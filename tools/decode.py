@@ -13,6 +13,7 @@ from typing import NamedTuple
 from pinyin_norm import norm, toneless
 
 MISSING = "□"
+OPEN_BRACKET = 1153  # （, which starts a variant spelling inside a headword, as in 这（这儿）
 
 
 class Cand(NamedTuple):
@@ -21,6 +22,28 @@ class Cand(NamedTuple):
     level: int
     py_norm: str
     py_toneless: str
+
+
+_LEVEL_TAG = re.compile(r"(old|new)-(\d+)")
+
+
+def complete_as_public(words):
+    """The complete list (data/public/hsk_complete_vNNN.json) in the shape build_index expects.
+
+    Each word is copied and given an "hsk" level: the lowest "old-N" tag (HSK 2.0) if it has one,
+    else the lowest "new-N" tag, else 9. "newest-N" tags do not count. Other fields, such as
+    "radical", are kept. For example ["newest-1", "new-1"] gives 1, ["new-3", "old-2"] gives 2
+    and ["newest-7"] gives 9.
+    """
+    out = []
+    for w in words:
+        levels = defaultdict(list)
+        for tag in w.get("level", []):
+            m = _LEVEL_TAG.fullmatch(tag)
+            if m:
+                levels[m.group(1)].append(int(m.group(2)))
+        out.append({**w, "hsk": min(levels["old"] or levels["new"] or [9])})
+    return out
 
 
 def build_index(public_words):
@@ -70,6 +93,53 @@ def _boundary(latin, keep, length):
     return None if nxt in _VOWELS or nxt in ("n", "r") else "weak"
 
 
+# The PDFs write the 儿 ending as its own syllable "er" (" gàn huó er work "), while both
+# public lists write "r" ("gàn huó r"). Only an "er" that follows a pinyin letter after a
+# space and ends at a space, punctuation or the end of the text counts, so " shù erect" is kept.
+_ERHUA = re.compile(r"(?<=[^\W\d_]) er(?=\W|$)")
+
+
+def match_head(cids):
+    """The headword codes to match against the public lists: everything before the first （.
+
+    HSK 1 to 4 print some headwords with a variant in brackets, such as 这（这儿）, which is
+    codes [6959, 1153, 6959, 1583, 1154]; match_head gives [6959], the code for 这.
+    A headword without （ is returned whole.
+    """
+    cids = list(cids)
+    return cids[:cids.index(OPEN_BRACKET)] if OPEN_BRACKET in cids else cids
+
+
+def effective_bans(banned, seeds):
+    """The (cid, char) pairs solve() should ban, with cids as integers.
+
+    `banned` comes from a suspects file, where cids may be text such as "6959". A pair the
+    glyph seed confirms (the same cid read as the same character) is dropped, because a
+    blind reading has since checked it. For example, with banned {("6959", "这"), ("7054", "那")}
+    and seeds {6959: "这", 7054: "哪"}, the result is {(7054, "那")}.
+    """
+    out = set()
+    for cid, ch in banned:
+        cid = int(cid)
+        if seeds.get(cid) != ch:
+            out.add((cid, ch))
+    return out
+
+
+def _first_hits(pools, latin):
+    """The first non-empty set of matching words, searched by boundary strength (strong, then weak),
+    then tone mode (exact, then toneless), then pool order."""
+    text, text_tl = norm(latin), toneless(latin)
+    for strength in ("strong", "weak"):
+        for keep, field, whole in ((norm, "py_norm", text), (toneless, "py_toneless", text_tl)):
+            for pool in pools:
+                hits = [c for c in pool if getattr(c, field) and whole.startswith(getattr(c, field))
+                        and _boundary(latin, keep, len(getattr(c, field))) == strength]
+                if hits:
+                    return hits
+    return []
+
+
 def candidates(head_len, latin, file_level, index, use_level=True):
     """Public words that could be this PDF entry, as a sorted list of character strings.
 
@@ -81,23 +151,26 @@ def candidates(head_len, latin, file_level, index, use_level=True):
     same two with a weak boundary. Tones are ignored as a fallback because the PDF
     writes tone changes such as bú kèqi. Only the longest matching pinyin is kept,
     so 帮 bāng beats 八 bā in " bāng v. help ".
+    `index` is one build_index result or a list of them, for example
+    [old-HSK index, complete-list index]. With a list, each of the four steps tries
+    the indexes in order before moving to the next step. So an exact match in the
+    complete list (天 tiān) beats a toneless match in the old list (甜 tián), while
+    for " bā num. eight " the old list's 八 wins over the complete list's 八 and 巴.
     The HSK 1 to 4 files repeat lower levels, so words at or below the file's level
     are preferred there. In the HSK 5 and 6 files the level must be equal.
     The public list's levels do not always match the PDFs' levels (号 hào is level 2
     in the list but sits in the HSK 1 PDF, next to 好, which also reads hào), so
     use_level=False returns every equally good match. solve() takes both lists.
+    If nothing matches, the search is repeated with the PDF's erhua spelling " er"
+    written as "r", so " gàn huó er work " finds 干活儿 "gàn huó r".
     """
-    text, text_tl = norm(latin), toneless(latin)
-    pool = index.get(head_len, [])
-    hits = []
-    for strength in ("strong", "weak"):
-        for keep, field, whole in ((norm, "py_norm", text), (toneless, "py_toneless", text_tl)):
-            hits = [c for c in pool if getattr(c, field) and whole.startswith(getattr(c, field))
-                    and _boundary(latin, keep, len(getattr(c, field))) == strength]
-            if hits:
-                break
-        if hits:
-            break
+    indexes = index if isinstance(index, (list, tuple)) else [index]
+    pools = [ix.get(head_len, []) for ix in indexes]
+    hits = _first_hits(pools, latin)
+    if not hits:
+        erhua, changed = _ERHUA.subn("r", unicodedata.normalize("NFC", latin))
+        if changed:
+            hits = _first_hits(pools, erhua)
     if not hits:
         return []
     longest = max(len(c.py_norm) for c in hits)
@@ -107,19 +180,19 @@ def candidates(head_len, latin, file_level, index, use_level=True):
     return sorted({c.hz for c in (in_level or hits)})
 
 
-def _consistent(hz, head, fwd, rev):
+def _consistent(hz, head, fwd, rev, banned=()):
     for cid, ch in zip(head, hz):
-        if fwd.get(cid, ch) != ch or rev.get(ch, cid) != cid:
+        if fwd.get(cid, ch) != ch or rev.get(ch, cid) != cid or (cid, ch) in banned:
             return False
     return True
 
 
-def live_candidates(head, hzs, fwd, rev):
-    """Candidates that still agree with everything learned so far."""
-    return [hz for hz in hzs if _consistent(hz, head, fwd, rev)]
+def live_candidates(head, hzs, fwd, rev, banned=()):
+    """Candidates that still agree with everything learned so far and use no banned (cid, char) pair."""
+    return [hz for hz in hzs if _consistent(hz, head, fwd, rev, banned)]
 
 
-def solve(items, seed, fallback=None):
+def solve(items, seed, fallback=None, banned=None):
     """Fill the code-to-character map.
 
     items: one (head_cids, candidate_strings) pair per PDF entry.
@@ -127,15 +200,20 @@ def solve(items, seed, fallback=None):
     fallback: optional second list of pairs, used only after items has learned all
     it can. Pass candidates(..., use_level=False) as items and the level-preferred
     candidates as fallback, so the level preference only settles what is still open.
+    banned: optional set of (cid, char) pairs that must not be learned, for example
+    readings a visual check flagged as suspect. A candidate that would put any banned
+    pair in the map is treated as inconsistent, so with banned={(1, "他")} the entry
+    ([1], ["他", "她"]) teaches 1 = 她. The seed is kept as it is, even for banned pairs.
     Each round, every entry votes for the positions where all its remaining
     candidates agree. The best-supported votes are applied, one code to one
     character and one character to one code, and rounds repeat until a round
     learns nothing. Returns (map, conflicts), where conflicts lists codes that
     received votes for more than one character.
     """
+    banned = frozenset(banned or ())
     if fallback is not None:
-        fwd, conflicts = solve(items, seed)
-        fwd, later = solve(fallback, fwd)
+        fwd, conflicts = solve(items, seed, banned=banned)
+        fwd, later = solve(fallback, fwd, banned=banned)
         return fwd, {**later, **conflicts}
     fwd = dict(seed)
     rev = {ch: cid for cid, ch in fwd.items()}
@@ -143,7 +221,7 @@ def solve(items, seed, fallback=None):
     while True:
         votes = defaultdict(Counter)
         for head, hzs in items:
-            live = live_candidates(head, hzs, fwd, rev)
+            live = live_candidates(head, hzs, fwd, rev, banned)
             if not live:
                 continue
             for i, cid in enumerate(head):
@@ -201,3 +279,4 @@ def coverage(entries, fwd):
                 unresolved[c] += 1
                 example.setdefault(c, f'HSK{e["file"]} #{e["n"]}')
     return per_file, body_total, body_ok, unresolved, example, all_cids
+

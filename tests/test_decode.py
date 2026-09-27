@@ -1,4 +1,5 @@
-from decode import body_text, build_index, candidates, coverage, solve
+from decode import (body_text, build_index, candidates, complete_as_public, coverage, effective_bans, match_head,
+                    solve)
 
 
 def W(hz, py, level):
@@ -126,3 +127,103 @@ def test_level_preference_only_settles_what_the_level_free_pass_leaves():
     fwd, conflicts = solve(loose, {}, fallback=strict)
     assert fwd == {1: "号", 2: "你", 3: "好", 4: "他", 5: "们", 6: "她"}
     assert conflicts == {}
+
+
+# The complete list (data/public/hsk_complete_vNNN.json) tags each word with levels such as
+# "old-2" (HSK 2.0), "new-1" (HSK 3.0 of 2021) and "newest-1", and has no "hsk" field.
+def CW(hz, py, levels, radical="一"):
+    return {"simplified": hz, "radical": radical, "level": levels,
+            "forms": [{"transcriptions": {"pinyin": py}}]}
+
+
+def test_complete_as_public_takes_lowest_old_level_then_lowest_new_level_else_9():
+    words = [CW("天", "tiān", ["newest-1", "new-1"], radical="大"), CW("甜", "tián", ["new-3", "old-2"]),
+             CW("阿拉伯语", "ā lā bó yǔ", ["newest-7"]), CW("班", "bān", ["new-1", "old-3"]),
+             CW("本", "běn", ["old-4", "old-2"]), CW("爱", "ài", ["newest-1", "new-2"])]
+    out = complete_as_public(words)
+    assert [w["hsk"] for w in out] == [1, 2, 9, 3, 2, 2]
+    assert out[0]["radical"] == "大" and out[0]["level"] == ["newest-1", "new-1"]
+    assert all("hsk" not in w for w in words)  # the input words are copied, not changed
+
+
+OLD = build_index([W("甜", "tián", 3), W("八", "bā", 1)])
+COMPLETE = build_index(complete_as_public([CW("天", "tiān", ["newest-1", "new-1"]),
+                                           CW("甜", "tián", ["new-3", "old-3"]),
+                                           CW("八", "bā", ["new-1", "old-1"]), CW("巴", "bā", ["new-5"]),
+                                           CW("说", "shuō", ["newest-1", "new-1"])]))
+
+
+def test_exact_match_in_complete_list_beats_toneless_match_in_old_list():
+    assert candidates(1, " tiān n. sky ", 1, OLD) == ["甜"]
+    assert candidates(1, " tiān n. sky ", 1, [OLD, COMPLETE]) == ["天"]
+
+
+def test_earlier_index_wins_when_both_match_equally_well():
+    assert candidates(1, " bā num. eight ", 1, [OLD, COMPLETE]) == ["八"]
+    assert candidates(1, " bā num. eight ", 1, [COMPLETE], use_level=False) == ["八", "巴"]
+
+
+def test_word_missing_from_old_list_is_found_in_complete_list():
+    assert candidates(1, " shuō v. speak ", 1, OLD) == []
+    assert candidates(1, " shuō v. speak ", 1, [OLD, COMPLETE]) == ["说"]
+
+
+def test_banned_pair_is_never_learned():
+    assert solve([([1], ["他"])], {}, banned={(1, "他")}) == ({}, {})
+    fwd, _ = solve([([1], ["他", "她"])], {}, banned={(1, "他")})
+    assert fwd == {1: "她"}
+
+
+def test_banned_does_not_touch_seeds():
+    assert solve([], {1: "他"}, banned={(1, "他")}) == ({1: "他"}, {})
+    fwd, _ = solve([([2], ["他"])], {1: "他"}, banned={(1, "他")})
+    assert fwd == {1: "他"}
+
+
+def test_banned_also_applies_to_the_fallback_pass():
+    assert solve([], {}, fallback=[([1], ["他"])]) == ({1: "他"}, {})
+    assert solve([], {}, fallback=[([1], ["他"])], banned={(1, "他")}) == ({}, {})
+    assert solve([([1], ["他"])], {}, fallback=[], banned={(1, "他")}) == ({}, {})
+
+
+# HSK 1 to 4 entry #142 prints its headword as 这（这儿）: codes 6959, 1153 （, 6959, 1583 儿, 1154 ）.
+def test_match_head_stops_at_the_opening_bracket():
+    assert match_head([6959, 1153, 6959, 1583, 1154]) == [6959]
+    assert match_head([7054, 1153, 7054, 1583, 1154]) == [7054]
+    assert match_head([4545, 4545]) == [4545, 4545]
+    assert match_head([]) == []
+
+
+def test_bracketed_variant_decodes_through_match_head():
+    index = build_index([W("这", "zhè", 1), W("那", "nà", 1)])
+    head = [6959, 1153, 6959, 1583, 1154]
+    assert candidates(len(head), " zhè pron. this ", 1, index) == []
+    hzs = candidates(len(match_head(head)), " zhè pron. this ", 1, index)
+    assert hzs == ["这"]
+    fwd, _ = solve([(match_head(head), hzs)], {1153: "（", 1154: "）"})
+    assert fwd[6959] == "这"
+
+
+# The PDFs write the 儿 ending as a separate "er"; both public lists write "r".
+ERHUA = build_index([W("干活儿", "gàn huó r", 5), W("大伙儿", "dà huǒ r", 6), W("玩意儿", "wán yì r", 6),
+                     W("竖", "shù", 6), W("干活", "gàn huó", 5)])
+
+
+def test_erhua_er_is_retried_as_r():
+    assert candidates(3, " gàn huó er do manual labour ", 5, ERHUA) == ["干活儿"]
+    assert candidates(3, "dà huǒ er everybody ", 6, ERHUA) == ["大伙儿"]
+    assert candidates(3, " wán yì er, thing;toy ", 6, ERHUA) == ["玩意儿"]
+    assert candidates(3, " wán yì er", 6, ERHUA) == ["玩意儿"]
+
+
+def test_erhua_retry_leaves_other_er_alone():
+    assert candidates(1, " shù erect; stand ", 6, ERHUA) == ["竖"]
+    assert candidates(3, " gàn huó error ", 5, ERHUA) == []
+    assert candidates(3, " gàn huó er2 ", 5, ERHUA) == []
+
+
+def test_effective_bans_converts_cids_and_drops_pairs_the_glyph_seed_confirms():
+    banned = {("6959", "这"), ("7054", "那"), (15, ",")}
+    assert effective_bans(banned, {6959: "这", 7054: "哪"}) == {(7054, "那"), (15, ",")}
+    assert effective_bans([], {1: "他"}) == set()
+    assert effective_bans([("1", "他")], {}) == {(1, "他")}
