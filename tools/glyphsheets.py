@@ -199,6 +199,19 @@ def radical_table(words):
     return table
 
 
+def select_codes(rows, sources, has_outline):
+    """The codes to draw on the verify sheets, as a list of numbers in increasing order.
+
+    rows: rows of cidmap_vNNN.csv (cid, char, source), as read from the file.
+    sources: the "source" names to keep, such as ["glyph"]. None or an empty list keeps every source.
+    has_outline: the codes that have a glyph outline in the PDFs, for example the dict glyph_outlines()
+    returns. A code not in it is left out. For example, with rows for code 9 (headword), 821 (glyph) and
+    4541 (glyph), sources ["glyph"] and outlines for 9 and 821 only, the result is [821].
+    """
+    return sorted(int(r["cid"]) for r in rows
+                  if (not sources or r["source"] in sources) and int(r["cid"]) in has_outline)
+
+
 def choose_planted(cids, fwd, radical_of, rate, rng):
     """Pick about `rate` of the cells to show a wrong character. Returns {cid: shown_char}.
 

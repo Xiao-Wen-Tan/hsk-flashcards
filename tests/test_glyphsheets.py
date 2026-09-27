@@ -5,7 +5,7 @@ import matplotlib.image as mpimg
 import pytest
 
 from glyphsheets import (check_glyph_reads, check_verify, choose_planted, draw_sheet, draw_verify_sheet,
-                         find_cjk_font, glyph_outlines, radical_table)
+                         find_cjk_font, glyph_outlines, radical_table, select_codes)
 
 PDF = Path("../HSK 词汇 6本/HSK1 词汇.pdf")
 
@@ -56,6 +56,32 @@ def test_choose_planted_count_is_near_the_rate():
     assert len(choose_planted(list(range(60)), fwd, {}, 0.05, random.Random(13))) == 3
     assert len(choose_planted(list(range(10)), fwd, {}, 0.05, random.Random(13))) == 1
     assert choose_planted([], fwd, {}, 0.05, random.Random(13)) == {}
+
+
+# Rows of cidmap_vNNN.csv as read from the file, so every value is a string.
+CIDMAP = [{"cid": "15", "char": ",", "source": "footer"},
+          {"cid": "821", "char": "、", "source": "glyph"},
+          {"cid": "9", "char": "妈", "source": "headword"},
+          {"cid": "10", "char": "好", "source": "headword"},
+          {"cid": "4541", "char": "爱", "source": "glyph"}]
+ALL_OUTLINES = {15, 821, 9, 10, 4541}
+
+
+def test_select_codes_keeps_every_source_by_default_in_number_order():
+    assert select_codes(CIDMAP, None, ALL_OUTLINES) == [9, 10, 15, 821, 4541]
+    assert select_codes(CIDMAP, [], ALL_OUTLINES) == [9, 10, 15, 821, 4541]
+
+
+def test_select_codes_keeps_only_the_named_sources():
+    assert select_codes(CIDMAP, ["glyph"], ALL_OUTLINES) == [821, 4541]
+    assert select_codes(CIDMAP, ["glyph", "footer"], ALL_OUTLINES) == [15, 821, 4541]
+    assert select_codes(CIDMAP, ["no such source"], ALL_OUTLINES) == []
+
+
+def test_select_codes_leaves_out_codes_without_an_outline():
+    outlines = {9: "path", 821: "path"}  # the dict glyph_outlines returns works as has_outline
+    assert select_codes(CIDMAP, None, outlines) == [9, 821]
+    assert select_codes(CIDMAP, ["glyph"], outlines) == [821]
 
 
 KEY = [{"cell": "1", "cid": "100", "control": "0", "known_char": ""},
