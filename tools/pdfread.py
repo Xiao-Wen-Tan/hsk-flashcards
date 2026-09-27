@@ -57,8 +57,16 @@ class FontInfo:
 
 
 def _raw(item):
+    """The string's bytes exactly as written in the content stream.
+
+    pypdf guesses that a string whose first byte is 0 is UTF-16BE and one whose second
+    byte is 0 is UTF-16LE, and turns it into text. get_original_bytes() then re-encodes
+    that text with a byte-order mark in front, so the glyph codes <0e001350> came back as
+    FF FE 0E 00 13 50, that is codes 65534, 3584, 4944 instead of 3584, 4944. The
+    original_bytes property returns the bytes pypdf actually read.
+    """
     if isinstance(item, TextStringObject):
-        return item.get_original_bytes()
+        return item.original_bytes
     if isinstance(item, (ByteStringObject, bytes)):
         return bytes(item)
     return None  # kerning numbers inside TJ arrays
