@@ -1,0 +1,10 @@
+.claude/
+.remember/
+__pycache__/
+.pytest_cache/
+*.part
+data/public/
+data/extract/
+data/decode/
+data/build/
+data/reports/
