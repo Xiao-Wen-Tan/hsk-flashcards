@@ -4,3 +4,5 @@ matplotlib>=3.8
 pytest>=8
 jieba>=0.42
 pillow>=10.1
+pypinyin>=0.49
+edge-tts>=6.1
