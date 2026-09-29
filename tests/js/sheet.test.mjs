@@ -16,7 +16,7 @@ import { loadFixture, word } from './helpers.mjs';
 
 const data = loadFixture();
 const CODE = 'k7mq-2xrt-9pwd-hc4n-fz6b-y3ja';
-const URL_OK = 'https://script.google.com/macros/s/AKfycbx1234567890abcdefghijklmnop/exec';
+const URL_OK = 'https://script.google.com/macros/s/AKfycbTEST-FAKE-ID-abcdefghijklmnop/exec';
 
 // Plays one study day with Study (Plan 2): every answer right, except `wrongFirst` wrong
 // answers on the first reviews. Answers are 10 seconds apart from 19:00 UTC.
@@ -68,11 +68,11 @@ test('a secret code is 24 easy-to-read letters and digits in groups of 4', () =>
 
 test('only a web app address is accepted', () => {
   assert.equal(checkWebAppUrl(` ${URL_OK} `), URL_OK);
-  assert.equal(checkWebAppUrl('https://script.google.com/a/macros/example.edu/s/AKfycbx1234567890abcdefghij/exec'),
-    'https://script.google.com/a/macros/example.edu/s/AKfycbx1234567890abcdefghij/exec');
+  assert.equal(checkWebAppUrl('https://script.google.com/a/macros/example.edu/s/AKfycbTEST-FAKE-ID-abcdefghij/exec'),
+    'https://script.google.com/a/macros/example.edu/s/AKfycbTEST-FAKE-ID-abcdefghij/exec');
   assert.equal(checkWebAppUrl('http://localhost:8125/exec'), 'http://localhost:8125/exec');
   assert.throws(() => checkWebAppUrl('https://docs.google.com/spreadsheets/d/abc/edit'), /not a web app address/);
-  assert.throws(() => checkWebAppUrl('https://script.google.com/macros/s/AKfycbx1234567890abcdefghij/dev'), /ends with \/exec/);
+  assert.throws(() => checkWebAppUrl('https://script.google.com/macros/s/AKfycbTEST-FAKE-ID-abcdefghij/dev'), /ends with \/exec/);
 });
 
 test('a code typed on a new phone is checked', () => {

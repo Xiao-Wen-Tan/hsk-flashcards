@@ -44,3 +44,17 @@ def test_sizes():
 def test_code_gs_keeps_the_placeholder():
     assert pc.check_code_gs("/** x */\nvar SECRET_CODE = 'PASTE-THE-CODE-FROM-THE-APP';\n") == []
     assert pc.check_code_gs("var SECRET_CODE = 'k7mq-2xrt-9pwd-hc4n-fz6b-y3ja';\n") != []
+
+
+def test_marked_test_addresses_are_allowed():
+    # The app's own tests need addresses of the real shape; they carry TEST-FAKE so the check can tell them apart.
+    line = 'const URL_OK = "https://script.google.com/macros/s/AKfycbTEST-FAKE-ID-abcdefghij/exec";'
+    assert pc.scan_text("tests/js/x.test.mjs", line, "") == []
+    assert pc.scan_text("tests/js/x.test.mjs", line.replace("TEST-FAKE-ID", "AAAABBBBCCCC"), "") == [
+        "tests/js/x.test.mjs:1: a Google Apps Script web app address",
+    ]
+
+
+def test_only_the_checker_and_its_tests_are_left_unscanned():
+    # They hold made-up examples of every problem, so scanning them would always fail.
+    assert pc.SELF_FILES == {"tools/publishcheck.py", "tests/test_publishcheck.py"}

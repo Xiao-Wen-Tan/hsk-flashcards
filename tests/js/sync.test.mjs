@@ -14,7 +14,7 @@ import { loadFixture } from './helpers.mjs';
 
 const data = loadFixture();
 const CODE = 'k7mq-2xrt-9pwd-hc4n-fz6b-y3ja';
-const URL_OK = 'https://script.google.com/macros/s/AKfycbx1234567890abcdefghijklmnop/exec';
+const URL_OK = 'https://script.google.com/macros/s/AKfycbTEST-FAKE-ID-abcdefghijklmnop/exec';
 
 function memoryStorage() {
   const m = new Map();

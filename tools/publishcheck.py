@@ -20,11 +20,15 @@ BINARY_TYPES = {".mp3", ".png", ".pdf", ".jpg", ".jpeg", ".gif", ".ico", ".woff"
 MAX_FILE_MB = 50  # GitHub warns above 50 MB and refuses files above 100 MB
 MAX_SITE_MB = 900  # GitHub Pages sites may be at most 1 GB
 
+# The checker and its tests hold made-up examples of every problem, so they are not scanned.
+SELF_FILES = {"tools/publishcheck.py", "tests/test_publishcheck.py"}
+
 PLACEHOLDER_LINE = "var SECRET_CODE = 'PASTE-THE-CODE-FROM-THE-APP';"
 
 _PATTERNS = [
     (re.compile(r"[A-Za-z]:[\\/]+Users[\\/]", re.I), "a personal Windows path (C:/Users/)"),
-    (re.compile(r"script\.google\.com/(?:a/macros/[^/\s]+|macros)/s/[A-Za-z0-9_-]{20,}"), "a Google Apps Script web app address"),
+    # An address whose ID holds TEST-FAKE is a made-up one from the app's own tests, so it is allowed.
+    (re.compile(r"script\.google\.com/(?:a/macros/[^/\s]+|macros)/s/(?![A-Za-z0-9_-]*TEST-FAKE)[A-Za-z0-9_-]{20,}"), "a Google Apps Script web app address"),
     (re.compile(r"docs\.google\.com/spreadsheets/d/[A-Za-z0-9_-]{20,}"), "a Google Sheet address"),
 ]
 _EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}")

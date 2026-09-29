@@ -28,7 +28,7 @@ def main():
         if not full.is_file():
             continue
         sizes[path] = full.stat().st_size
-        if not pc.is_binary(path):
+        if not pc.is_binary(path) and path not in pc.SELF_FILES:
             text = full.read_text(encoding="utf-8", errors="replace")
             problems += pc.scan_text(path, text, username)
             if path == "tools/apps_script/Code.gs":
