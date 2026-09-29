@@ -55,17 +55,18 @@ def cut(text):
 def card_pinyin(w, forms, names):
     """py, pyNum, pyBase and syl for one word, where py's word spacing came from, and any missing decision.
 
-    py uses textbook word spacing. The source is "pdf" when an HSK 1 to 4 PDF entry prints pinyin
-    that fits the card reading (its syllables, tones and capital are used as printed, so 互联网 is
-    "hùliánwǎng" as HSK4 #776 prints it). Otherwise it is "idiom", "words" or "joined" for a
+    py uses textbook word spacing and is in lower case, names included (the user's decision of
+    2026-09-29, so 北京 is "běijīng" although HSK1 #5 prints "Běijīng"). The source is "pdf" when an
+    HSK 1 to 4 PDF entry prints pinyin that fits the card reading (its syllables, tones and word
+    spacing are used as printed, so 互联网 is "hùliánwǎng" as HSK4 #776 prints it). Otherwise it is "idiom", "words" or "joined" for a
     four-character headword, whose form comes from `forms` ({hz: (form, words)} from
     data/manual/four_char_words), which has a row for every such headword, CC-CEDICT idioms
     included. Any other headword has the source "jieba". Only py shows the 一 and 不 tone changes.
     pyNum, pyBase and syl use the dictionary tones, so 不客气 gives py "bú kèqi" and pyNum
     "bu4 ke4 qi5".
-    names ({hz: (words, capitals)} from data/manual/capitals) says whether a card without a fitting
-    print has a capital, and for a person's name which words it has. A card that the public list or
-    a pdf_fixes row writes with a capital needs a row there.
+    names ({hz: (words, capitals)} from data/manual/capitals) gives the words of a name, so 李老师 is
+    "lǐ lǎoshī". A card that the public list or a pdf_fixes row writes with a capital is a name, and
+    without a fitting print it needs a row there. A row for a printed card must give the print's words.
     The last two items returned name a missing decision (or None), and the four-character
     headword that needs a form (or None).
     """
@@ -76,23 +77,25 @@ def card_pinyin(w, forms, names):
     printed = printed_pinyin(w["latin"], w["hz"], nums)
     missing = needs_form = None
     if printed:
-        shown, joints, capital = printed
+        shown, joints = printed
         source = "pdf"
-        if w["hz"] in names:
-            missing = f"{w['hz']}: data/manual/capitals has a row, but its capital follows the HSK PDF print"
+        if w["hz"] in names and joints_from_sizes([len(p) for p in names[w["hz"]][0]]) != joints:
+            missing = (f"{w['hz']}: data/manual/capitals gives the words {' '.join(names[w['hz']][0])}, "
+                       f"but the HSK PDF prints {card_py(shown, joints)!r}")
     else:
         stem = w["hz"][:-1] if len(w["hz"]) > 2 and w["hz"].endswith("儿") else w["hz"]
         form = forms.get(stem)
         if len(stem) == 4 and "…" not in stem and form is None:
             needs_form = stem
         shown, joints = tone_change(chars, nums), headword_joints(w["hz"], cut, form)
-        parts, capital = names.get(w["hz"], ([w["hz"]], w["capital"]))
+        parts = names.get(w["hz"], ([w["hz"]], []))[0]
         if len(parts) > 1:
             joints = joints_from_sizes([len(p) for p in parts])
         if w["capital"] and w["hz"] not in names:
-            missing = f"{w['hz']}: written with a capital in the public list; add a row to data/manual/capitals"
+            missing = (f"{w['hz']}: the public list writes it as a name; add a row to data/manual/capitals "
+                       "to give its word spacing")
         source = form[0] if len(stem) == 4 and form else "jieba"
-    return {"py": card_py(shown, joints, capital), "pyNum": " ".join(nums), "pyBase": py_base(nums),
+    return {"py": card_py(shown, joints), "pyNum": " ".join(nums), "pyBase": py_base(nums),
             "syl": syllable_count(nums)}, source, missing, needs_form
 
 
@@ -179,10 +182,10 @@ def main():
                  and spacing[r["id"]] != "pdf"]
     in_file = {form: [r for r in rows if spacing[r["id"]] == form] for form in ("idiom", "words", "joined")}
     split = [r for r in rows if spacing[r["id"]] == "jieba" and " " in r["py"]]
-    capitals = [r for r in rows if r["py"][:1].isupper()]
-    printed_caps = [r for r in capitals if spacing[r["id"]] == "pdf"]
-    listed_caps = [r for r in capitals if spacing[r["id"]] != "pdf"]
-    lowered = [r for r in rows if listed_capital[r["id"]] and not r["py"][:1].isupper()]
+    capitals = [r for r in rows if any(ch.isupper() for ch in r["py"])]
+    named = [r for r in rows if listed_capital[r["id"]] or r["hz"] in names]
+    printed_names = [r for r in named if spacing[r["id"]] == "pdf"]
+    filed_names = [r for r in named if spacing[r["id"]] != "pdf"]
     lines = ["Word list report", "",
              f"Cards: {len(rows)} ({len(pdf)} from the PDFs, {len(listed)} only in the public HSK 2.0 list, "
              f"{len(second)} second readings)",
@@ -198,9 +201,9 @@ def main():
              f"{by_source['idiom'] + by_source['words'] + by_source['joined']} four-character words ({by_source['idiom']} "
              f"idioms, {by_source['words']} written as several words, {by_source['joined']} joined), "
              f"{by_source['jieba']} from jieba ({len(split)} of them more than one word)",
-             f"Cards written with a capital: {len(capitals)} ({len(printed_caps)} as the HSK 1 to 4 PDFs print them, "
-             f"{len(listed_caps)} as data/manual/capitals sets them). In lower case although the public list has "
-             f"a capital: {len(lowered)}",
+             f"Cards with a capital letter in py: {len(capitals)} (all pinyin is in lower case since 2026-09-29)",
+             f"Cards that are names or have a row in data/manual/capitals: {len(named)} ({len(printed_names)} spaced "
+             f"as the HSK 1 to 4 PDFs print them, {len(filed_names)} as data/manual/capitals gives their words)",
              ""]
     review = ["HSK 1 to 4 cards whose PDF pinyin does not fit the card reading, so jieba gave the spacing:"]
     review += [f"  {r['id']} {r['hz']} {r['py']} | {r['pyNum']}" for r in unprinted] or ["  none"]
@@ -209,14 +212,12 @@ def main():
                for form, found in in_file.items()]
     review += ["", "Headwords that jieba splits into more than one word:",
                "  " + (" ".join(f"{r['hz']} {r['py']}" for r in split) or "none"), ""]
-    review += ["Cards written with a capital, as names. The first group follows the HSK 1 to 4 PDFs' print.",
-               "The second takes its capital from data/manual/capitals, which follows the public list until the",
-               "user decides, because the HSK 5 and 6 PDFs print every word in lower case. Show it to the user.",
-               "  As printed: " + " ".join(f"{r['hz']} {r['py']}" for r in printed_caps),
-               "  From data/manual/capitals: " + " ".join(f"{r['hz']} {r['py']}" for r in listed_caps),
-               "In lower case although the public list has a capital, as the HSK 1 to 4 PDFs print them or as",
-               "data/manual/capitals sets them:",
-               "  " + (" ".join(f"{r['hz']} {r['py']}" for r in lowered) or "none"), ""]
+    review += ["Cards that are names or have a row in data/manual/capitals, all in lower case. The first group is",
+               "spaced as the HSK 1 to 4 PDFs print it, the second as data/manual/capitals gives its words.",
+               "  As printed: " + (" ".join(f"{r['hz']} {r['py']}" for r in printed_names) or "none"),
+               "  From data/manual/capitals: " + (" ".join(f"{r['hz']} {r['py']}" for r in filed_names) or "none"),
+               "Cards with a capital letter in py, which should be none:",
+               "  " + (" ".join(f"{r['id']} {r['hz']} {r['py']}" for r in capitals) or "none"), ""]
     review += ["Card meanings with a word CC-CEDICT never uses. Most are real English words (noonday, kinsfolk).",
                "Look for words run together, misspellings and junk text, and fix them in a new gloss_fixes file.", ""]
     review += [f"  {r['id']} {r['hz']} {r['pyNum']}: {' '.join(strange)} | {r['en']}" for r, strange in odd]

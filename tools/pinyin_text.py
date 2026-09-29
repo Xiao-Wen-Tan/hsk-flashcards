@@ -18,7 +18,8 @@ compound of several words is written as those words ("words", 通货膨胀 "tōn
 single word that cannot be divided is written joined (二氧化碳 "èryǎnghuàtàn"), as are an idiom
 that does not divide into two pairs (总而言之 "zǒng'éryánzhī") and a doubled word (断断续续).
 data/manual/four_char_words says which form each such word takes, and data/manual/capitals says
-which words are names with capitals.
+which words are names and how their words are spaced. All pinyin is in lower case, names included,
+as the user decided on 2026-09-29 (北京 "běijīng", 李老师 "lǐ lǎoshī").
 """
 import re
 import unicodedata
@@ -143,16 +144,16 @@ def reading_mismatches(chars, shown, nums):
     return out
 
 
-def card_py(nums, joints=None, capital=False):
-    """Tone-marked card pinyin in textbook word spacing.
+def card_py(nums, joints=None):
+    """Tone-marked card pinyin in textbook word spacing, in lower case.
 
     nums: numbered syllables, with the 一 and 不 tone changes already applied. An "r5" (the 儿
     ending) always joins the syllable before it.
     joints: one item per gap between two syllables (see the module notes); None joins them all.
     A pattern word's "…" joints also get a final "…".
     Inside a word, a syllable starting with a, o or e gets an apostrophe.
-    capital: True capitalises each word, for names such as 北京 "Běijīng" and 黄河 "Huáng Hé". A list
-    with one True or False per word capitalises only some words (capitalise).
+    Names are in lower case too (the user's decision of 2026-09-29), so ["bei3", "jing1"] gives
+    "běijīng", and ["li3", "lao3", "shi1"] with [" ", ""] gives "lǐ lǎoshī".
     ["bu2", "ke4", "qi5"] with joints [" ", ""] gives "bú kèqi", ["xi1", "an1"] gives "xī'ān",
     ["ba2", "miao2", "zhu4", "zhang3"] with IDIOM_JOINTS gives "bámiáo-zhùzhǎng", and
     ["sui1", "ran2", "dan4", "shi4"] with ["", "…", ""] gives "suīrán…dànshì…".
@@ -170,22 +171,7 @@ def card_py(nums, joints=None, capital=False):
         text += joint + marked
     if "…" in joints:
         text += "…"
-    return capitalise(text, capital)
-
-
-def capitalise(text, capital):
-    """text with a capital at the start of some of its words (the parts between spaces).
-
-    capital: True for every word, False for none, or one True or False per word. The textbook
-    rules write a surname and a given name each with a capital and a title in lower case, so
-    "lǐ lǎoshī" with [True, False] gives "Lǐ lǎoshī", and "wáng jiànguó" with True gives
-    "Wáng Jiànguó".
-    """
-    words = text.split(" ")
-    flags = list(capital) if isinstance(capital, (list, tuple)) else [bool(capital)] * len(words)
-    if len(flags) != len(words):
-        raise ValueError(f"{text!r}: {len(words)} words but {len(flags)} capital flags")
-    return " ".join(w[:1].upper() + w[1:] if flag else w for w, flag in zip(words, flags))
+    return text
 
 
 def joints_from_sizes(sizes, between=" "):
@@ -264,15 +250,14 @@ def pdf_pinyin(text, hz, nums):
 def printed_pinyin(texts, hz, nums):
     """The printed pinyin of the first of a card's HSK 1 to 4 PDF texts that fits the card (pdf_pinyin).
 
-    Returns (the printed syllables in numbered form, joints, capital) or None. capital says whether
-    the print starts with a capital letter, so the capital of `py` follows the print, as its spacing
-    does. The public list writes 互联网 "Hù lián wǎng", but HSK4 #776 prints " hùliánwǎng n. the
-    Internet ", which gives capital False, while " Běijīng n. Beijing " gives capital True.
+    Returns (the printed syllables in numbered form, joints) or None. A printed capital is dropped,
+    because all pinyin is in lower case since 2026-09-29, so " Běijīng n. Beijing " with bei3 jing1
+    gives (["bei3", "jing1"], [""]), which card_py writes "běijīng".
     """
     for text in texts:
         found = pdf_pinyin(text, hz, nums)
         if found:
-            return found[0], found[1], text.lstrip()[:1].isupper()
+            return found
     return None
 
 
@@ -432,8 +417,10 @@ def name_rows(rows):
     person's name it lists the words that spell hz, separated by spaces, because the textbook
     rules write the surname apart from the given name and a title apart from the name (王建国
     "王 建国", 李老师 "李 老师"). capital is one Y or N for all the words, or one per word. So
-    {"hz": "李老师", "words": "李 老师", "capital": "Y N"} gives {"李老师": (["李", "老师"], [True, False])},
-    which is written "Lǐ lǎoshī". A value other than Y or N, a number of values that does not fit
+    {"hz": "李老师", "words": "李 老师", "capital": "Y N"} gives {"李老师": (["李", "老师"], [True, False])}.
+    Since the user's decision of 2026-09-29 all pinyin is in lower case ("lǐ lǎoshī"), so the file
+    only gives a name's words, and a Y only marks a row as a name (a word with only N, such as
+    正月, is a common noun). A value other than Y or N, a number of values that does not fit
     the words, words that do not spell hz and a headword listed twice are problems.
     """
     out, problems = {}, []

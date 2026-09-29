@@ -58,7 +58,7 @@ def head_forms(hz, py, pynum):
     if joints is None or shown is None or len(nums) != len(hz):
         return {py}
     options = [[s] for s in shown[:-1]] + [_TONES_OF.get((hz[-1], shown[-1]), [shown[-1]])]
-    return {py} | {card_py(list(c), joints, py[:1].isupper()) for c in itertools.product(*options)}
+    return {py} | {card_py(list(c), joints) for c in itertools.product(*options)}
 
 
 def name_starts(sentence, names):

@@ -122,3 +122,31 @@ def test_level_and_english():
     assert english(w, R) == ["to grow"]
     assert english({**w, "glosses": ["grow; develop"]}, R) == ["grow", "develop"]
     assert english({"hz": "纪录", "num": "ji4 lu4", "files": [], "glosses": []}, R) == ["to record"]
+
+
+def test_card_pinyin_is_in_lower_case_and_names_keep_their_word_spacing():
+    # The user's decision of 2026-09-29: card py is in lower case, names included, whether the HSK PDFs
+    # print a capital (北京 "Běijīng") or the public list writes one (欧洲 "Ōuzhōu"). data/manual/capitals
+    # still gives the words of a name ("lǐ lǎoshī").
+    import importlib
+    step5 = importlib.import_module("05_build_wordlist")
+
+    def card(hz, num, latin=(), capital=True):
+        return {"hz": hz, "num": num, "latin": list(latin), "capital": capital}
+
+    names = {"欧洲": (["欧洲"], [True]), "李老师": (["李", "老师"], [True, False]), "长城": (["长城"], [True]),
+             "黄河": (["黄", "河"], [True, True])}
+    got = step5.card_pinyin(card("北京", "bei3 jing1", [" Běijīng n. Beijing "]), {}, names)
+    assert (got[0]["py"], got[1], got[2]) == ("běijīng", "pdf", None)
+    got = step5.card_pinyin(card("欧洲", "ou1 zhou1"), {}, names)
+    assert (got[0]["py"], got[1], got[2]) == ("ōuzhōu", "jieba", None)
+    assert step5.card_pinyin(card("李老师", "li3 lao3 shi1"), {}, names)[0]["py"] == "lǐ lǎoshī"
+    # A row for a printed card is allowed when its words fit the print's word spacing.
+    got = step5.card_pinyin(card("长城", "chang2 cheng2", [" Chángchéng n. the Great Wall "]), {}, names)
+    assert (got[0]["py"], got[2]) == ("chángchéng", None)
+    got = step5.card_pinyin(card("黄河", "huang2 he2", [" Huánghé n. the Yellow River "]), {}, names)
+    assert got[0]["py"] == "huánghé"
+    assert got[2] == "黄河: data/manual/capitals gives the words 黄 河, but the HSK PDF prints 'huánghé'"
+    # A name of the public list still needs a row, which gives its word spacing.
+    assert step5.card_pinyin(card("华裔", "hua2 yi4"), {}, {})[2] == \
+        "华裔: the public list writes it as a name; add a row to data/manual/capitals to give its word spacing"

@@ -1,4 +1,5 @@
-from pinyin_text import (IDIOM_JOINTS, capitalise, card_py, check_form_answers, form_joints, form_rows,
+import pinyin_text
+from pinyin_text import (IDIOM_JOINTS, card_py, check_form_answers, form_joints, form_rows,
                          headword_joints, join_erhua, joints_of_py, marked_to_num, name_rows, num_to_marked, pdf_pinyin,
                          printed_pinyin, py_base, py_problems, syllable_count, syllables_of_py, tone_change)
 
@@ -46,15 +47,16 @@ def test_card_py_word_spacing():
     assert card_py(["sui1", "ran2", "dan4", "shi4"], ["", "…", ""]) == "suīrán…dànshì…"
 
 
-def test_card_py_apostrophes_and_capitals():
+def test_card_py_apostrophes_and_lower_case_names():
     assert card_py(["xi1", "an1"]) == "xī'ān"
     assert card_py(["nü3", "er2"]) == "nǚ'ér"
     assert card_py(["bu2", "dan4", "er2", "qie3"], ["", "…", ""]) == "búdàn…érqiě…"
-    assert card_py(["bei3", "jing1"], capital=True) == "Běijīng"
-    assert card_py(["huang2", "he2"], [" "], capital=True) == "Huáng Hé"
-    assert card_py(["li3", "lao3", "shi1"], [" ", ""], capital=[True, False]) == "Lǐ lǎoshī"
-    assert capitalise("wáng jiànguó", True) == "Wáng Jiànguó"
-    assert capitalise("xiǎo wáng", [True, True]) == "Xiǎo Wáng"
+    # The user's decision of 2026-09-29: all pinyin is in lower case, names included. The words of a
+    # name keep their spacing, so a surname stays apart from a given name and a title stays apart.
+    assert card_py(["bei3", "jing1"]) == "běijīng"
+    assert card_py(["huang2", "he2"], [" "]) == "huáng hé"
+    assert card_py(["li3", "lao3", "shi1"], [" ", ""]) == "lǐ lǎoshī"
+    assert "capitalise" not in vars(pinyin_text)
 
 
 def test_pdf_pinyin_reads_the_textbook_spacing():
@@ -76,12 +78,13 @@ def test_pdf_pinyin_rejects_other_readings():
     assert pdf_pinyin(" hǎo adj. good ", "好", ["hao4"]) is None
 
 
-def test_printed_pinyin_takes_the_capital_as_printed():
+def test_printed_pinyin_reads_the_first_print_that_fits():
     net = ["hu4", "lian2", "wang3"]
-    assert printed_pinyin([" hùliánwǎng n. the Internet "], "互联网", net) == (net, ["", ""], False)
-    assert card_py(net, ["", ""], False) == "hùliánwǎng"
+    assert printed_pinyin([" hùliánwǎng n. the Internet "], "互联网", net) == (net, ["", ""])
+    assert card_py(net, ["", ""]) == "hùliánwǎng"
+    # A printed capital does not reach the card, which is in lower case (decision of 2026-09-29).
     assert printed_pinyin([" Běi n. north ", " Běijīng n. Beijing "], "北京", ["bei3", "jing1"]) == \
-        (["bei3", "jing1"], [""], True)
+        (["bei3", "jing1"], [""])
     assert printed_pinyin([" zhǎng v. grow "], "长", ["chang2"]) is None
 
 
@@ -190,12 +193,11 @@ def test_card_pinyin_follows_the_style_sheet():
     assert pdf_pinyin(" bǎifēnzhī percent ", "百分之", ["bai3", "fen1", "zhi1"]) == (["bai3", "fen1", "zhi1"], ["", ""])
     assert card_py(tone_change("十一", ["shi2", "yi1"])) == "shíyī"
     assert card_py(tone_change("一两", ["yi1", "liang3"]), ["-"]) == "yì-liǎng"
-    # Point 7: every part of a place name takes a capital, a title stays in lower case, and a month
-    # name is a common noun in lower case (a row with N in data/manual/capitals, as for 正月).
-    assert card_py(["fu2", "jian4", "sheng3"], ["", " "], capital=True) == "Fújiàn Shěng"
-    assert card_py(["wang2", "xian1", "sheng5"], [" ", ""], capital=[True, False]) == "Wáng xiānsheng"
-    months, _ = name_rows([{"hz": "正月", "words": "", "capital": "N"}])
-    assert card_py(["zheng1", "yue4"], capital=months["正月"][1]) == "zhēngyuè"
+    # Point 7: since 2026-09-29 names are in lower case too, and their words keep their spacing, so the
+    # kind of a place and a title stand apart.
+    assert card_py(["fu2", "jian4", "sheng3"], ["", " "]) == "fújiàn shěng"
+    assert card_py(["wang2", "xian1", "sheng5"], [" ", ""]) == "wáng xiānsheng"
+    assert card_py(["zheng1", "yue4"]) == "zhēngyuè"
     # Point 8: the tone changes of 一 and 不 as they are spoken, and neutral tones as in the dictionary.
     spoken = [("一起", ["yi1", "qi3"]), ("一下", ["yi1", "xia4"]), ("不是", ["bu4", "shi4"]), ("唯一", ["wei2", "yi1"]),
               ("不客气", ["bu4", "ke4", "qi5"])]
