@@ -1,5 +1,5 @@
-from themes import (THEMES, batch_rows, check_output, chunks, curriculum, is_starter, second_opinion_flags,
-                    split_by_level)
+from themes import (LEVEL_GROUPS, THEMES, batch_rows, check_output, chunks, curriculum, is_starter,
+                    level_group, second_opinion_flags)
 
 
 def test_thirty_themes_starting_with_the_starter_kit():
@@ -57,19 +57,28 @@ def test_second_opinion_flags_only_real_disagreements():
     assert second_opinion_flags(main, second) == {"w1": "7"}
 
 
-def test_split_by_level():
-    assert [len(p) for p in split_by_level(list(range(700)))] == [350, 350]
-    assert [len(p) for p in split_by_level(list(range(351)))] == [176, 175]
-    assert [len(p) for p in split_by_level(list(range(40)))] == [40]
+def test_level_groups_put_hsk_1_and_2_together():
+    assert LEVEL_GROUPS == [("HSK 1-2", (1, 2)), ("HSK 3", (3,)), ("HSK 4", (4,)), ("HSK 5", (5,)), ("HSK 6", (6,))]
+    assert [level_group(lv) for lv in range(1, 7)] == [0, 0, 1, 2, 3, 4]
 
 
-def test_curriculum_orders_by_theme_level_frequency_and_splits_big_themes():
-    words = [{"id": f"w{i:04d}", "lv": 6 - i % 2, "freq": i} for i in range(1, 401)] + \
-            [{"id": "w0999", "lv": 1, "freq": 5}]
-    theme_of = {w["id"]: 6 for w in words}
-    theme_of["w0999"] = 2
-    out_ = curriculum(words, theme_of, [2, 6, 3], {2: "Greetings & Courtesy", 6: "Food & Drink", 3: "Numbers"})
-    assert [(no, name, len(ws)) for no, name, ws in out_] == [
-        (2, "Greetings & Courtesy", 1), (6, "Food & Drink (Part 1)", 200), (6, "Food & Drink (Part 2)", 200)]
-    part1 = out_[1][2]
-    assert [w["lv"] for w in part1] == [5] * 200 and part1[0]["id"] == "w0001"
+def test_curriculum_goes_level_group_first_then_theme_then_level_frequency_and_id():
+    def w(i, lv, freq):
+        return {"id": f"w{i:04d}", "lv": lv, "freq": freq}
+    words = [w(1, 3, 1), w(2, 1, 9), w(3, 2, 1), w(4, 1, 5), w(5, 6, 1), w(6, 1, 5), w(7, 3, 2), w(8, 4, 1)]
+    theme_of = {"w0001": 6, "w0002": 6, "w0003": 6, "w0004": 2, "w0005": 2, "w0006": 6, "w0007": 2, "w0008": 9}
+    names = {2: "Greetings & Courtesy", 6: "Food & Drink", 3: "Numbers", 9: "Daily Routine"}
+    out_ = curriculum(words, theme_of, [2, 6, 3, 9], names)
+    assert [(group, no, name, [x["id"] for x in ws]) for group, no, name, ws in out_] == [
+        ("HSK 1-2", 2, "Greetings & Courtesy", ["w0004"]),
+        ("HSK 1-2", 6, "Food & Drink", ["w0006", "w0002", "w0003"]),
+        ("HSK 3", 2, "Greetings & Courtesy", ["w0007"]),
+        ("HSK 3", 6, "Food & Drink", ["w0001"]),
+        ("HSK 4", 9, "Daily Routine", ["w0008"]),
+        ("HSK 6", 2, "Greetings & Courtesy", ["w0005"])]
+
+
+def test_curriculum_never_splits_a_big_theme():
+    words = [{"id": f"w{i:04d}", "lv": 1, "freq": i} for i in range(1, 701)]
+    out_ = curriculum(words, {x["id"]: 6 for x in words}, [6], {6: "Food & Drink"})
+    assert [(group, name, len(ws)) for group, no, name, ws in out_] == [("HSK 1-2", "Food & Drink", 700)]
