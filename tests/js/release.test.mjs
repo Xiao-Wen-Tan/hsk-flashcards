@@ -28,9 +28,10 @@ function siteFiles(dir = DOCS, prefix = '') {
   return out;
 }
 
-// Files that are not saved at install: the worker itself, licence texts, the words files
-// (the current one is saved separately), and audio and stroke files (saved as they are used).
-const NOT_PRECACHED = (path) => path === 'sw.js' || path.endsWith('.txt') || path.startsWith('data/')
+// Files that are not saved at install: the worker itself, GitHub Pages' .nojekyll marker,
+// licence texts, the words files (the current one is saved separately), and audio and stroke
+// files (saved as they are used).
+const NOT_PRECACHED = (path) => path === 'sw.js' || path === '.nojekyll' || path.endsWith('.txt') || path.startsWith('data/')
   || path.startsWith('audio/') || path.startsWith('strokes/');
 
 test('sw.js repeats the release, the words file and the media cache name', () => {

@@ -6,6 +6,7 @@
 //   node tests/browser/check.mjs day       a whole first day on the smoke site (served on 8123)
 //   node tests/browser/check.mjs offline   the same site with its server stopped
 //   node tests/browser/check.mjs update    after RELEASE was raised in the smoke copy
+//   node tests/browser/check.mjs sheet     the Google Sheet backup, against fake-sheet-server.mjs (after day)
 // Each prints PASS or FAIL lines and exits with 1 when anything failed.
 const PORT = 9333;
 const SITE = 'http://localhost:8123/';
@@ -199,10 +200,74 @@ async function update() {
   await page.close();
 }
 
+// The Google Sheet backup section of Settings (Plan 5), against the stand-in web app of
+// tests/browser/fake-sheet-server.mjs on port 8125. Run it after 'day', in the same Chrome
+// profile, so the phone already has a first study day to back up.
+const FAKE_SHEET = 'http://localhost:8125';
+const COUNTS = `(async () => { const m = await import(location.origin + '/js/store.js'); const s = await m.openIdbStore();
+  const d = await s.dump(); s.db.close(); return [d.progress.length, d.events.length, d.days.length].join(' '); })()`;
+
+async function sheet() {
+  const page = await openPage(`${SITE}#/today`);
+  await page.until("!!document.querySelector('.streak')", 20000);
+  // Start as a phone that was never set up, so the check can run again in the same profile.
+  await page.eval("localStorage.removeItem('hsk-sheet-backup'); location.hash = '#/settings'; true");
+  await page.until("[...document.querySelectorAll('h2')].some((x) => x.textContent === 'Google Sheet backup')");
+  check('Settings shows the Google Sheet backup section', true);
+  await page.eval('window.confirm = () => true; window.alert = () => {}; true');
+  const code = await page.eval("document.querySelector('input.code').value");
+  check('Settings made a secret code', /^[a-z2-9]{4}(-[a-z2-9]{4}){5}$/.test(code), code);
+  await fetch(`${FAKE_SHEET}/admin/setup?code=${code}`); // as if the owner pasted it and ran setup
+  const tap = async (label) => {
+    await page.eval(`document.querySelector('.sheet-message').textContent = ''; ${CLICK(label)}; true`);
+    await page.until("!['', 'Working...'].includes(document.querySelector('.sheet-message').textContent)");
+    return page.eval("document.querySelector('.sheet-message').textContent");
+  };
+  const setUrl = (url) => page.eval(`document.querySelector('input[name=sheetUrl]').value = '${url}'; true`);
+  await setUrl(`${FAKE_SHEET}/exec`);
+  check('the address is saved', (await tap('Save address and code')) === 'Saved. Tap "Test connection" to check it.');
+  let said = await tap('Test connection');
+  check('Test connection reaches the web app', said === 'Connected. The Sheet has saved answers up to number 0.', said);
+  said = await tap('Back up now');
+  const rows = await (await fetch(`${FAKE_SHEET}/admin/rows`)).json();
+  const sent = Number((said.match(/^Backed up\. (\d+) changes sent\.$/) ?? [])[1]);
+  check('Back up now sends the first day', sent > 0 && rows.log === sent && rows.progress === 12 && rows.daily === 1, `${said} ${JSON.stringify(rows)}`);
+  await fetch(`${FAKE_SHEET}/admin/code?code=wrong-code`);
+  said = await tap('Test connection');
+  check('a wrong secret code is refused', /refused the secret code/.test(said), said);
+  await fetch(`${FAKE_SHEET}/admin/code?code=${code}`);
+  const before = await page.eval(COUNTS);
+  await page.eval(`${CLICK('Restore from Google Sheet')}; true`);
+  await page.until("location.hash === '#/today' && /day streak/.test(document.getElementById('main').innerText)");
+  const after = await page.eval(COUNTS);
+  check('Restore from Google Sheet gives the same counts and streak', before === after && /1 day streak/.test(await page.text()), `${before} / ${after}`);
+  await page.eval("location.hash = '#/settings'; true");
+  await page.until("!!document.querySelector('input[name=sheetUrl]')");
+  // Saving the daily amounts logs a change. Hiding the page (as when the app is closed) sends it
+  // with a keepalive request, which the browser finishes even if the page goes away.
+  const logged = (await (await fetch(`${FAKE_SHEET}/admin/rows`)).json()).log;
+  await page.eval(`${CLICK('Save')}; true`);
+  await page.sleep(500);
+  await page.eval(`Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' });
+    document.dispatchEvent(new Event('visibilitychange')); true`);
+  await page.sleep(2000);
+  await page.eval("delete document.visibilityState; true");
+  const loggedNow = (await (await fetch(`${FAKE_SHEET}/admin/rows`)).json()).log;
+  check('closing the app sends the new change', loggedNow === logged + 1, `${logged} then ${loggedNow}`);
+  await setUrl('http://localhost:8126/exec'); // nothing listens there, as when the phone is offline
+  await tap('Save address and code');
+  said = await tap('Test connection');
+  check('an unreachable Sheet gives a plain message', /^Could not reach the Sheet/.test(said), said);
+  await setUrl(`${FAKE_SHEET}/exec`);
+  await tap('Save address and code');
+  check('no uncaught errors on the page', page.errors.length === 0, page.errors.join('; '));
+  await page.close();
+}
+
 const mode = process.argv[2];
-const modes = { store, day, offline, update };
+const modes = { store, day, offline, update, sheet };
 if (!modes[mode]) {
-  results.push('FAIL usage: node tests/browser/check.mjs store|day|offline|update');
+  results.push('FAIL usage: node tests/browser/check.mjs store|day|offline|update|sheet');
 } else {
   try {
     await modes[mode]();

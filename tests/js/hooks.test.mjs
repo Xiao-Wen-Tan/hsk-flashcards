@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
 import { HOOK_NAMES, createHooks, loadPlugins } from '../../docs/js/hooks.js';
 import { PLUGINS } from '../../docs/js/plugins.js';
 
@@ -37,6 +38,6 @@ test('plugins are installed with the app context, and a broken one is skipped', 
   assert.deepEqual(logged, ['Plugin ./broken.js failed:', 'Plugin ./missing.js failed:']);
 });
 
-test('Plan 4 ships with no plugins', () => {
-  assert.deepEqual(PLUGINS, []);
+test('the plugin list names only modules that exist in docs/js/', () => {
+  for (const path of PLUGINS) assert.ok(existsSync(new URL(`../../docs/js/${path}`, import.meta.url)), path);
 });

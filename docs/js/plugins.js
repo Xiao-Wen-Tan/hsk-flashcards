@@ -1,3 +1,3 @@
 // Modules that join the app through hooks.js, as paths relative to docs/js/.
-// Plan 5 adds './sync.js' (the Google Sheet backup) here and to APP_FILES in sw.js.
-export const PLUGINS = Object.freeze([]);
+// './sync.js' is the Google Sheet backup (Plan 5). It is also listed in APP_FILES in sw.js.
+export const PLUGINS = Object.freeze(['./sync.js']);

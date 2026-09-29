@@ -106,3 +106,8 @@ nav a.active { color: var(--accent); font-weight: 700; }
 .overlay[hidden] { display: none; }
 .overlay button.big { max-width: 20rem; }
 .toast { position: fixed; left: 1rem; right: 1rem; bottom: 4.5rem; background: var(--fg); color: var(--bg); padding: 0.75rem; border-radius: 0.75rem; text-align: center; z-index: 20; }
+
+/* Google Sheet backup section of Settings (Plan 5) */
+.field input.wide { display: block; width: 100%; font: inherit; padding: 0.5rem; margin-top: 0.25rem; }
+.field input.code { font-family: ui-monospace, Consolas, monospace; letter-spacing: 0.05em; }
+.sheet-message { min-height: 1.4em; }
