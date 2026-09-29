@@ -13,7 +13,7 @@ import re
 from decode import decode_cids
 
 PLACEHOLDER = "～"
-_DIGITS_PUNCT = re.compile(r"[\s\d.,:;%/+\-!?'\"“”#~2014]+")
+_DIGITS_PUNCT = re.compile(r"[\s\d.,:;%/+\-!?'\"“”#~\u2014]+")
 _ACRONYM = re.compile(r"\s*[A-Z][A-Z0-9]+\s*")
 _HALF_TO_FULL = {",": "，", "!": "！", "?": "？", ":": "：", ";": "；", "~": PLACEHOLDER}
 _ENDS = "。！？"
