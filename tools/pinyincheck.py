@@ -167,8 +167,17 @@ def word_facts(complete, listed, cards):
     for w in cards:
         pos[w["hz"]] = list(dict.fromkeys(pos.get(w["hz"], []) + list(w.get("pos", []))))
     known = {w["hz"] for w in cards if "…" not in w["hz"]} | {x["simplified"] for x in complete}
-    measure = {word for word, labels in pos.items() if len(word) == 1 and "m." in labels} - {"月"}
-    shown = {}
+    measure = {word for word, labels in pos.items() if "m." in labels} - {"月"}
+    shown, card_words = {}, {}
+    for w in cards:
+        hz, nums = w["hz"], w["pyNum"].split()
+        if len(hz) < 2 or "…" in hz or not set(hz) & set(_TONE_CHANGES):
+            continue
+        sylls, joints = syllables_of_py(w["py"], nums), joints_of_py(w["py"], nums)
+        if sylls and joints is not None and len(sylls) == len(hz):
+            for k, (ch, syl) in enumerate(zip(hz, sylls)):
+                if ch in _TONE_CHANGES:
+                    card_words.setdefault(ch, set()).add((hz, k, syl, tuple(joints), w["py"]))
     pairs = [(w["hz"], syllables_of_py(w["py"], w["pyNum"].split())) for w in cards
              if len(w["hz"]) > 1 and "…" not in w["hz"]]
     pairs += [(hz, r["num"].split()) for hz, options in listed.items() if len(hz) > 1 for r in options
@@ -178,7 +187,8 @@ def word_facts(complete, listed, cards):
             for k, (ch, syl) in enumerate(zip(hz, sylls)):
                 if ch in _TONE_CHANGES:
                     shown.setdefault(ch, set()).add((hz, k, syl))
-    return {"pos": pos, "known": known, "measure": measure, "counted": measure | _COUNTED, "shown": shown}
+    return {"pos": pos, "known": known, "measure": measure, "counted": measure | _COUNTED, "shown": shown,
+            "cards": card_words}
 
 
 def head_positions(sentence, hz):
@@ -534,9 +544,21 @@ def _tone_change_problems(sentence, cells, head, facts):
         num, nxt = syllable_to_num(syl), cells.get(i + 1)
         tone = num[-1]
         after = syllable_to_num(nxt[0])[-1] if nxt and toneless(nxt[0]) != "r" else ""
+        bound = {} if i in at else _card_tones(sentence, i, cells, facts.get("cards", {}))
+        if bound:
+            if num not in bound:
+                word, py, want = sorted(bound.values())[0]
+                problems.append(f"'{syl}' ({ch}) is part of {word}, which its card writes '{py}', so it is written "
+                                f"'{num_to_marked(want)}'")
+            continue
         if _shown_here(sentence, i, num, facts["shown"]):
             continue
-        kept = _keeps_yi(sentence, i, facts["known"]) if ch == "一" else ""
+        middle = ch == "不" and tone != "5" and _potential_in_line(sentence, i, cells, facts["pos"])
+        if middle:
+            problems.append(f"'{syl}' (不) is the middle of the potential complement {middle}, which point 5 of the "
+                            "style sheet writes with a neutral 'bu' ('zhǎo bu dào')")
+            continue
+        kept =_keeps_yi(sentence, i, facts["known"]) if ch == "一" else ""
         if tone == "5":
             if not (_doubled(sentence, i) or (ch == "不" and _potential_at(sentence, i, facts["pos"]))):
                 problems.append(f"'{syl}' ({ch}) is in the neutral tone, which the style sheet keeps for a doubled "
@@ -564,9 +586,48 @@ def _tone_change_problems(sentence, cells, head, facts):
             problems.append(f"'{syl}' (一) has no syllable after it, so it keeps its first tone 'yī'")
         elif tone == "1" and joint and _counts(sentence, i, facts["counted"]) \
                 and not (i and sentence[i - 1] in NUMERALS | {"第"}):
-            problems.append(f"'{syl}' (一) counts with {sentence[i + 1]} here, so it shows its tone change, 'yí' "
-                            "before a fourth tone and 'yì' before the other tones")
+            problems.append(f"'{syl}' (一) counts with {_counts(sentence, i, facts['counted'])} here, so it shows its "
+                            "tone change, 'yí' before a fourth tone and 'yì' before the other tones")
     return problems
+
+
+def _card_tones(sentence, i, cells, cards):
+    """{syllable: (card, py, syllable)} that the cards give the 一 or 不 at index i where the line writes
+    a card that holds it as that card writes it, else {} (known open item 3).
+
+    A card is written as its card where its first character starts a pinyin word, its last character
+    ends one, and the joints between its characters are those of its py. So with the card 一会儿
+    "yíhuìr", "yíhuìr" passes and "yīhuìr" fails, while "yào bu yào" is not the card 要不 "yàobù".
+    cards: word_facts()["cards"].
+    """
+    out = {}
+    for word, k, syl, joints, py in cards.get(sentence[i], ()):
+        a, b = i - k, i - k + len(word) - 1
+        if a < 0 or sentence[a:b + 1] != word or any(j not in cells for j in range(a, b + 1)):
+            continue
+        if (a - 1 in cells and _joint(cells, a) == "") or (b + 1 in cells and _joint(cells, b + 1) == ""):
+            continue
+        if all(_joint(cells, j) == joints[j - a - 1] for j in range(a + 1, b + 1)):
+            out[syl] = (word, py, syl)
+    return out
+
+
+def _potential_in_line(sentence, i, cells, pos):
+    """The potential complement (找不到) whose middle is the 不 at index i, as the line's own words show
+    it, else "" (known open item 3, style sheet point 5).
+
+    The 不 must be a pinyin word of its own, and the words before and after it must be a verb and a
+    result or direction (sentpinyin.potential). So "zhǎo bú dào" is one, while "kǎoshì bù jígé" (考试 +
+    不 + 及格, "fails the exam") is not, although 试 is a verb and 及 a result.
+    """
+    if i - 1 not in cells or i + 1 not in cells or _joint(cells, i) == "" or _joint(cells, i + 1) == "":
+        return ""
+    verb = "".join(sentence[j] for j in sorted(cells) if cells[j][2] == cells[i - 1][2])
+    result = "".join(sentence[j] for j in sorted(cells) if cells[j][2] == cells[i + 1][2])
+    for end in (result, result[:-1] if result[-1:] in "了着过" else ""):
+        if end and potential(verb, end, pos):
+            return verb + "不" + end
+    return ""
 
 
 def _shown_here(sentence, i, num, shown):
@@ -604,11 +665,15 @@ def _keeps_yi(sentence, i, known):
 
 
 def _counts(sentence, i, counted):
-    """True when the 一 at index i counts with the word after it (一个, 一天, 一千), see _tone_change_problems."""
+    """The word after the 一 at index i when that 一 counts with it (一个, 一天, 一千, 一公斤), else "".
+
+    counted holds measure words of one or more characters (公斤), see _tone_change_problems.
+    """
     rest = sentence[i + 1:]
-    if rest[:1] not in counted or rest.startswith(_ORDINAL_AFTER):
-        return False
-    return rest[:1] != "点" or rest[1:2] in ("儿", "点")
+    word = next((rest[:n] for n in (4, 3, 2, 1) if rest[:n] in counted), "")
+    if not word or rest.startswith(_ORDINAL_AFTER):
+        return ""
+    return word if rest[:1] != "点" or rest[1:2] in ("儿", "点") else ""
 
 
 def _one_word_problems(sentence, cells, head):

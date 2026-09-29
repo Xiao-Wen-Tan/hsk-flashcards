@@ -35,8 +35,20 @@ def card(hz, py, pynum):
 CALL = card("打电话", "dǎ diànhuà", "da3 dian4 hua4")
 
 
-def check(sentence, line, head=CALL, names=NAMES):
-    return check_line(sentence, line, head, lambda ch: READ.get(ch, set()), names, FACTS)
+def check(sentence, line, head=CALL, names=NAMES, facts=FACTS):
+    return check_line(sentence, line, head, lambda ch: READ.get(ch, set()) or MORE_READ.get(ch, set()), names, facts)
+
+
+# Readings and word facts for the tests of the known open items (added after the plan's tests).
+MORE_READ = {"会": {"hui4"}, "就": {"jiu4"}, "要": {"yao4"}, "公": {"gong1"}, "买": {"mai3"}, "考": {"kao3"},
+             "试": {"shi4"}, "及": {"ji2"}, "格": {"ge2"}, "福": {"fu2"}, "建": {"jian4"}, "统": {"tong3"}}
+MORE_FACTS = word_facts([{"simplified": hz, "pos": tags} for hz, tags in
+                         [("找", ["v"]), ("到", ["v"]), ("去", ["v"]), ("个", ["q"]), ("公斤", ["q"]),
+                          ("考试", ["v", "n"]), ("试", ["v"]), ("及格", ["v"]), ("要", ["v"])]],
+                        {},
+                        [{"hz": "一会儿", "py": "yíhuìr", "pyNum": "yi1 hui4 r5"},
+                         {"hz": "要不", "py": "yàobù", "pyNum": "yao4 bu4"},
+                         {"hz": "一起", "py": "yìqǐ", "pyNum": "yi1 qi3"}])
 
 
 def test_lines_that_follow_the_style_sheet_pass():
@@ -296,3 +308,36 @@ def test_match_answers():
     outputs = [{"id": "w1", "py": "a"}, {"id": "w2", "py": "b"}, {"id": "w2", "py": "c"}, {"id": "w9", "py": "d"}]
     got, problems = match_answers(inputs, outputs)
     assert list(got) == ["w1"] and problems == ["w9: not in the input", "w2: answered 2 times"]
+
+
+def test_a_card_word_written_as_its_card_keeps_its_tone_change():
+    # Known open item 3: a card that prints a tone change (一会儿 "yíhuìr") keeps it where the line
+    # writes that card as its card does. Written as other words ("yào bu yào"), the card does not bind.
+    come = card("来", "lái", "lai2")
+    assert check("我一会儿就来。", "Wǒ yíhuìr jiù lái.", come, facts=MORE_FACTS) == []
+    assert check("我一会儿就来。", "Wǒ yīhuìr jiù lái.", come, facts=MORE_FACTS) == [
+        "'yī' (一) is part of 一会儿, which its card writes 'yíhuìr', so it is written 'yí'"]
+    assert check("你要不要去？", "Nǐ yào bu yào qù?", card("去", "qù", "qu4"), facts=MORE_FACTS) == []
+    assert check("你要不去吗？", "Nǐ yàobu qù ma?", card("去", "qù", "qu4"), facts=MORE_FACTS) == [
+        "'bu' (不) is part of 要不, which its card writes 'yàobù', so it is written 'bù'"]
+
+
+def test_a_potential_complement_has_a_neutral_bu():
+    # Known open item 3 and style sheet point 5: "zhǎo bu dào", never "zhǎo bú dào".
+    home = card("家", "jiā", "jia1")
+    assert check("他找不到家。", "Tā zhǎo bu dào jiā.", home, facts=MORE_FACTS) == []
+    assert check("他找不到家。", "Tā zhǎo bú dào jiā.", home, facts=MORE_FACTS) == [
+        "'bú' (不) is the middle of the potential complement 找不到, which point 5 of the style sheet writes "
+        "with a neutral 'bu' ('zhǎo bu dào')"]
+    # The line's own words decide, so 考试 + 不 + 及格 ("fails the exam") is not one, although 试 is a
+    # verb and 及 a result.
+    assert check("他考试不及格。", "Tā kǎoshì bù jígé.", card("考试", "kǎoshì", "kao3 shi4"), facts=MORE_FACTS) == []
+
+
+def test_yi_counts_before_a_measure_word_of_two_characters():
+    # Known open item 3: 公斤 is a measure word of the public list, so 一公斤 is "yì gōngjīn".
+    buy = card("买", "mǎi", "mai3")
+    assert check("我买了一公斤。", "Wǒ mǎile yì gōngjīn.", buy, facts=MORE_FACTS) == []
+    assert check("我买了一公斤。", "Wǒ mǎile yī gōngjīn.", buy, facts=MORE_FACTS) == [
+        "'yī' (一) counts with 公斤 here, so it shows its tone change, 'yí' before a fourth tone and 'yì' before "
+        "the other tones"]
