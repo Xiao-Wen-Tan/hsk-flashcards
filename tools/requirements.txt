@@ -3,3 +3,4 @@ fonttools>=4.43
 matplotlib>=3.8
 pytest>=8
 jieba>=0.42
+pillow>=10.1
