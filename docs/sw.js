@@ -38,6 +38,7 @@ const APP_FILES = [
   'js/release.js',
   'js/rng.js',
   'js/session.js',
+  'js/sheet.js',
   'js/srs.js',
   'js/stats.js',
   'js/store.js',
