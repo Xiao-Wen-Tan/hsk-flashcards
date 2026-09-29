@@ -1,10 +1,12 @@
 // Milestone badges. A badge ID is a short text, for example 'streak-7', 'learned-all',
-// 'theme-t05', 'level-1' or 'perfect'. Earned badges are kept in the meta store as
+// 'theme-t05', 'hsk-1-2' or 'perfect'. Earned badges are kept in the meta store as
 // { badgeId: dayEarned }, so each one is awarded once.
 import { CONFIG } from './config.js';
 
 // The facts object looks like { bestStreak, checkIns, learned, mastered, totalWords, themesDone: ['t01'],
-//          levelsDone: [1], perfectSession: true or false }
+//          groupsDone: ['1-2'], perfectSession: true or false }
+// groupsDone holds the finished level groups (stats.js LEVEL_GROUPS), which replaced the
+// separate HSK 1 and HSK 2 badges (the user's decision of 2026-09-29).
 export function earnedBadges(facts) {
   const ids = [];
   const { badges } = CONFIG;
@@ -14,7 +16,7 @@ export function earnedBadges(facts) {
   if (facts.totalWords > 0 && facts.learned >= facts.totalWords) ids.push('learned-all');
   for (const n of badges.mastered) if (facts.mastered >= n) ids.push(`mastered-${n}`);
   for (const t of facts.themesDone) ids.push(`theme-${t}`);
-  for (const lv of facts.levelsDone) ids.push(`level-${lv}`);
+  for (const g of facts.groupsDone) ids.push(`hsk-${g}`);
   if (facts.perfectSession) ids.push('perfect');
   return ids;
 }
@@ -32,7 +34,7 @@ export function badgeTitle(id, themes = []) {
     case 'learned': return value === 'all' ? 'Every word learned' : `${value} words learned`;
     case 'mastered': return `${value} words mastered`;
     case 'theme': return `Finished ${themes.find((t) => t.id === value)?.name ?? value}`;
-    case 'level': return `HSK ${value} finished`;
+    case 'hsk': return `Finished HSK ${value}`;
     case 'perfect': return 'Perfect session';
     default: return id;
   }

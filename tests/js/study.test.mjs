@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { Study, previewDay } from '../../docs/js/study.js';
 import { MemoryStore } from '../../docs/js/store.js';
-import { quizForReview } from '../../docs/js/srs.js';
+import { learnedProgress, quizForReview } from '../../docs/js/srs.js';
 import { loadFixture, localDate } from './helpers.mjs';
 
 const data = loadFixture();
@@ -138,6 +138,17 @@ test('a finished theme earns its badge once', async () => {
   const second = await playDay(store, '2026-10-06'); // words 13 to 24, and Greetings ends at 22
   assert.deepEqual(second.newBadges, ['theme-t02']);
   assert.deepEqual(await store.getMeta('badges'), { 'theme-t01': '2026-10-05', 'theme-t02': '2026-10-06' });
+});
+
+test('learning the last HSK 1 and 2 words earns the theme badge and the HSK 1-2 badge', async () => {
+  const store = new MemoryStore();
+  const early = data.words.filter((w) => w.theme !== 't05'); // all but Food & Drink, the last 15 words
+  const seeded = early.map((w) => ({ ...learnedProgress(w.id, '2026-10-01'), due: '2026-12-01' }));
+  const before = Object.fromEntries(['learned-50', 'theme-t01', 'theme-t02', 'theme-t03', 'theme-t04'].map((id) => [id, '2026-10-04']));
+  await store.commit({ progress: seeded, meta: { settings: { newPerDay: 15 }, badges: before }, event: { day: '2026-10-04', kind: 'settings' } });
+  const result = await playDay(store, '2026-10-05');
+  assert.equal(result.summary.learned, 15);
+  assert.deepEqual(result.newBadges, ['learned-all', 'theme-t05', 'hsk-1-2']);
 });
 
 test('30 reviews all right first time earn the perfect-session badge', async () => {
