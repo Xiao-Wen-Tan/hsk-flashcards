@@ -32,17 +32,17 @@ _PUBLIC_POS = {"n": "n.", "nr": "n.", "ns": "n.", "nt": "n.", "nz": "n.", "t": "
                "e": "int.", "o": "int."}
 
 # CC-CEDICT notes that are not meanings. At the start of a sense: classifiers, surnames, sounds
-# ("(onom.) dong"), cross-references ("see also 红铜") and abbreviations. Anywhere in a sense: variants
-# ("variant of 记录") and pronunciation notes ("colloquial pr.", "Taiwan pr.").
-_CEDICT_DROP = re.compile(r"^(CL:|surname\b|old variant|see (also\b|[一-鿿])|also written|abbr\. for"
-                          r"|used in [一-鿿]|erhua variant|Japanese\b|Kangxi radical|radical in Chinese"
+# ("(onom.) dong"), cross-references ("see also \u7ea2\u94dc") and abbreviations. Anywhere in a sense: variants
+# ("variant of \u8bb0\u5f55") and pronunciation notes ("colloquial pr.", "Taiwan pr.").
+_CEDICT_DROP = re.compile(r"^(CL:|surname\b|old variant|see (also\b|[\u4e00-\u9fff])|also written|abbr\. for"
+                          r"|used in [\u4e00-\u9fff]|erhua variant|Japanese\b|Kangxi radical|radical in Chinese"
                           r"|\(onom\.\))|variant of\b|\bpr\.")
 # CC-CEDICT register labels at the start of a sense. Senses marked with the first set are left out,
 # senses marked with the second set go after the other senses, and "(coll.)" (colloquial) is removed.
 _REGISTER_DROP = re.compile(r"^\((slang|Internet slang|old|archaic|vulgar)\)")
 _REGISTER_LAST = re.compile(r"^\((literary|dialect|classical|Tw)\)")
 _COLLOQUIAL = re.compile(r"^\(coll\.\)\s*")
-_HANZI = re.compile(r"[一-鿿]")
+_HANZI = re.compile(r"[\u4e00-\u9fff]")
 _WORD = re.compile(r"[A-Za-z]+")
 # Word endings removed before looking a word up, and British spellings tried in their American form
 # (CC-CEDICT writes "honor" and "center"; the PDFs often write "honour" and "centre").
