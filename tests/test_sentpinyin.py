@@ -41,18 +41,19 @@ def pinyin(sentence, words, hz, head_nums, caps=(), fixes=None, joints_of=None):
 
 
 def test_plain_sentence():
-    assert pinyin("我爱我的家。", ["我", "爱", "我", "的", "家", "。"], "爱", ["ai4"]) == "Wǒ ài wǒ de jiā."
+    assert pinyin("我爱我的家。", ["我", "爱", "我", "的", "家", "。"], "爱", ["ai4"]) == "wǒ ài wǒ de jiā."
 
 
-def test_quotes_and_capitals():
-    assert pinyin("“你好”他说。", ["“", "你好", "”", "他", "说", "。"], "说", ["shuo1"]) == '"Nǐhǎo" tā shuō.'
-    assert pinyin("我爱北京。", ["我", "爱", "北京", "。"], "北京", ["bei3", "jing1"], caps={2}) == "Wǒ ài Běijīng."
+def test_quotes_and_names_in_lower_case():
+    # The user decided on 2026-09-29 that all pinyin is in lower case, the start of a sentence and names included.
+    assert pinyin("“你好”他说。", ["“", "你好", "”", "他", "说", "。"], "说", ["shuo1"]) == '"nǐhǎo" tā shuō.'
+    assert pinyin("我爱北京。", ["我", "爱", "北京", "。"], "北京", ["bei3", "jing1"], caps={2}) == "wǒ ài běijīng."
     spaced = lambda word: word_joints(word, CARDS)
     assert pinyin("我看黄河。", ["我", "看", "黄河", "。"], "看", ["kan4"], caps={2}, joints_of=spaced) == \
-        "Wǒ kàn Huáng Hé."
+        "wǒ kàn huáng hé."
 
 
-def test_a_quotation_after_a_colon_starts_with_a_capital_and_names_are_written_apart():
+def test_a_quotation_after_a_colon_is_in_lower_case_and_names_are_written_apart():
     sentence = "他指着前面，高兴地说：“你看，小王来了。”"
     jieba_words = ["他", "指", "着", "前面", "，", "高兴", "地", "说", "：", "“", "你", "看", "，", "小王", "来", "了", "。",
                    "”"]
@@ -62,15 +63,15 @@ def test_a_quotation_after_a_colon_starts_with_a_capital_and_names_are_written_a
     sylls = syllables(sentence, words, lambda w: table[w], "指", ["zhi3"])
     attach = attached(words, {**POS, "指": ["v."]})
     assert render(sentence, words, sylls, caps, attach=attach) == \
-        'Tā zhǐzhe qiánmiàn, gāoxìng de shuō: "Nǐ kàn, Xiǎo Wáng lái le."'
+        'tā zhǐzhe qiánmiàn, gāoxìng de shuō: "nǐ kàn, xiǎo wáng lái le."'
 
 
-def test_a_surname_and_a_given_name_take_capitals_and_a_title_stays_in_lower_case():
+def test_a_surname_and_a_given_name_are_two_words_and_a_title_stands_apart():
     names = {"李老师": (["李", "老师"], [True, False]), "张先生": (["张", "先生"], [True, False]),
              "李明": (["李", "明"], [True, True])}
     words, caps = name_words("喂，李老师在吗？", ["喂", "，", "李老师", "在", "吗", "？"], names)
     assert (words, caps) == (["喂", "，", "李", "老师", "在", "吗", "？"], {2})
-    assert pinyin("喂，李老师在吗？", words, "喂", ["wei4"], caps=caps) == "Wèi, Lǐ lǎoshī zài ma?"
+    assert pinyin("喂，李老师在吗？", words, "喂", ["wei4"], caps=caps) == "wèi, lǐ lǎoshī zài ma?"
     assert name_words("遇到了张先生。", ["遇到", "了", "张", "先生", "。"], names)[1] == {3}
     assert name_words("我叫李明。", ["我", "叫", "李明", "。"], names) == (["我", "叫", "李", "明", "。"], {2, 3})
     assert name_words("这是李子。", ["这", "是", "李子", "。"], names)[1] == set()
@@ -78,27 +79,27 @@ def test_a_surname_and_a_given_name_take_capitals_and_a_title_stays_in_lower_cas
 
 def test_tone_changes_cross_words_but_respect_word_ends():
     assert pinyin("我不去。统一中国！", ["我", "不", "去", "。", "统一", "中国", "！"], "统一", ["tong3", "yi1"]) == \
-        "Wǒ bú qù. Tǒngyī zhōngguó!"
-    assert pinyin("一个人长大了。", ["一", "个", "人", "长", "大", "了", "。"], "一", ["yi1"]) == "Yí gè rén cháng dà le."
+        "wǒ bú qù. tǒngyī zhōngguó!"
+    assert pinyin("一个人长大了。", ["一", "个", "人", "长", "大", "了", "。"], "一", ["yi1"]) == "yí gè rén cháng dà le."
 
 
 def test_headword_reading_is_forced_and_fixes_apply_last():
     words = ["一", "个", "人", "长", "大", "了", "。"]
-    assert pinyin("一个人长大了。", words, "长", ["zhang3"]) == "Yí gè rén zhǎng dà le."
-    assert pinyin("一个人长大了。", words, "一", ["yi1"], fixes={3: "zhang3"}) == "Yí gè rén zhǎng dà le."
+    assert pinyin("一个人长大了。", words, "长", ["zhang3"]) == "yí gè rén zhǎng dà le."
+    assert pinyin("一个人长大了。", words, "一", ["yi1"], fixes={3: "zhang3"}) == "yí gè rén zhǎng dà le."
     table = {**TABLE, "开心": ["kai1", "xin1"], "得": ["de5"], "不得了": ["bu4", "de2", "liao3"]}
     words = ["开心", "得", "不得了", "。"]
     sylls = syllables("开心得不得了。", words, lambda w: table[w], "不得了", ["bu4", "de2", "liao3"])
-    assert render("开心得不得了。", words, sylls) == "Kāixīn de bùdéliǎo."
+    assert render("开心得不得了。", words, sylls) == "kāixīn de bùdéliǎo."
 
 
 def test_words_are_spaced_like_the_cards():
     spaced = lambda word: word_joints(word, CARDS)
-    assert pinyin("他说不客气。", ["他", "说", "不客气", "。"], "说", ["shuo1"], joints_of=spaced) == "Tā shuō bú kèqi."
+    assert pinyin("他说不客气。", ["他", "说", "不客气", "。"], "说", ["shuo1"], joints_of=spaced) == "tā shuō bú kèqi."
     assert pinyin("拔苗助长不好。", ["拔苗助长", "不", "好", "。"], "好", ["hao3"], joints_of=spaced) == \
-        "Bámiáo-zhùzhǎng bù hǎo."
+        "bámiáo-zhùzhǎng bù hǎo."
     words = split_words(["我", "看", "足球比赛", "。"], KNOWN, POS)
-    assert pinyin("我看足球比赛。", words, "看", ["kan4"], joints_of=spaced) == "Wǒ kàn zúqiú bǐsài."
+    assert pinyin("我看足球比赛。", words, "看", ["kan4"], joints_of=spaced) == "wǒ kàn zúqiú bǐsài."
 
 
 def test_split_words():
@@ -164,16 +165,16 @@ def test_numbers_in_real_sentences():
     assert split_words(["超过", "二十亿", "人"], KNOWN, POS) == ["超过", "二十", "亿", "人"]
     assert split_words(["千万", "别", "忘"], KNOWN, POS) == ["千万", "别", "忘"]
     words = split_words(["我", "父亲", "今年", "八十三岁", "了", "。"], KNOWN, POS)
-    assert pinyin("我父亲今年八十三岁了。", words, "父亲", ["fu4", "qin5"]) == "Wǒ fùqin jīnnián bāshísān suì le."
+    assert pinyin("我父亲今年八十三岁了。", words, "父亲", ["fu4", "qin5"]) == "wǒ fùqin jīnnián bāshísān suì le."
     words = split_words(["今年", "是", "二零", "一二年", "。"], KNOWN, POS)
     assert words == ["今年", "是", "二", "零", "一", "二", "年", "。"]
-    assert pinyin("今年是二零一二年。", words, "零", ["ling2"]) == "Jīnnián shì èr líng yī èr nián."
+    assert pinyin("今年是二零一二年。", words, "零", ["ling2"]) == "jīnnián shì èr líng yī èr nián."
     spaced = lambda word: word_joints(word, CARDS)
     words = split_words(["要", "花", "一两个", "月", "。"], KNOWN, POS)
-    assert pinyin("要花一两个月。", words, "花", ["hua1"], joints_of=spaced) == "Yào huā yì-liǎng gè yuè."
+    assert pinyin("要花一两个月。", words, "花", ["hua1"], joints_of=spaced) == "yào huā yì-liǎng gè yuè."
     words = split_words(["我们", "从", "第十课", "开始", "。"], KNOWN, POS)
     assert pinyin("我们从第十课开始。", words, "开始", ["kai1", "shi3"], joints_of=spaced) == \
-        "Wǒmen cóng dì-shí kè kāishǐ."
+        "wǒmen cóng dì-shí kè kāishǐ."
     # 我爱旅游，去过几十个国家。 这个火车有十几节车厢。
     assert split_words(["去过", "几十个", "国家"], KNOWN, POS) == ["去过", "几十", "个", "国家"]
     assert split_words(["有", "十几节", "车厢"], KNOWN, POS) == ["有", "十几", "节", "车厢"]
@@ -188,18 +189,18 @@ def test_decimals_rough_numbers_and_the_dash():
     # while 三点一刻 is a time of day ("sān diǎn yí kè").
     words = split_words(["是", "三点", "一", "四", "。"], known, pos)
     assert words == ["是", "三", "点", "一", "四", "。"] and decimal_digits(words) == {1, 3, 4}
-    assert render("是三点一四。", words, syllables("是三点一四。", words, look, "是", ["shi4"])) == "Shì sān diǎn yī sì."
+    assert render("是三点一四。", words, syllables("是三点一四。", words, look, "是", ["shi4"])) == "shì sān diǎn yī sì."
     words = split_words(["零点", "一米", "。"], known, pos)
-    assert render("零点一米。", words, syllables("零点一米。", words, look, "零", ["ling2"])) == "Líng diǎn yī mǐ."
+    assert render("零点一米。", words, syllables("零点一米。", words, look, "零", ["ling2"])) == "líng diǎn yī mǐ."
     words = split_words(["是", "三点", "一刻", "。"], known, pos)
     assert words == ["是", "三", "点", "一", "刻", "。"] and decimal_digits(words) == set()
-    assert render("是三点一刻。", words, syllables("是三点一刻。", words, look, "是", ["shi4"])) == "Shì sān diǎn yí kè."
+    assert render("是三点一刻。", words, syllables("是三点一刻。", words, look, "是", ["shi4"])) == "shì sān diǎn yí kè."
     # 几十 stays one number word after 好, as 十几 and 几十 do everywhere ("hǎo jǐshí gè rén").
     assert split_words(["来", "了", "好几十个", "人"], known | {"好几"}, pos) == ["来", "了", "好", "几十", "个", "人"]
     # The Chinese dash, two long dashes, is one mark "-", even when the segmenter cuts it in two.
     words = ["我", "\u2014", "\u2014", "你", "。"]
     sentence = "我\u2014\u2014你。"
-    assert render(sentence, words, syllables(sentence, words, lookup, "你", ["ni3"])) == "Wǒ - nǐ."
+    assert render(sentence, words, syllables(sentence, words, lookup, "你", ["ni3"])) == "wǒ - nǐ."
 
 
 def test_month_and_weekday_names_and_pointing_words_are_one_word():
@@ -210,14 +211,14 @@ def test_month_and_weekday_names_and_pointing_words_are_one_word():
     words = ["今天", "是", "八", "月", "九", "日", "。"]
     assert attached(words, POS) == {4}
     sylls = syllables("今天是八月九日。", words, look, "九", ["jiu3"])
-    assert render("今天是八月九日。", words, sylls, attach=attached(words, POS)) == "Jīntiān shì bāyuè jiǔ rì."
+    assert render("今天是八月九日。", words, sylls, attach=attached(words, POS)) == "jīntiān shì bāyuè jiǔ rì."
     words = ["今天", "星期", "五", "。"]  # the headword 五 cut jieba's 星期五
     sylls = syllables("今天星期五。", words, look, "五", ["wu3"])
-    assert render("今天星期五。", words, sylls, attach=attached(words, POS)) == "Jīntiān xīngqīwǔ."
+    assert render("今天星期五。", words, sylls, attach=attached(words, POS)) == "jīntiān xīngqīwǔ."
     # The 一 of 星期一 keeps its first tone when the headword 星期 cuts it off.
     words = ["星期", "一", "下午", "。"]
     sylls = syllables("星期一下午。", words, look, "星期", ["xing1", "qi1"])
-    assert render("星期一下午。", words, sylls, attach=attached(words, POS)) == "Xīngqīyī xiàwǔ."
+    assert render("星期一下午。", words, sylls, attach=attached(words, POS)) == "xīngqīyī xiàwǔ."
     assert attached(["三", "个", "月"], POS) == set() and attached(["几", "月"], POS) == set()
     # Point 1: step 8 adds 这个, 那个 and 哪个 to the known words, so they stay whole and are read "zhège".
     assert POINTING_WORDS["这个"] == "zhe4 ge5"
@@ -233,7 +234,7 @@ def test_the_zero_of_years_is_read_ling():
     words = split_words(["二", "〇", "〇", "八年", "。"], KNOWN, POS)
     assert words == ["二", "〇", "〇", "八", "年", "。"]
     sylls = syllables("二〇〇八年。", words, lambda w: table[w], "年", ["nian2"])
-    assert render("二〇〇八年。", words, sylls) == "Èr líng líng bā nián."
+    assert render("二〇〇八年。", words, sylls) == "èr líng líng bā nián."
 
 
 def test_decimal_positions_and_a_percent_sign():
@@ -246,7 +247,7 @@ def test_decimal_positions_and_a_percent_sign():
     words = ["地球", "上", "70", "%", "的", "面积", "是", "海洋", "。"]
     sentence = "地球上70%的面积是海洋。"
     sylls = syllables(sentence, words, lambda w: table[w], "海洋", ["hai3", "yang2"])
-    assert render(sentence, words, sylls) == "Dìqiú shàng 70% de miànjī shì hǎiyáng."
+    assert render(sentence, words, sylls) == "dìqiú shàng 70% de miànjī shì hǎiyáng."
 
 
 def test_potential_complements():
@@ -256,7 +257,7 @@ def test_potential_complements():
     words = ["我", "睡", "不", "着", "。"]
     assert potential_readings(words, POS) == {2: "bu5", 3: "zhao2"}
     sylls = syllables("我睡不着。", words, lookup, "睡", ["shui4"], potential_readings(words, POS))
-    assert render("我睡不着。", words, sylls, attach=attached(words, POS)) == "Wǒ shuì bu zháo."
+    assert render("我睡不着。", words, sylls, attach=attached(words, POS)) == "wǒ shuì bu zháo."
     assert potential_readings(["他", "说", "不", "去", "。"], POS) == {}
     assert potential_readings(["他", "不", "到", "十", "岁"], POS) == {}
     # A result 来, and jieba's 不了 or 不过 after a verb (钱买不来幸福。 孩子跨不过这条沟。 我忍受不了他。).
@@ -265,14 +266,14 @@ def test_potential_complements():
     table = {**TABLE, "钱": ["qian2"], "买": ["mai3"], "幸福": ["xing4", "fu2"], "忍受": ["ren3", "shou4"], "跨": ["kua4"],
              "过": ["guo4"]}
     sylls = syllables("钱买不来幸福。", words, lambda w: table[w], "钱", ["qian2"], potential_readings(words, POS))
-    assert render("钱买不来幸福。", words, sylls, attach=attached(words, POS)) == "Qián mǎi bu lái xìngfú."
+    assert render("钱买不来幸福。", words, sylls, attach=attached(words, POS)) == "qián mǎi bu lái xìngfú."
     pos = {**POS, "跨": ["v."], "忍受": ["v."]}
     assert split_words(["跨", "不过", "这"], KNOWN, pos) == ["跨", "不", "过", "这"]
     assert split_words(["他", "很", "好", "，", "不过", "我"], KNOWN, pos)[4] == "不过"
     words = split_words(["我", "忍受", "不了", "他", "。"], KNOWN, pos)
     assert words == ["我", "忍受", "不", "了", "他", "。"]
     sylls = syllables("我忍受不了他。", words, lambda w: table[w], "我", ["wo3"], potential_readings(words, pos))
-    assert render("我忍受不了他。", words, sylls, attach=attached(words, pos)) == "Wǒ rěnshòu bu liǎo tā."
+    assert render("我忍受不了他。", words, sylls, attach=attached(words, pos)) == "wǒ rěnshòu bu liǎo tā."
     # A potential complement of the public list is split too, but a card keeps its card's spacing.
     known = KNOWN | {"赶不上", "受不了", "火车"}
     pos = {**pos, "赶": ["v."], "受": ["v."]}
@@ -283,7 +284,7 @@ def test_particles_join_the_word_before_them():
     words = ["我", "用", "了", "两", "个", "小时", "。"]
     assert attached(words, POS) == {2}
     sylls = syllables("我用了两个小时。", words, lookup, "用", ["yong4"])
-    assert render("我用了两个小时。", words, sylls, attach=attached(words, POS)) == "Wǒ yòngle liǎng gè xiǎoshí."
+    assert render("我用了两个小时。", words, sylls, attach=attached(words, POS)) == "wǒ yòngle liǎng gè xiǎoshí."
     assert attached(["昨天", "下", "雨", "了", "。"], POS) == set()
     assert attached(["你", "来", "了", "吗", "？"], POS) == set()
     assert attached(["我", "见", "过", "他"], POS) == {2}
@@ -310,7 +311,7 @@ def test_a_one_character_verb_joins_a_one_character_result():
     assert attached(words, pos) == {2, 3}
     table = {**TABLE, "关": ["guan1"], "上": ["shang4"], "门": ["men2"]}
     sylls = syllables("他关上了门。", words, lambda w: table[w], "关", ["guan1"])
-    assert render("他关上了门。", words, sylls, attach=attached(words, pos)) == "Tā guānshàngle mén."
+    assert render("他关上了门。", words, sylls, attach=attached(words, pos)) == "tā guānshàngle mén."
     # 上 after a word that is first a noun is a place word, and 是, 有 and a verb of wanting take no result.
     assert attached(["鸟", "在", "树", "上", "。"], pos) == set()
     assert attached(["这", "是", "好", "人"], pos) == set()
@@ -350,7 +351,7 @@ def test_lookup_reads_cards_then_public_list_words_then_the_guess():
         [["xi3", "huan5"], ["xia4", "lai5"], ["kan4", "kan4"], ["na3", "r5"]]
     words = ["汽车", "停", "了", "下来", "。"]
     sylls = syllables("汽车停了下来。", words, lambda w: TABLE.get(w) or look(w), "停", ["ting2"])
-    assert render("汽车停了下来。", words, sylls, attach=attached(words, POS)) == "Qìchē tíngle xiàlai."
+    assert render("汽车停了下来。", words, sylls, attach=attached(words, POS)) == "qìchē tíngle xiàlai."
 
 
 def test_regroup_keeps_the_headword_whole_and_joins_a_lone_er():
@@ -372,7 +373,7 @@ def test_regroup_keeps_a_known_word_that_holds_the_headword():
     assert words[0] == "春天"
     table = {**TABLE, "春天": ["chun1", "tian1"], "的": ["de5"]}
     sylls = syllables("春天是一年的开始。", words, lambda w: table[w], "春", ["chun1"])
-    assert render("春天是一年的开始。", words, sylls) == "Chūntiān shì yì nián de kāishǐ."
+    assert render("春天是一年的开始。", words, sylls) == "chūntiān shì yì nián de kāishǐ."
     # A word that neither list has is still cut, so the headword stands as a word of its own.
     assert regroup("都市里很热闹。", ["都", "市里", "很", "热闹", "。"], "都市", known=known)[:2] == ["都市", "里"]
 

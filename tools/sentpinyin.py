@@ -674,15 +674,15 @@ def syllables(sentence, words, lookup, hz, head_nums, fixes=None):
 def render(sentence, words, sylls, capital_positions=(), joints_of=None, attach=()):
     """Write the sentence pinyin, with the syllables of one word together, words apart and punctuation attached.
 
-    capital_positions: sentence indexes where a word written with a capital starts (names such as
-    北京, and the surname and given name of a person). Each part of such a word between spaces gets
-    a capital, as on the cards, so 黄河 with the card joints [" "] gives "Huáng Hé".
+    All pinyin is in lower case, the start of a sentence and names included, as the user decided on
+    2026-09-29 ("wǒ qù běijīng."). capital_positions (where name_words finds a word of a name) is
+    still accepted from callers, but it no longer changes the text, so 黄河 with the card joints
+    [" "] gives "huáng hé".
     joints_of(word): the word's joints (word_joints in the build script); without it, or when
     the joints do not fit the word, all its syllables are joined.
     attach: sentence indexes where a word starts that joins the word before it (attached), so
     他指着前面 gives "tā zhǐzhe qiánmiàn".
-    The first letter of the sentence, of each sentence after . ! or ?, and of a quotation that
-    follows a colon is capitalised ('Tā shuō: "Nǐ kàn."'). The Chinese dash, two long dashes that jieba
+    A quotation after a colon is in lower case too ('tā shuō: "nǐ kàn."'). The Chinese dash, two long dashes that jieba
     may cut into two marks, is written as one "-". A percent sign stays with the digits before it, as
     in the sentence ("70%", which jieba cuts into 70 and %).
     """
@@ -692,8 +692,6 @@ def render(sentence, words, sylls, capital_positions=(), joints_of=None, attach=
             nums = [sylls[pos + k] for k, ch in enumerate(word) if sylls[pos + k]]
             joints = joints_of(word) if joints_of else None
             text = card_py(nums, joints if joints is not None and len(joints) == len(nums) - 1 else None)
-            if pos in capital_positions:
-                text = " ".join(part[:1].upper() + part[1:] for part in text.split(" "))
             if pos in attach and pieces and pieces[-1][0] == "word":
                 pieces[-1] = ("word", pieces[-1][1] + ("'" if text[:1] in "aāáǎàoōóǒòeēéěè" else "") + text)
             else:
@@ -716,18 +714,18 @@ def render(sentence, words, sylls, capital_positions=(), joints_of=None, attach=
             out += text
         else:
             out += (" " if out else "") + text
-    return re.sub(r'(^|[.!?]"?\s+|:\s+")("?\(?)([a-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü])',
-                  lambda m: m.group(1) + m.group(2) + m.group(3).upper(), out)
+    return out
 
 
 def name_words(sentence, words, names):
-    """The words with each name of several words divided into its words, and where capitals start.
+    """The words with each name of several words divided into its words, and where the name's words start.
 
     names: {hz: (words, capitals)} from data/manual/capitals (Plan 3a pinyin_text.name_rows).
     A person's name is written as the textbook rules write it, with the surname apart from the
-    given name and a title apart in lower case. So with the row 李老师 (李 老师, Y N), the words
+    given name and a title apart. So with the row 李老师 (李 老师, Y N), the words
     ["喂", "，", "李老师", "在", "吗", "？"] give ["喂", "，", "李", "老师", "在", "吗", "？"] and the
-    capital positions {2}, which render writes "Wèi, Lǐ lǎoshī zài ma?". A name is found wherever
+    positions {2} of the words the row marks Y, which render writes "wèi, lǐ lǎoshī zài ma?", in lower
+    case since 2026-09-29. A name is found wherever
     the words start and end at its words, even when the segmenter already cut it (李 + 老师).
     """
     out = []
