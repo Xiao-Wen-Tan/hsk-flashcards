@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { loadFixture } from './helpers.mjs';
 
 const data = loadFixture();
-const TONES = /[̄́̌̀]/g;
+const TONES = /[\u0304\u0301\u030c\u0300]/g;
 // pyBase is the pinyin without tone marks, spaces, apostrophes or hyphens, in lower case.
 const toneless = (py) => py.normalize('NFD').replace(TONES, '').normalize('NFC').toLowerCase().replace(/[\s'’-]/g, '');
 const POS = new Set(['n.', 'v.', 'adj.', 'adv.', 'm.', 'pron.', 'prep.', 'conj.', 'part.', 'num.', 'int.']);
