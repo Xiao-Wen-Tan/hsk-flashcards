@@ -216,3 +216,13 @@ def test_ex_py_holds_no_chinese_character():
         "w0001: ex.py 'Wǒ zài èr 〇 〇 bā nián qùguo Běijīng.' contains Chinese characters"]
     fixed = {**year, "ex": {**year["ex"], "py": "Wǒ zài èr líng líng bā nián qùguo Běijīng."}}
     assert check_word(fixed, {"t01"}) == []
+
+
+def test_a_capital_right_after_a_colon_starts_a_sentence():
+    # Point 9 of the style sheet: a quotation after a colon starts with a capital, with or without
+    # quotation marks, as the strict checker (pinyincheck) allows.
+    w = sample()["words"][0]
+    you = {**w, "hz": "你", "py": "nǐ", "pyNum": "ni3", "pyBase": "ni", "syl": 1,
+           "ex": {**w["ex"], "hz": "他说：你看。", "py": "Tā shuō: Nǐ kàn."}}
+    quoted = {**you, "ex": {**w["ex"], "hz": "他说：“你看。”", "py": 'Tā shuō: "Nǐ kàn."'}}
+    assert [check_word(x, {"t01"}) for x in (you, quoted)] == [[], []]

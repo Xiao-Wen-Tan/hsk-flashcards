@@ -29,8 +29,8 @@ _EX_KEYS = {"hz", "py", "en", "au", "src"}
 # The tones a 一 or 不 may show in a sentence, where the tone changes follow the next word.
 _TONES_OF = {("一", "yi1"): ["yi1", "yi2", "yi4", "yi5"], ("不", "bu4"): ["bu4", "bu2", "bu5"]}
 # Where render (Plan 3b sentpinyin) starts a sentence, so a capital may stand there. A quotation
-# after a colon also starts one ('shuō: "Nǐ kàn."').
-_SENTENCE_START = r'(?:^|[.!?]"?\s+|:\s+")"?\(?'
+# after a colon also starts one, with or without quotation marks ('shuō: "Nǐ kàn."', "shuō: Nǐ kàn.").
+_SENTENCE_START = r'(?:^|[.!?]"?\s+|:\s+)"?\(?'
 # The headword's syllables may stand as a word of their own or inside a longer word, as long as
 # they start and end at syllable edges there. A longer word holds them in a known word (男人
 # "nánrén" for the card 男), with a joined particle, suffix or result ("kànzhe", "jiàshǐyuán",
