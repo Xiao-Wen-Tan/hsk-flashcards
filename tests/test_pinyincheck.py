@@ -341,3 +341,26 @@ def test_yi_counts_before_a_measure_word_of_two_characters():
     assert check("我买了一公斤。", "Wǒ mǎile yī gōngjīn.", buy, facts=MORE_FACTS) == [
         "'yī' (一) counts with 公斤 here, so it shows its tone change, 'yí' before a fourth tone and 'yì' before "
         "the other tones"]
+
+
+def test_the_words_of_a_name_are_spaced_as_the_capitals_file_gives_them():
+    # Known open item 5 and style sheet point 7: "Lǐ lǎoshī" and "Shāndōng Shěng", each word of the name apart.
+    hello = card("喂", "wèi", "wei4")
+    assert check("喂，李老师在吗？", "Wèi, Lǐ lǎoshī zài ma?", hello) == []
+    assert check("喂，李老师在吗？", "Wèi, Lǐlǎoshī zài ma?", hello) == [
+        "the name 李老师 is written as the words 李 老师 (point 7 of the style sheet), but the line has 'Lǐlǎoshī'"]
+    me = card("我", "wǒ", "wo3")
+    assert check("我来自山东省。", "Wǒ láizì Shāndōngshěng.", me) == [
+        "the name 山东省 is written as the words 山东 省 (point 7 of the style sheet), but the line has "
+        "'Shāndōngshěng'"]
+    assert check("我来自山东省。", "Wǒ láizì Shān dōng Shěng.", me) == [
+        "the name 山东省 is written as the words 山东 省 (point 7 of the style sheet), but the line has "
+        "'Shān dōng Shěng'"]
+
+
+def test_a_numeral_stands_apart_from_a_measure_word_of_two_characters():
+    # Known open item 5 and style sheet point 6: "sān gōngjīn", as "sān gè".
+    buy = card("买", "mǎi", "mai3")
+    assert check("我买了三公斤。", "Wǒ mǎile sān gōngjīn.", buy, facts=MORE_FACTS) == []
+    assert check("我买了三公斤。", "Wǒ mǎile sāngōngjīn.", buy, facts=MORE_FACTS) == [
+        "the number 三公斤 is written 'sān gōngjīn' (point 6 of the style sheet), but the line has 'sāngōngjīn'"]

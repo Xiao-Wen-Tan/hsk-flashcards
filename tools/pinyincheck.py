@@ -23,14 +23,18 @@ a corrected line only when it finds no problem. It checks that:
    other tones, "yī" in a decimal and after 第, a numeral, 星期 or 礼拜 ("dì-yī", "shíyī"), a tone
    change for a 一 that counts ("yí gè", "yìqiān"), and a neutral "bu" or "yi" only in a doubled word
    ("kàn yi kàn"), in a potential complement ("zhǎo bu dào") and where a card or the public list
-   shows it ("duìbuqǐ");
+   shows it ("duìbuqǐ"). A 一 or 不 inside a card that the line writes as its card shows the card's
+   tone ("yíhuìr"), a 不 between a verb and a result, as the line's words show them, is a neutral
+   "bu" ("zhǎo bu dào"), and a 一 before a measure word of two characters counts too ("yì gōngjīn");
 8. the words that points 1 and 2 of the style sheet write as one word are one pinyin word (这个
    "zhège", 那些 "nàxiē", 八月 "bāyuè", 星期五 "xīngqīwǔ");
 9. numbers are spaced as point 6 of the style sheet says (_number_problems), with 11 to 99 and each
    group of 百, 千, 万 and 亿 joined ("shí'èr", "yìqiān wǔbǎi"), 第 with a hyphen ("dì-shí"), a numeral
-   apart from its measure word ("sān gè"), and a fraction and the digits of a decimal syllable by
+   apart from its measure word ("sān gè", "sān gōngjīn"), and a fraction and the digits of a decimal syllable by
    syllable ("sān fēn zhī yī", "sān diǎn yī sì");
-10. a 了 that ends a sentence or a clause is a word of its own ("xià yǔ le.", point 3).
+10. a 了 that ends a sentence or a clause is a word of its own ("xià yǔ le.", point 3);
+11. the words of a name are spaced as data/manual/capitals or its card gives them ("Lǐ lǎoshī",
+    "Shāndōng Shěng", "Běijīng"), wherever the line writes it as a name (point 7).
 It also checks the form of each syllable, which is at most one tone mark, on the vowel the rules
 name, and an apostrophe before a syllable inside a word that starts with a, o or e, and nowhere else,
 and that no space stands before a closing mark such as , . ! or ?.
@@ -478,6 +482,38 @@ def check_line(sentence, line, head, readings_of, names, facts):
     problems += _number_problems(sentence, cells, head, facts)
     problems += _final_le_problems(sentence, cells, facts)
     problems += _capital_problems(sentence, items, cells, names, literal_items)
+    problems += _name_word_problems(sentence, cells, head, names)
+    return problems
+
+
+def _name_word_problems(sentence, cells, head, names):
+    """The words of a name stand apart and each word is joined, as the capitals file or its card gives
+    them (known open item 5, style sheet point 7), wherever the line writes it as a name, that is, where
+    its first character starts a pinyin word and its last character ends one.
+
+    So with the name 李老师 (李 + 老师) "Lǐ lǎoshī" passes and "Lǐlǎoshī" fails. Joints between two
+    characters of the headword are left to the headword check.
+    """
+    head_at, problems = set(head_positions(sentence, head["hz"])), []
+    for hz, (parts, _) in names.items():
+        want, offset = {}, 0
+        for n, part in enumerate(parts):
+            want.update({offset + k: "" for k in range(1, len(part))})
+            if n:
+                want[offset] = " "
+            offset += len(part)
+        at = sentence.find(hz)
+        while at >= 0:
+            end = at + len(hz) - 1
+            span = list(range(at, end + 1))
+            if all(i in cells for i in span) and (at - 1 not in cells or _joint(cells, at) != "") \
+                    and (end + 1 not in cells or _joint(cells, end + 1) != "") \
+                    and any(_joint(cells, at + k) != joint for k, joint in want.items()
+                            if not (at + k in head_at and at + k - 1 in head_at)):
+                what = f"as the words {' '.join(parts)}" if len(parts) > 1 else "as one word"
+                problems.append(f"the name {hz} is written {what} (point 7 of the style sheet), but the line has "
+                                f"'{_written(cells, span)}'")
+            at = sentence.find(hz, at + 1)
     return problems
 
 
@@ -741,9 +777,10 @@ def _number_problems(sentence, cells, head, facts):
                 want[b + 2] = " "
         elif sentence[b:b + 1] == "点" and b + 1 in decimal:
             want[b] = " "
-        elif sentence[b:b + 1] in facts["measure"] and (len(run) == 1 or _settled(run, year)) \
+        elif _measure_at(sentence, b, facts["measure"]) and (len(run) == 1 or _settled(run, year)) \
                 and sentence[b + 1:b + 2] != sentence[b] and not _held(sentence, b, known):
             want[b] = " "
+            want.update({b + k: "" for k in range(1, len(_measure_at(sentence, b, facts["measure"])))})
     wrong = sorted(j for j, joint in want.items() if j - 1 in cells and j in cells
                    and not (j - 1 in head_at and j in head_at) and _joint(cells, j) != joint)
     problems, done = [], set()
@@ -767,6 +804,12 @@ def _number_problems(sentence, cells, head, facts):
         problems.append(f"the number {sentence[start:end + 1]} is written '{expected}' (point 6 of the style "
                         f"sheet), but the line has '{_written(cells, span)}'")
     return problems
+
+
+def _measure_at(sentence, b, measure):
+    """The longest measure word of the lists that starts at index b (公斤 in 三公斤, 个 in 三个), else ""."""
+    return next((sentence[b:b + n] for n in (4, 3, 2, 1) if b + n <= len(sentence) and sentence[b:b + n] in measure),
+                "")
 
 
 def _held(sentence, j, known):
