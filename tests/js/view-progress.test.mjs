@@ -14,13 +14,27 @@ const t01 = data.words.filter((w) => w.theme === 't01');
 const t02 = data.words.filter((w) => w.theme === 't02');
 
 test('the map has a tile per theme, done, current or locked, with shares', () => {
-  const tiles = mapView(data, mapOf([...t01.map((w) => at(w.id, 7)), at(t02[0].id, 1), at(t02[1].id, 2)]));
-  assert.deepEqual(tiles.map((t) => [t.name, t.statusLabel]), [
-    ['Starter Kit', 'Done'], ['Greetings & Courtesy', 'Now'], ['Numbers & Measure Words', 'Locked'],
-    ['Family & People', 'Locked'], ['Food & Drink', 'Locked'],
+  const sections = mapView(data, mapOf([...t01.map((w) => at(w.id, 7)), at(t02[0].id, 1), at(t02[1].id, 2)]));
+  assert.deepEqual(sections.map((s) => [s.title, s.statusLabel, s.counts]), [['HSK 1-2', '', '14 of 61 learned']]);
+  const tiles = sections[0].tiles;
+  assert.deepEqual(tiles.map((t) => [t.id, t.name, t.statusLabel]), [
+    ['t01', 'Starter Kit', 'Done'], ['t02', 'Greetings & Courtesy', 'Now'], ['t03', 'Numbers & Measure Words', 'Locked'],
+    ['t04', 'Family & People', 'Locked'], ['t05', 'Food & Drink', 'Locked'],
   ]);
   assert.deepEqual([tiles[0].learnedPct, tiles[0].masteredPct], ['100%', '100%']);
   assert.deepEqual([tiles[1].learnedPct, tiles[1].masteredPct, tiles[1].counts], ['20%', '0%', '2 of 10 learned, 0 mastered']);
+});
+
+test("a finished level group says Done, and its tiles count only that group's words", () => {
+  const themes = [{ id: 't01', order: 1, name: 'Starter Kit' }, { id: 't02', order: 2, name: 'Food & Drink' }];
+  const words = [['a', 't01', 1], ['b', 't02', 2], ['c', 't02', 3], ['d', 't01', 4]]
+    .map(([id, theme, lv], i) => ({ id, theme, lv, ord: i + 1 }));
+  const sections = mapView({ themes, words }, mapOf([at('a', 1), at('b', 1)]));
+  assert.deepEqual(sections.map((s) => [s.title, s.statusLabel, s.tiles.map((t) => [t.name, t.statusLabel, t.counts])]), [
+    ['HSK 1-2', 'Done', [['Starter Kit', 'Done', '1 of 1 learned, 0 mastered'], ['Food & Drink', 'Done', '1 of 1 learned, 0 mastered']]],
+    ['HSK 3', '', [['Food & Drink', 'Now', '0 of 1 learned, 0 mastered']]],
+    ['HSK 4', '', [['Starter Kit', 'Locked', '0 of 1 learned, 0 mastered']]],
+  ]);
 });
 
 test('a theme lists its words in teaching order with their place', () => {

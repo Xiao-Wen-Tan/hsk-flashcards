@@ -3,23 +3,31 @@
 import { CONFIG } from '../config.js';
 import { bestStreak, monthCalendar } from '../checkin.js';
 import { weekdayIndex } from '../dates.js';
-import { accuracy, activity, forecast, levelProgress, themeProgress, totals } from '../stats.js';
+import { accuracy, activity, forecast, levelProgress, mapSections, totals } from '../stats.js';
 import { badgeTitle } from '../badges.js';
 import { isLearned, isMastered } from '../srs.js';
 import { WEEKDAY_SHORT, monthTitle, percent, plural } from './format.js';
 
 const STATUS_LABEL = Object.freeze({ done: 'Done', current: 'Now', locked: 'Locked' });
 
-// One tile per theme, in theme order.
+// One section per level group (HSK 1-2, then 3, 4, 5 and 6), each with a tile per theme that
+// has words in that group, in theme order. A tile's counts are of that group's words only.
 export function mapView(data, progressById) {
-  return themeProgress(data.themes, data.words, progressById).map((t) => ({
-    id: t.id,
-    name: t.name,
-    status: t.status,
-    statusLabel: STATUS_LABEL[t.status],
-    learnedPct: percent(t.learnedShare),
-    masteredPct: percent(t.masteredShare),
-    counts: `${t.learned} of ${t.total} learned, ${t.mastered} mastered`,
+  return mapSections(data.themes, data.words, progressById).map((s) => ({
+    id: s.id,
+    title: s.label,
+    done: s.done,
+    statusLabel: s.done ? STATUS_LABEL.done : '',
+    counts: `${s.learned} of ${s.total} learned`,
+    tiles: s.tiles.map((t) => ({
+      id: t.id,
+      name: t.name,
+      status: t.status,
+      statusLabel: STATUS_LABEL[t.status],
+      learnedPct: percent(t.learnedShare),
+      masteredPct: percent(t.masteredShare),
+      counts: `${t.learned} of ${t.total} learned, ${t.mastered} mastered`,
+    })),
   }));
 }
 

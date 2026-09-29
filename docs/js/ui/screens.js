@@ -57,15 +57,18 @@ export async function renderCheckin(app) {
 }
 
 export async function renderMap(app) {
-  const tiles = mapView(app.data, await progressById(app));
+  const sections = mapView(app.data, await progressById(app));
   show(app.main, h('h1', {}, 'Progress map'),
-    h('div', { class: 'tiles' }, tiles.map((t) => h('a', { class: `tile ${t.status}`, href: `#/theme/${t.id}` },
-      h('span', { class: 'tile-status' }, t.statusLabel),
-      h('span', { class: 'tile-name' }, t.name),
-      h('span', { class: 'bar' },
-        h('span', { class: 'bar-learned', style: `width:${t.learnedPct}` }),
-        h('span', { class: 'bar-mastered', style: `width:${t.masteredPct}` })),
-      h('span', { class: 'tile-counts' }, t.counts)))));
+    sections.map((s) => h('section', { class: `level${s.done ? ' done' : ''}` },
+      h('h2', {}, s.title, s.statusLabel ? h('span', { class: 'level-status' }, ` ${s.statusLabel}`) : null),
+      h('p', { class: 'level-counts' }, s.counts),
+      h('div', { class: 'tiles' }, s.tiles.map((t) => h('a', { class: `tile ${t.status}`, href: `#/theme/${t.id}` },
+        h('span', { class: 'tile-status' }, t.statusLabel),
+        h('span', { class: 'tile-name' }, t.name),
+        h('span', { class: 'bar' },
+          h('span', { class: 'bar-learned', style: `width:${t.learnedPct}` }),
+          h('span', { class: 'bar-mastered', style: `width:${t.masteredPct}` })),
+        h('span', { class: 'tile-counts' }, t.counts)))))));
 }
 
 export async function renderTheme(app, themeId) {
