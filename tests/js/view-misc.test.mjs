@@ -22,6 +22,9 @@ test('addresses name the screens', () => {
   assert.deepEqual(parseRoute('#/theme/t05/3'), { name: 'theme', id: 't05', group: '3' });
   assert.deepEqual(parseRoute('#/theme/t05/1-2'), { name: 'theme', id: 't05', group: '1-2' });
   assert.equal(hrefOf({ name: 'theme', id: 't05', group: '1-2' }), '#/theme/t05/1-2');
+  // A word opened from a group's list keeps the group, so its Back link returns to that list.
+  assert.deepEqual(parseRoute('#/word/w0026/3'), { name: 'word', id: 'w0026', group: '3' });
+  assert.equal(hrefOf({ name: 'word', id: 'w0026', group: '3' }), '#/word/w0026/3');
   assert.equal(hrefOf({ name: 'word', id: 'w0026' }), '#/word/w0026');
   assert.equal(hrefOf({ name: 'stats' }), '#/stats');
 });

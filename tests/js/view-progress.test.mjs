@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  badgesView, calendarWeeks, checkinView, mapView, statsView, themeWordsView, wordStatus,
+  badgesView, calendarWeeks, checkinView, mapView, statsView, themeWordsView, wordBackHref, wordStatus,
 } from '../../docs/js/view/progress.js';
 import { learnedProgress } from '../../docs/js/srs.js';
 import { loadFixture } from './helpers.mjs';
@@ -51,6 +51,14 @@ test("a tile's word list holds only that level group's words of the theme", () =
   assert.deepEqual([hsk3.name, hsk3.words.map((w) => w.id)], ['Food & Drink, HSK 3', ['b']]);
   assert.deepEqual(themeWordsView({ themes, words }, 't02', new Map()).words.map((w) => w.id), ['a', 'b']);
   assert.equal(themeWordsView({ themes, words }, 't02', new Map(), '9'), null);
+  assert.deepEqual(hsk3.words.map((w) => w.href), ['#/word/b/3']);
+  assert.deepEqual(themeWordsView({ themes, words }, 't02', new Map()).words.map((w) => w.href), ['#/word/a', '#/word/b']);
+});
+
+test("a word's Back link returns to the list it was opened from", () => {
+  const w = { id: 'w0026', theme: 't05' };
+  assert.equal(wordBackHref(w, '3'), '#/theme/t05/3');
+  assert.equal(wordBackHref(w, undefined), '#/theme/t05');
 });
 
 test('a theme lists its words in teaching order with their place', () => {

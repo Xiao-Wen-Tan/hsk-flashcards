@@ -74,9 +74,9 @@ button.small { min-height: 2.75rem; margin: 0.25rem 0.25rem 0.25rem 0; }
 
 /* Progress map, word lists and stats */
 .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-.level { margin-bottom: 1.2rem; }
-.level-status, .level-counts { font-size: 0.8rem; color: var(--muted); }
-.level.done h2 { color: var(--mastered); }
+.group-section { margin-bottom: 1.2rem; }
+.group-status, .group-counts { font-size: 0.8rem; color: var(--muted); }
+.group-section.done h2 { color: var(--mastered); }
 .tile { display: flex; flex-direction: column; gap: 0.25rem; background: var(--card); border: 1px solid var(--line); border-radius: 0.75rem; padding: 0.6rem; color: var(--fg); text-decoration: none; }
 .tile.done { border-color: var(--mastered); }
 .tile.current { border: 2px solid var(--accent); }

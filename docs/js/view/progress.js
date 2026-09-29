@@ -51,8 +51,17 @@ export function themeWordsView(data, themeId, progressById, groupId) {
   if (!theme || group === undefined) return null;
   const inTheme = data.words.filter((w) => w.theme === themeId);
   const words = (group ? wordsOfGroup(inTheme, group) : inTheme).sort((a, b) => a.ord - b.ord)
-    .map((w) => ({ id: w.id, hz: w.hz, py: w.py, enShort: w.enShort, status: wordStatus(progressById.get(w.id)) }));
+    .map((w) => ({
+      id: w.id, hz: w.hz, py: w.py, enShort: w.enShort, status: wordStatus(progressById.get(w.id)),
+      href: hrefOf({ name: 'word', id: w.id, group: groupId }),
+    }));
   return { id: theme.id, name: group ? `${theme.name}, ${group.label}` : theme.name, words };
+}
+
+// The word screen's Back link, to the list the word was opened from: '#/theme/t05/3' for the
+// HSK 3 list of t05, or '#/theme/t05' for the whole theme.
+export function wordBackHref(word, groupId) {
+  return hrefOf({ name: 'theme', id: word.theme, group: groupId });
 }
 
 // The Stats screen. events are the answers of the last 30 study days (store.eventsFrom).

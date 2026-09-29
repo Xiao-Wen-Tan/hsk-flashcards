@@ -12,10 +12,11 @@ export const NAV = Object.freeze([
 const SIMPLE = new Set(['today', 'session', 'checkin', 'map', 'stats', 'badges', 'settings']);
 
 // parseRoute('#/word/w0026') gives { name: 'word', id: 'w0026' }, and parseRoute('#/theme/t05/3')
-// gives { name: 'theme', id: 't05', group: '3' }. Anything unknown is Today.
+// gives { name: 'theme', id: 't05', group: '3' }. A word opened from a group's list keeps the
+// group ('#/word/w0026/3'), so its Back link returns to that list. Anything unknown is Today.
 export function parseRoute(hash) {
   const [name, id, group] = String(hash ?? '').replace(/^#\/?/, '').split('/');
-  if (name === 'theme' && id && group) return { name, id: decodeURIComponent(id), group: decodeURIComponent(group) };
+  if ((name === 'theme' || name === 'word') && id && group) return { name, id: decodeURIComponent(id), group: decodeURIComponent(group) };
   if ((name === 'theme' || name === 'word') && id) return { name, id: decodeURIComponent(id) };
   if (SIMPLE.has(name)) return { name };
   return { name: 'today' };
