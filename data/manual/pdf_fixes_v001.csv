@@ -1,0 +1,42 @@
+file,n,hz,pynum,pos,gloss,sentence,why
+1,69,,,,that; there,,variant pinyin nàr is read as a gloss
+2,69,,,,that; there,,variant pinyin nàr is read as a gloss
+3,69,,,,that; there,,variant pinyin nàr is read as a gloss
+4,69,,,,that; there,,variant pinyin nàr is read as a gloss
+1,142,,,,this; here,,variant pinyin zhèr is read as a gloss
+2,142,,,,this; here,,variant pinyin zhèr is read as a gloss
+3,142,,,,this; here,,variant pinyin zhèr is read as a gloss
+4,142,,,,this; here,,variant pinyin zhèr is read as a gloss
+2,250,虽然…但是…,sui1 ran2 dan4 shi4,conj.,"although …, (still) …",,pattern word missing from both lists
+3,250,虽然…但是…,sui1 ran2 dan4 shi4,conj.,"although …, (still) …",,pattern word missing from both lists
+4,250,虽然…但是…,sui1 ran2 dan4 shi4,conj.,"although …, (still) …",,pattern word missing from both lists
+2,281,因为…所以…,yin1 wei4 suo3 yi3,conj.,"because …, so …",,pattern word missing from both lists
+3,281,因为…所以…,yin1 wei4 suo3 yi3,conj.,"because …, so …",,pattern word missing from both lists
+4,281,因为…所以…,yin1 wei4 suo3 yi3,conj.,"because …, so …",,pattern word missing from both lists
+3,326,不但…而且…,bu4 dan4 er2 qie3,conj.,not only … but also …,,pattern word missing from both lists
+4,326,不但…而且…,bu4 dan4 er2 qie3,conj.,not only … but also …,,pattern word missing from both lists
+2,252,,ti1 zu2 qiu2,v.,play soccer,,missing from both lists
+3,252,,ti1 zu2 qiu2,v.,play soccer,,missing from both lists
+4,252,,ti1 zu2 qiu2,v.,play soccer,,missing from both lists
+2,277,,yi1 xia4,m.,once; in a short while,,missing from both lists (only 一下儿 is listed)
+3,277,,yi1 xia4,m.,once; in a short while,,missing from both lists (only 一下儿 is listed)
+4,277,,yi1 xia4,m.,once; in a short while,,missing from both lists (only 一下儿 is listed)
+3,408,,Huang2 he2,n.,the Yellow River,,missing from both lists
+4,408,,Huang2 he2,n.,the Yellow River,,missing from both lists
+4,606,,bai3 fen1 zhi1,num.,percent,,missing from both lists
+4,1024,,tan2 gang1 qin2,v.,play the piano,,missing from both lists
+5,173,,chuang1 lian2,n.,curtain,,PDF pinyin cut to chuāng
+5,350,,gan1 ju2,n.,oranges and tangerines; citrus fruit,,missing from both lists
+6,27,拔苗助长,ba2 miao2 zhu4 zhang3,,spoil things by being too eager; help shoots grow by pulling them,拔苗助长的教育方式不可取。,headword wrapped onto the sentence line
+6,544,,en4,int.,hum (showing agreement),,PDF pinyin èng is not a listed reading
+6,859,,hu2 po1,n.,lake,,PDF pinyin hú bó differs from the list
+6,1126,,kai1 tuo4,v.,open up; exploit,,PDF pinyin kāi tà differs from the list
+6,1792,,shuan4 huo3 guo1,v.,eat hot pot; shabu-shabu,,missing from both lists
+6,1796,,shui3 long2 tou2,n.,faucet; tap,,PDF pinyin cut to shuǐ lóng
+6,1815,,su4 shi2 zhu3 yi4,n.,vegetarianism,,missing from both lists
+6,1897,,tong1 huo4 peng2 zhang4,n.,inflation,,missing from both lists
+6,2091,,xie4 lu4,v.,disclose; reveal,,PDF pinyin xiè lòu differs from the list
+6,2185,,yan1 hua1 bao4 zhu2,n.,fireworks,,missing from both lists
+6,2479,致力于,zhi4 li4 yu2,v.,devote oneself to,经济学家一直致力于为他们的观点寻找证据。,headword wrapped onto the sentence line
+6,2593,总而言之,zong3 er2 yan2 zhi1,conj.,all in all; in a word,总而言之，这本书是我读过的最好的一本。,headword wrapped onto the sentence line
+4,686,,,part.,marker of complement,你走得太快了。,the second sense get; obtain is the reading dé
