@@ -32,38 +32,81 @@ function countGroup(words, progressById) {
   return { total: words.length, learned, mastered };
 }
 
-// [{ lv: 1, total, learned, mastered }, ...] for each HSK level in the word list.
+// [{ lv: 1, total, learned, mastered }, ...] for each HSK level in the word list, for the Stats screen.
 export function levelProgress(words, progressById) {
   const levels = [...new Set(words.map((w) => w.lv))].sort((a, b) => a - b);
   return levels.map((lv) => ({ lv, ...countGroup(words.filter((w) => w.lv === lv), progressById) }));
 }
 
-export function levelsDone(words, progressById) {
-  return levelProgress(words, progressById).filter((l) => l.learned === l.total).map((l) => l.lv);
+// The level groups of the learning order, as the user decided on 2026-09-29. HSK 1 and 2
+// are learned together, then HSK 3, 4, 5 and 6 each on its own. tools/themes.py LEVEL_GROUPS repeats them.
+export const LEVEL_GROUPS = Object.freeze([
+  { id: '1-2', label: 'HSK 1-2', levels: [1, 2] },
+  { id: '3', label: 'HSK 3', levels: [3] },
+  { id: '4', label: 'HSK 4', levels: [4] },
+  { id: '5', label: 'HSK 5', levels: [5] },
+  { id: '6', label: 'HSK 6', levels: [6] },
+].map((g) => Object.freeze(g)));
+
+// The level group with this ID, for example groupById('3'), or undefined.
+export function groupById(id) {
+  return LEVEL_GROUPS.find((g) => g.id === id);
 }
 
-// One tile per theme for the progress map. A theme is 'done' when every word is learned,
-// the first theme that is not done is 'current', and the rest are 'locked'.
-export function themeProgress(themes, words, progressById) {
-  const byTheme = new Map(themes.map((t) => [t.id, []]));
-  for (const w of words) byTheme.get(w.theme)?.push(w);
-  let currentGiven = false;
-  return themes.slice().sort((a, b) => a.order - b.order).map((t) => {
-    const c = countGroup(byTheme.get(t.id), progressById);
-    let status = 'locked';
-    if (c.total > 0 && c.learned === c.total) status = 'done';
-    else if (!currentGiven) { status = 'current'; currentGiven = true; }
-    return {
-      id: t.id, name: t.name, order: t.order, ...c,
-      learnedShare: c.total ? c.learned / c.total : 0,
-      masteredShare: c.total ? c.mastered / c.total : 0,
-      status,
-    };
-  });
+export function wordsOfGroup(words, group) {
+  return words.filter((w) => group.levels.includes(w.lv));
 }
 
+// The IDs of the level groups whose words are all learned, for example ['1-2'].
+export function groupsDone(words, progressById) {
+  return LEVEL_GROUPS.filter((g) => {
+    const c = countGroup(wordsOfGroup(words, g), progressById);
+    return c.total > 0 && c.learned === c.total;
+  }).map((g) => g.id);
+}
+
+// The progress map. Words are taught level group first, then theme (see ord), so the map has
+// one section per level group that has words, in group order. A section lists the themes
+// with words in that group, in theme order, and a tile counts only that group's words of
+// its theme. A tile is 'done' when all those words are learned, 'current' when it holds the
+// next new word (the lowest ord not learned yet), 'started' when some of its words are
+// learned, and 'locked' when none is. A section is done when all its words are learned.
+// A tile can be started without being current when a failed lesson sends the next new word
+// back to an earlier tile.
+// For example, with Food & Drink's 3 HSK 1-2 words learned and its 1 HSK 3 word not, the
+// HSK 1-2 section shows Food & Drink done (3 of 3) and the HSK 3 section shows it at 0 of 1.
+export function mapSections(themes, words, progressById) {
+  const next = words.filter((w) => !isLearned(progressById.get(w.id)))
+    .reduce((a, w) => (a === null || w.ord < a.ord ? w : a), null);
+  const ordered = themes.slice().sort((a, b) => a.order - b.order);
+  return LEVEL_GROUPS.map((g) => {
+    const inGroup = wordsOfGroup(words, g);
+    const section = countGroup(inGroup, progressById);
+    const tiles = ordered.map((t) => {
+      const members = inGroup.filter((w) => w.theme === t.id);
+      if (!members.length) return null;
+      const c = countGroup(members, progressById);
+      let status = 'locked';
+      if (c.learned === c.total) status = 'done';
+      else if (next && members.includes(next)) status = 'current';
+      else if (c.learned > 0) status = 'started';
+      return {
+        id: t.id, name: t.name, order: t.order, ...c,
+        learnedShare: c.learned / c.total,
+        masteredShare: c.mastered / c.total,
+        status,
+      };
+    }).filter(Boolean);
+    return { id: g.id, label: g.label, ...section, done: section.total > 0 && section.learned === section.total, tiles };
+  }).filter((s) => s.total > 0);
+}
+
+// The IDs of the themes whose words, in every level group, are all learned.
 export function themesDone(themes, words, progressById) {
-  return themeProgress(themes, words, progressById).filter((t) => t.status === 'done').map((t) => t.id);
+  return themes.slice().sort((a, b) => a.order - b.order).filter((t) => {
+    const c = countGroup(words.filter((w) => w.theme === t.id), progressById);
+    return c.total > 0 && c.learned === c.total;
+  }).map((t) => t.id);
 }
 
 // Reviews answered and words learned on each of the last `days` study days, oldest first.

@@ -2,6 +2,7 @@
 // (.claude/plans/words-json-schema.md), so the app logic is tested on the real shape.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { LEVEL_GROUPS } from '../../docs/js/stats.js';
 import { loadFixture } from './helpers.mjs';
 
 const data = loadFixture();
@@ -45,14 +46,17 @@ test('every word has every field with the right shape', () => {
   }
 });
 
-test('ord runs 1 to N, in theme order, and the level never goes down within a theme', () => {
+test('ord runs 1 to N by level group, then theme order, and the level never goes down within a theme', () => {
   const sorted = data.words.slice().sort((a, b) => a.ord - b.ord);
   sorted.forEach((w, i) => assert.equal(w.ord, i + 1));
   const themeOrder = new Map(data.themes.map((t) => [t.id, t.order]));
+  // The level groups are HSK 1-2, 3, 4, 5 and 6 (the user's decision of 2026-09-29).
+  const group = (w) => LEVEL_GROUPS.findIndex((g) => g.levels.includes(w.lv));
   for (let i = 1; i < sorted.length; i++) {
     const a = sorted[i - 1], b = sorted[i];
-    assert.ok(themeOrder.get(a.theme) <= themeOrder.get(b.theme));
-    if (a.theme === b.theme) assert.ok(a.lv <= b.lv, `${a.hz} then ${b.hz}`);
+    assert.ok(group(a) <= group(b), `${a.hz} then ${b.hz}`);
+    if (group(a) === group(b)) assert.ok(themeOrder.get(a.theme) <= themeOrder.get(b.theme), `${a.hz} then ${b.hz}`);
+    if (group(a) === group(b) && a.theme === b.theme) assert.ok(a.lv <= b.lv, `${a.hz} then ${b.hz}`);
   }
 });
 

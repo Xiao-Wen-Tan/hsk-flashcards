@@ -15,7 +15,7 @@ import {
 } from './session.js';
 import { PASS } from './srs.js';
 import { bestStreak, currentStreak } from './checkin.js';
-import { levelsDone, themesDone, totals } from './stats.js';
+import { groupsDone, themesDone, totals } from './stats.js';
 import { newBadges } from './badges.js';
 
 export async function loadSettings(store) {
@@ -108,7 +108,7 @@ export class Study {
       ...totals(progress),
       totalWords: data.words.length,
       themesDone: themesDone(data.themes, data.words, byId),
-      levelsDone: levelsDone(data.words, byId),
+      groupsDone: groupsDone(data.words, byId),
       perfectSession: summary.perfect,
     };
     const earned = (await store.getMeta('badges')) ?? {};

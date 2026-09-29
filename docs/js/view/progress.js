@@ -3,23 +3,35 @@
 import { CONFIG } from '../config.js';
 import { bestStreak, monthCalendar } from '../checkin.js';
 import { weekdayIndex } from '../dates.js';
-import { accuracy, activity, forecast, levelProgress, themeProgress, totals } from '../stats.js';
+import { accuracy, activity, forecast, groupById, levelProgress, mapSections, totals, wordsOfGroup } from '../stats.js';
 import { badgeTitle } from '../badges.js';
+import { hrefOf } from './route.js';
 import { isLearned, isMastered } from '../srs.js';
 import { WEEKDAY_SHORT, monthTitle, percent, plural } from './format.js';
 
 const STATUS_LABEL = Object.freeze({ done: 'Done', current: 'Now', locked: 'Locked' });
 
-// One tile per theme, in theme order.
+// One section per level group (HSK 1-2, then 3, 4, 5 and 6), each with a tile per theme that
+// has words in that group, in theme order. A tile's counts are of that group's words only,
+// and it opens the list of those words. A started tile (see stats.js mapSections) shows its
+// learned share, for example '40%', where the other tiles show Done, Now or Locked.
 export function mapView(data, progressById) {
-  return themeProgress(data.themes, data.words, progressById).map((t) => ({
-    id: t.id,
-    name: t.name,
-    status: t.status,
-    statusLabel: STATUS_LABEL[t.status],
-    learnedPct: percent(t.learnedShare),
-    masteredPct: percent(t.masteredShare),
-    counts: `${t.learned} of ${t.total} learned, ${t.mastered} mastered`,
+  return mapSections(data.themes, data.words, progressById).map((s) => ({
+    id: s.id,
+    title: s.label,
+    done: s.done,
+    statusLabel: s.done ? STATUS_LABEL.done : '',
+    counts: `${s.learned} of ${s.total} learned`,
+    tiles: s.tiles.map((t) => ({
+      id: t.id,
+      name: t.name,
+      href: hrefOf({ name: 'theme', id: t.id, group: s.id }),
+      status: t.status,
+      statusLabel: t.status === 'started' ? percent(t.learnedShare) : STATUS_LABEL[t.status],
+      learnedPct: percent(t.learnedShare),
+      masteredPct: percent(t.masteredShare),
+      counts: `${t.learned} of ${t.total} learned, ${t.mastered} mastered`,
+    })),
   }));
 }
 
@@ -30,13 +42,26 @@ export function wordStatus(p) {
   return 'New';
 }
 
-// The words of one theme in teaching order, or null when the theme does not exist.
-export function themeWordsView(data, themeId, progressById) {
+// The words of one theme in teaching order, or null when the theme does not exist. With a
+// level group ID, for example '3', only that group's words, as a map tile shows them, under
+// the name 'Food & Drink, HSK 3'. An unknown group gives null.
+export function themeWordsView(data, themeId, progressById, groupId) {
   const theme = data.themes.find((t) => t.id === themeId);
-  if (!theme) return null;
-  const words = data.words.filter((w) => w.theme === themeId).sort((a, b) => a.ord - b.ord)
-    .map((w) => ({ id: w.id, hz: w.hz, py: w.py, enShort: w.enShort, status: wordStatus(progressById.get(w.id)) }));
-  return { id: theme.id, name: theme.name, words };
+  const group = groupId === undefined ? null : groupById(groupId);
+  if (!theme || group === undefined) return null;
+  const inTheme = data.words.filter((w) => w.theme === themeId);
+  const words = (group ? wordsOfGroup(inTheme, group) : inTheme).sort((a, b) => a.ord - b.ord)
+    .map((w) => ({
+      id: w.id, hz: w.hz, py: w.py, enShort: w.enShort, status: wordStatus(progressById.get(w.id)),
+      href: hrefOf({ name: 'word', id: w.id, group: groupId }),
+    }));
+  return { id: theme.id, name: group ? `${theme.name}, ${group.label}` : theme.name, words };
+}
+
+// The word screen's Back link, to the list the word was opened from: '#/theme/t05/3' for the
+// HSK 3 list of t05, or '#/theme/t05' for the whole theme.
+export function wordBackHref(word, groupId) {
+  return hrefOf({ name: 'theme', id: word.theme, group: groupId });
 }
 
 // The Stats screen. events are the answers of the last 30 study days (store.eventsFrom).

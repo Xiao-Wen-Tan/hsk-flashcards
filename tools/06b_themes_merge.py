@@ -13,7 +13,7 @@ from pathlib import Path
 
 from common import (all_version_paths, latest_version_path, next_versions, read_csv, read_jsonl, write_new_csv,
                     write_new_text)
-from themes import MAX_THEME, MIN_THEME, STARTER_NO, THEMES, check_output, second_opinion_flags
+from themes import STARTER_NO, THEMES, check_output, second_opinion_flags
 
 REVIEW_COLUMNS = ["id", "hz", "py", "lv", "en", "theme_no", "theme_name", "confidence", "flag",
                   "alt_theme_no", "second_opinion", "note"]
@@ -77,12 +77,9 @@ def main():
              f"Second opinion: agrees on {agree} of {len(second_rows)} sampled words "
              f"({100 * agree / len(second_rows):.0f}%).",
              f"Rows flagged CHECK (low confidence or a second-opinion disagreement): "
-             f"{sum(1 for row in rows if row[8])}", "", "Theme sizes (limits: at least 40, at most 350 per part):"]
+             f"{sum(1 for row in rows if row[8])}", "", "Theme sizes:"]
     for n, name in enumerate(THEMES, start=1):
-        size = sizes.get(n, 0)
-        note = (f"  will be split into {-(-size // MAX_THEME)} parts" if size > MAX_THEME
-                else "  below 40" if size < MIN_THEME else "")
-        lines.append(f"  {n:2d}. {name}: {size}{note}")
+        lines.append(f"  {n:2d}. {name}: {sizes.get(n, 0)}")
     write_new_text(paths["report"], "\n".join(lines) + "\n")
     print("\n".join(lines))
     print(f"Review sheet: {paths['review']}. Theme list: {paths['themes']}. Report: {paths['report']}")

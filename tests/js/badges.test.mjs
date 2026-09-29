@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { badgeTitle, earnedBadges, newBadges } from '../../docs/js/badges.js';
 
-const NONE = { bestStreak: 0, checkIns: 0, learned: 0, mastered: 0, totalWords: 5000, themesDone: [], levelsDone: [], perfectSession: false };
+const NONE = { bestStreak: 0, checkIns: 0, learned: 0, mastered: 0, totalWords: 5000, themesDone: [], groupsDone: [], perfectSession: false };
 
 test('nothing earned at the start', () => {
   assert.deepEqual(earnedBadges(NONE), []);
@@ -32,9 +32,9 @@ test('mastered badges at 100, 500, 1000 and 2500', () => {
   assert.deepEqual(earnedBadges({ ...NONE, mastered: 2500 }), ['mastered-100', 'mastered-500', 'mastered-1000', 'mastered-2500']);
 });
 
-test('one badge per finished theme and HSK level, and one for a perfect session', () => {
-  assert.deepEqual(earnedBadges({ ...NONE, themesDone: ['t01', 't02'], levelsDone: [1], perfectSession: true }),
-    ['theme-t01', 'theme-t02', 'level-1', 'perfect']);
+test('one badge per finished theme and level group, and one for a perfect session', () => {
+  assert.deepEqual(earnedBadges({ ...NONE, themesDone: ['t01', 't02'], groupsDone: ['1-2', '3'], perfectSession: true }),
+    ['theme-t01', 'theme-t02', 'hsk-1-2', 'hsk-3', 'perfect']);
 });
 
 test('badges already earned are not awarded again', () => {
@@ -50,6 +50,7 @@ test('titles for the badge screen', () => {
   assert.equal(badgeTitle('learned-500'), '500 words learned');
   assert.equal(badgeTitle('mastered-100'), '100 words mastered');
   assert.equal(badgeTitle('theme-t05', themes), 'Finished Food & Drink');
-  assert.equal(badgeTitle('level-2'), 'HSK 2 finished');
+  assert.equal(badgeTitle('hsk-1-2'), 'Finished HSK 1-2');
+  assert.equal(badgeTitle('hsk-6'), 'Finished HSK 6');
   assert.equal(badgeTitle('perfect'), 'Perfect session');
 });

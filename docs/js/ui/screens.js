@@ -3,7 +3,7 @@
 import { previewDay } from '../study.js';
 import { studyDay, addDays } from '../dates.js';
 import { todayView } from '../view/today.js';
-import { badgesView, checkinView, mapView, statsView, themeWordsView } from '../view/progress.js';
+import { badgesView, checkinView, mapView, statsView, themeWordsView, wordBackHref } from '../view/progress.js';
 import { shortDate } from '../view/format.js';
 import { cardElement } from './card.js';
 import { startSession } from './session.js';
@@ -57,32 +57,35 @@ export async function renderCheckin(app) {
 }
 
 export async function renderMap(app) {
-  const tiles = mapView(app.data, await progressById(app));
+  const sections = mapView(app.data, await progressById(app));
   show(app.main, h('h1', {}, 'Progress map'),
-    h('div', { class: 'tiles' }, tiles.map((t) => h('a', { class: `tile ${t.status}`, href: `#/theme/${t.id}` },
-      h('span', { class: 'tile-status' }, t.statusLabel),
-      h('span', { class: 'tile-name' }, t.name),
-      h('span', { class: 'bar' },
-        h('span', { class: 'bar-learned', style: `width:${t.learnedPct}` }),
-        h('span', { class: 'bar-mastered', style: `width:${t.masteredPct}` })),
-      h('span', { class: 'tile-counts' }, t.counts)))));
+    sections.map((s) => h('section', { class: `group-section${s.done ? ' done' : ''}` },
+      h('h2', {}, s.title, s.statusLabel ? h('span', { class: 'group-status' }, ` ${s.statusLabel}`) : null),
+      h('p', { class: 'group-counts' }, s.counts),
+      h('div', { class: 'tiles' }, s.tiles.map((t) => h('a', { class: `tile ${t.status}`, href: t.href },
+        h('span', { class: 'tile-status' }, t.statusLabel),
+        h('span', { class: 'tile-name' }, t.name),
+        h('span', { class: 'bar' },
+          h('span', { class: 'bar-learned', style: `width:${t.learnedPct}` }),
+          h('span', { class: 'bar-mastered', style: `width:${t.masteredPct}` })),
+        h('span', { class: 'tile-counts' }, t.counts)))))));
 }
 
-export async function renderTheme(app, themeId) {
-  const v = themeWordsView(app.data, themeId, await progressById(app));
+export async function renderTheme(app, themeId, groupId) {
+  const v = themeWordsView(app.data, themeId, await progressById(app), groupId);
   if (!v) { window.location.hash = '#/map'; return; }
   show(app.main, h('a', { href: '#/map' }, 'Back to the map'), h('h1', {}, v.name),
     h('ul', { class: 'words' }, v.words.map((w) => h('li', {},
-      h('a', { href: `#/word/${w.id}` },
+      h('a', { href: w.href },
         h('span', { class: 'w-hz', lang: 'zh-CN' }, w.hz), h('span', { class: 'w-py' }, w.py),
         h('span', { class: 'w-en' }, w.enShort), h('span', { class: 'w-status' }, w.status))))));
 }
 
-export async function renderWord(app, wordId) {
+export async function renderWord(app, wordId, groupId) {
   const word = app.wordsById.get(wordId);
   if (!word) { window.location.hash = '#/map'; return; }
   const settings = await app.settings();
-  show(app.main, h('a', { href: `#/theme/${word.theme}` }, 'Back to the theme'),
+  show(app.main, h('a', { href: wordBackHref(word, groupId) }, 'Back to the theme'),
     cardElement(app, word, { autoplay: settings.autoplay !== false }));
 }
 

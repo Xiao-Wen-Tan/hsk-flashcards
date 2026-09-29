@@ -66,8 +66,8 @@ async function render() {
       case 'session': renderSession(app); break;
       case 'checkin': await renderCheckin(app); break;
       case 'map': await renderMap(app); break;
-      case 'theme': await renderTheme(app, route.id); break;
-      case 'word': await renderWord(app, route.id); break;
+      case 'theme': await renderTheme(app, route.id, route.group); break;
+      case 'word': await renderWord(app, route.id, route.group); break;
       case 'stats': await renderStats(app); break;
       case 'badges': await renderBadges(app); break;
       case 'settings': await renderSettings(app); break;

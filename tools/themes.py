@@ -3,8 +3,6 @@
 Theme 1, the Starter Kit, is filled by a fixed rule, never by judgement. Every other
 word is sorted into themes 2 to 30 by Claude batch agents, each writing one CSV per batch.
 """
-import math
-
 THEMES = ["Starter Kit", "Greetings & Courtesy", "Numbers & Measure Words", "Time & Dates",
           "Family & People", "Food & Drink", "Shopping & Money", "Home & Housework", "Daily Routine",
           "Body & Health", "Clothes & Appearance", "Transport & Travel", "Places & Directions",
@@ -18,10 +16,11 @@ CORE_WORDS = {"是", "有", "在", "要", "的", "了", "吗", "呢", "吧", "�
               "和", "太", "还", "就", "没有", "一点儿"}
 # A core headword with more than one card counts only in this reading, so 还 hái (still) counts and 还 huán (return) does not.
 CORE_READINGS = {"还": "hai2"}
-MAX_THEME, MIN_THEME = 350, 40
-# Theme number 1 is the Starter Kit, whose words step 6b places by rule. Like every theme it
-# needs at least MIN_THEME words.
+# Theme number 1 is the Starter Kit, whose words step 6b places by rule.
 STARTER_NO = 1
+# The learning order goes level group first, then theme (the user's decision of 2026-09-29).
+# HSK 1 and 2 are learned together, then each higher level on its own.
+LEVEL_GROUPS = [("HSK 1-2", (1, 2)), ("HSK 3", (3,)), ("HSK 4", (4,)), ("HSK 5", (5,)), ("HSK 6", (6,))]
 BATCH_COLUMNS = ["id", "hz", "py", "lv", "pos", "en"]
 OUTPUT_COLUMNS = ["id", "hz", "theme_no", "confidence", "alt_theme_no", "note"]
 
@@ -92,38 +91,24 @@ def second_opinion_flags(main, second):
     return flags
 
 
-def split_by_level(words):
-    """Split one theme's words, already in curriculum order, into parts of at most MAX_THEME.
-
-    The parts are as equal as possible and keep the order, so the first part holds the
-    lowest levels. 700 words give two parts of 350; 351 words give parts of 176 and 175.
-    """
-    parts = math.ceil(len(words) / MAX_THEME) or 1
-    base, extra = divmod(len(words), parts)
-    out, start = [], 0
-    for i in range(parts):
-        size = base + (1 if i < extra else 0)
-        out.append(words[start:start + size])
-        start += size
-    return out
+def level_group(lv):
+    """The position in LEVEL_GROUPS of the group holding HSK level lv, so level 2 gives 0 and level 3 gives 1."""
+    return next(k for k, (_, levels) in enumerate(LEVEL_GROUPS) if lv in levels)
 
 
 def curriculum(words, theme_of, theme_order, theme_names):
-    """Themes in study order with their words, split into parts where needed.
+    """The study order as blocks, one per level group and theme that share words.
 
     words: word dicts with "id", "lv" and "freq". theme_of: {id: theme_no}.
     theme_order: theme numbers in the order they are studied. theme_names: {theme_no: name}.
-    Returns [(theme_no, name, [word, ...])]. Inside a theme, words go by HSK level, then by
-    frequency (a smaller number is more common), then by id. Themes with no words are left out.
+    Returns [(group label, theme_no, name, [word, ...])]. The blocks go by level group (HSK 1-2,
+    then 3, 4, 5 and 6), and inside a group by theme order. Inside a block, words go by HSK level,
+    then by frequency (a smaller number is more common), then by id. So Food & Drink gives one
+    block of its HSK 1 and 2 words after the Starter Kit's, and another after the HSK 3 words of
+    the themes before it. A theme is never split by size, and empty blocks are left out.
     """
-    out = []
-    for no in theme_order:
-        members = sorted((w for w in words if theme_of[w["id"]] == no),
-                         key=lambda w: (w["lv"], w["freq"], w["id"]))
-        if not members:
-            continue
-        parts = split_by_level(members)
-        for i, part in enumerate(parts, start=1):
-            name = theme_names[no] + (f" (Part {i})" if len(parts) > 1 else "")
-            out.append((no, name, part))
-    return out
+    rank = {no: k for k, no in enumerate(theme_order)}
+    blocks = {}
+    for w in sorted(words, key=lambda w: (level_group(w["lv"]), rank[theme_of[w["id"]]], w["lv"], w["freq"], w["id"])):
+        blocks.setdefault((level_group(w["lv"]), theme_of[w["id"]]), []).append(w)
+    return [(LEVEL_GROUPS[group][0], no, theme_names[no], members) for (group, no), members in blocks.items()]

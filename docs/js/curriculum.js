@@ -1,7 +1,8 @@
-// Which new words come next. Words are taught in `ord` order (theme by theme, easiest
-// HSK level first). A word is skipped once learned. A word whose lesson ended today
-// without passing waits until the next study day, where it comes first again because
-// its ord is lower than any word not yet taught.
+// Which new words come next. Words are taught in `ord` order, which goes by level group
+// (HSK 1-2, then 3, 4, 5 and 6), then theme by theme, then easiest HSK level first.
+// A word is skipped once learned. A word whose lesson ended today without passing waits
+// until the next study day, where it comes first again because its ord is lower than any
+// word not yet taught.
 const sortedCache = new WeakMap();
 
 function byOrd(words) {

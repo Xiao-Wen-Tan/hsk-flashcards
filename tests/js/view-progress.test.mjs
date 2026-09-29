@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  badgesView, calendarWeeks, checkinView, mapView, statsView, themeWordsView, wordStatus,
+  badgesView, calendarWeeks, checkinView, mapView, statsView, themeWordsView, wordBackHref, wordStatus,
 } from '../../docs/js/view/progress.js';
 import { learnedProgress } from '../../docs/js/srs.js';
 import { loadFixture } from './helpers.mjs';
@@ -14,13 +14,51 @@ const t01 = data.words.filter((w) => w.theme === 't01');
 const t02 = data.words.filter((w) => w.theme === 't02');
 
 test('the map has a tile per theme, done, current or locked, with shares', () => {
-  const tiles = mapView(data, mapOf([...t01.map((w) => at(w.id, 7)), at(t02[0].id, 1), at(t02[1].id, 2)]));
-  assert.deepEqual(tiles.map((t) => [t.name, t.statusLabel]), [
-    ['Starter Kit', 'Done'], ['Greetings & Courtesy', 'Now'], ['Numbers & Measure Words', 'Locked'],
-    ['Family & People', 'Locked'], ['Food & Drink', 'Locked'],
+  const sections = mapView(data, mapOf([...t01.map((w) => at(w.id, 7)), at(t02[0].id, 1), at(t02[1].id, 2)]));
+  assert.deepEqual(sections.map((s) => [s.title, s.statusLabel, s.counts]), [['HSK 1-2', '', '14 of 61 learned']]);
+  const tiles = sections[0].tiles;
+  assert.deepEqual(tiles.map((t) => [t.id, t.name, t.statusLabel]), [
+    ['t01', 'Starter Kit', 'Done'], ['t02', 'Greetings & Courtesy', 'Now'], ['t03', 'Numbers & Measure Words', 'Locked'],
+    ['t04', 'Family & People', 'Locked'], ['t05', 'Food & Drink', 'Locked'],
   ]);
+  assert.deepEqual(tiles.map((t) => t.href).slice(0, 2), ['#/theme/t01/1-2', '#/theme/t02/1-2']);
   assert.deepEqual([tiles[0].learnedPct, tiles[0].masteredPct], ['100%', '100%']);
   assert.deepEqual([tiles[1].learnedPct, tiles[1].masteredPct, tiles[1].counts], ['20%', '0%', '2 of 10 learned, 0 mastered']);
+});
+
+test("a finished level group says Done, and its tiles count only that group's words", () => {
+  const themes = [{ id: 't01', order: 1, name: 'Starter Kit' }, { id: 't02', order: 2, name: 'Food & Drink' }];
+  const words = [['a', 't01', 1], ['b', 't02', 2], ['c', 't02', 3], ['d', 't01', 4]]
+    .map(([id, theme, lv], i) => ({ id, theme, lv, ord: i + 1 }));
+  const sections = mapView({ themes, words }, mapOf([at('a', 1), at('b', 1)]));
+  assert.deepEqual(sections.map((s) => [s.title, s.statusLabel, s.tiles.map((t) => [t.name, t.statusLabel, t.counts])]), [
+    ['HSK 1-2', 'Done', [['Starter Kit', 'Done', '1 of 1 learned, 0 mastered'], ['Food & Drink', 'Done', '1 of 1 learned, 0 mastered']]],
+    ['HSK 3', '', [['Food & Drink', 'Now', '0 of 1 learned, 0 mastered']]],
+    ['HSK 4', '', [['Starter Kit', 'Locked', '0 of 1 learned, 0 mastered']]],
+  ]);
+  // A started tile that is not the current one shows its learned share instead of Locked.
+  const started = mapView({ themes, words: [...words, { id: 'e', theme: 't01', lv: 4, ord: 5 }] }, mapOf([at('a', 1), at('d', 1)]));
+  assert.deepEqual(started.map((s) => s.tiles.map((t) => t.statusLabel)), [['Done', 'Now'], ['Locked'], ['50%']]);
+});
+
+test("a tile's word list holds only that level group's words of the theme", () => {
+  const v = themeWordsView(data, 't05', new Map(), '1-2');
+  assert.equal(v.name, 'Food & Drink, HSK 1-2');
+  assert.equal(v.words.length, 15);
+  const themes = [{ id: 't02', order: 1, name: 'Food & Drink' }];
+  const words = [{ ...data.words[0], id: 'a', theme: 't02', lv: 2, ord: 1 }, { ...data.words[1], id: 'b', theme: 't02', lv: 3, ord: 2 }];
+  const hsk3 = themeWordsView({ themes, words }, 't02', new Map(), '3');
+  assert.deepEqual([hsk3.name, hsk3.words.map((w) => w.id)], ['Food & Drink, HSK 3', ['b']]);
+  assert.deepEqual(themeWordsView({ themes, words }, 't02', new Map()).words.map((w) => w.id), ['a', 'b']);
+  assert.equal(themeWordsView({ themes, words }, 't02', new Map(), '9'), null);
+  assert.deepEqual(hsk3.words.map((w) => w.href), ['#/word/b/3']);
+  assert.deepEqual(themeWordsView({ themes, words }, 't02', new Map()).words.map((w) => w.href), ['#/word/a', '#/word/b']);
+});
+
+test("a word's Back link returns to the list it was opened from", () => {
+  const w = { id: 'w0026', theme: 't05' };
+  assert.equal(wordBackHref(w, '3'), '#/theme/t05/3');
+  assert.equal(wordBackHref(w, undefined), '#/theme/t05');
 });
 
 test('a theme lists its words in teaching order with their place', () => {
