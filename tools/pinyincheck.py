@@ -24,8 +24,8 @@ a corrected line only when it finds no problem. It checks that:
    change for a 一 that counts ("yí gè", "yìqiān"), and a neutral "bu" or "yi" only in a doubled word
    ("kàn yi kàn"), in a potential complement ("zhǎo bu dào") and where a card or the public list
    shows it ("duìbuqǐ"). A 一 or 不 inside a card that the line writes as its card shows the card's
-   tone ("yíhuìr"), a 不 between a verb and a result, as the line's words show them, is a neutral
-   "bu" ("zhǎo bu dào"), and a 一 before a measure word of two characters counts too ("yì gōngjīn");
+   tone ("yíhuìr", or at its end the spoken tone change, "bùdébú qù"), and a 一 before a measure
+   word of two characters counts too ("yì gōngjīn");
 8. the words that points 1 and 2 of the style sheet write as one word are one pinyin word (这个
    "zhège", 那些 "nàxiē", 八月 "bāyuè", 星期五 "xīngqīwǔ");
 9. numbers are spaced as point 6 of the style sheet says (_number_problems), with 11 to 99 and each
@@ -581,18 +581,12 @@ def _tone_change_problems(sentence, cells, head, facts):
         tone = num[-1]
         after = syllable_to_num(nxt[0])[-1] if nxt and toneless(nxt[0]) != "r" else ""
         bound = {} if i in at else _card_tones(sentence, i, cells, facts.get("cards", {}))
-        if bound:
-            if num not in bound:
-                word, py, want = sorted(bound.values())[0]
-                problems.append(f"'{syl}' ({ch}) is part of {word}, which its card writes '{py}', so it is written "
-                                f"'{num_to_marked(want)}'")
+        if bound and num not in bound and not (all(last for _, _, last in bound.values()) and tone in "24"):
+            word, py, want = sorted((w, p, s) for s, (w, p, _) in bound.items())[0]
+            problems.append(f"'{syl}' ({ch}) is part of {word}, which its card writes '{py}', so it is written "
+                            f"'{num_to_marked(want)}'")
             continue
-        if _shown_here(sentence, i, num, facts["shown"]):
-            continue
-        middle = ch == "不" and tone != "5" and _potential_in_line(sentence, i, cells, facts["pos"])
-        if middle:
-            problems.append(f"'{syl}' (不) is the middle of the potential complement {middle}, which point 5 of the "
-                            "style sheet writes with a neutral 'bu' ('zhǎo bu dào')")
+        if num in bound or _shown_here(sentence, i, num, facts["shown"]):
             continue
         kept =_keeps_yi(sentence, i, facts["known"]) if ch == "一" else ""
         if tone == "5":
@@ -628,8 +622,10 @@ def _tone_change_problems(sentence, cells, head, facts):
 
 
 def _card_tones(sentence, i, cells, cards):
-    """{syllable: (card, py, syllable)} that the cards give the 一 or 不 at index i where the line writes
-    a card that holds it as that card writes it, else {} (known open item 3).
+    """{syllable: (card, py, last)} that the cards give the 一 or 不 at index i where the line writes
+    a card that holds it as that card writes it, else {} (known open item 3). last says whether the
+    一 or 不 ends the card, where it may instead show its spoken tone change before the next syllable
+    (不得不去 "bùdébú qù"), which the ordinary rules then check.
 
     A card is written as its card where its first character starts a pinyin word, its last character
     ends one, and the joints between its characters are those of its py. So with the card 一会儿
@@ -644,26 +640,8 @@ def _card_tones(sentence, i, cells, cards):
         if (a - 1 in cells and _joint(cells, a) == "") or (b + 1 in cells and _joint(cells, b + 1) == ""):
             continue
         if all(_joint(cells, j) == joints[j - a - 1] for j in range(a + 1, b + 1)):
-            out[syl] = (word, py, syl)
+            out[syl] = (word, py, k == len(word) - 1)
     return out
-
-
-def _potential_in_line(sentence, i, cells, pos):
-    """The potential complement (找不到) whose middle is the 不 at index i, as the line's own words show
-    it, else "" (known open item 3, style sheet point 5).
-
-    The 不 must be a pinyin word of its own, and the words before and after it must be a verb and a
-    result or direction (sentpinyin.potential). So "zhǎo bú dào" is one, while "kǎoshì bù jígé" (考试 +
-    不 + 及格, "fails the exam") is not, although 试 is a verb and 及 a result.
-    """
-    if i - 1 not in cells or i + 1 not in cells or _joint(cells, i) == "" or _joint(cells, i + 1) == "":
-        return ""
-    verb = "".join(sentence[j] for j in sorted(cells) if cells[j][2] == cells[i - 1][2])
-    result = "".join(sentence[j] for j in sorted(cells) if cells[j][2] == cells[i + 1][2])
-    for end in (result, result[:-1] if result[-1:] in "了着过" else ""):
-        if end and potential(verb, end, pos):
-            return verb + "不" + end
-    return ""
 
 
 def _shown_here(sentence, i, num, shown):

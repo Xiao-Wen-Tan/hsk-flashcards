@@ -322,17 +322,13 @@ def test_a_card_word_written_as_its_card_keeps_its_tone_change():
         "'bu' (不) is part of 要不, which its card writes 'yàobù', so it is written 'bù'"]
 
 
-def test_a_potential_complement_has_a_neutral_bu():
-    # Known open item 3 and style sheet point 5: "zhǎo bu dào", never "zhǎo bú dào".
+def test_a_potential_complement_may_have_a_neutral_bu():
+    # Style sheet point 5 writes "zhǎo bu dào", but no rule of the sheet decides which verb + 不 + word
+    # is a potential complement, so the checker allows the neutral bu there and does not require it.
     home = card("家", "jiā", "jia1")
     assert check("他找不到家。", "Tā zhǎo bu dào jiā.", home, facts=MORE_FACTS) == []
-    assert check("他找不到家。", "Tā zhǎo bú dào jiā.", home, facts=MORE_FACTS) == [
-        "'bú' (不) is the middle of the potential complement 找不到, which point 5 of the style sheet writes "
-        "with a neutral 'bu' ('zhǎo bu dào')"]
-    # The line's own words decide, so 考试 + 不 + 及格 ("fails the exam") is not one, although 试 is a
-    # verb and 及 a result.
+    assert check("他找不到家。", "Tā zhǎo bú dào jiā.", home, facts=MORE_FACTS) == []
     assert check("他考试不及格。", "Tā kǎoshì bù jígé.", card("考试", "kǎoshì", "kao3 shi4"), facts=MORE_FACTS) == []
-
 
 def test_yi_counts_before_a_measure_word_of_two_characters():
     # Known open item 3: 公斤 is a measure word of the public list, so 一公斤 is "yì gōngjīn".
@@ -364,3 +360,39 @@ def test_a_numeral_stands_apart_from_a_measure_word_of_two_characters():
     assert check("我买了三公斤。", "Wǒ mǎile sān gōngjīn.", buy, facts=MORE_FACTS) == []
     assert check("我买了三公斤。", "Wǒ mǎile sāngōngjīn.", buy, facts=MORE_FACTS) == [
         "the number 三公斤 is written 'sān gōngjīn' (point 6 of the style sheet), but the line has 'sāngōngjīn'"]
+
+
+# Verbs of wishing, thinking and deciding, before which a 不 is a plain "not", and a card that ends in 不.
+DECIDE_READ = {"希": {"xi1"}, "望": {"wang4"}, "觉": {"jue2", "jiao4"}, "得": {"de2", "de5", "dei3"},
+               "够": {"gou4"}, "怕": {"pa4"}, "同": {"tong2"}, "意": {"yi4"}, "决": {"jue2"}, "定": {"ding4"},
+               "出": {"chu1"}, "算": {"suan4"}, "回": {"hui2"}}
+DECIDE_FACTS = word_facts([{"simplified": hz, "pos": tags} for hz, tags in
+                           [("希望", ["v"]), ("觉得", ["v"]), ("怕", ["v"]), ("同意", ["v"]), ("决定", ["v"]),
+                            ("打算", ["v"]), ("下", ["v"]), ("够", ["v"]), ("去", ["v"]), ("出去", ["v"]),
+                            ("回去", ["v"]), ("找", ["v"]), ("到", ["v"])]],
+                          {},
+                          [{"hz": "不得不", "py": "bùdébù", "pyNum": "bu4 de2 bu4"}])
+
+
+def decide(sentence, line, head):
+    readings = lambda ch: READ.get(ch, set()) or MORE_READ.get(ch, set()) or DECIDE_READ.get(ch, set())
+    return check_line(sentence, line, head, readings, NAMES, DECIDE_FACTS)
+
+
+def test_a_bu_after_a_verb_of_wishing_or_deciding_keeps_its_full_tone():
+    # No rule of the style sheet tells "cannot do" (找不到) from "decides not to" (决定不去), so the
+    # checker does not require a neutral bu after a verb; it only allows one in a potential complement.
+    me, he = card("我", "wǒ", "wo3"), card("他", "tā", "ta1")
+    good = [("我希望不下雨。", "Wǒ xīwàng bú xià yǔ.", me), ("我觉得不够。", "Wǒ juéde bú gòu.", me),
+            ("我怕不够。", "Wǒ pà bú gòu.", me), ("他同意不去。", "Tā tóngyì bú qù.", he),
+            ("我决定不出去了。", "Wǒ juédìng bù chūqu le.", me), ("我打算不回去。", "Wǒ dǎsuàn bù huíqu.", me)]
+    assert [decide(s, line, head) for s, line, head in good] == [[]] * len(good)
+    assert decide("他找不到家。", "Tā zhǎo bu dào jiā.", card("家", "jiā", "jia1")) == []
+
+
+def test_a_card_that_ends_in_bu_may_show_its_tone_change():
+    go = card("去", "qù", "qu4")
+    assert decide("我不得不去。", "Wǒ bùdébù qù.", go) == []
+    assert decide("我不得不去。", "Wǒ bùdébú qù.", go) == []
+    assert decide("我不得不去。", "Wǒ búdébú qù.", go) == [
+        "'bú' (不) is part of 不得不, which its card writes 'bùdébù', so it is written 'bù'"]
