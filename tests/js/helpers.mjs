@@ -21,7 +21,7 @@ export function localDate(day, hour = 9) {
 
 // Checks one quiz's wrong choices against every rule in the design, independently of how
 // distractors.js picks them. Returns a list of broken rules (empty when all is well).
-const MARK = /[̄́̌̀]/g;
+const MARK = /[\u0304\u0301\u030c\u0300]/g;
 // exact(py) is how the pinyin sounds, and shape(py) is its letters and word spacing
 // without tones. A tone variant must keep the answer's shape and change its sound.
 const exact = (s) => s.normalize('NFC').toLowerCase().replace(/[\s'’-]/g, '');
