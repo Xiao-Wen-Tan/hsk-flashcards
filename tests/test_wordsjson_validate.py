@@ -45,7 +45,7 @@ from validate import check_order, check_themes, check_word, validate
 
 
 def test_validate_passes_a_good_file():
-    results = validate(sample(), lambda path, kind: None, word_range=(5, 5), min_theme=5, max_theme=10)
+    results = validate(sample(), lambda path, kind: None, word_range=(5, 5))
     assert results == {"top": [], "word count": [], "themes": [], "fields": [], "order": [], "links": [],
                        "distractors": [], "audio": []}
 
@@ -63,7 +63,7 @@ def test_validate_reports_bad_fields_and_missing_audio():
     assert check_word(labelled, {"t01"}) == ["w0002: en 'sv. dance' starts with a part-of-speech label",
                                              "w0002: enShort '/vm. number of times' starts with a part-of-speech label"]
     results = validate(data, lambda path, kind: "missing" if path.startswith("s/") else None,
-                       word_range=(5, 5), min_theme=5, max_theme=10)
+                       word_range=(5, 5))
     assert results["audio"][0] == "w0001: s/w0001_4567cdef.mp3: missing"
 
 
@@ -73,11 +73,25 @@ def test_check_order_catches_a_level_going_down():
     assert check_order(words, ["t01"]) == ["w0002: level goes down from 2 to 1 inside t01"]
 
 
-def test_the_starter_kit_needs_40_words_like_every_theme():
+def test_check_order_takes_level_group_first_then_theme():
+    # The user's decision of 2026-09-29: HSK 1-2 words of every theme come before any HSK 3 word,
+    # so a theme is two blocks here, t01's HSK 1 words and later its HSK 3 word.
+    words = sample()["words"]
+    for w, theme, lv in zip(words, ["t01", "t01", "t02", "t01", "t02"], [1, 2, 1, 3, 3]):
+        w.update({"theme": theme, "lv": lv})
+    assert check_order(words, ["t01", "t02"]) == []
+    words[1]["lv"] = 3
+    assert check_order(words, ["t01", "t02"]) == ["w0003: level group HSK 1-2 comes after HSK 3 in ord order"]
+    words[1]["lv"] = 2
+    words[3]["theme"], words[4]["theme"] = "t02", "t01"
+    assert check_order(words, ["t01", "t02"]) == ["w0005: theme t01 comes after t02 inside HSK 3 in ord order"]
+
+
+def test_check_themes_has_no_size_limits_but_wants_words_in_every_theme():
     data = sample()
-    data["themes"][0]["name"] = "Starter Kit"
-    assert check_themes(data["themes"], data["words"], 40, 350) == [
-        "theme t01 Starter Kit: 5 words, outside 40 to 350"]
+    assert check_themes(data["themes"], data["words"]) == []
+    data["themes"].append({"id": "t02", "order": 2, "name": "Food & Drink", "count": 0})
+    assert check_themes(data["themes"], data["words"]) == ["theme t02 Food & Drink: no words"]
 
 
 def test_check_word_checks_the_card_pinyin_spacing():
@@ -205,7 +219,7 @@ def test_a_card_name_shows_its_headword_in_lower_case():
     wall = {**second, "hz": "长城", "py": "chángchéng", "pyNum": "chang2 cheng2", "pyBase": "changcheng", "syl": 2,
             "ex": {**second["ex"], "hz": "长城很长。", "py": "chángchéng hěn cháng."}}
     data["words"][0], data["words"][1] = long, wall
-    results = validate(data, lambda path, kind: None, word_range=(5, 5), min_theme=5, max_theme=10)
+    results = validate(data, lambda path, kind: None, word_range=(5, 5))
     assert results["fields"] == []
     assert check_word(long, {"t01"}) == []
 

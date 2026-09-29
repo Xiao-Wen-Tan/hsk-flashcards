@@ -14,6 +14,7 @@ from pdfbody import contains_head
 from pinyin_norm import toneless
 from pinyin_text import card_py, joints_of_py, py_base, py_problems, syllable_count, syllables_of_py
 from pinyincheck import line_items, sentence_units
+from themes import LEVEL_GROUPS, level_group
 
 POS_LABELS = {"n.", "v.", "adj.", "adv.", "m.", "pron.", "prep.", "conj.", "part.", "num.", "int."}
 _HANZI = re.compile(r"[\u3007\u4e00-\u9fff]")  # Chinese characters, with the 〇 of years (二〇〇八年)
@@ -101,10 +102,11 @@ def check_top(data):
     return problems
 
 
-def check_themes(themes, words, min_size, max_size):
-    """Theme ids t01, t02... in order, order 1..k, names, counts that match, and sizes in range.
+def check_themes(themes, words):
+    """Theme ids t01, t02... in order, order 1..k, names, counts that match, and at least one word each.
 
-    Every theme counts, the Starter Kit included, whose widened rule gives it 40 words.
+    There is no size limit (the user's decision of 2026-09-29, which approved a theme of 36 words).
+    The real safeguard for a small theme is check_distractors.
     """
     problems = []
     counts = Counter(w["theme"] for w in words)
@@ -115,9 +117,8 @@ def check_themes(themes, words, min_size, max_size):
             problems.append(f"theme {t.get('id')}: no name")
         if t.get("count") != counts.get(t.get("id"), 0):
             problems.append(f"theme {t.get('id')}: count {t.get('count')} but {counts.get(t.get('id'), 0)} words")
-        size = counts.get(t.get("id"), 0)
-        if not min_size <= size <= max_size:
-            problems.append(f"theme {t.get('id')} {t.get('name')}: {size} words, outside {min_size} to {max_size}")
+        if not counts.get(t.get("id"), 0):
+            problems.append(f"theme {t.get('id')} {t.get('name')}: no words")
     return problems
 
 
@@ -194,8 +195,12 @@ def check_word(w, theme_ids):
 
 
 def check_order(words, theme_ids):
-    """ord runs 1..N once each; in ord order themes follow theme order, each theme is one block,
-    and the HSK level never goes down inside a theme."""
+    """ord runs 1..N once each, and in ord order the words go by level group, then theme, then level.
+
+    The level groups are HSK 1-2, 3, 4, 5 and 6 (themes.LEVEL_GROUPS, the user's decision of
+    2026-09-29). So every HSK 1 and 2 word comes before any HSK 3 word, the themes follow theme
+    order inside each group, and the HSK level never goes down inside one group's part of a theme.
+    """
     problems = []
     ords = sorted(w["ord"] for w in words if isinstance(w["ord"], int))
     if ords != list(range(1, len(words) + 1)):
@@ -204,9 +209,13 @@ def check_order(words, theme_ids):
     rank = {t: k for k, t in enumerate(theme_ids)}
     seq = sorted(words, key=lambda w: w["ord"])
     for a, b in zip(seq, seq[1:]):
-        if rank[b["theme"]] < rank[a["theme"]]:
-            problems.append(f"{b['id']}: theme {b['theme']} comes after {a['theme']} in ord order")
-        elif a["theme"] == b["theme"] and b["lv"] < a["lv"]:
+        ga, gb = level_group(a["lv"]), level_group(b["lv"])
+        if gb < ga:
+            problems.append(f"{b['id']}: level group {LEVEL_GROUPS[gb][0]} comes after {LEVEL_GROUPS[ga][0]} in ord order")
+        elif gb == ga and rank[b["theme"]] < rank[a["theme"]]:
+            problems.append(f"{b['id']}: theme {b['theme']} comes after {a['theme']} inside {LEVEL_GROUPS[gb][0]} "
+                            "in ord order")
+        elif gb == ga and a["theme"] == b["theme"] and b["lv"] < a["lv"]:
             problems.append(f"{b['id']}: level goes down from {a['lv']} to {b['lv']} inside {a['theme']}")
     return problems
 
@@ -250,7 +259,7 @@ def check_audio(words, file_problem):
     return problems
 
 
-def validate(data, file_problem, word_range=(4800, 5300), min_theme=40, max_theme=350):
+def validate(data, file_problem, word_range=(4800, 5300)):
     """Every check on the whole data file. Returns {check name: problems}.
 
     Since the user's decision of 2026-09-29 all pinyin is in lower case, so the validator needs no
@@ -264,7 +273,7 @@ def validate(data, file_problem, word_range=(4800, 5300), min_theme=40, max_them
     fields = [p for w in words for p in check_word(w, set(theme_ids))]
     results = {"top": [], "word count": [] if word_range[0] <= len(words) <= word_range[1]
                else [f"{len(words)} words, expected {word_range[0]} to {word_range[1]}"],
-               "themes": check_themes(themes, words, min_theme, max_theme), "fields": fields}
+               "themes": check_themes(themes, words), "fields": fields}
     if fields:
         return results
     results.update({"order": check_order(words, theme_ids), "links": check_links(words),
