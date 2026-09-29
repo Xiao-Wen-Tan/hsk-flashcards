@@ -607,10 +607,10 @@ def _tone_change_problems(sentence, cells, head, facts):
             if tone != "1":
                 problems.append(f"'{syl}' (一) follows {kept}, so it is part of a number, an ordinal or a weekday and "
                                 "keeps its first tone 'yī'")
-        elif yi_in_arithmetic(sentence, i, facts["counted"]):
+        elif yi_in_arithmetic(sentence, i, facts["counted"], lambda j: _span(cells, j)):
             if tone != "1":
-                problems.append(f"'{syl}' (一) is a number in arithmetic next to "
-                                f"{yi_in_arithmetic(sentence, i, facts['counted'])}, so it keeps its first tone 'yī'")
+                word = yi_in_arithmetic(sentence, i, facts["counted"], lambda j: _span(cells, j))
+                problems.append(f"'{syl}' (一) is a number in arithmetic next to {word}, so it keeps its first tone 'yī'")
         elif sentence[i + 1:i + 2] in DIGITS and i + 1 in cells:
             if tone != "1":
                 problems.append(f"'{syl}' (一) is read digit by digit before {sentence[i + 1]}, so it keeps its first "
@@ -630,6 +630,14 @@ def _tone_change_problems(sentence, cells, head, facts):
                 problems.append(f"'{syl}' (一) comes before '{nxt[0]}', so it shows its spoken tone change, 'yí' before "
                                 "a fourth tone and 'yì' before the other tones")
     return problems
+
+
+def _span(cells, j):
+    """(start, end) of the sentence characters that share a pinyin word with the character j, or None."""
+    if j not in cells:
+        return None
+    same = [k for k in cells if cells[k][2] == cells[j][2]]
+    return min(same), max(same) + 1
 
 
 def _yi_open(sentence, i, cells, known):

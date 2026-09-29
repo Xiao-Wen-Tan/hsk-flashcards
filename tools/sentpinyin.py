@@ -643,8 +643,9 @@ def syllables(sentence, words, lookup, hz, head_nums, fixes=None, counted=()):
     where 得不得 looks like a doubled verb.
     """
     out = [None] * len(sentence)
-    keep, pos, decimal = set(), 0, decimal_digits(words)
+    keep, pos, decimal, span = set(), 0, decimal_digits(words), {}
     for n, word in enumerate(words):
+        span.update({pos + k: (pos, pos + len(word)) for k in range(len(word))})
         found = iter(lookup(word)) if _HANZI.search(word) else iter(())
         for k, ch in enumerate(word):
             if _HANZI.match(ch):
@@ -663,8 +664,11 @@ def syllables(sentence, words, lookup, hz, head_nums, fixes=None, counted=()):
     for i, syl in (fixes or {}).items():
         out[i] = syl
     idx = [i for i, s in enumerate(out) if s]
+    at = {i: n for n, i in enumerate(idx)}
+    spans = {n: (at[span[i][0]], at[span[i][1] - 1] + 1) for n, i in enumerate(idx)
+             if span[i][0] in at and span[i][1] - 1 in at}
     changed = tone_change([sentence[i] for i in idx], [out[i] for i in idx],
-                          keep={n for n, i in enumerate(idx) if i in keep}, counted=counted)
+                          keep={n for n, i in enumerate(idx) if i in keep}, counted=counted, spans=spans)
     for i, syl in zip(idx, changed):
         out[i] = syl
     for i, syl in zip(head, head_nums):

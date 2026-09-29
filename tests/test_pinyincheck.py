@@ -456,6 +456,14 @@ def test_yi_keeps_its_first_tone_in_arithmetic_and_in_month_names():
     assert yi("一加一等于二。", "yì jiā yī děngyú èr.", two) == [
         "'yì' (一) is a number in arithmetic next to 加, so it keeps its first tone 'yī'"]
     assert yi("再加一个人来。", "zài jiā yí gè rén lái.") == []
+    # 加 that starts a longer word of the line (加班 "jiābān") is not arithmetic (decision of 2026-09-29),
+    # while 除以 and 乘以 are arithmetic words of their own.
+    reads.update({"班": {"ban1"}, "除": {"chu2"}, "以": {"yi3"}})
+    assert yi("他一加班就来。", "tā yì jiābān jiù lái.") == []
+    assert yi("他一加班就来。", "tā yī jiābān jiù lái.") == [
+        "'yī' (一) comes before 'jiā', so it shows its spoken tone change, 'yí' before a fourth tone and 'yì' "
+        "before the other tones"]
+    assert yi("一除以二等于二。", "yī chúyǐ èr děngyú èr.", two) == []
     cold = card("冷", "lěng", "leng3")
     assert yi("一月很冷。", "yīyuè hěn lěng.", cold) == []
     assert yi("十一月很冷。", "shíyīyuè hěn lěng.", cold) == []
@@ -469,9 +477,10 @@ def test_the_draft_and_the_checker_agree_on_yi():
              "一月": ["yi1", "yue4"], "十一月": ["shi2", "yi1", "yue4"], "很": ["hen3"], "冷": ["leng3"],
              "加": ["jia1"], "等于": ["deng3", "yu2"], "二": ["er4"], "是": ["shi4"], "第一": ["di4", "yi1"],
              "我们": ["wo3", "men5"], "统一": ["tong3", "yi1"], "去": ["qu4"], "一百": ["yi1", "bai3"],
-             "一十": ["yi1", "shi2"], "九": ["jiu3"], "八": ["ba1"], "年": ["nian2"]}
+             "一十": ["yi1", "shi2"], "九": ["jiu3"], "八": ["ba1"], "年": ["nian2"], "加班": ["jia1", "ban1"],
+             "除以": ["chu2", "yi3"]}
     reads = {**READ, **MORE_READ, "加": {"jia1"}, "等": {"deng3"}, "于": {"yu2"}, "冷": {"leng3"}, "口": {"kou3"},
-             "气": {"qi4"}, "跑": {"pao3"}}
+             "气": {"qi4"}, "跑": {"pao3"}, "班": {"ban1"}, "除": {"chu2"}, "以": {"yi3"}}
     samples = [("他一看就来。", ["他", "一", "看", "就", "来", "。"], "tā yí kàn jiù lái."),
                ("他一听就来。", ["他", "一", "听", "就", "来", "。"], "tā yì tīng jiù lái."),
                ("我一个人来。", ["我", "一", "个", "人", "来", "。"], "wǒ yí gè rén lái."),
@@ -479,6 +488,8 @@ def test_the_draft_and_the_checker_agree_on_yi():
                ("一月很冷。", ["一月", "很", "冷", "。"], "yīyuè hěn lěng."),
                ("十一月很冷。", ["十一月", "很", "冷", "。"], "shíyīyuè hěn lěng."),
                ("一加一等于二。", ["一", "加", "一", "等于", "二", "。"], "yī jiā yī děngyú èr."),
+               ("他一加班就来。", ["他", "一", "加班", "就", "来", "。"], "tā yì jiābān jiù lái."),
+               ("一除以二等于二。", ["一", "除以", "二", "等于", "二", "。"], "yī chúyǐ èr děngyú èr."),
                ("他是第一。", ["他", "是", "第一", "。"], "tā shì dì-yī."),
                ("我们统一去。", ["我们", "统一", "去", "。"], "wǒmen tǒngyī qù."),
                ("一百一十个人来。", ["一百", "一十", "个", "人", "来", "。"], "yìbǎi yīshí gè rén lái."),

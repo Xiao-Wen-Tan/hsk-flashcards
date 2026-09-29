@@ -102,34 +102,44 @@ def num_to_marked(syl):
 # 两 is not one, because 一两 is an approximate number ("yì-liǎng").
 DIGITS = set("〇零一二三四五六七八九")
 # The words of arithmetic, next to which a 一 is a number and keeps yi1 ("yī jiā yī děngyú èr").
-ARITHMETIC = ("加", "减", "乘", "除", "等于")
+ARITHMETIC = ("除以", "乘以", "等于", "加", "减", "乘", "除")
 
 
-def yi_in_arithmetic(chars, i, counted=()):
+def yi_in_arithmetic(chars, i, counted=(), span_of=None):
     """The arithmetic word next to the 一 at index i of chars, when that 一 keeps yi1 there, else "".
 
     A 一 directly before or after 加, 减, 乘, 除 or 等于 is a number in arithmetic, as the coordinator
     decided on 2026-09-29, so 一加一等于二 gives 加 for both 一. A 一 after such a word that counts
     with a word of counted (the measure words, 个) still shows its tone change (再加一个 "zài jiā yí gè").
+    span_of(j) gives (start, end) of the word that holds the character j as the line or the segmenter
+    divides it, or None. An arithmetic character that belongs to a longer word without the 一 is not
+    arithmetic (coordinator's decision of 2026-09-29), so in 一加班 "yì jiābān" the 一 changes. 除以
+    and 乘以 are arithmetic words of their own ("yī chúyǐ èr").
     The draft (tone_change) and the checker (pinyincheck) share this rule.
     """
     chars = "".join(chars)
+
+    def alone(a, b):
+        span = span_of(a) if span_of else None
+        return not span or (span[0] >= a and span[1] <= b) or span[0] <= i < span[1]
+
     after = next((w for w in ARITHMETIC if chars[i + 1:i + 1 + len(w)] == w), "")
-    if after:
+    if after and alone(i + 1, i + 1 + len(after)):
         return after
     before = next((w for w in ARITHMETIC if i >= len(w) and chars[i - len(w):i] == w), "")
-    if before and not any(chars[i + 1:i + 1 + n] in counted for n in (1, 2, 3, 4)):
+    if before and alone(i - len(before), i) and not any(chars[i + 1:i + 1 + n] in counted for n in (1, 2, 3, 4)):
         return before
     return ""
 
 
-def tone_change(hz, nums, keep=(), counted=()):
+def tone_change(hz, nums, keep=(), counted=(), spans=None):
     """Apply the tone changes of 一 and 不 that textbooks write, and no others.
 
     hz: the characters, one per syllable (a 儿 ending counts as its own character, like "r5").
     nums: the numbered syllables, in dictionary tones. keep: positions of 一 that end a
     word inside a sentence (统一 in 统一中国), which keep yi1. counted: the measure words, which
-    tell a 一 that counts after an arithmetic word (yi_in_arithmetic).
+    tell a 一 that counts after an arithmetic word (yi_in_arithmetic). spans: {position: (start, end)}
+    of the segmented word that holds each position, so 加班 is not the arithmetic 加.
     Between two copies of one character, 一 and 不 lose their tone, so 看一看 gives kan4 yi5 kan4
     and 好不好 gives hao3 bu5 hao3. Otherwise these rules apply.
     不 (bu4) becomes bu2 before a fourth tone, so 不客气 bu4 ke4 qi5 gives bu2 ke4 qi5.
@@ -152,7 +162,7 @@ def tone_change(hz, nums, keep=(), counted=()):
             if nxt == "4":
                 out[i] = "bu2"
         elif not (i in keep or (i > 0 and hz[i - 1] in _NUMERALS) or hz[i + 1] == "月" or hz[i + 1] in DIGITS
-                  or yi_in_arithmetic(hz, i, counted)):
+                  or yi_in_arithmetic(hz, i, counted, (spans or {}).get)):
             out[i] = "yi2" if nxt in "45" else "yi4"
     return out
 
