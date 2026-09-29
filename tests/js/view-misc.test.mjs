@@ -18,6 +18,10 @@ test('addresses name the screens', () => {
   assert.deepEqual(parseRoute('#/word/w0026'), { name: 'word', id: 'w0026' });
   assert.deepEqual(parseRoute('#/nonsense'), { name: 'today' });
   assert.deepEqual(parseRoute('#/theme'), { name: 'today' });
+  // A map tile opens one level group's words of a theme, for example the HSK 3 words of t05.
+  assert.deepEqual(parseRoute('#/theme/t05/3'), { name: 'theme', id: 't05', group: '3' });
+  assert.deepEqual(parseRoute('#/theme/t05/1-2'), { name: 'theme', id: 't05', group: '1-2' });
+  assert.equal(hrefOf({ name: 'theme', id: 't05', group: '1-2' }), '#/theme/t05/1-2');
   assert.equal(hrefOf({ name: 'word', id: 'w0026' }), '#/word/w0026');
   assert.equal(hrefOf({ name: 'stats' }), '#/stats');
 });

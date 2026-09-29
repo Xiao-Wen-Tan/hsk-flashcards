@@ -79,6 +79,20 @@ test('the map has a section per level group, each with the themes that have word
   assert.deepEqual(groupsDone(WORDS3, later), ['1-2']);
 });
 
+test('a tile with a learned word is started, never locked, when it is not the current tile', () => {
+  // 'c' failed its lesson, so it is the next new word, while 'd' of the next tile was learned.
+  const progress = mapOf(['a', 'b', 'd'].map((id) => at(id, 1)));
+  const tiles = mapSections(THEMES3, WORDS3, progress).map((s) => s.tiles.map((t) => [t.name, t.status]));
+  assert.deepEqual(tiles, [
+    [['Starter Kit', 'done'], ['Food & Drink', 'current']],
+    [['Starter Kit', 'done'], ['Transport & Travel', 'locked']],
+    [['Food & Drink', 'locked']],
+  ]);
+  const words = WORDS3.map((w) => (w.id === 'e' ? { ...w, theme: 't01' } : w)); // HSK 3 Starter Kit: d and e
+  const half = mapSections(THEMES3, words, progress)[1].tiles[0];
+  assert.deepEqual([half.name, half.learned, half.total, half.status], ['Starter Kit', 1, 2, 'started']);
+});
+
 test('30-day activity counts reviews and learned words per day', () => {
   const events = [
     { seq: 1, day: '2026-09-20', kind: 'review', grade: 'right' }, // 31 days ago, so left out

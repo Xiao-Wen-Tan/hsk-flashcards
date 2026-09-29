@@ -21,6 +21,7 @@ test('the map has a tile per theme, done, current or locked, with shares', () =>
     ['t01', 'Starter Kit', 'Done'], ['t02', 'Greetings & Courtesy', 'Now'], ['t03', 'Numbers & Measure Words', 'Locked'],
     ['t04', 'Family & People', 'Locked'], ['t05', 'Food & Drink', 'Locked'],
   ]);
+  assert.deepEqual(tiles.map((t) => t.href).slice(0, 2), ['#/theme/t01/1-2', '#/theme/t02/1-2']);
   assert.deepEqual([tiles[0].learnedPct, tiles[0].masteredPct], ['100%', '100%']);
   assert.deepEqual([tiles[1].learnedPct, tiles[1].masteredPct, tiles[1].counts], ['20%', '0%', '2 of 10 learned, 0 mastered']);
 });
@@ -35,6 +36,21 @@ test("a finished level group says Done, and its tiles count only that group's wo
     ['HSK 3', '', [['Food & Drink', 'Now', '0 of 1 learned, 0 mastered']]],
     ['HSK 4', '', [['Starter Kit', 'Locked', '0 of 1 learned, 0 mastered']]],
   ]);
+  // A started tile that is not the current one shows its learned share instead of Locked.
+  const started = mapView({ themes, words: [...words, { id: 'e', theme: 't01', lv: 4, ord: 5 }] }, mapOf([at('a', 1), at('d', 1)]));
+  assert.deepEqual(started.map((s) => s.tiles.map((t) => t.statusLabel)), [['Done', 'Now'], ['Locked'], ['50%']]);
+});
+
+test("a tile's word list holds only that level group's words of the theme", () => {
+  const v = themeWordsView(data, 't05', new Map(), '1-2');
+  assert.equal(v.name, 'Food & Drink, HSK 1-2');
+  assert.equal(v.words.length, 15);
+  const themes = [{ id: 't02', order: 1, name: 'Food & Drink' }];
+  const words = [{ ...data.words[0], id: 'a', theme: 't02', lv: 2, ord: 1 }, { ...data.words[1], id: 'b', theme: 't02', lv: 3, ord: 2 }];
+  const hsk3 = themeWordsView({ themes, words }, 't02', new Map(), '3');
+  assert.deepEqual([hsk3.name, hsk3.words.map((w) => w.id)], ['Food & Drink, HSK 3', ['b']]);
+  assert.deepEqual(themeWordsView({ themes, words }, 't02', new Map()).words.map((w) => w.id), ['a', 'b']);
+  assert.equal(themeWordsView({ themes, words }, 't02', new Map(), '9'), null);
 });
 
 test('a theme lists its words in teaching order with their place', () => {

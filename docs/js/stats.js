@@ -48,7 +48,12 @@ export const LEVEL_GROUPS = Object.freeze([
   { id: '6', label: 'HSK 6', levels: [6] },
 ].map((g) => Object.freeze(g)));
 
-function wordsOfGroup(words, group) {
+// The level group with this ID, for example groupById('3'), or undefined.
+export function groupById(id) {
+  return LEVEL_GROUPS.find((g) => g.id === id);
+}
+
+export function wordsOfGroup(words, group) {
   return words.filter((w) => group.levels.includes(w.lv));
 }
 
@@ -64,8 +69,10 @@ export function groupsDone(words, progressById) {
 // one section per level group that has words, in group order. A section lists the themes
 // with words in that group, in theme order, and a tile counts only that group's words of
 // its theme. A tile is 'done' when all those words are learned, 'current' when it holds the
-// next new word (the lowest ord not learned yet), and 'locked' otherwise. A section is done
-// when all its words are learned.
+// next new word (the lowest ord not learned yet), 'started' when some of its words are
+// learned, and 'locked' when none is. A section is done when all its words are learned.
+// A tile can be started without being current when a failed lesson sends the next new word
+// back to an earlier tile.
 // For example, with Food & Drink's 3 HSK 1-2 words learned and its 1 HSK 3 word not, the
 // HSK 1-2 section shows Food & Drink done (3 of 3) and the HSK 3 section shows it at 0 of 1.
 export function mapSections(themes, words, progressById) {
@@ -82,6 +89,7 @@ export function mapSections(themes, words, progressById) {
       let status = 'locked';
       if (c.learned === c.total) status = 'done';
       else if (next && members.includes(next)) status = 'current';
+      else if (c.learned > 0) status = 'started';
       return {
         id: t.id, name: t.name, order: t.order, ...c,
         learnedShare: c.learned / c.total,

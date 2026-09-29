@@ -62,7 +62,7 @@ export async function renderMap(app) {
     sections.map((s) => h('section', { class: `level${s.done ? ' done' : ''}` },
       h('h2', {}, s.title, s.statusLabel ? h('span', { class: 'level-status' }, ` ${s.statusLabel}`) : null),
       h('p', { class: 'level-counts' }, s.counts),
-      h('div', { class: 'tiles' }, s.tiles.map((t) => h('a', { class: `tile ${t.status}`, href: `#/theme/${t.id}` },
+      h('div', { class: 'tiles' }, s.tiles.map((t) => h('a', { class: `tile ${t.status}`, href: t.href },
         h('span', { class: 'tile-status' }, t.statusLabel),
         h('span', { class: 'tile-name' }, t.name),
         h('span', { class: 'bar' },
@@ -71,8 +71,8 @@ export async function renderMap(app) {
         h('span', { class: 'tile-counts' }, t.counts)))))));
 }
 
-export async function renderTheme(app, themeId) {
-  const v = themeWordsView(app.data, themeId, await progressById(app));
+export async function renderTheme(app, themeId, groupId) {
+  const v = themeWordsView(app.data, themeId, await progressById(app), groupId);
   if (!v) { window.location.hash = '#/map'; return; }
   show(app.main, h('a', { href: '#/map' }, 'Back to the map'), h('h1', {}, v.name),
     h('ul', { class: 'words' }, v.words.map((w) => h('li', {},
