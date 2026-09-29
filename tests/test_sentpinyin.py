@@ -36,8 +36,8 @@ def lookup(word):
     return TABLE[word]
 
 
-def pinyin(sentence, words, hz, head_nums, caps=(), fixes=None, joints_of=None):
-    return render(sentence, words, syllables(sentence, words, lookup, hz, head_nums, fixes), caps, joints_of)
+def pinyin(sentence, words, hz, head_nums, caps=(), fixes=None, joints_of=None, facts=None):
+    return render(sentence, words, syllables(sentence, words, lookup, hz, head_nums, fixes, facts), caps, joints_of)
 
 
 def test_plain_sentence():
@@ -78,7 +78,9 @@ def test_a_surname_and_a_given_name_are_two_words_and_a_title_stands_apart():
 
 
 def test_tone_changes_cross_words_but_respect_word_ends():
-    assert pinyin("我不去。统一中国！", ["我", "不", "去", "。", "统一", "中国", "！"], "统一", ["tong3", "yi1"]) == \
+    # 统一 keeps "yī" at its end because it is a known word (sentpinyin.yi_rule, the checker's rule).
+    assert pinyin("我不去。统一中国！", ["我", "不", "去", "。", "统一", "中国", "！"], "统一", ["tong3", "yi1"],
+                  facts={"known": {"统一"}}) == \
         "wǒ bú qù. tǒngyī zhōngguó!"
     assert pinyin("一个人长大了。", ["一", "个", "人", "长", "大", "了", "。"], "一", ["yi1"]) == "yí gè rén cháng dà le."
 

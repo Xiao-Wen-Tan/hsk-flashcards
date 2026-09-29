@@ -103,9 +103,13 @@ def num_to_marked(syl):
 DIGITS = set("〇零一二三四五六七八九")
 # The words of arithmetic, next to which a 一 is a number and keeps yi1 ("yī jiā yī děngyú èr").
 ARITHMETIC = ("除以", "乘以", "等于", "加", "减", "乘", "除")
+# Words that relate two numbers, next to which a 一 keeps yi1 when a numeral stands on their other side
+# (一比零 "yī bǐ líng", 一是一 "yī shì yī").
+RELATIONS = ("比", "是")
+_NUMBER_CHARS = set("〇零一二两三四五六七八九十百千万亿")
 
 
-def yi_in_arithmetic(chars, i, counted=(), span_of=None):
+def yi_in_arithmetic(chars, i, counted=(), span_of=None, known=()):
     """The arithmetic word next to the 一 at index i of chars, when that 一 keeps yi1 there, else "".
 
     A 一 directly before or after 加, 减, 乘, 除 or 等于 is a number in arithmetic, as the coordinator
@@ -114,8 +118,10 @@ def yi_in_arithmetic(chars, i, counted=(), span_of=None):
     span_of(j) gives (start, end) of the word that holds the character j as the line or the segmenter
     divides it, or None. An arithmetic character that belongs to a longer word without the 一 is not
     arithmetic (coordinator's decision of 2026-09-29), so in 一加班 "yì jiābān" the 一 changes. 除以
-    and 乘以 are arithmetic words of their own ("yī chúyǐ èr").
-    The draft (tone_change) and the checker (pinyincheck) share this rule.
+    and 乘以 are arithmetic words of their own ("yī chúyǐ èr"). A 一 after such a word that starts a
+    card or a word of the public lists (known, 一半 in 加一半 "jiā yíbàn") is not a number there either.
+    比 and 是 (RELATIONS) count too where a numeral stands on their other side (一比零, 一是一).
+    The draft (sentpinyin.yi_rule) and the checker (pinyincheck) share this rule.
     """
     chars = "".join(chars)
 
@@ -123,11 +129,21 @@ def yi_in_arithmetic(chars, i, counted=(), span_of=None):
         span = span_of(a) if span_of else None
         return not span or (span[0] >= a and span[1] <= b) or span[0] <= i < span[1]
 
+    starts_word = any(chars[i:i + n] in known for n in (2, 3, 4))
     after = next((w for w in ARITHMETIC if chars[i + 1:i + 1 + len(w)] == w), "")
     if after and alone(i + 1, i + 1 + len(after)):
         return after
+    after = next((w for w in RELATIONS if chars[i + 1:i + 1 + len(w)] == w), "")
+    if after and alone(i + 1, i + 1 + len(after)) and chars[i + 1 + len(after):i + 2 + len(after)] in _NUMBER_CHARS \
+            and chars[i + 1 + len(after):i + 2 + len(after)]:
+        return after
     before = next((w for w in ARITHMETIC if i >= len(w) and chars[i - len(w):i] == w), "")
-    if before and alone(i - len(before), i) and not any(chars[i + 1:i + 1 + n] in counted for n in (1, 2, 3, 4)):
+    if before and alone(i - len(before), i) and not starts_word \
+            and not any(chars[i + 1:i + 1 + n] in counted for n in (1, 2, 3, 4)):
+        return before
+    before = next((w for w in RELATIONS if i >= len(w) and chars[i - len(w):i] == w), "")
+    if before and alone(i - len(before), i) and not starts_word and i > len(before) \
+            and chars[i - len(before) - 1] in _NUMBER_CHARS:
         return before
     return ""
 

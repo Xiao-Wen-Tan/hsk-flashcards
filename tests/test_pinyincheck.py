@@ -400,7 +400,8 @@ def test_a_card_that_ends_in_bu_may_show_its_tone_change():
 # change, except in an ordinal or counting use, a number read digit by digit and at the end of a word.
 YI_FACTS = word_facts([{"simplified": hz, "pos": tags} for hz, tags in
                        [("看", ["v"]), ("听", ["v"]), ("个", ["q"]), ("同一", ["b"]), ("年", ["qt", "n"]),
-                        ("楼", ["n"]), ("点", ["q", "n"])]],
+                        ("楼", ["n"]), ("点", ["q", "n"]), ("一半", ["m"]), ("王", ["n", "nr"]), ("份", ["q"]),
+                        ("小时", ["n", "q"]), ("一路平安", [])]],
                       {}, [{"hz": "一起", "py": "yìqǐ", "pyNum": "yi1 qi3"},
                            {"hz": "统一", "py": "tǒngyī", "pyNum": "tong3 yi1"}])
 YI_CHANGE = "so it shows its spoken tone change, 'yí' before a fourth tone and 'yì' before the other tones"
@@ -469,8 +470,44 @@ def test_yi_keeps_its_first_tone_in_arithmetic_and_in_month_names():
     assert yi("十一月很冷。", "shíyīyuè hěn lěng.", cold) == []
 
 
+def test_the_review_cases_of_yi():
+    # Review of 2026-09-29. A card or list word that starts with 一 after 加 is not arithmetic (一半); 一
+    # keeps yī in a name (王一), between numbers with 是 or 比 (一是一, 一比零); 等 and 路车 make an ordinal
+    # (一等奖, 一路车) while the list word 一路平安 changes; a doubled word does not reach across a comma.
+    reads = {**READ, **MORE_READ, **EXTRA_READ}
+    yi = lambda sentence, line, head: check_line(sentence, line, head, lambda ch: reads.get(ch, set()), NAMES,
+                                                 YI_FACTS)
+    come, two = card("来", "lái", "lai2"), card("二", "èr", "er4")
+    assert yi("每次加一半。", "měi cì jiā yíbàn.", card("次", "cì", "ci4")) == []
+    assert yi("王一来了。", "wáng yī lái le.", come) == []
+    assert yi("一是一，二是二。", "yī shì yī, èr shì èr.", two) == []
+    assert yi("一比零。", "yī bǐ líng.", card("零", "líng", "ling2")) == []
+    assert yi("一比零。", "yì bǐ líng.", card("零", "líng", "ling2")) == [
+        "'yì' (一) is a number in arithmetic next to 比, so it keeps its first tone 'yī'"]
+    prize = card("奖", "jiǎng", "jiang3")
+    assert yi("我得了一等奖。", "wǒ dé le yī děng jiǎng.", prize) == []
+    assert yi("我得了一等奖。", "wǒ dé le yì děng jiǎng.", prize) == []
+    bus = card("车", "chē", "che1")
+    assert yi("我坐一路车。", "wǒ zuò yī lù chē.", bus) == []
+    wish = card("祝", "zhù", "zhu4")
+    assert yi("祝你一路平安。", "zhù nǐ yílù píng'ān.", wish) == []
+    assert yi("祝你一路平安。", "zhù nǐ yīlù píng'ān.", wish) == [f"'yī' (一) comes before 'lù', {YI_CHANGE}"]
+    share = card("份", "fèn", "fen4")
+    assert yi("两份，一份。", "liǎng fèn, yí fèn.", share) == []
+    assert len(yi("两份，一份。", "liǎng fèn, yi fèn.", share)) == 1
+
+
+EXTRA_READ = {"加": {"jia1"}, "等": {"deng3"}, "于": {"yu2"}, "冷": {"leng3"}, "口": {"kou3"}, "气": {"qi4"},
+              "跑": {"pao3"}, "班": {"ban1"}, "除": {"chu2"}, "以": {"yi3"}, "每": {"mei3"}, "半": {"ban4"},
+              "王": {"wang2"}, "比": {"bi3"}, "零": {"ling2"}, "得": {"de2"}, "奖": {"jiang3"}, "坐": {"zuo4"},
+              "路": {"lu4"}, "车": {"che1"}, "祝": {"zhu4"}, "平": {"ping2"}, "安": {"an1"}, "份": {"fen4"},
+              "价": {"jia4"}, "减": {"jian3"}, "划": {"hua2"}, "桨": {"jiang3"}, "时": {"shi2"}, "号": {"hao4"},
+              "级": {"ji2"}, "上": {"shang4"}}
+
+
 def test_the_draft_and_the_checker_agree_on_yi():
-    # The draft (sentpinyin.syllables with pinyin_text.tone_change) writes each line so the checker accepts it.
+    # The draft (sentpinyin.syllables) writes each line so the checker accepts it, with the same 一 rules.
+    from pinyin_text import card_py
     from sentpinyin import render, syllables, word_joints
     table = {"他": ["ta1"], "一": ["yi1"], "看": ["kan4"], "就": ["jiu4"], "来": ["lai2"], "听": ["ting1"],
              "我": ["wo3"], "个": ["ge4"], "人": ["ren2"], "一口气": ["yi1", "kou3", "qi4"], "跑": ["pao3"],
@@ -478,28 +515,43 @@ def test_the_draft_and_the_checker_agree_on_yi():
              "加": ["jia1"], "等于": ["deng3", "yu2"], "二": ["er4"], "是": ["shi4"], "第一": ["di4", "yi1"],
              "我们": ["wo3", "men5"], "统一": ["tong3", "yi1"], "去": ["qu4"], "一百": ["yi1", "bai3"],
              "一十": ["yi1", "shi2"], "九": ["jiu3"], "八": ["ba1"], "年": ["nian2"], "加班": ["jia1", "ban1"],
-             "除以": ["chu2", "yi3"]}
-    reads = {**READ, **MORE_READ, "加": {"jia1"}, "等": {"deng3"}, "于": {"yu2"}, "冷": {"leng3"}, "口": {"kou3"},
-             "气": {"qi4"}, "跑": {"pao3"}, "班": {"ban1"}, "除": {"chu2"}, "以": {"yi3"}}
-    samples = [("他一看就来。", ["他", "一", "看", "就", "来", "。"], "tā yí kàn jiù lái."),
-               ("他一听就来。", ["他", "一", "听", "就", "来", "。"], "tā yì tīng jiù lái."),
-               ("我一个人来。", ["我", "一", "个", "人", "来", "。"], "wǒ yí gè rén lái."),
-               ("他一口气跑来。", ["他", "一口气", "跑", "来", "。"], "tā yìkǒuqì pǎo lái."),
-               ("一月很冷。", ["一月", "很", "冷", "。"], "yīyuè hěn lěng."),
-               ("十一月很冷。", ["十一月", "很", "冷", "。"], "shíyīyuè hěn lěng."),
-               ("一加一等于二。", ["一", "加", "一", "等于", "二", "。"], "yī jiā yī děngyú èr."),
-               ("他一加班就来。", ["他", "一", "加班", "就", "来", "。"], "tā yì jiābān jiù lái."),
-               ("一除以二等于二。", ["一", "除以", "二", "等于", "二", "。"], "yī chúyǐ èr děngyú èr."),
-               ("他是第一。", ["他", "是", "第一", "。"], "tā shì dì-yī."),
-               ("我们统一去。", ["我们", "统一", "去", "。"], "wǒmen tǒngyī qù."),
-               ("一百一十个人来。", ["一百", "一十", "个", "人", "来", "。"], "yìbǎi yīshí gè rén lái."),
-               ("一九九八年来。", ["一", "九", "九", "八", "年", "来", "。"], "yī jiǔ jiǔ bā nián lái.")]
-    head = card("来", "lái", "lai2")
-    for sentence, words, want in samples:
-        h = head if "来" in sentence else card("是", "shì", "shi4") if "是" in sentence else \
-            card("很", "hěn", "hen3") if "很" in sentence else card("二", "èr", "er4") if "二" in sentence else \
-            card("去", "qù", "qu4")
-        sylls = syllables(sentence, words, lambda w: table[w], h["hz"], h["pyNum"].split(), counted=YI_FACTS["counted"])
+             "除以": ["chu2", "yi3"], "价格": ["jia4", "ge2"], "减": ["jian3"], "一半": ["yi1", "ban4"],
+             "每": ["mei3"], "次": ["ci4"], "王": ["wang2"], "了": ["le5"], "比": ["bi3"], "零": ["ling2"],
+             "得": ["de2"], "等": ["deng3"], "奖": ["jiang3"], "坐": ["zuo4"], "路": ["lu4"], "车": ["che1"],
+             "祝": ["zhu4"], "你": ["ni3"], "一路平安": ["yi1", "lu4", "ping2", "an1"], "两": ["liang3"],
+             "份": ["fen4"], "每人": ["mei3", "ren2"], "划一": ["hua2", "yi1"], "小时": ["xiao3", "shi2"],
+             "桨": ["jiang3"], "在": ["zai4"], "楼": ["lou2"], "今天": ["jin1", "tian1"], "号": ["hao4"],
+             "上": ["shang4"], "年级": ["nian2", "ji2"]}
+    reads = {**READ, **MORE_READ, **EXTRA_READ}
+    samples = [("他一看就来。", ["他", "一", "看", "就", "来", "。"], "tā yí kàn jiù lái.", "来"),
+               ("他一听就来。", ["他", "一", "听", "就", "来", "。"], "tā yì tīng jiù lái.", "来"),
+               ("我一个人来。", ["我", "一", "个", "人", "来", "。"], "wǒ yí gè rén lái.", "来"),
+               ("他一口气跑来。", ["他", "一口气", "跑", "来", "。"], "tā yìkǒuqì pǎo lái.", "来"),
+               ("一月很冷。", ["一月", "很", "冷", "。"], "yīyuè hěn lěng.", "很"),
+               ("十一月很冷。", ["十一月", "很", "冷", "。"], "shíyīyuè hěn lěng.", "很"),
+               ("一加一等于二。", ["一", "加", "一", "等于", "二", "。"], "yī jiā yī děngyú èr.", "二"),
+               ("他一加班就来。", ["他", "一", "加班", "就", "来", "。"], "tā yì jiābān jiù lái.", "来"),
+               ("一除以二等于二。", ["一", "除以", "二", "等于", "二", "。"], "yī chúyǐ èr děngyú èr.", "二"),
+               ("他是第一。", ["他", "是", "第一", "。"], "tā shì dì-yī.", "是"),
+               ("我们统一去。", ["我们", "统一", "去", "。"], "wǒmen tǒngyī qù.", "去"),
+               ("一百一十个人来。", ["一百", "一十", "个", "人", "来", "。"], "yìbǎi yīshí gè rén lái.", "来"),
+               ("一九九八年来。", ["一", "九", "九", "八", "年", "来", "。"], "yī jiǔ jiǔ bā nián lái.", "来"),
+               ("价格减一半。", ["价格", "减", "一半", "。"], "jiàgé jiǎn yíbàn.", "减"),
+               ("每次加一半。", ["每", "次", "加", "一半", "。"], "měi cì jiā yíbàn.", "次"),
+               ("王一来了。", ["王", "一", "来", "了", "。"], "wáng yī lái le.", "来"),
+               ("一是一，二是二。", ["一", "是", "一", "，", "二", "是", "二", "。"], "yī shì yī, èr shì èr.", "二"),
+               ("一比零。", ["一", "比", "零", "。"], "yī bǐ líng.", "零"),
+               ("我得了一等奖。", ["我", "得", "了", "一", "等", "奖", "。"], "wǒ dé le yī děng jiǎng.", "奖"),
+               ("我坐一路车。", ["我", "坐", "一", "路", "车", "。"], "wǒ zuò yī lù chē.", "车"),
+               ("祝你一路平安。", ["祝", "你", "一路平安", "。"], "zhù nǐ yílùpíng'ān.", "祝"),
+               ("两份，一份。", ["两", "份", "，", "一", "份", "。"], "liǎng fèn, yí fèn.", "两"),
+               ("每人划一小时桨。", ["每人", "划一", "小时", "桨", "。"], "měirén huáyì xiǎoshí jiǎng.", "桨"),
+               ("我在一楼。", ["我", "在", "一", "楼", "。"], "wǒ zài yī lóu.", "在"),
+               ("今天一号。", ["今天", "一", "号", "。"], "jīntiān yī hào.", "今天"),
+               ("他上一年级。", ["他", "上", "一", "年级", "。"], "tā shàng yī niánjí.", "上")]
+    for sentence, words, want, hz in samples:
+        h = card(hz, card_py(table[hz]), " ".join(table[hz]))
+        sylls = syllables(sentence, words, lambda w: table[w], hz, table[hz], facts=YI_FACTS)
         line = render(sentence, words, sylls, joints_of=lambda w: word_joints(w, {}))
         assert (sentence, line) == (sentence, want)
         assert (sentence, check_line(sentence, line, h, lambda ch: reads.get(ch, set()), NAMES, YI_FACTS)) == \

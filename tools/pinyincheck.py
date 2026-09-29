@@ -48,8 +48,8 @@ from pypinyin import Style, pinyin
 from pypinyin.pinyin_dict import pinyin_dict
 
 from meaning import public_pos
-from pinyin_text import DIGITS, joints_of_py, num_to_marked, syllable_to_num, syllables_of_py, yi_in_arithmetic
-from sentpinyin import NUMERALS, approximate, decimal_positions, number_words, potential
+from pinyin_text import joints_of_py, num_to_marked, syllable_to_num, syllables_of_py
+from sentpinyin import NUMERALS, approximate, decimal_positions, number_words, potential, yi_rule
 
 _HANZI = re.compile(r"[\u3007\u4e00-\u9fff]")  # Chinese characters, with the 〇 of years (二〇〇八年)
 _TONE_MARKS = re.compile("[\u0304\u0301\u030c\u0300]")
@@ -75,10 +75,6 @@ _ONLY_READINGS = {**_TONE_CHANGES, "〇": {"ling2"}}
 # or another numeral stands before it (一个 "yí gè", 一千 "yìqiān", 一些 "yìxiē", but 第一个 "dì-yī gè"
 # and 十一个 "shíyī gè"). word_facts adds every measure word of the two lists (斤, 家, 天, 年).
 _COUNTED = set("百千万亿刻个些下起样直定共切般边种位件本张条只次")
-# After 一 these start an ordinal or a date rather than a count, so no rule settles its tone:
-# 一号 and 一日 "yī hào", "yī rì" (the first day), 一班 (class one), 一年级 "yī niánjí", 一级, 一期,
-# 一季度, 一楼 and 一层 (the first floor).
-_ORDINAL_AFTER = ("号", "日", "班", "年级", "级", "期", "季度", "楼", "层")
 # Particles after which a 了 still ends its sentence ("Nǐ lái le ma?").
 _FINAL_PARTICLES = set("吗吧呢啊呀啦嘛")
 # A run of numerals, with 几 as in 十几 and 几十.
@@ -161,6 +157,8 @@ def word_facts(complete, listed, cards):
     - "measure": the measure words of one character (the label "m.", as 个, 斤, 天 and 年 have it),
       from which a numeral stands apart ("sān gè rén"), except 月, whose month names are one word.
     - "counted": those measure words and _COUNTED, before which a 一 that counts shows its tone change.
+    - "surnames": the characters that the public list tags as a surname (nr), such as 王, after which a
+      一 that is a word of its own may be a given name ("wáng yī", sentpinyin.yi_rule).
     - "shown": {character: {(word, offset, syllable)}} for each 一 and 不 inside a card of two or
       more characters, with the syllable its py shows (一起 "yìqǐ" gives ("一起", 0, "yi4")), and
       inside a word of the public list whose reading has a neutral bu or yi (差不多 cha4 bu5 duo1
@@ -190,7 +188,9 @@ def word_facts(complete, listed, cards):
             for k, (ch, syl) in enumerate(zip(hz, sylls)):
                 if ch in _TONE_CHANGES:
                     shown.setdefault(ch, set()).add((hz, k, syl))
+    surnames = {x["simplified"] for x in complete if len(x["simplified"]) == 1 and "nr" in x.get("pos", [])}
     return {"pos": pos, "known": known, "measure": measure, "counted": measure | _COUNTED, "shown": shown,
+            "surnames": surnames,
             "cards": card_words}
 
 
@@ -553,15 +553,11 @@ def _tone_change_problems(sentence, cells, head, facts):
     - a neutral "bu" or "yi" stands only in a doubled word ("kàn yi kàn", "hǎo bu hǎo", "xǐ bu
       xǐhuan") and, for 不, in a potential complement (sentpinyin.potential, "zhǎo bu dào");
     - 不 is "bú" before a fourth tone and "bù" before the other tones;
-    - 一 keeps "yī" in a decimal ("sān diǎn yī sì") and after 第, a numeral, 星期 or 礼拜 ("dì-yī",
-      "shíyī gè", "xīngqīyī"), unless 百, 千, 万 or 亿 follows it or it starts a word of the lists (千万
-      一定 "qiānwàn yídìng");
-    - elsewhere 一 is "yí" before a fourth tone and "yì" before the other tones, it keeps "yī" where no
-      syllable follows it, and it shows its tone change when it starts a word before a measure word
-      or another word of facts["counted"] ("yí gè", "yì nián", "yìqiān"). Before a neutral tone the
-      choice between "yí" and "yì" is open, and nothing is settled before an ordinal or a date
-      (_ORDINAL_AFTER, 一号 "yī hào") or before 点, which may be a time of day ("yī diǎn"), except in
-      一点儿 and 一点点. Before any other character "yī" may stand too (一楼 "yī lóu").
+    - a 一 with no syllable after it keeps "yī";
+    - any other 一 follows sentpinyin.yi_rule, which the draft follows too. It keeps "yī" as a digit, an
+      ordinal or a number (第一, 十一, 一加一, 一比零, 一九九八), may keep it before 月, an ordinal or a
+      date (一楼, 一等奖), in a name ("wáng yī") and at the end of a known word (统一), and elsewhere it is
+      "yí" before a fourth tone and "yì" before the other tones ("yí gè", "yì nián", "yí kàn").
     A 一 or 不 inside the headword keeps the tone its card shows (受不了 "shòubuliǎo").
     So "Wǒ bù qù.", "Wǒ bu qù.", "Wǒ yī gè rén qù.", "yī tiān" and "dì-yí cì" fail, while "Wǒ bú qù.",
     "Wǒ yí gè rén qù.", "yì tiān" and "dì-yī cì" pass.
@@ -587,7 +583,6 @@ def _tone_change_problems(sentence, cells, head, facts):
             continue
         if num in bound or _shown_here(sentence, i, num, facts["shown"]):
             continue
-        kept =_keeps_yi(sentence, i, facts["known"]) if ch == "一" else ""
         if tone == "5":
             if not (_doubled(sentence, i) or (ch == "不" and _potential_at(sentence, i, facts["pos"]))):
                 problems.append(f"'{syl}' ({ch}) is in the neutral tone, which the style sheet keeps for a doubled "
@@ -599,36 +594,21 @@ def _tone_change_problems(sentence, cells, head, facts):
                 problems.append(f"'{syl}' (不) comes before the fourth tone of '{nxt[0]}', so it is written 'bú'")
             elif tone == "2" and after not in ("4", "5"):
                 problems.append(f"'{syl}' (不) is written 'bú' only before a fourth tone, so write 'bù' here")
-        elif i in decimal:
-            if tone != "1":
-                problems.append(f"'{syl}' (一) is a digit of a decimal number, which is read digit by digit, so it "
-                                "keeps its first tone 'yī'")
-        elif kept:
-            if tone != "1":
-                problems.append(f"'{syl}' (一) follows {kept}, so it is part of a number, an ordinal or a weekday and "
-                                "keeps its first tone 'yī'")
-        elif yi_in_arithmetic(sentence, i, facts["counted"], lambda j: _span(cells, j)):
-            if tone != "1":
-                word = yi_in_arithmetic(sentence, i, facts["counted"], lambda j: _span(cells, j))
-                problems.append(f"'{syl}' (一) is a number in arithmetic next to {word}, so it keeps its first tone 'yī'")
-        elif sentence[i + 1:i + 2] in DIGITS and i + 1 in cells:
-            if tone != "1":
-                problems.append(f"'{syl}' (一) is read digit by digit before {sentence[i + 1]}, so it keeps its first "
-                                "tone 'yī'")
-        elif tone == "4" and after == "4":
-            problems.append(f"'{syl}' (一) comes before the fourth tone of '{nxt[0]}', so it is written 'yí'")
-        elif tone == "2" and after in ("1", "2", "3"):
-            problems.append(f"'{syl}' (一) comes before '{nxt[0]}', which is not a fourth tone, so it is written 'yì'")
-        elif tone in ("2", "4") and not after:
-            problems.append(f"'{syl}' (一) has no syllable after it, so it keeps its first tone 'yī'")
-        elif tone == "1" and after and not _yi_open(sentence, i, cells, facts["known"]):
-            counted = _counts(sentence, i, facts["counted"]) if joint else ""
-            if counted:
-                problems.append(f"'{syl}' (一) counts with {counted} here, so it shows its tone change, 'yí' before a "
-                                "fourth tone and 'yì' before the other tones")
-            else:
-                problems.append(f"'{syl}' (一) comes before '{nxt[0]}', so it shows its spoken tone change, 'yí' before "
-                                "a fourth tone and 'yì' before the other tones")
+        elif not after:
+            if tone in ("2", "4"):
+                problems.append(f"'{syl}' (一) has no syllable after it, so it keeps its first tone 'yī'")
+        else:
+            kind, why = yi_rule(sentence, i, facts, lambda j: _span(cells, j), decimal)
+            if kind == "keep":
+                if tone != "1":
+                    problems.append(f"'{syl}' (一) {why}")
+            elif tone == "4" and after == "4":
+                problems.append(f"'{syl}' (一) comes before the fourth tone of '{nxt[0]}', so it is written 'yí'")
+            elif tone == "2" and after in ("1", "2", "3"):
+                problems.append(f"'{syl}' (一) comes before '{nxt[0]}', which is not a fourth tone, so it is written "
+                                "'yì'")
+            elif tone == "1" and kind == "change":
+                problems.append(f"'{syl}' (一) " + why.replace("{next}", nxt[0]))
     return problems
 
 
@@ -638,31 +618,6 @@ def _span(cells, j):
         return None
     same = [k for k in cells if cells[k][2] == cells[j][2]]
     return min(same), max(same) + 1
-
-
-def _yi_open(sentence, i, cells, known):
-    """True when the 一 at index i may keep "yī" before the syllable after it.
-
-    Since the user's decision of 2026-09-29 a 一 before a syllable shows its spoken tone change ("yí kàn",
-    "yì tīng"), except where it keeps "yī" as an ordinal or a number, which _keeps_yi and the digit rule
-    settle first. Here it may keep "yī":
-    - at the end of a card or of a word of the public list, where the line ends the pinyin word
-      (同一 in "tóngyī gè rén", 之一);
-    - before 月, where it starts a month name (一月 "yīyuè", style sheet point 2);
-    - before a word that makes it an ordinal or a date (_ORDINAL_AFTER, 一楼 "yī lóu"), and before 点
-      except in 一点儿 and 一点点, because 一点 may be one o'clock ("yī diǎn");
-    - after a numeral or 第 that _keeps_yi left open, as before 百, 千, 万 or 亿 (三千一百), where a numeral
-      before it settles nothing.
-    """
-    rest = sentence[i + 1:]
-    if rest[:1] == "月":
-        return True
-    if rest.startswith(_ORDINAL_AFTER) or (rest[:1] == "点" and rest[1:2] not in ("儿", "点")):
-        return True
-    if i and sentence[i - 1] in NUMERALS | {"第"}:
-        return True
-    word_end = i + 1 not in cells or cells[i + 1][2] != cells[i][2]
-    return word_end and any(i >= k and sentence[i - k:i + 1] in known for k in (1, 2, 3))
 
 
 def _card_tones(sentence, i, cells, cards):
@@ -697,8 +652,9 @@ def _shown_here(sentence, i, num, shown):
 def _doubled(sentence, i):
     """True when the 一 or 不 at index i stands between two copies of a word (看一看, 好不好, 喜不喜欢, 喜欢不喜欢)."""
     one = sentence[i - 1:i]
+    two = sentence[i - 2:i] if i >= 2 else ""
     return bool(one and _HANZI.match(one) and sentence[i + 1:i + 2] == one) or \
-        (i >= 2 and bool(_HANZI.match(sentence[i - 2])) and sentence[i - 2:i] == sentence[i + 1:i + 3])
+        bool(two and all(_HANZI.match(c) for c in two) and two == sentence[i + 1:i + 3])
 
 
 def _potential_at(sentence, i, pos):
@@ -706,32 +662,6 @@ def _potential_at(sentence, i, pos):
     verbs = [sentence[j:i] for j in (i - 1, i - 2) if j >= 0]
     results = [sentence[i + 1:i + 1 + n] for n in (1, 2) if i + n < len(sentence)]
     return any(potential(verb, result, pos) for verb in verbs for result in results)
-
-
-def _keeps_yi(sentence, i, known):
-    """The word before the 一 at index i when that 一 is part of a number, an ordinal or a weekday, so it
-    keeps "yī" (第 in 第一, 十 in 十一个, 星期 in 星期一), else ""."""
-    if sentence[max(i - 2, 0):i] in ("星期", "礼拜"):
-        return sentence[i - 2:i]
-    if sentence[i - 1:i] == "第":
-        return "第"
-    if not i or sentence[i - 1] not in NUMERALS or sentence[i + 1:i + 2] in ("百", "千", "万", "亿"):
-        return ""
-    if any(sentence[i:i + n] in known and not _NUMBER_RUN.fullmatch(sentence[i:i + n]) for n in (2, 3, 4)):
-        return ""
-    return sentence[i - 1]
-
-
-def _counts(sentence, i, counted):
-    """The word after the 一 at index i when that 一 counts with it (一个, 一天, 一千, 一公斤), else "".
-
-    counted holds measure words of one or more characters (公斤), see _tone_change_problems.
-    """
-    rest = sentence[i + 1:]
-    word = next((rest[:n] for n in (4, 3, 2, 1) if rest[:n] in counted), "")
-    if not word or rest.startswith(_ORDINAL_AFTER):
-        return ""
-    return word if rest[:1] != "点" or rest[1:2] in ("儿", "点") else ""
 
 
 def _one_word_problems(sentence, cells, head):

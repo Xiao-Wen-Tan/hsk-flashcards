@@ -11,7 +11,7 @@ import re
 
 import jieba.posseg
 
-from pinyin_text import card_py, tone_change
+from pinyin_text import DIGITS, card_py, tone_change, yi_in_arithmetic
 
 # Chinese characters. 〇 (U+3007), the zero of years such as 二〇〇八年, lies outside the main block, but it
 # is read like a character (líng, as in "èr líng líng bā nián").
@@ -84,6 +84,11 @@ POTENTIAL_BU = "bu5"
 _COMPLEMENT_READING = {"着": "zhao2", "了": "liao3"}
 # Characters that write numbers, and the value of each digit.
 NUMERALS = set("〇零一二两三四五六七八九十百千万亿")
+# After 一 these start an ordinal or a date rather than a count, so 一 may keep "yī": 一号 and 一日 (the
+# first day), 一班 (class one), 一年级, 一级, 一期, 一季度, 一楼 and 一层 (the first floor), 一等 (一等奖
+# "yī děng jiǎng", first prize, which no rule tells from 一等 "wait a moment"), and 一路车 (bus number one).
+ORDINAL_AFTER = ("号", "日", "班", "年级", "级", "期", "季度", "楼", "层", "等", "路车", "路公交", "路汽车", "路电车")
+_NUMBER_RUN_RE = re.compile("[〇零一二两三四五六七八九十百千万亿几]+")
 _DIGIT = {"〇": 0, "零": 0, "一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
 _FRACTION = re.compile(r"^([零一二两三四五六七八九十百千万亿]+)分之([零一二两三四五六七八九十百千万亿]+)$")
 # The digits after the point of a decimal number (三点一四 "sān diǎn yī sì"), and the words that may follow
@@ -627,18 +632,98 @@ def regroup(sentence, words, hz, cut=None, known=()):
     return out
 
 
-def syllables(sentence, words, lookup, hz, head_nums, fixes=None, counted=()):
+def keeps_yi(sentence, i, known):
+    """The word before the 一 at index i when that 一 is part of a number, an ordinal or a weekday, so it
+    keeps "yī" (第 in 第一, 十 in 十一个, 星期 in 星期一), else ""."""
+    if sentence[max(i - 2, 0):i] in ("星期", "礼拜"):
+        return sentence[i - 2:i]
+    if sentence[i - 1:i] == "第":
+        return "第"
+    if not i or sentence[i - 1] not in NUMERALS or sentence[i + 1:i + 2] in ("百", "千", "万", "亿"):
+        return ""
+    if any(sentence[i:i + n] in known and not _NUMBER_RUN_RE.fullmatch(sentence[i:i + n]) for n in (2, 3, 4)):
+        return ""
+    return sentence[i - 1]
+
+
+def yi_counts(sentence, i, counted):
+    """The word after the 一 at index i when that 一 counts with it (一个, 一天, 一千, 一公斤), else "".
+
+    counted holds measure words of one or more characters (公斤) and the words of pinyincheck._COUNTED.
+    """
+    rest = sentence[i + 1:]
+    word = next((rest[:n] for n in (4, 3, 2, 1) if rest[:n] in counted), "")
+    if not word or rest.startswith(ORDINAL_AFTER):
+        return ""
+    return word if rest[:1] != "点" or rest[1:2] in ("儿", "点") else ""
+
+
+def yi_rule(sentence, i, facts=None, span_of=None, decimal=()):
+    """How the 一 at index i is written before the syllable after it, as (kind, why).
+
+    The draft (syllables) and the strict checker (pinyincheck) both follow it, so they agree. kind is
+    "keep" (it must be "yī"), "change" (it must be "yí" before a fourth tone and "yì" before the other
+    tones, the user's decision of 2026-09-29), or "open-keep" and "open-change" (either passes, and the
+    draft writes the first). why is the checker's reason, where "{next}" stands for the next syllable.
+    facts: pinyincheck.word_facts ("known", "counted", "surnames"). span_of(j): (start, end) of the word
+    that holds character j as the line or the segmenter divides it. decimal: the digits of decimals.
+    - "keep": a digit of a decimal, after 第, a numeral, 星期 or 礼拜 (keeps_yi), next to a word of
+      arithmetic or between numbers with 比 or 是 (pinyin_text.yi_in_arithmetic: 一加一, 一比零, 一是一),
+      and before another digit (一九九八).
+    - "open-keep": before 月 (一月), before an ordinal or a date (ORDINAL_AFTER: 一楼, 一号, 一等奖, 一路车),
+      after a numeral that keeps_yi left open (三千一百), in a name after a surname that the lists tag
+      as one ("wáng yī", both written as words of their own), and at the end of a card or list word
+      where the word ends (统一 "tǒngyī", 同一 in "tóngyī gè rén").
+    - "open-change": before 点 other than in 一点儿 and 一点点, because 一点 may be one o'clock.
+    - "change": everywhere else, with the reason that it counts with a measure word when it does.
+    """
+    facts = facts or {}
+    known, counted = facts.get("known", ()), facts.get("counted", ())
+    keep_why = "so it keeps its first tone 'yī'"
+    if i in decimal:
+        return "keep", "is a digit of a decimal number, which is read digit by digit, " + keep_why
+    kept = keeps_yi(sentence, i, known)
+    if kept:
+        return "keep", f"follows {kept}, so it is part of a number, an ordinal or a weekday and keeps its first tone 'yī'"
+    word = yi_in_arithmetic(sentence, i, counted, span_of, known)
+    if word:
+        return "keep", f"is a number in arithmetic next to {word}, " + keep_why
+    if sentence[i + 1:i + 2] in DIGITS and sentence[i + 1:i + 2]:
+        return "keep", f"is read digit by digit before {sentence[i + 1]}, " + keep_why
+    rest = sentence[i + 1:]
+    if rest[:1] == "月" or rest.startswith(ORDINAL_AFTER):
+        return "open-keep", ""
+    if rest[:1] == "点" and rest[1:2] not in ("儿", "点"):
+        return "open-change", ""
+    if i and sentence[i - 1] in NUMERALS | {"第"}:
+        return "open-keep", ""
+    span = span_of(i) if span_of else None
+    if i and sentence[i - 1] in facts.get("surnames", ()) and span_of and span_of(i - 1) == (i - 1, i) \
+            and span == (i, i + 1):
+        return "open-keep", ""
+    if (span is None or span[1] == i + 1) and any(i >= k and sentence[i - k:i + 1] in known for k in (1, 2, 3)):
+        return "open-keep", ""
+    count = yi_counts(sentence, i, counted) if span is None or span[0] == i else ""
+    if count:
+        return "change", (f"counts with {count} here, so it shows its tone change, 'yí' before a fourth tone and "
+                          "'yì' before the other tones")
+    return "change", ("comes before '{next}', so it shows its spoken tone change, 'yí' before a fourth tone and "
+                      "'yì' before the other tones")
+
+
+def syllables(sentence, words, lookup, hz, head_nums, fixes=None, facts=None):
     """One numbered syllable per sentence character (None for non-Chinese characters).
 
     words: the segmenter's words, which together spell the sentence. lookup(word) gives one
     numbered syllable per Chinese character of the word. The headword's characters get
     head_nums (the syllables its card shows). fixes: {index: syllable} from the polyphone check
-    and potential_readings, applied last. counted: the measure words (pinyincheck.word_facts gives
-    them as "counted"), which tell a 一 that counts after an arithmetic word (再加一个 "zài jiā yí gè").
-    Then 一 and 不 change tone by pinyin_text.tone_change, which follows the checker's rules, except that a 一 that ends a
-    word of two or more characters keeps its tone (统一 in 统一中国), and so do a 一 after 星期 or 礼拜
-    (星期 + 一 + 下午 "xīngqīyī xiàwǔ", when the headword 星期 cuts 星期一) and a 一 of a decimal
-    number (decimal_digits, "sān diǎn yī sì"). Every syllable of the headword but its last keeps the
+    and potential_readings, applied last. facts: pinyincheck.word_facts, which yi_rule needs (the
+    known words, the measure words and the surnames). Then 不 changes tone by pinyin_text.tone_change
+    within each stretch of Chinese characters between punctuation marks, so a doubled word never
+    reaches across a comma ("liǎng fèn, yí fèn"), and each 一 before a syllable follows yi_rule, the
+    checker's own rule, with the segmenter's words as the word breaks. So 统一中国 keeps "tǒngyī" when
+    统一 is a known word, 星期 + 一 + 下午 gives "xīngqīyī xiàwǔ", a decimal gives "sān diǎn yī sì", and
+    a word that only jieba has (划一) does not keep "yī". Every syllable of the headword but its last keeps the
     tone its card shows, so 不得了 stays "bùdéliǎo" in 开心得不得了,
     where 得不得 looks like a doubled verb.
     """
@@ -652,8 +737,6 @@ def syllables(sentence, words, lookup, hz, head_nums, fixes=None, counted=()):
                 out[pos + k] = next(found)
             if ch == "一" and n in decimal:
                 keep.add(pos + k)
-        if (len(word) > 1 and word.endswith("一")) or (word == "一" and n and words[n - 1] in ("星期", "礼拜")):
-            keep.add(pos + len(word) - 1)
         pos += len(word)
     head, lasts, end = head_positions(sentence, hz), set(), 0
     for part in (p for p in hz.split("…") if p and head):
@@ -663,14 +746,27 @@ def syllables(sentence, words, lookup, hz, head_nums, fixes=None, counted=()):
         out[i] = syl
     for i, syl in (fixes or {}).items():
         out[i] = syl
+    base = list(out)
     idx = [i for i, s in enumerate(out) if s]
-    at = {i: n for n, i in enumerate(idx)}
-    spans = {n: (at[span[i][0]], at[span[i][1] - 1] + 1) for n, i in enumerate(idx)
-             if span[i][0] in at and span[i][1] - 1 in at}
-    changed = tone_change([sentence[i] for i in idx], [out[i] for i in idx],
-                          keep={n for n, i in enumerate(idx) if i in keep}, counted=counted, spans=spans)
-    for i, syl in zip(idx, changed):
-        out[i] = syl
+    runs = []
+    for i in idx:
+        if runs and runs[-1][-1] == i - 1:
+            runs[-1].append(i)
+        else:
+            runs.append([i])
+    for run in runs:
+        changed = tone_change([sentence[i] for i in run], [base[i] for i in run],
+                              keep={n for n, i in enumerate(run) if sentence[i] == "一"})
+        for i, syl in zip(run, changed):
+            out[i] = syl
+    for i in idx:
+        if sentence[i] != "一" or base[i] != "yi1" or out[i] == "yi5" or not out[i + 1:i + 2] or not base[i + 1]:
+            continue
+        kind, _ = yi_rule(sentence, i, facts, span.get, keep)
+        if kind in ("keep", "open-keep"):
+            out[i] = "yi1"
+        else:
+            out[i] = "yi2" if base[i + 1][-1] in "45" else "yi4"
     for i, syl in zip(head, head_nums):
         if i not in lasts:
             out[i] = syl
