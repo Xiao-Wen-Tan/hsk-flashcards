@@ -1,0 +1,5044 @@
+id,hz,pynum
+w0001,的,de5
+w0002,了,le5
+w0003,我,wo3
+w0004,是,shi4
+w0005,你,ni3
+w0006,在,zai4
+w0007,不,bu4
+w0008,有,you3
+w0009,他,ta1
+w0010,这,zhe4
+w0011,个,ge4
+w0012,人,ren2
+w0013,和,he2
+w0014,我们,wo3 men5
+w0015,说,shuo1
+w0016,好,hao3
+w0017,一,yi1
+w0018,会,hui4
+w0019,都,dou1
+w0020,上,shang4
+w0021,来,lai2
+w0022,很,hen3
+w0023,去,qu4
+w0024,她,ta1
+w0025,想,xiang3
+w0026,没有,mei2 you3
+w0027,能,neng2
+w0028,那,na4
+w0029,看,kan4
+w0030,做,zuo4
+w0031,什么,shen2 me5
+w0032,点,dian3
+w0033,没,mei2
+w0034,大,da4
+w0035,下,xia4
+w0036,里,li3
+w0037,现在,xian4 zai4
+w0038,年,nian2
+w0039,多,duo1
+w0040,吗,ma5
+w0041,太,tai4
+w0042,呢,ne5
+w0043,小,xiao3
+w0044,时候,shi2 hou5
+w0045,工作,gong1 zuo4
+w0046,家,jia1
+w0047,怎么,zen3 me5
+w0048,爱,ai4
+w0049,喜欢,xi3 huan5
+w0050,吃,chi1
+w0051,谁,shei2
+w0052,今天,jin1 tian1
+w0053,月,yue4
+w0054,几,ji3
+w0055,听,ting1
+w0056,开,kai1
+w0057,叫,jiao4
+w0058,请,qing3
+w0059,钱,qian2
+w0060,本,ben3
+w0061,回,hui2
+w0062,东西,dong1 xi5
+w0063,三,san1
+w0064,买,mai3
+w0065,岁,sui4
+w0066,号,hao4
+w0067,住,zhu4
+w0068,朋友,peng2 you5
+w0069,水,shui3
+w0070,写,xie3
+w0071,日,ri4
+w0072,喝,he1
+w0073,学校,xue2 xiao4
+w0074,坐,zuo4
+w0075,认识,ren4 shi5
+w0076,分钟,fen1 zhong1
+w0077,明天,ming2 tian1
+w0078,四,si4
+w0079,块,kuai4
+w0080,谢谢,xie4 xie5
+w0081,多少,duo1 shao5
+w0082,妈妈,ma1 ma5
+w0083,少,shao3
+w0084,电影,dian4 ying3
+w0085,哪,na3
+w0086,昨天,zuo2 tian1
+w0087,书,shu1
+w0088,五,wu3
+w0089,先生,xian1 sheng5
+w0090,医院,yi1 yuan4
+w0091,些,xie1
+w0092,狗,gou3
+w0093,学生,xue2 sheng5
+w0094,二,er4
+w0095,儿子,er2 zi5
+w0096,中国,zhong1 guo2
+w0097,电视,dian4 shi4
+w0098,下午,xia4 wu3
+w0099,学习,xue2 xi2
+w0100,老师,lao3 shi1
+w0101,六,liu4
+w0102,医生,yi1 sheng1
+w0103,名字,ming2 zi5
+w0104,十,shi2
+w0105,看见,kan4 jian4
+w0106,女儿,nü3 er2
+w0107,说话,shuo1 hua4
+w0108,爸爸,ba4 ba5
+w0109,字,zi4
+w0110,漂亮,piao4 liang5
+w0111,高兴,gao1 xing4
+w0112,热,re4
+w0113,睡觉,shui4 jiao4
+w0114,电脑,dian4 nao3
+w0115,读,du2
+w0116,冷,leng3
+w0117,飞机,fei1 ji1
+w0118,猫,mao1
+w0119,打电话,da3 dian4 hua4
+w0120,后面,hou4 mian5
+w0121,喂,wei4
+w0122,八,ba1
+w0123,怎么样,zen3 me5 yang4
+w0124,七,qi1
+w0125,菜,cai4
+w0126,衣服,yi1 fu5
+w0127,小姐,xiao3 jie5
+w0128,对不起,dui4 bu5 qi3
+w0129,天气,tian1 qi4
+w0130,前面,qian2 mian4
+w0131,同学,tong2 xue2
+w0132,茶,cha2
+w0133,星期,xing1 qi1
+w0134,九,jiu3
+w0135,上午,shang4 wu3
+w0136,再见,zai4 jian4
+w0137,哪儿,na3 r5
+w0138,苹果,ping2 guo3
+w0139,中午,zhong1 wu3
+w0140,出租车,chu1 zu1 che1
+w0141,水果,shui3 guo3
+w0142,商店,shang1 dian4
+w0143,没关系,mei2 guan1 xi5
+w0144,零,ling2
+w0145,桌子,zhuo1 zi5
+w0146,饭店,fan4 dian4
+w0147,椅子,yi3 zi5
+w0148,北京,bei3 jing1
+w0149,下雨,xia4 yu3
+w0150,杯子,bei1 zi5
+w0151,一点儿,yi1 dian3 r5
+w0152,火车站,huo3 che1 zhan4
+w0153,米饭,mi3 fan4
+w0154,汉语,han4 yu3
+w0155,饭馆,fan4 guan3
+w0156,不客气,bu4 ke4 qi5
+w0157,就,jiu4
+w0158,要,yao4
+w0159,也,ye3
+w0160,对,dui4
+w0161,到,dao4
+w0162,还,hai2
+w0163,还,huan2
+w0164,着,zhe5
+w0165,给,gei3
+w0166,让,rang4
+w0167,为,wei4
+w0168,可以,ke3 yi3
+w0169,吧,ba5
+w0170,得,de2
+w0171,得,de5
+w0172,得,dei3
+w0173,过,guo5
+w0174,从,cong2
+w0175,真,zhen1
+w0176,两,liang3
+w0177,等,deng3
+w0178,出,chu1
+w0179,已经,yi3 jing1
+w0180,最,zui4
+w0181,再,zai4
+w0182,因为,yin1 wei4
+w0183,次,ci4
+w0184,知道,zhi1 dao4
+w0185,走,zou3
+w0186,问题,wen4 ti2
+w0187,它,ta1
+w0188,但是,dan4 shi4
+w0189,可能,ke3 neng2
+w0190,时间,shi2 jian1
+w0191,开始,kai1 shi3
+w0192,新,xin1
+w0193,找,zhao3
+w0194,快,kuai4
+w0195,比,bi3
+w0196,所以,suo3 yi3
+w0197,觉得,jue2 de5
+w0198,向,xiang4
+w0199,一起,yi1 qi3
+w0200,希望,xi1 wang4
+w0201,大家,da4 jia1
+w0202,非常,fei1 chang2
+w0203,孩子,hai2 zi5
+w0204,别,bie2
+w0205,公司,gong1 si1
+w0206,第一,di4 yi1
+w0207,长,chang2
+w0208,长,zhang3
+w0209,问,wen4
+w0210,告诉,gao4 su5
+w0211,事情,shi4 qing5
+w0212,高,gao1
+w0213,件,jian4
+w0214,为什么,wei4 shen2 me5
+w0215,张,zhang1
+w0216,准备,zhun3 bei4
+w0217,进,jin4
+w0218,每,mei3
+w0219,您,nin2
+w0220,女,nü3
+w0221,送,song4
+w0222,笑,xiao4
+w0223,女人,nü3 ren2
+w0224,小时,xiao3 shi2
+w0225,完,wan2
+w0226,路,lu4
+w0227,玩,wan2
+w0228,男人,nan2 ren2
+w0229,正在,zheng4 zai4
+w0230,门,men2
+w0231,穿,chuan1
+w0232,外,wai4
+w0233,帮助,bang1 zhu4
+w0234,晚上,wan3 shang5
+w0235,错,cuo4
+w0236,男,nan2
+w0237,卖,mai4
+w0238,远,yuan3
+w0239,快乐,kuai4 le4
+w0240,懂,dong3
+w0241,药,yao4
+w0242,黑,hei1
+w0243,身体,shen1 ti3
+w0244,元,yuan2
+w0245,介绍,jie4 shao4
+w0246,红,hong2
+w0247,欢迎,huan1 ying2
+w0248,眼睛,yan3 jing5
+w0249,近,jin4
+w0250,手机,shou3 ji1
+w0251,忙,mang2
+w0252,离,li2
+w0253,白,bai2
+w0254,去年,qu4 nian2
+w0255,票,piao4
+w0256,意思,yi4 si5
+w0257,早上,zao3 shang5
+w0258,回答,hui2 da2
+w0259,运动,yun4 dong4
+w0260,妻子,qi1 zi5
+w0261,鱼,yu2
+w0262,累,lei4
+w0263,休息,xiu1 xi5
+w0264,洗,xi3
+w0265,船,chuan2
+w0266,房间,fang2 jian1
+w0267,丈夫,zhang4 fu5
+w0268,上班,shang4 ban1
+w0269,生日,sheng1 ri4
+w0270,姐姐,jie3 jie5
+w0271,课,ke4
+w0272,哥哥,ge1 ge5
+w0273,咖啡,ka1 fei1
+w0274,考试,kao3 shi4
+w0275,千,qian1
+w0276,慢,man4
+w0277,旁边,pang2 bian1
+w0278,颜色,yan2 se4
+w0279,雪,xue3
+w0280,妹妹,mei4 mei5
+w0281,报纸,bao4 zhi3
+w0282,贵,gui4
+w0283,机场,ji1 chang3
+w0284,踢,ti1
+w0285,弟弟,di4 di5
+w0286,百,bai3
+w0287,好吃,hao3 chi1
+w0288,旅游,lü3 you2
+w0289,起床,qi3 chuang2
+w0290,题,ti2
+w0291,便宜,pian2 yi5
+w0292,唱歌,chang4 ge1
+w0293,右边,you4 bian5
+w0294,牛奶,niu2 nai3
+w0295,自行车,zi4 xing2 che1
+w0296,鸡蛋,ji1 dan4
+w0297,姓,xing4
+w0298,游泳,you2 yong3
+w0299,跳舞,tiao4 wu3
+w0300,阴,yin1
+w0301,生病,sheng1 bing4
+w0302,左边,zuo3 bian5
+w0303,公斤,gong1 jin1
+w0304,教室,jiao4 shi4
+w0305,服务员,fu2 wu4 yuan2
+w0306,手表,shou3 biao3
+w0307,跑步,pao3 bu4
+w0308,西瓜,xi1 gua1
+w0309,铅笔,qian1 bi3
+w0310,晴,qing2
+w0311,羊肉,yang2 rou4
+w0312,公共汽车,gong1 gong4 qi4 che1
+w0313,一下,yi1 xia4
+w0314,因为…所以…,yin1 wei4 suo3 yi3
+w0315,打篮球,da3 lan2 qiu2
+w0316,虽然…但是…,sui1 ran2 dan4 shi4
+w0317,踢足球,ti1 zu2 qiu2
+w0318,啊,a5
+w0319,把,ba3
+w0320,被,bei4
+w0321,自己,zi4 ji3
+w0322,过,guo4
+w0323,用,yong4
+w0324,如果,ru2 guo3
+w0325,又,you4
+w0326,只,zhi1
+w0327,只,zhi3
+w0328,更,geng4
+w0329,需要,xu1 yao4
+w0330,地,de5
+w0331,才,cai2
+w0332,跟,gen1
+w0333,像,xiang4
+w0334,还是,hai2 shi5
+w0335,认为,ren4 wei2
+w0336,应该,ying1 gai1
+w0337,位,wei4
+w0338,带,dai4
+w0339,种,zhong3
+w0340,发现,fa1 xian4
+w0341,一定,yi1 ding4
+w0342,一直,yi1 zhi2
+w0343,为了,wei4 le5
+w0344,一样,yi1 yang4
+w0345,世界,shi4 jie4
+w0346,而且,er2 qie3
+w0347,重要,zhong4 yao4
+w0348,必须,bi4 xu1
+w0349,地方,di4 fang5
+w0350,老,lao3
+w0351,其他,qi2 ta1
+w0352,比赛,bi3 sai4
+w0353,然后,ran2 hou4
+w0354,担心,dan1 xin1
+w0355,条,tiao2
+w0356,放,fang4
+w0357,拿,na2
+w0358,先,xian1
+w0359,关系,guan1 xi5
+w0360,出现,chu1 xian4
+w0361,了解,liao3 jie3
+w0362,过去,guo4 qu4
+w0363,参加,can1 jia1
+w0364,国家,guo2 jia1
+w0365,决定,jue2 ding4
+w0366,分,fen1
+w0367,选择,xuan3 ze2
+w0368,或者,huo4 zhe3
+w0369,机会,ji1 hui4
+w0370,别人,bie2 ren5
+w0371,站,zhan4
+w0372,使,shi3
+w0373,发,fa1
+w0374,其实,qi2 shi2
+w0375,以后,yi3 hou4
+w0376,要求,yao1 qiu2
+w0377,信,xin4
+w0378,当然,dang1 ran2
+w0379,接,jie1
+w0380,相信,xiang1 xin4
+w0381,花,hua1
+w0382,虽然,sui1 ran2
+w0383,解决,jie3 jue2
+w0384,关于,guan1 yu2
+w0385,完成,wan2 cheng2
+w0386,结束,jie2 shu4
+w0387,努力,nu3 li4
+w0388,以前,yi3 qian2
+w0389,办法,ban4 fa3
+w0390,特别,te4 bie2
+w0391,难,nan2
+w0392,注意,zhu4 yi4
+w0393,讲,jiang3
+w0394,万,wan4
+w0395,离开,li2 kai1
+w0396,以为,yi3 wei2
+w0397,越,yue4
+w0398,城市,cheng2 shi4
+w0399,影响,ying3 xiang3
+w0400,游戏,you2 xi4
+w0401,马,ma3
+w0402,比较,bi3 jiao4
+w0403,最近,zui4 jin4
+w0404,换,huan4
+w0405,终于,zhong1 yu2
+w0406,脸,lian3
+w0407,口,kou3
+w0408,总是,zong3 shi4
+w0409,除了,chu2 le5
+w0410,双,shuang1
+w0411,突然,tu1 ran2
+w0412,段,duan4
+w0413,检查,jian3 cha2
+w0414,米,mi3
+w0415,容易,rong2 yi4
+w0416,明白,ming2 bai5
+w0417,根据,gen1 ju4
+w0418,记得,ji4 de5
+w0419,辆,liang4
+w0420,简单,jian3 dan1
+w0421,半,ban4
+w0422,愿意,yuan4 yi4
+w0423,音乐,yin1 yue4
+w0424,包,bao1
+w0425,楼,lou2
+w0426,清楚,qing1 chu5
+w0427,照片,zhao4 pian4
+w0428,银行,yin2 hang2
+w0429,故事,gu4 shi5
+w0430,一般,yi1 ban1
+w0431,可爱,ke3 ai4
+w0432,新闻,xin1 wen2
+w0433,声音,sheng1 yin1
+w0434,马上,ma3 shang4
+w0435,表示,biao3 shi4
+w0436,经过,jing1 guo4
+w0437,历史,li4 shi3
+w0438,哭,ku1
+w0439,敢,gan3
+w0440,会议,hui4 yi4
+w0441,试,shi4
+w0442,经常,jing1 chang2
+w0443,低,di1
+w0444,节目,jie2 mu4
+w0445,健康,jian4 kang1
+w0446,作用,zuo4 yong4
+w0447,西,xi1
+w0448,差,cha4
+w0449,结婚,jie2 hun1
+w0450,短,duan3
+w0451,同意,tong2 yi4
+w0452,教,jiao1
+w0453,几乎,ji1 hu1
+w0454,认真,ren4 zhen1
+w0455,附近,fu4 jin4
+w0456,脚,jiao3
+w0457,主要,zhu3 yao4
+w0458,后来,hou4 lai2
+w0459,嘴,zui3
+w0460,遇到,yu4 dao4
+w0461,年轻,nian2 qing1
+w0462,久,jiu3
+w0463,画,hua4
+w0464,表演,biao3 yan3
+w0465,关,guan1
+w0466,刚才,gang1 cai2
+w0467,办公室,ban4 gong1 shi4
+w0468,环境,huan2 jing4
+w0469,关心,guan1 xin1
+w0470,祝,zhu4
+w0471,层,ceng2
+w0472,腿,tui3
+w0473,班,ban1
+w0474,坏,huai4
+w0475,一边,yi1 bian1
+w0476,鞋,xie2
+w0477,习惯,xi2 guan4
+w0478,变化,bian4 hua4
+w0479,周末,zhou1 mo4
+w0480,忘记,wang4 ji4
+w0481,打算,da3 suan4
+w0482,极,ji2
+w0483,小心,xiao3 xin1
+w0484,举行,ju3 xing2
+w0485,动物,dong4 wu4
+w0486,饿,e4
+w0487,树,shu4
+w0488,水平,shui3 ping2
+w0489,借,jie4
+w0490,东,dong1
+w0491,头发,tou2 fa5
+w0492,害怕,hai4 pa4
+w0493,鸟,niao3
+w0494,蓝,lan2
+w0495,照顾,zhao4 gu5
+w0496,文化,wen2 hua4
+w0497,疼,teng2
+w0498,奇怪,qi2 guai4
+w0499,礼物,li3 wu4
+w0500,南,nan2
+w0501,提高,ti2 gao1
+w0502,满意,man3 yi4
+w0503,旧,jiu4
+w0504,司机,si1 ji1
+w0505,黄,huang2
+w0506,经理,jing1 li3
+w0507,兴趣,xing4 qu4
+w0508,帮忙,bang1 mang2
+w0509,电子,dian4 zi3
+w0510,见面,jian4 mian4
+w0511,成绩,cheng2 ji4
+w0512,中间,zhong1 jian1
+w0513,聪明,cong1 ming5
+w0514,多么,duo1 me5
+w0515,太阳,tai4 yang5
+w0516,灯,deng1
+w0517,方便,fang1 bian4
+w0518,糖,tang2
+w0519,相同,xiang1 tong2
+w0520,生气,sheng1 qi4
+w0521,公园,gong1 yuan2
+w0522,热情,re4 qing2
+w0523,一会儿,yi1 hui4 r5
+w0524,骑,qi2
+w0525,河,he2
+w0526,搬,ban1
+w0527,同事,tong2 shi4
+w0528,舒服,shu1 fu5
+w0529,体育,ti3 yu4
+w0530,角,jiao3
+w0531,胖,pang4
+w0532,干净,gan1 jing4
+w0533,放心,fang4 xin1
+w0534,草,cao3
+w0535,甜,tian2
+w0536,安静,an1 jing4
+w0537,作业,zuo4 ye4
+w0538,瘦,shou4
+w0539,绿,lü4
+w0540,聊天,liao2 tian1
+w0541,啤酒,pi2 jiu3
+w0542,蛋糕,dan4 gao1
+w0543,新鲜,xin1 xian1
+w0544,难过,nan2 guo4
+w0545,客人,ke4 ren2
+w0546,奶奶,nai3 nai5
+w0547,碗,wan3
+w0548,数学,shu4 xue2
+w0549,地铁,di4 tie3
+w0550,刷,shua1
+w0551,厨房,chu2 fang2
+w0552,练习,lian4 xi2
+w0553,爷爷,ye2 ye5
+w0554,云,yun2
+w0555,邻居,lin2 ju1
+w0556,校长,xiao4 zhang3
+w0557,花园,hua1 yuan2
+w0558,耳朵,er3 duo5
+w0559,饮料,yin3 liao4
+w0560,节日,jie2 ri4
+w0561,鼻子,bi2 zi5
+w0562,叔叔,shu1 shu5
+w0563,洗澡,xi3 zao3
+w0564,地图,di4 tu2
+w0565,帽子,mao4 zi5
+w0566,街道,jie1 dao4
+w0567,感冒,gan3 mao4
+w0568,迟到,chi2 dao4
+w0569,航班,hang2 ban1
+w0570,刻,ke4
+w0571,锻炼,duan4 lian4
+w0572,裤子,ku4 zi5
+w0573,夏,xia4
+w0574,图书馆,tu2 shu1 guan3
+w0575,电梯,dian4 ti1
+w0576,刮,gua1
+w0577,笔记本,bi3 ji4 ben3
+w0578,矮,ai3
+w0579,信用卡,xin4 yong4 ka3
+w0580,眼镜,yan3 jing4
+w0581,上网,shang4 wang3
+w0582,春,chun1
+w0583,面包,mian4 bao1
+w0584,冰箱,bing1 xiang1
+w0585,阿姨,a1 yi2
+w0586,超市,chao1 shi4
+w0587,着急,zhao2 ji2
+w0588,季节,ji4 jie2
+w0589,饱,bao3
+w0590,空调,kong1 tiao2
+w0591,一共,yi1 gong4
+w0592,月亮,yue4 liang5
+w0593,北方,bei3 fang1
+w0594,爱好,ai4 hao4
+w0595,衬衫,chen4 shan1
+w0596,宾馆,bin1 guan3
+w0597,冬,dong1
+w0598,起飞,qi3 fei1
+w0599,裙子,qun2 zi5
+w0600,香蕉,xiang1 jiao1
+w0601,秋,qiu1
+w0602,发烧,fa1 shao1
+w0603,伞,san3
+w0604,有名,you3 ming2
+w0605,打扫,da3 sao3
+w0606,葡萄,pu2 tao5
+w0607,中文,zhong1 wen2
+w0608,降落,jiang4 luo4
+w0609,复习,fu4 xi2
+w0610,熊猫,xiong2 mao1
+w0611,护照,hu4 zhao4
+w0612,菜单,cai4 dan1
+w0613,年级,nian2 ji2
+w0614,果汁,guo3 zhi1
+w0615,面条,mian4 tiao2
+w0616,动物园,dong4 wu4 yuan2
+w0617,盘子,pan2 zi5
+w0618,渴,ke3
+w0619,洗手间,xi3 shou3 jian1
+w0620,电子邮件,dian4 zi3 you2 jian4
+w0621,刷牙,shua1 ya2
+w0622,词语,ci2 yu3
+w0623,句子,ju4 zi5
+w0624,照相机,zhao4 xiang4 ji1
+w0625,筷子,kuai4 zi5
+w0626,个子,ge4 zi5
+w0627,皮鞋,pi2 xie2
+w0628,感兴趣,gan3 xing4 qu4
+w0629,字典,zi4 dian3
+w0630,普通话,pu3 tong1 hua4
+w0631,爬山,pa2 shan1
+w0632,黑板,hei1 ban3
+w0633,留学,liu2 xue2
+w0634,行李箱,xing2 li5 xiang1
+w0635,词典,ci2 dian3
+w0636,刮风,gua1 feng1
+w0637,不但…而且…,bu4 dan4 er2 qie3
+w0638,黄河,huang2 he2
+w0639,而,er2
+w0640,与,yu3
+w0641,当,dang1
+w0642,之,zhi1
+w0643,以,yi3
+w0644,起来,qi3 lai5
+w0645,死,si3
+w0646,却,que4
+w0647,生活,sheng1 huo2
+w0648,发生,fa1 sheng1
+w0649,不过,bu4 guo4
+w0650,所有,suo3 you3
+w0651,情况,qing2 kuang4
+w0652,最后,zui4 hou4
+w0653,成为,cheng2 wei2
+w0654,行,xing2
+w0655,感觉,gan3 jue2
+w0656,继续,ji4 xu4
+w0657,场,chang3
+w0658,进行,jin4 xing2
+w0659,内,nei4
+w0660,通过,tong1 guo4
+w0661,无,wu2
+w0662,一切,yi1 qie4
+w0663,由,you2
+w0664,任何,ren4 he2
+w0665,安全,an1 quan2
+w0666,结果,jie2 guo3
+w0667,只有,zhi3 you3
+w0668,完全,wan2 quan2
+w0669,计划,ji4 hua4
+w0670,可是,ke3 shi4
+w0671,连,lian2
+w0672,呀,ya5
+w0673,原因,yuan2 yin1
+w0674,消息,xiao1 xi5
+w0675,只要,zhi3 yao4
+w0676,干,gan4
+w0677,接受,jie1 shou4
+w0678,其中,qi2 zhong1
+w0679,成功,cheng2 gong1
+w0680,甚至,shen4 zhi4
+w0681,拉,la1
+w0682,肯定,ken3 ding4
+w0683,当时,dang1 shi2
+w0684,转,zhuan3
+w0685,调查,diao4 cha2
+w0686,部分,bu4 fen5
+w0687,能力,neng2 li4
+w0688,保护,bao3 hu4
+w0689,真正,zhen1 zheng4
+w0690,支持,zhi1 chi2
+w0691,掉,diao4
+w0692,改变,gai3 bian4
+w0693,是否,shi4 fou3
+w0694,方法,fang1 fa3
+w0695,研究,yan2 jiu1
+w0696,保证,bao3 zheng4
+w0697,直接,zhi2 jie1
+w0698,组织,zu3 zhi1
+w0699,永远,yong3 yuan3
+w0700,也许,ye3 xu3
+w0701,方面,fang1 mian4
+w0702,活动,huo2 dong4
+w0703,考虑,kao3 lü4
+w0704,份,fen4
+w0705,重,zhong4
+w0706,信息,xin4 xi1
+w0707,提供,ti2 gong1
+w0708,指,zhi3
+w0709,精神,jing1 shen2
+w0710,使用,shi3 yong4
+w0711,代表,dai4 biao3
+w0712,来自,lai2 zi4
+w0713,任务,ren4 wu5
+w0714,开心,kai1 xin1
+w0715,联系,lian2 xi4
+w0716,因此,yin1 ci3
+w0717,台,tai2
+w0718,算,suan4
+w0719,获得,huo4 de2
+w0720,生命,sheng1 ming4
+w0721,留,liu2
+w0722,交,jiao1
+w0723,全部,quan2 bu4
+w0724,刚刚,gang1 gang5
+w0725,正常,zheng4 chang2
+w0726,另外,ling4 wai4
+w0727,血,xue4
+w0728,挺,ting3
+w0729,好像,hao3 xiang4
+w0730,到底,dao4 di3
+w0731,感谢,gan3 xie4
+w0732,坚持,jian1 chi2
+w0733,座,zuo4
+w0734,技术,ji4 shu4
+w0735,往,wang3
+w0736,停,ting2
+w0737,倒,dao3
+w0738,建议,jian4 yi4
+w0739,严重,yan2 zhong4
+w0740,包括,bao1 kuo4
+w0741,原来,yuan2 lai2
+w0742,光,guang1
+w0743,法律,fa3 lü4
+w0744,父亲,fu4 qin1
+w0745,并且,bing4 qie3
+w0746,收,shou1
+w0747,社会,she4 hui4
+w0748,证明,zheng4 ming2
+w0749,记者,ji4 zhe3
+w0750,底,di3
+w0751,确实,que4 shi2
+w0752,不管,bu4 guan3
+w0753,受到,shou4 dao4
+w0754,发展,fa1 zhan3
+w0755,谈,tan2
+w0756,至少,zhi4 shao3
+w0757,解释,jie3 shi4
+w0758,负责,fu4 ze2
+w0759,首先,shou3 xian1
+w0760,理解,li3 jie3
+w0761,报道,bao4 dao4
+w0762,安排,an1 pai2
+w0763,梦,meng4
+w0764,重新,chong2 xin1
+w0765,提,ti2
+w0766,幸福,xing4 fu2
+w0767,自然,zi4 ran2
+w0768,责任,ze2 ren4
+w0769,弄,nong4
+w0770,赢,ying2
+w0771,满,man3
+w0772,说明,shuo1 ming2
+w0773,许多,xu3 duo1
+w0774,压力,ya1 li4
+w0775,由于,you2 yu2
+w0776,母亲,mu3 qin1
+w0777,放弃,fang4 qi4
+w0778,意见,yi4 jian4
+w0779,过程,guo4 cheng2
+w0780,即使,ji2 shi3
+w0781,尽管,jin3 guan3
+w0782,深,shen1
+w0783,各,ge4
+w0784,仍然,reng2 ran2
+w0785,秒,miao3
+w0786,值得,zhi2 de5
+w0787,经历,jing1 li4
+w0788,讨论,tao3 lun4
+w0789,超过,chao1 guo4
+w0790,比如,bi3 ru2
+w0791,假,jia3
+w0792,地址,di4 zhi3
+w0793,无论,wu2 lun4
+w0794,紧张,jin3 zhang1
+w0795,省,sheng3
+w0796,十分,shi2 fen1
+w0797,陪,pei2
+w0798,挂,gua4
+w0799,本来,ben3 lai2
+w0800,条件,tiao2 jian4
+w0801,广告,guang3 gao4
+w0802,警察,jing3 cha2
+w0803,关键,guan1 jian4
+w0804,样子,yang4 zi5
+w0805,困难,kun4 nan5
+w0806,专业,zhuan1 ye4
+w0807,难道,nan2 dao4
+w0808,于是,yu2 shi4
+w0809,规定,gui1 ding4
+w0810,正确,zheng4 que4
+w0811,爱情,ai4 qing2
+w0812,照,zhao4
+w0813,群,qun2
+w0814,够,gou4
+w0815,火,huo3
+w0816,方向,fang1 xiang4
+w0817,市场,shi4 chang3
+w0818,节,jie2
+w0819,教育,jiao4 yu4
+w0820,取,qu3
+w0821,危险,wei1 xian3
+w0822,管理,guan3 li3
+w0823,乱,luan4
+w0824,适合,shi4 he2
+w0825,正式,zheng4 shi4
+w0826,引起,yin3 qi3
+w0827,从来,cong2 lai2
+w0828,棒,bang4
+w0829,抱,bao4
+w0830,内容,nei4 rong2
+w0831,律师,lü4 shi1
+w0832,通知,tong1 zhi1
+w0833,感情,gan3 qing2
+w0834,目的,mu4 di4
+w0835,观众,guan1 zhong4
+w0836,国际,guo2 ji4
+w0837,美丽,mei3 li4
+w0838,经验,jing1 yan4
+w0839,破,po4
+w0840,推,tui1
+w0841,刀,dao1
+w0842,科学,ke1 xue2
+w0843,心情,xin1 qing2
+w0844,错误,cuo4 wu4
+w0845,标准,biao1 zhun3
+w0846,职业,zhi2 ye4
+w0847,毛,mao2
+w0848,精彩,jing1 cai3
+w0849,范围,fan4 wei2
+w0850,接着,jie1 zhe5
+w0851,速度,su4 du4
+w0852,实在,shi2 zai4
+w0853,空,kong1
+w0854,左右,zuo3 you4
+w0855,效果,xiao4 guo3
+w0856,遍,bian4
+w0857,经济,jing1 ji4
+w0858,按照,an4 zhao4
+w0859,反对,fan3 dui4
+w0860,竟然,jing4 ran2
+w0861,重点,zhong4 dian3
+w0862,倍,bei4
+w0863,醒,xing3
+w0864,讨厌,tao3 yan4
+w0865,输,shu1
+w0866,咱们,zan2 men5
+w0867,要是,yao4 shi5
+w0868,免费,mian3 fei4
+w0869,否则,fou3 ze2
+w0870,动作,dong4 zuo4
+w0871,俩,lia3
+w0872,增加,zeng1 jia1
+w0873,著名,zhu4 ming2
+w0874,拒绝,ju4 jue2
+w0875,帅,shuai4
+w0876,不仅,bu4 jin3
+w0877,顺利,shun4 li4
+w0878,艺术,yi4 shu4
+w0879,麻烦,ma2 fan5
+w0880,申请,shen1 qing3
+w0881,美好,mei3 hao3
+w0882,演出,yan3 chu1
+w0883,猪,zhu1
+w0884,竞争,jing4 zheng1
+w0885,估计,gu1 ji4
+w0886,失败,shi1 bai4
+w0887,世纪,shi4 ji4
+w0888,制造,zhi4 zao4
+w0889,不得不,bu4 de2 bu4
+w0890,当地,dang1 di4
+w0891,允许,yun3 xu3
+w0892,大概,da4 gai4
+w0893,教授,jiao4 shou4
+w0894,吸引,xi1 yin3
+w0895,顿,dun4
+w0896,共同,gong4 tong2
+w0897,杂志,za2 zhi4
+w0898,既然,ji4 ran2
+w0899,停止,ting2 zhi3
+w0900,提醒,ti2 xing3
+w0901,演员,yan3 yuan2
+w0902,态度,tai4 du5
+w0903,周围,zhou1 wei2
+w0904,丢,diu1
+w0905,复杂,fu4 za2
+w0906,表达,biao3 da2
+w0907,数字,shu4 zi4
+w0908,邀请,yao1 qing3
+w0909,交通,jiao1 tong1
+w0910,优秀,you1 xiu4
+w0911,亮,liang4
+w0912,篇,pian1
+w0913,儿童,er2 tong2
+w0914,最好,zui4 hao3
+w0915,味道,wei4 dao5
+w0916,断,duan4
+w0917,千万,qian1 wan4
+w0918,出发,chu1 fa1
+w0919,距离,ju4 li2
+w0920,轻松,qing1 song1
+w0921,墙,qiang2
+w0922,毕业,bi4 ye4
+w0923,怀疑,huai2 yi2
+w0924,修,xiu1
+w0925,价格,jia4 ge2
+w0926,戴,dai4
+w0927,究竟,jiu1 jing4
+w0928,轻,qing1
+w0929,然而,ran2 er2
+w0930,交流,jiao1 liu2
+w0931,兴奋,xing1 fen4
+w0932,困,kun4
+w0933,符合,fu2 he2
+w0934,躺,tang3
+w0935,答案,da2 an4
+w0936,地点,di4 dian3
+w0937,皮肤,pi2 fu1
+w0938,浪费,lang4 fei4
+w0939,厉害,li4 hai5
+w0940,尊重,zun1 zhong4
+w0941,激动,ji1 dong4
+w0942,骗,pian4
+w0943,可怜,ke3 lian2
+w0944,语言,yu3 yan2
+w0945,擦,ca1
+w0946,香,xiang1
+w0947,成熟,cheng2 shu2
+w0948,无聊,wu2 liao2
+w0949,文章,wen2 zhang1
+w0950,信任,xin4 ren4
+w0951,网站,wang3 zhan4
+w0952,地球,di4 qiu2
+w0953,实际,shi2 ji4
+w0954,年龄,nian2 ling2
+w0955,差不多,cha4 bu5 duo1
+w0956,现金,xian4 jin1
+w0957,可惜,ke3 xi1
+w0958,阳光,yang2 guang1
+w0959,回忆,hui2 yi4
+w0960,空气,kong1 qi4
+w0961,材料,cai2 liao4
+w0962,熟悉,shu2 xi1
+w0963,随便,sui2 bian4
+w0964,撞,zhuang4
+w0965,互相,hu4 xiang1
+w0966,合适,he2 shi4
+w0967,失望,shi1 wang4
+w0968,印象,yin4 xiang4
+w0969,号码,hao4 ma3
+w0970,出生,chu1 sheng1
+w0971,生意,sheng1 yi5
+w0972,赶,gan3
+w0973,存,cun2
+w0974,桥,qiao2
+w0975,基础,ji1 chu3
+w0976,适应,shi4 ying4
+w0977,赚,zhuan4
+w0978,猜,cai1
+w0979,到处,dao4 chu4
+w0980,食品,shi2 pin3
+w0981,大约,da4 yue1
+w0982,提前,ti2 qian2
+w0983,暂时,zan4 shi2
+w0984,积极,ji1 ji2
+w0985,高级,gao1 ji2
+w0986,响,xiang3
+w0987,汤,tang1
+w0988,收入,shou1 ru4
+w0989,恐怕,kong3 pa4
+w0990,仔细,zi3 xi4
+w0991,严格,yan2 ge2
+w0992,及时,ji2 shi2
+w0993,知识,zhi1 shi5
+w0994,专门,zhuan1 men2
+w0995,工具,gong1 ju4
+w0996,脱,tuo1
+w0997,举,ju3
+w0998,放松,fang4 song1
+w0999,苦,ku3
+w1000,租,zu1
+w1001,费用,fei4 yong4
+w1002,旅行,lü3 xing2
+w1003,尤其,you2 qi2
+w1004,页,ye4
+w1005,信心,xin4 xin1
+w1006,扔,reng1
+w1007,博士,bo2 shi4
+w1008,故意,gu4 yi4
+w1009,看法,kan4 fa3
+w1010,浪漫,lang4 man4
+w1011,减少,jian3 shao3
+w1012,辛苦,xin1 ku3
+w1013,剩,sheng4
+w1014,正好,zheng4 hao3
+w1015,主动,zhu3 dong4
+w1016,硬,ying4
+w1017,限制,xian4 zhi4
+w1018,判断,pan4 duan4
+w1019,现代,xian4 dai4
+w1020,弹,tan2
+w1021,有趣,you3 qu4
+w1022,公里,gong1 li3
+w1023,工资,gong1 zi1
+w1024,好处,hao3 chu5
+w1025,伤心,shang1 xin1
+w1026,区别,qu1 bie2
+w1027,暗,an4
+w1028,将来,jiang1 lai2
+w1029,自信,zi4 xin4
+w1030,小说,xiao3 shuo1
+w1031,鼓励,gu3 li4
+w1032,理想,li3 xiang3
+w1033,后悔,hou4 hui3
+w1034,举办,ju3 ban4
+w1035,感动,gan3 dong4
+w1036,顾客,gu4 ke4
+w1037,组成,zu3 cheng2
+w1038,离婚,li2 hun1
+w1039,流行,liu2 xing2
+w1040,整理,zheng3 li3
+w1041,吵,chao3
+w1042,丰富,feng1 fu4
+w1043,原谅,yuan2 liang4
+w1044,肚子,du4 zi5
+w1045,平时,ping2 shi2
+w1046,辣,la4
+w1047,作者,zuo4 zhe3
+w1048,不好意思,bu4 hao3 yi4 si5
+w1049,质量,zhi4 liang4
+w1050,愉快,yu2 kuai4
+w1051,寄,ji4
+w1052,准确,zhun3 que4
+w1053,详细,xiang2 xi4
+w1054,禁止,jin4 zhi3
+w1055,圆,yuan2
+w1056,冷静,leng3 jing4
+w1057,购物,gou4 wu4
+w1058,数量,shu4 liang4
+w1059,勇敢,yong3 gan3
+w1060,巧克力,qiao3 ke4 li4
+w1061,富,fu4
+w1062,骄傲,jiao1 ao4
+w1063,作家,zuo4 jia1
+w1064,性格,xing4 ge2
+w1065,降低,jiang4 di1
+w1066,果然,guo3 ran2
+w1067,随着,sui2 zhe5
+w1068,只好,zhi3 hao3
+w1069,密码,mi4 ma3
+w1070,餐厅,can1 ting1
+w1071,亚洲,ya4 zhou1
+w1072,道歉,dao4 qian4
+w1073,趟,tang4
+w1074,软,ruan3
+w1075,访问,fang3 wen4
+w1076,森林,sen1 lin2
+w1077,聚会,ju4 hui4
+w1078,友好,you3 hao3
+w1079,尝,chang2
+w1080,亿,yi4
+w1081,对话,dui4 hua4
+w1082,收拾,shou1 shi5
+w1083,广播,guang3 bo1
+w1084,逐渐,zhu2 jian4
+w1085,钥匙,yao4 shi5
+w1086,酸,suan1
+w1087,污染,wu1 ran3
+w1088,厕所,ce4 suo3
+w1089,温度,wen1 du4
+w1090,孤单,gu1 dan1
+w1091,宽,kuan1
+w1092,例如,li4 ru2
+w1093,祝贺,zhu4 he4
+w1094,批评,pi1 ping2
+w1095,重视,zhong4 shi4
+w1096,增长,zeng1 zhang3
+w1097,相反,xiang1 fan3
+w1098,抬,tai2
+w1099,主意,zhu3 yi5
+w1100,扩大,kuo4 da4
+w1101,奖金,jiang3 jin1
+w1102,盐,yan2
+w1103,功夫,gong1 fu5
+w1104,计算机,ji4 suan4 ji1
+w1105,难受,nan2 shou4
+w1106,民族,min2 zu2
+w1107,偶尔,ou3 er3
+w1108,约会,yue1 hui4
+w1109,受不了,shou4 bu4 liao3
+w1110,厚,hou4
+w1111,护士,hu4 shi5
+w1112,参观,can1 guan1
+w1113,顺便,shun4 bian4
+w1114,友谊,you3 yi4
+w1115,笨,ben4
+w1116,沙发,sha1 fa1
+w1117,耐心,nai4 xin1
+w1118,开玩笑,kai1 wan2 xiao4
+w1119,反映,fan3 ying4
+w1120,植物,zhi2 wu4
+w1121,对面,dui4 mian4
+w1122,减肥,jian3 fei2
+w1123,其次,qi2 ci4
+w1124,敲,qiao1
+w1125,脾气,pi2 qi5
+w1126,翻译,fan1 yi4
+w1127,烦恼,fan2 nao3
+w1128,特点,te4 dian3
+w1129,往往,wang3 wang3
+w1130,风景,feng1 jing3
+w1131,笑话,xiao4 hua5
+w1132,海洋,hai3 yang2
+w1133,窗户,chuang1 hu5
+w1134,不但,bu4 dan4
+w1135,代替,dai4 ti4
+w1136,家具,jia1 ju4
+w1137,棵,ke1
+w1138,商量,shang1 liang5
+w1139,狮子,shi1 zi5
+w1140,排队,pai2 dui4
+w1141,稍微,shao1 wei1
+w1142,汗,han4
+w1143,缺少,que1 shao3
+w1144,阅读,yue4 du2
+w1145,穷,qiong2
+w1146,打扮,da3 ban5
+w1147,座位,zuo4 wei4
+w1148,首都,shou3 du1
+w1149,吃惊,chi1 jing1
+w1150,忽然,hu1 ran2
+w1151,羡慕,xian4 mu4
+w1152,报名,bao4 ming2
+w1153,脏,zang1
+w1154,极其,ji2 qi2
+w1155,日记,ri4 ji4
+w1156,同情,tong2 qing2
+w1157,逛,guang4
+w1158,总结,zong3 jie2
+w1159,打扰,da3 rao3
+w1160,幽默,you1 mo4
+w1161,互联网,hu4 lian2 wang3
+w1162,误会,wu4 hui4
+w1163,抱歉,bao4 qian4
+w1164,师傅,shi1 fu5
+w1165,朵,duo3
+w1166,镜子,jing4 zi5
+w1167,合格,he2 ge2
+w1168,亲戚,qin1 qi5
+w1169,力气,li4 qi5
+w1170,缺点,que1 dian3
+w1171,抽烟,chou1 yan1
+w1172,高速公路,gao1 su4 gong1 lu4
+w1173,网球,wang3 qiu2
+w1174,老虎,lao3 hu3
+w1175,乘坐,cheng2 zuo4
+w1176,诚实,cheng2 shi2
+w1177,集合,ji2 he2
+w1178,孙子,sun1 zi5
+w1179,优点,you1 dian3
+w1180,客厅,ke4 ting1
+w1181,猴子,hou2 zi5
+w1182,来不及,lai2 bu5 ji2
+w1183,普遍,pu3 bian4
+w1184,修理,xiu1 li3
+w1185,入口,ru4 kou3
+w1186,加班,jia1 ban1
+w1187,热闹,re4 nao5
+w1188,散步,san4 bu4
+w1189,顺序,shun4 xu4
+w1190,懒,lan3
+w1191,准时,zhun3 shi2
+w1192,大夫,dai4 fu5
+w1193,盒子,he2 zi5
+w1194,得意,de2 yi4
+w1195,礼貌,li3 mao4
+w1196,推迟,tui1 chi2
+w1197,饼干,bing3 gan1
+w1198,性别,xing4 bie2
+w1199,袜子,wa4 zi5
+w1200,气候,qi4 hou4
+w1201,毛巾,mao2 jin1
+w1202,鼓掌,gu3 zhang3
+w1203,瓶子,ping2 zi5
+w1204,传真,chuan2 zhen1
+w1205,害羞,hai4 xiu1
+w1206,握手,wo4 shou3
+w1207,来得及,lai2 de5 ji2
+w1208,咳嗽,ke2 sou5
+w1209,研究生,yan2 jiu1 sheng1
+w1210,出差,chu1 chai1
+w1211,按时,an4 shi2
+w1212,流泪,liu2 lei4
+w1213,卫生间,wei4 sheng1 jian1
+w1214,咸,xian2
+w1215,加油站,jia1 you2 zhan4
+w1216,郊区,jiao1 qu1
+w1217,节约,jie2 yue1
+w1218,打招呼,da3 zhao1 hu5
+w1219,招聘,zhao1 pin4
+w1220,活泼,huo2 po5
+w1221,干燥,gan1 zao4
+w1222,签证,qian1 zheng4
+w1223,暖和,nuan3 huo5
+w1224,打印,da3 yin4
+w1225,农村,nong2 cun1
+w1226,排列,pai2 lie4
+w1227,窄,zhai3
+w1228,积累,ji1 lei3
+w1229,整齐,zheng3 qi2
+w1230,迷路,mi2 lu4
+w1231,景色,jing3 se4
+w1232,表格,biao3 ge2
+w1233,表扬,biao3 yang2
+w1234,付款,fu4 kuan3
+w1235,硕士,shuo4 shi4
+w1236,牙膏,ya2 gao1
+w1237,房东,fang2 dong1
+w1238,长城,chang2 cheng2
+w1239,做生意,zuo4 sheng1 yi4
+w1240,请客,qing3 ke4
+w1241,请假,qing3 jia4
+w1242,乒乓球,ping1 pang1 qiu2
+w1243,导游,dao3 you2
+w1244,小吃,xiao3 chi1
+w1245,信封,xin4 feng1
+w1246,叶子,ye4 zi5
+w1247,打折,da3 zhe2
+w1248,洗衣机,xi3 yi1 ji1
+w1249,堵车,du3 che1
+w1250,西红柿,xi1 hong2 shi4
+w1251,大使馆,da4 shi3 guan3
+w1252,邮局,you2 ju2
+w1253,饺子,jiao3 zi5
+w1254,垃圾桶,la1 ji1 tong3
+w1255,塑料袋,su4 liao4 dai4
+w1256,应聘,ying4 pin4
+w1257,养成,yang3 cheng2
+w1258,矿泉水,kuang4 quan2 shui3
+w1259,打针,da3 zhen1
+w1260,零钱,ling2 qian2
+w1261,理发,li3 fa4
+w1262,语法,yu3 fa3
+w1263,排球,pai2 qiu2
+w1264,干杯,gan1 bei1
+w1265,复印,fu4 yin4
+w1266,国籍,guo2 ji2
+w1267,勺子,shao2 zi5
+w1268,湿润,shi1 run4
+w1269,包子,bao1 zi5
+w1270,羽毛球,yu3 mao2 qiu2
+w1271,流利,liu2 li4
+w1272,橡皮,xiang4 pi2
+w1273,凉快,liang2 kuai5
+w1274,售货员,shou4 huo4 yuan2
+w1275,长江,chang2 jiang1
+w1276,马虎,ma3 hu5
+w1277,寒假,han2 jia4
+w1278,人民币,ren2 min2 bi4
+w1279,粗心,cu1 xin1
+w1280,登机牌,deng1 ji1 pai2
+w1281,礼拜天,li3 bai4 tian1
+w1282,预习,yu4 xi2
+w1283,占线,zhan4 xian4
+w1284,京剧,jing1 ju4
+w1285,分之,fen1 zhi1
+w1286,填空,tian2 kong4
+w1287,弹钢琴,tan2 gang1 qin2
+w1288,放暑假,fang4 shu3 jia4
+w1289,百分之,bai3 fen1 zhi1
+w1290,短信,duan3 xin4
+w1291,所,suo3
+w1292,正,zheng4
+w1293,搞,gao3
+w1294,如何,ru2 he2
+w1295,作为,zuo4 wei2
+w1296,唯一,wei2 yi1
+w1297,表现,biao3 xian4
+w1298,对于,dui4 yu2
+w1299,方式,fang1 shi4
+w1300,处理,chu3 li3
+w1301,政府,zheng4 fu3
+w1302,系统,xi4 tong3
+w1303,杀,sha1
+w1304,以及,yi3 ji2
+w1305,片,pian4
+w1306,同时,tong2 shi2
+w1307,拍,pai1
+w1308,控制,kong4 zhi4
+w1309,整个,zheng3 ge4
+w1310,根本,gen1 ben3
+w1311,目前,mu4 qian2
+w1312,重,chong2
+w1313,存在,cun2 zai4
+w1314,个人,ge4 ren2
+w1315,保持,bao3 chi2
+w1316,确定,que4 ding4
+w1317,目标,mu4 biao1
+w1318,中心,zhong1 xin1
+w1319,行动,xing2 dong4
+w1320,合作,he2 zuo4
+w1321,人员,ren2 yuan2
+w1322,哈,ha1
+w1323,报告,bao4 gao4
+w1324,治疗,zhi4 liao2
+w1325,家庭,jia1 ting2
+w1326,明显,ming2 xian3
+w1327,套,tao4
+w1328,曾经,ceng2 jing1
+w1329,行为,xing2 wei2
+w1330,克,ke4
+w1331,装,zhuang1
+w1332,绝对,jue2 dui4
+w1333,派,pai4
+w1334,未来,wei4 lai2
+w1335,设计,she4 ji4
+w1336,利用,li4 yong4
+w1337,看来,kan4 lai5
+w1338,倒,dao4
+w1339,意义,yi4 yi4
+w1340,便,bian4
+w1341,项,xiang4
+w1342,力量,li4 liang5
+w1343,项目,xiang4 mu4
+w1344,造成,zao4 cheng2
+w1345,某,mou3
+w1346,支,zhi1
+w1347,人生,ren2 sheng1
+w1348,失去,shi1 qu4
+w1349,非,fei1
+w1350,则,ze2
+w1351,面对,mian4 dui4
+w1352,训练,xun4 lian4
+w1353,总统,zong3 tong3
+w1354,部门,bu4 men2
+w1355,似乎,si4 hu1
+w1356,位置,wei4 zhi5
+w1357,宝贝,bao3 bei4
+w1358,方,fang1
+w1359,参与,can1 yu4
+w1360,显示,xian3 shi4
+w1361,属于,shu3 yu2
+w1362,人类,ren2 lei4
+w1363,手术,shou3 shu4
+w1364,兄弟,xiong1 di4
+w1365,自由,zi4 you2
+w1366,夜,ye4
+w1367,事实,shi4 shi2
+w1368,基本,ji1 ben3
+w1369,居然,ju1 ran2
+w1370,专家,zhuan1 jia1
+w1371,类,lei4
+w1372,称,cheng1
+w1373,分析,fen1 xi1
+w1374,享受,xiang3 shou4
+w1375,以来,yi3 lai2
+w1376,反应,fan3 ying4
+w1377,地区,di4 qu1
+w1378,资料,zi1 liao4
+w1379,冠军,guan4 jun1
+w1380,价值,jia4 zhi2
+w1381,相当,xiang1 dang1
+w1382,实现,shi2 xian4
+w1383,产生,chan3 sheng1
+w1384,对方,dui4 fang1
+w1385,状态,zhuang4 tai4
+w1386,心理,xin1 li3
+w1387,根,gen1
+w1388,建立,jian4 li4
+w1389,更加,geng4 jia1
+w1390,老板,lao3 ban3
+w1391,必要,bi4 yao4
+w1392,抢,qiang3
+w1393,傻,sha3
+w1394,亲爱,qin1 ai4
+w1395,救,jiu4
+w1396,恢复,hui1 fu4
+w1397,达到,da2 dao4
+w1398,投资,tou2 zi1
+w1399,现实,xian4 shi2
+w1400,不断,bu4 duan4
+w1401,导致,dao3 zhi4
+w1402,集中,ji2 zhong1
+w1403,战争,zhan4 zheng1
+w1404,理由,li3 you2
+w1405,感受,gan3 shou4
+w1406,完美,wan2 mei3
+w1407,真实,zhen1 shi2
+w1408,记录,ji4 lu4
+w1409,空间,kong1 jian1
+w1410,冲,chong1
+w1411,期待,qi1 dai4
+w1412,政治,zheng4 zhi4
+w1413,朝,chao2
+w1414,一旦,yi1 dan4
+w1415,承认,cheng2 ren4
+w1416,执行,zhi2 xing2
+w1417,痛苦,tong4 ku3
+w1418,文件,wen2 jian4
+w1419,显然,xian3 ran2
+w1420,传统,chuan2 tong3
+w1421,状况,zhuang4 kuang4
+w1422,翻,fan1
+w1423,作品,zuo4 pin3
+w1424,时代,shi2 dai4
+w1425,伟大,wei3 da4
+w1426,的确,di2 que4
+w1427,颗,ke1
+w1428,身份,shen1 fen4
+w1429,充满,chong1 man3
+w1430,人物,ren2 wu4
+w1431,系,xi4
+w1432,直,zhi2
+w1433,产品,chan3 pin3
+w1434,枪,qiang1
+w1435,保险,bao3 xian3
+w1436,年代,nian2 dai4
+w1437,领导,ling3 dao3
+w1438,寻找,xun2 zhao3
+w1439,胜利,sheng4 li4
+w1440,明星,ming2 xing1
+w1441,受伤,shou4 shang1
+w1442,程度,cheng2 du4
+w1443,理论,li3 lun4
+w1444,宣布,xuan1 bu4
+w1445,姑娘,gu1 niang5
+w1446,创造,chuang4 zao4
+w1447,呆,dai1
+w1448,雷,lei2
+w1449,数据,shu4 ju4
+w1450,武器,wu3 qi4
+w1451,圈,quan1
+w1452,思想,si1 xiang3
+w1453,破坏,po4 huai4
+w1454,消失,xiao1 shi1
+w1455,稳定,wen3 ding4
+w1456,巨大,ju4 da4
+w1457,龙,long2
+w1458,英雄,ying1 xiong2
+w1459,满足,man3 zu2
+w1460,土地,tu3 di4
+w1461,威胁,wei1 xie2
+w1462,等待,deng3 dai4
+w1463,挑战,tiao3 zhan4
+w1464,秘密,mi4 mi4
+w1465,设备,she4 bei4
+w1466,团,tuan2
+w1467,紧,jin3
+w1468,俱乐部,ju4 le4 bu4
+w1469,对手,dui4 shou3
+w1470,想象,xiang3 xiang4
+w1471,所谓,suo3 wei4
+w1472,恐怖,kong3 bu4
+w1473,背,bei1
+w1474,背,bei4
+w1475,顶,ding3
+w1476,特殊,te4 shu1
+w1477,具体,ju4 ti3
+w1478,风格,feng1 ge2
+w1479,建筑,jian4 zhu4
+w1480,角色,jue2 se4
+w1481,疯狂,feng1 kuang2
+w1482,彻底,che4 di3
+w1483,幅,fu2
+w1484,出口,chu1 kou3
+w1485,布,bu4
+w1486,权利,quan2 li4
+w1487,采取,cai3 qu3
+w1488,意外,yi4 wai4
+w1489,期间,qi1 jian1
+w1490,时刻,shi2 ke4
+w1491,风险,feng1 xian3
+w1492,平,ping2
+w1493,观察,guan1 cha2
+w1494,钟,zhong1
+w1495,恨,hen4
+w1496,接近,jie1 jin4
+w1497,敌人,di2 ren2
+w1498,表明,biao3 ming2
+w1499,时尚,shi2 shang4
+w1500,程序,cheng2 xu4
+w1501,持续,chi2 xu4
+w1502,和平,he2 ping2
+w1503,切,qie1
+w1504,合同,he2 tong5
+w1505,食物,shi2 wu4
+w1506,发表,fa1 biao3
+w1507,相关,xiang1 guan1
+w1508,简直,jian3 zhi2
+w1509,退,tui4
+w1510,情绪,qing2 xu4
+w1511,信号,xin4 hao4
+w1512,岛,dao3
+w1513,官,guan1
+w1514,掌握,zhang3 wo4
+w1515,证据,zheng4 ju4
+w1516,幸运,xing4 yun4
+w1517,制作,zhi4 zuo4
+w1518,教练,jiao4 lian4
+w1519,记忆,ji4 yi4
+w1520,公开,gong1 kai1
+w1521,资金,zi1 jin1
+w1522,摆,bai3
+w1523,吓,xia4
+w1524,立即,li4 ji2
+w1525,升,sheng1
+w1526,经营,jing1 ying2
+w1527,发挥,fa1 hui1
+w1528,立刻,li4 ke4
+w1529,独立,du2 li4
+w1530,实验,shi2 yan4
+w1531,取消,qu3 xiao1
+w1532,吹,chui1
+w1533,表情,biao3 qing2
+w1534,采访,cai3 fang3
+w1535,通常,tong1 chang2
+w1536,针对,zhen1 dui4
+w1537,角度,jiao3 du4
+w1538,遗憾,yi2 han4
+w1539,对象,dui4 xiang4
+w1540,接触,jie1 chu4
+w1541,规则,gui1 ze2
+w1542,损失,sun3 shi1
+w1543,合理,he2 li3
+w1544,依然,yi1 ran2
+w1545,阶段,jie1 duan4
+w1546,一致,yi1 zhi4
+w1547,吐,tu3
+w1548,刺激,ci4 ji1
+w1549,反正,fan3 zheng4
+w1550,赶紧,gan3 jin3
+w1551,移动,yi2 dong4
+w1552,销售,xiao1 shou4
+w1553,呼吸,hu1 xi1
+w1554,可怕,ke3 pa4
+w1555,确认,que4 ren4
+w1556,出色,chu1 se4
+w1557,不必,bu4 bi4
+w1558,调整,tiao2 zheng3
+w1559,滴,di1
+w1560,滚,gun3
+w1561,逃,tao2
+w1562,婚姻,hun1 yin1
+w1563,喊,han3
+w1564,宣传,xuan1 chuan2
+w1565,紧急,jin3 ji2
+w1566,优势,you1 shi4
+w1567,随时,sui2 shi2
+w1568,卷,juan3
+w1569,时期,shi2 qi1
+w1570,措施,cuo4 shi1
+w1571,导演,dao3 yan3
+w1572,利益,li4 yi4
+w1573,评价,ping2 jia4
+w1574,形象,xing2 xiang4
+w1575,方案,fang1 an4
+w1576,欠,qian4
+w1577,商业,shang1 ye4
+w1578,答应,da1 ying5
+w1579,到达,dao4 da2
+w1580,功能,gong1 neng2
+w1581,避免,bi4 mian3
+w1582,生产,sheng1 chan3
+w1583,女士,nü3 shi4
+w1584,成长,cheng2 zhang3
+w1585,彼此,bi3 ci3
+w1586,推荐,tui1 jian4
+w1587,指导,zhi3 dao3
+w1588,原则,yuan2 ze2
+w1589,盖,gai4
+w1590,联合,lian2 he2
+w1591,炒,chao3
+w1592,塔,ta3
+w1593,微笑,wei1 xiao4
+w1594,组合,zu3 he2
+w1595,观点,guan1 dian3
+w1596,强烈,qiang2 lie4
+w1597,争取,zheng1 qu3
+w1598,公平,gong1 ping2
+w1599,洞,dong4
+w1600,病毒,bing4 du2
+w1601,良好,liang2 hao3
+w1602,权力,quan2 li4
+w1603,思考,si1 kao3
+w1604,自从,zi4 cong2
+w1605,命运,ming4 yun4
+w1606,凭,ping2
+w1607,尽量,jin3 liang4
+w1608,娱乐,yu2 le4
+w1609,不然,bu4 ran2
+w1610,资格,zi1 ge2
+w1611,胸,xiong1
+w1612,企业,qi3 ye4
+w1613,嫁,jia4
+w1614,追求,zhui1 qiu2
+w1615,命令,ming4 ling4
+w1616,政策,zheng4 ce4
+w1617,欣赏,xin1 shang3
+w1618,神经,shen2 jing1
+w1619,碎,sui4
+w1620,阻止,zu3 zhi3
+w1621,资源,zi1 yuan2
+w1622,决赛,jue2 sai4
+w1623,主席,zhu3 xi2
+w1624,一辈子,yi1 bei4 zi5
+w1625,形成,xing2 cheng2
+w1626,行业,hang2 ye4
+w1627,士兵,shi4 bing1
+w1628,配合,pei4 he2
+w1629,单位,dan1 wei4
+w1630,显得,xian3 de5
+w1631,亲自,qin1 zi4
+w1632,物质,wu4 zhi4
+w1633,承担,cheng2 dan1
+w1634,面临,mian4 lin2
+w1635,神秘,shen2 mi4
+w1636,自动,zi4 dong4
+w1637,明确,ming2 que4
+w1638,结合,jie2 he2
+w1639,登记,deng1 ji4
+w1640,烂,lan4
+w1641,充分,chong1 fen4
+w1642,批,pi1
+w1643,除,chu2
+w1644,主人,zhu3 ren2
+w1645,经典,jing1 dian3
+w1646,法院,fa3 yuan4
+w1647,醉,zui4
+w1648,工人,gong1 ren2
+w1649,念,nian4
+w1650,背景,bei4 jing3
+w1651,狼,lang2
+w1652,进步,jin4 bu4
+w1653,闻,wen2
+w1654,对待,dui4 dai4
+w1655,现象,xian4 xiang4
+w1656,道德,dao4 de2
+w1657,编辑,bian1 ji2
+w1658,私人,si1 ren2
+w1659,一路,yi1 lu4
+w1660,领域,ling3 yu4
+w1661,服装,fu2 zhuang1
+w1662,形式,xing2 shi4
+w1663,毕竟,bi4 jing4
+w1664,万一,wan4 yi1
+w1665,如今,ru2 jin1
+w1666,恋爱,lian4 ai4
+w1667,成立,cheng2 li4
+w1668,细节,xi4 jie2
+w1669,唉,ai1
+w1670,道理,dao4 li5
+w1671,迅速,xun4 su4
+w1672,似的,shi4 de5
+w1673,出席,chu1 xi2
+w1674,深刻,shen1 ke4
+w1675,庆祝,qing4 zhu4
+w1676,婚礼,hun1 li3
+w1677,全面,quan2 mian4
+w1678,体验,ti3 yan4
+w1679,财产,cai2 chan3
+w1680,坚强,jian1 qiang2
+w1681,玻璃,bo1 li5
+w1682,话题,hua4 ti2
+w1683,军事,jun1 shi4
+w1684,咬,yao3
+w1685,银,yin2
+w1686,合法,he2 fa3
+w1687,至于,zhi4 yu2
+w1688,贷款,dai4 kuan3
+w1689,缺乏,que1 fa2
+w1690,诗,shi1
+w1691,锁,suo3
+w1692,重复,chong2 fu4
+w1693,个性,ge4 xing4
+w1694,批准,pi1 zhun3
+w1695,骂,ma4
+w1696,机器,ji1 qi4
+w1697,标志,biao1 zhi4
+w1698,公布,gong1 bu4
+w1699,工厂,gong1 chang3
+w1700,心脏,xin1 zang4
+w1701,人才,ren2 cai2
+w1702,黄金,huang2 jin1
+w1703,魅力,mei4 li4
+w1704,不如,bu4 ru2
+w1705,指挥,zhi3 hui1
+w1706,伙伴,huo3 ban4
+w1707,露,lu4
+w1708,因素,yin1 su4
+w1709,双方,shuang1 fang1
+w1710,摸,mo1
+w1711,法官,fa3 guan1
+w1712,赶快,gan3 kuai4
+w1713,股票,gu3 piao4
+w1714,脑袋,nao3 dai5
+w1715,温暖,wen1 nuan3
+w1716,祝福,zhu4 fu2
+w1717,承受,cheng2 shou4
+w1718,公主,gong1 zhu3
+w1719,人口,ren2 kou3
+w1720,咨询,zi1 xun2
+w1721,地位,di4 wei4
+w1722,表面,biao3 mian4
+w1723,青,qing1
+w1724,结构,jie2 gou4
+w1725,妇女,fu4 nü3
+w1726,矛盾,mao2 dun4
+w1727,吻,wen3
+w1728,完整,wan2 zheng3
+w1729,煮,zhu3
+w1730,谈判,tan2 pan4
+w1731,请求,qing3 qiu2
+w1732,纪念,ji4 nian4
+w1733,插,cha1
+w1734,分别,fen1 bie2
+w1735,愿望,yuan4 wang4
+w1736,广场,guang3 chang3
+w1737,度过,du4 guo4
+w1738,臭,chou4
+w1739,金属,jin1 shu3
+w1740,灰,hui1
+w1741,堆,dui1
+w1742,保留,bao3 liu2
+w1743,频道,pin2 dao4
+w1744,公寓,gong1 yu4
+w1745,弱,ruo4
+w1746,不足,bu4 zu2
+w1747,业务,ye4 wu4
+w1748,驾驶,jia4 shi3
+w1749,计算,ji4 suan4
+w1750,开发,kai1 fa1
+w1751,乘,cheng2
+w1752,晕,yun1
+w1753,始终,shi3 zhong1
+w1754,甲,jia3
+w1755,革命,ge2 ming4
+w1756,贡献,gong4 xian4
+w1757,出版,chu1 ban3
+w1758,诊断,zhen3 duan4
+w1759,临时,lin2 shi2
+w1760,单独,dan1 du2
+w1761,平衡,ping2 heng2
+w1762,开放,kai1 fang4
+w1763,瞧,qiao2
+w1764,大型,da4 xing2
+w1765,展开,zhan3 kai1
+w1766,把握,ba3 wo4
+w1767,酒吧,jiu3 ba1
+w1768,胃,wei4
+w1769,成就,cheng2 jiu4
+w1770,课程,ke4 cheng2
+w1771,踩,cai3
+w1772,激烈,ji1 lie4
+w1773,想念,xiang3 nian4
+w1774,勇气,yong3 qi4
+w1775,固定,gu4 ding4
+w1776,注册,zhu4 ce4
+w1777,选举,xuan3 ju3
+w1778,摇,yao2
+w1779,愤怒,fen4 nu4
+w1780,培养,pei2 yang3
+w1781,平静,ping2 jing4
+w1782,传说,chuan2 shuo1
+w1783,转变,zhuan3 bian4
+w1784,至今,zhi4 jin1
+w1785,无数,wu2 shu4
+w1786,维护,wei2 hu4
+w1787,后果,hou4 guo3
+w1788,气氛,qi4 fen1
+w1789,违反,wei2 fan3
+w1790,石头,shi2 tou5
+w1791,委托,wei3 tuo1
+w1792,主持,zhu3 chi2
+w1793,关闭,guan1 bi4
+w1794,摄影,she4 ying3
+w1795,交换,jiao1 huan4
+w1796,文明,wen2 ming2
+w1797,丁,ding1
+w1798,届,jie4
+w1799,挡,dang3
+w1800,运气,yun4 qi5
+w1801,玩具,wan2 ju4
+w1802,年纪,nian2 ji4
+w1803,智慧,zhi4 hui4
+w1804,摔,shuai1
+w1805,教训,jiao4 xun5
+w1806,手指,shou3 zhi3
+w1807,沟通,gou1 tong1
+w1808,结论,jie2 lun4
+w1809,除非,chu2 fei1
+w1810,化学,hua4 xue2
+w1811,总之,zong3 zhi1
+w1812,天空,tian1 kong1
+w1813,统一,tong3 yi1
+w1814,制度,zhi4 du4
+w1815,绕,rao4
+w1816,玉米,yu4 mi3
+w1817,工业,gong1 ye4
+w1818,身材,shen1 cai2
+w1819,设施,she4 shi1
+w1820,腰,yao1
+w1821,从事,cong2 shi4
+w1822,义务,yi4 wu4
+w1823,奇迹,qi2 ji4
+w1824,运用,yun4 yong4
+w1825,肺,fei4
+w1826,民主,min2 zhu3
+w1827,制定,zhi4 ding4
+w1828,沉默,chen2 mo4
+w1829,独特,du2 te4
+w1830,各自,ge4 zi4
+w1831,糟糕,zao1 gao1
+w1832,砍,kan3
+w1833,拆,chai1
+w1834,退休,tui4 xiu1
+w1835,成果,cheng2 guo3
+w1836,蛇,she2
+w1837,精力,jing1 li4
+w1838,宗教,zong1 jiao4
+w1839,等于,deng3 yu2
+w1840,概念,gai4 nian4
+w1841,能源,neng2 yuan2
+w1842,核心,he2 xin1
+w1843,据说,ju4 shuo1
+w1844,特征,te4 zheng1
+w1845,去世,qu4 shi4
+w1846,县,xian4
+w1847,平均,ping2 jun1
+w1848,询问,xun2 wen4
+w1849,事物,shi4 wu4
+w1850,温柔,wen1 rou2
+w1851,软件,ruan3 jian4
+w1852,严肃,yan2 su4
+w1853,脖子,bo2 zi5
+w1854,否认,fou3 ren4
+w1855,肌肉,ji1 rou4
+w1856,安慰,an1 wei4
+w1857,过分,guo4 fen4
+w1858,寂寞,ji4 mo4
+w1859,反而,fan3 er2
+w1860,体会,ti3 hui4
+w1861,豪华,hao2 hua2
+w1862,税,shui4
+w1863,王子,wang2 zi3
+w1864,高速,gao1 su4
+w1865,此外,ci3 wai4
+w1866,安装,an1 zhuang1
+w1867,怀念,huai2 nian4
+w1868,荣誉,rong2 yu4
+w1869,解放,jie3 fang4
+w1870,假如,jia3 ru2
+w1871,幻想,huan4 xiang3
+w1872,甩,shuai3
+w1873,相对,xiang1 dui4
+w1874,改善,gai3 shan4
+w1875,拥抱,yong1 bao4
+w1876,晒,shai4
+w1877,感激,gan3 ji1
+w1878,纪录,ji4 lu4
+w1879,乖,guai1
+w1880,农民,nong2 min2
+w1881,商品,shang1 pin3
+w1882,形势,xing2 shi4
+w1883,劝,quan4
+w1884,娶,qu3
+w1885,运输,yun4 shu1
+w1886,利润,li4 run4
+w1887,珍惜,zhen1 xi1
+w1888,传播,chuan2 bo1
+w1889,匹,pi3
+w1890,好奇,hao4 qi2
+w1891,集体,ji2 ti3
+w1892,收获,shou1 huo4
+w1893,装饰,zhuang1 shi4
+w1894,通讯,tong1 xun4
+w1895,锅,guo1
+w1896,太太,tai4 tai5
+w1897,落后,luo4 hou4
+w1898,蹲,dun1
+w1899,强调,qiang2 diao4
+w1900,丑,chou3
+w1901,冒险,mao4 xian3
+w1902,牵,qian1
+w1903,分配,fen1 pei4
+w1904,账户,zhang4 hu4
+w1905,修改,xiu1 gai3
+w1906,宇宙,yu3 zhou4
+w1907,冻,dong4
+w1908,要不,yao4 bu4
+w1909,辞职,ci2 zhi2
+w1910,遵守,zun1 shou3
+w1911,抓紧,zhua1 jin3
+w1912,相处,xiang1 chu3
+w1913,保存,bao3 cun2
+w1914,阵,zhen4
+w1915,日期,ri4 qi1
+w1916,瞎,xia1
+w1917,从此,cong2 ci3
+w1918,地震,di4 zhen4
+w1919,赔偿,pei2 chang2
+w1920,发明,fa1 ming2
+w1921,挥,hui1
+w1922,突出,tu1 chu1
+w1923,电池,dian4 chi2
+w1924,乐观,le4 guan1
+w1925,实话,shi2 hua4
+w1926,青少年,qing1 shao4 nian2
+w1927,老鼠,lao3 shu3
+w1928,涨,zhang3
+w1929,热烈,re4 lie4
+w1930,吨,dun1
+w1931,相似,xiang1 si4
+w1932,移民,yi2 min2
+w1933,担任,dan1 ren4
+w1934,趁,chen4
+w1935,宿舍,su4 she4
+w1936,秩序,zhi4 xu4
+w1937,善良,shan4 liang2
+w1938,可靠,ke3 kao4
+w1939,其余,qi2 yu2
+w1940,规模,gui1 mo2
+w1941,决心,jue2 xin1
+w1942,忍不住,ren3 bu5 zhu4
+w1943,球迷,qiu2 mi2
+w1944,捡,jian3
+w1945,蔬菜,shu1 cai4
+w1946,消灭,xiao1 mie4
+w1947,哪怕,na3 pa4
+w1948,补充,bu3 chong1
+w1949,最初,zui4 chu1
+w1950,克服,ke4 fu2
+w1951,摩托车,mo2 tuo1 che1
+w1952,薄,bao2
+w1953,贸易,mao4 yi4
+w1954,成分,cheng2 fen4
+w1955,召开,zhao4 kai1
+w1956,平常,ping2 chang2
+w1957,借口,jie4 kou3
+w1958,有利,you3 li4
+w1959,博物馆,bo2 wu4 guan3
+w1960,体现,ti3 xian4
+w1961,热爱,re4 ai4
+w1962,总裁,zong3 cai2
+w1963,协调,xie2 tiao2
+w1964,论文,lun4 wen2
+w1965,从而,cong2 er2
+w1966,整体,zheng3 ti3
+w1967,综合,zong1 he2
+w1968,形容,xing2 rong2
+w1969,青春,qing1 chun1
+w1970,吸收,xi1 shou1
+w1971,迎接,ying2 jie1
+w1972,改进,gai3 jin4
+w1973,小伙子,xiao3 huo3 zi5
+w1974,舒适,shu1 shi4
+w1975,建设,jian4 she4
+w1976,文学,wen2 xue2
+w1977,会计,kuai4 ji4
+w1978,仿佛,fang3 fu2
+w1979,漏,lou4
+w1980,屋子,wu1 zi5
+w1981,应付,ying4 fu5
+w1982,雾,wu4
+w1983,家乡,jia1 xiang1
+w1984,祖国,zu3 guo2
+w1985,伸,shen1
+w1986,奋斗,fen4 dou4
+w1987,消费,xiao1 fei4
+w1988,实行,shi2 xing2
+w1989,吵架,chao3 jia4
+w1990,口味,kou3 wei4
+w1991,具备,ju4 bei4
+w1992,姿势,zi1 shi4
+w1993,干脆,gan1 cui4
+w1994,不安,bu4 an1
+w1995,谨慎,jin3 shen4
+w1996,尽力,jin4 li4
+w1997,陌生,mo4 sheng1
+w1998,企图,qi3 tu2
+w1999,扶,fu2
+w2000,下载,xia4 zai3
+w2001,构成,gou4 cheng2
+w2002,肩膀,jian1 bang3
+w2003,发言,fa1 yan2
+w2004,观念,guan1 nian4
+w2005,催,cui1
+w2006,改革,gai3 ge2
+w2007,告别,gao4 bie2
+w2008,秘书,mi4 shu1
+w2009,捐,juan1
+w2010,卧室,wo4 shi4
+w2011,假装,jia3 zhuang1
+w2012,燃烧,ran2 shao1
+w2013,反复,fan3 fu4
+w2014,尊敬,zun1 jing4
+w2015,宠物,chong3 wu4
+w2016,模仿,mo2 fang3
+w2017,破产,po4 chan3
+w2018,烫,tang4
+w2019,说不定,shuo1 bu5 ding4
+w2020,统治,tong3 zhi4
+w2021,自豪,zi4 hao2
+w2022,闯,chuang3
+w2023,戒指,jie4 zhi5
+w2024,单纯,dan1 chun2
+w2025,比例,bi3 li4
+w2026,输入,shu1 ru4
+w2027,逃避,tao2 bi4
+w2028,劳动,lao2 dong4
+w2029,事先,shi4 xian1
+w2030,失业,shi1 ye4
+w2031,粒,li4
+w2032,规律,gui1 lü4
+w2033,待遇,dai4 yu4
+w2034,淡,dan4
+w2035,逗,dou4
+w2036,飘,piao1
+w2037,物理,wu4 li3
+w2038,前途,qian2 tu2
+w2039,营养,ying2 yang3
+w2040,平等,ping2 deng3
+w2041,说服,shuo1 fu2
+w2042,打工,da3 gong1
+w2043,自愿,zi4 yuan4
+w2044,抗议,kang4 yi4
+w2045,铜,tong2
+w2046,总算,zong3 suan4
+w2047,汽油,qi4 you2
+w2048,传递,chuan2 di4
+w2049,浓,nong2
+w2050,活跃,huo2 yue4
+w2051,毛病,mao2 bing4
+w2052,逻辑,luo2 ji5
+w2053,兔子,tu4 zi5
+w2054,弯,wan1
+w2055,横,heng2
+w2056,忽视,hu1 shi4
+w2057,密切,mi4 qie4
+w2058,哲学,zhe2 xue2
+w2059,光明,guang1 ming2
+w2060,光荣,guang1 rong2
+w2061,卡车,ka3 che1
+w2062,嘉宾,jia1 bin1
+w2063,象征,xiang4 zheng1
+w2064,射击,she4 ji1
+w2065,本质,ben3 zhi4
+w2066,提问,ti2 wen4
+w2067,录取,lu4 qu3
+w2068,浅,qian3
+w2069,犹豫,you2 yu4
+w2070,实践,shi2 jian4
+w2071,小偷,xiao3 tou1
+w2072,坚决,jian1 jue2
+w2073,从前,cong2 qian2
+w2074,日常,ri4 chang2
+w2075,老实,lao3 shi5
+w2076,预防,yu4 fang2
+w2077,效率,xiao4 lü4
+w2078,情景,qing2 jing3
+w2079,必然,bi4 ran2
+w2080,摘,zhai1
+w2081,皇帝,huang2 di4
+w2082,业余,ye4 yu2
+w2083,古老,gu3 lao3
+w2084,倒霉,dao3 mei2
+w2085,胳膊,ge1 bo5
+w2086,危害,wei1 hai4
+w2087,对比,dui4 bi3
+w2088,手续,shou3 xu4
+w2089,争论,zheng1 lun4
+w2090,休闲,xiu1 xian2
+w2091,签字,qian1 zi4
+w2092,戏剧,xi4 ju4
+w2093,难怪,nan2 guai4
+w2094,围绕,wei2 rao4
+w2095,隔壁,ge2 bi4
+w2096,歪,wai1
+w2097,外交,wai4 jiao1
+w2098,缩小,suo1 xiao3
+w2099,偶然,ou3 ran2
+w2100,规矩,gui1 ju5
+w2101,模糊,mo2 hu5
+w2102,差别,cha1 bie2
+w2103,赞成,zan4 cheng2
+w2104,复制,fu4 zhi4
+w2105,消化,xiao1 hua4
+w2106,录音,lu4 yin1
+w2107,接待,jie1 dai4
+w2108,疑问,yi2 wen4
+w2109,包裹,bao1 guo3
+w2110,真理,zhen1 li3
+w2111,善于,shan4 yu2
+w2112,客观,ke4 guan1
+w2113,丝毫,si1 hao2
+w2114,应用,ying4 yong4
+w2115,包含,bao1 han2
+w2116,过敏,guo4 min3
+w2117,电台,dian4 tai2
+w2118,总理,zong3 li3
+w2119,骨头,gu3 tou5
+w2120,宝贵,bao3 gui4
+w2121,睁,zheng1
+w2122,进口,jin4 kou3
+w2123,工程师,gong1 cheng2 shi1
+w2124,土豆,tu3 dou4
+w2125,展览,zhan3 lan3
+w2126,完善,wan2 shan4
+w2127,参考,can1 kao3
+w2128,拦,lan2
+w2129,重量,zhong4 liang4
+w2130,缓解,huan3 jie3
+w2131,多余,duo1 yu2
+w2132,发达,fa1 da2
+w2133,自私,zi4 si1
+w2134,爱心,ai4 xin1
+w2135,撕,si1
+w2136,天真,tian1 zhen1
+w2137,沙漠,sha1 mo4
+w2138,语气,yu3 qi4
+w2139,形状,xing2 zhuang4
+w2140,披,pi1
+w2141,学期,xue2 qi1
+w2142,皇后,huang2 hou4
+w2143,了不起,liao3 bu5 qi3
+w2144,证件,zheng4 jian4
+w2145,幼儿园,you4 er2 yuan2
+w2146,罪犯,zui4 fan4
+w2147,煎,jian1
+w2148,影子,ying3 zi5
+w2149,延长,yan2 chang2
+w2150,地道,di4 dao4
+w2151,数码,shu4 ma3
+w2152,实习,shi2 xi2
+w2153,盆,pen2
+w2154,性质,xing4 zhi4
+w2155,神话,shen2 hua4
+w2156,紫,zi3
+w2157,称呼,cheng1 hu5
+w2158,推广,tui1 guang3
+w2159,营业,ying2 ye4
+w2160,古代,gu3 dai4
+w2161,问候,wen4 hou4
+w2162,棉花,mian2 hua5
+w2163,铃,ling2
+w2164,点头,dian3 tou2
+w2165,农业,nong2 ye4
+w2166,服从,fu2 cong2
+w2167,洒,sa3
+w2168,等候,deng3 hou4
+w2169,纪律,ji4 lü4
+w2170,面积,mian4 ji1
+w2171,闪电,shan3 dian4
+w2172,桃,tao2
+w2173,广泛,guang3 fan4
+w2174,手套,shou3 tao4
+w2175,品种,pin3 zhong3
+w2176,讽刺,feng3 ci4
+w2177,悄悄,qiao1 qiao1
+w2178,舌头,she2 tou5
+w2179,总共,zong3 gong4
+w2180,粮食,liang2 shi5
+w2181,特意,te4 yi4
+w2182,糊涂,hu2 tu5
+w2183,豆腐,dou4 fu5
+w2184,促进,cu4 jin4
+w2185,何必,he2 bi4
+w2186,优惠,you1 hui4
+w2187,恶劣,e4 lie4
+w2188,高档,gao1 dang4
+w2189,废话,fei4 hua4
+w2190,个别,ge4 bie2
+w2191,蝴蝶,hu2 die2
+w2192,利息,li4 xi1
+w2193,否定,fou3 ding4
+w2194,灵活,ling2 huo2
+w2195,主张,zhu3 zhang1
+w2196,辣椒,la4 jiao1
+w2197,嫩,nen4
+w2198,沙滩,sha1 tan1
+w2199,亲切,qin1 qie4
+w2200,预订,yu4 ding4
+w2201,地毯,di4 tan3
+w2202,办理,ban4 li3
+w2203,趋势,qu1 shi4
+w2204,艰苦,jian1 ku3
+w2205,钢铁,gang1 tie3
+w2206,名牌,ming2 pai2
+w2207,学术,xue2 shu4
+w2208,原料,yuan2 liao4
+w2209,透明,tou4 ming2
+w2210,地理,di4 li3
+w2211,翅膀,chi4 bang3
+w2212,阳台,yang2 tai2
+w2213,项链,xiang4 lian4
+w2214,鼓舞,gu3 wu3
+w2215,抄,chao1
+w2216,佩服,pei4 fu2
+w2217,妨碍,fang2 ai4
+w2218,名片,ming2 pian4
+w2219,花生,hua1 sheng1
+w2220,荣幸,rong2 xing4
+w2221,液体,ye4 ti3
+w2222,宴会,yan4 hui4
+w2223,岸,an4
+w2224,尾巴,wei3 ba5
+w2225,罚款,fa2 kuan3
+w2226,手工,shou3 gong1
+w2227,歇,xie1
+w2228,侵略,qin1 lüe4
+w2229,题目,ti2 mu4
+w2230,节省,jie2 sheng3
+w2231,围巾,wei2 jin1
+w2232,何况,he2 kuang4
+w2233,删除,shan1 chu2
+w2234,枕头,zhen3 tou5
+w2235,车厢,che1 xiang1
+w2236,失眠,shi1 mian2
+w2237,绳子,sheng2 zi5
+w2238,优美,you1 mei3
+w2239,传染,chuan2 ran3
+w2240,分布,fen1 bu4
+w2241,必需,bi4 xu1
+w2242,递,di4
+w2243,赞美,zan4 mei3
+w2244,痒,yang3
+w2245,疲劳,pi2 lao2
+w2246,挣钱,zheng4 qian2
+w2247,台阶,tai2 jie1
+w2248,目录,mu4 lu4
+w2249,耽误,dan1 wu5
+w2250,彩虹,cai3 hong2
+w2251,柜台,gui4 tai2
+w2252,打听,da3 ting5
+w2253,促使,cu4 shi3
+w2254,钓,diao4
+w2255,辩论,bian4 lun4
+w2256,怪不得,guai4 bu5 de5
+w2257,老百姓,lao3 bai3 xing4
+w2258,辅导,fu3 dao3
+w2259,未必,wei4 bi4
+w2260,牛仔裤,niu2 zai3 ku4
+w2261,浏览,liu2 lan3
+w2262,古典,gu3 dian3
+w2263,大方,da4 fang1
+w2264,斜,xie2
+w2265,启发,qi3 fa1
+w2266,体贴,ti3 tie1
+w2267,壶,hu2
+w2268,浇,jiao1
+w2269,生动,sheng1 dong4
+w2270,乙,yi3
+w2271,步骤,bu4 zhou4
+w2272,梨,li2
+w2273,人事,ren2 shi4
+w2274,热心,re4 xin1
+w2275,蜡烛,la4 zhu2
+w2276,纷纷,fen1 fen1
+w2277,单元,dan1 yuan2
+w2278,缘故,yuan2 gu4
+w2279,流传,liu2 chuan2
+w2280,海关,hai3 guan1
+w2281,简历,jian3 li4
+w2282,自觉,zi4 jue2
+w2283,醋,cu4
+w2284,夸,kua1
+w2285,嗓子,sang3 zi5
+w2286,专心,zhuan1 xin1
+w2287,中介,zhong1 jie4
+w2288,征求,zheng1 qiu2
+w2289,救护车,jiu4 hu4 che1
+w2290,键盘,jian4 pan2
+w2291,蜜蜂,mi4 feng1
+w2292,实用,shi2 yong4
+w2293,繁荣,fan2 rong2
+w2294,册,ce4
+w2295,被子,bei4 zi5
+w2296,车库,che1 ku4
+w2297,宁可,ning4 ke3
+w2298,迫切,po4 qie4
+w2299,打交道,da3 jiao1 dao4
+w2300,用途,yong4 tu2
+w2301,当代,dang1 dai4
+w2302,零件,ling2 jian4
+w2303,雇佣,gu4 yong1
+w2304,招待,zhao1 dai4
+w2305,关怀,guan1 huai2
+w2306,称赞,cheng1 zan4
+w2307,不得了,bu4 de2 liao3
+w2308,时髦,shi2 mao2
+w2309,拥挤,yong1 ji3
+w2310,预报,yu4 bao4
+w2311,支票,zhi1 piao4
+w2312,点心,dian3 xin5
+w2313,光临,guang1 lin2
+w2314,逐步,zhu2 bu4
+w2315,硬币,ying4 bi4
+w2316,常识,chang2 shi2
+w2317,可见,ke3 jian4
+w2318,凡是,fan2 shi4
+w2319,无奈,wu2 nai4
+w2320,小麦,xiao3 mai4
+w2321,木头,mu4 tou5
+w2322,格外,ge2 wai4
+w2323,大象,da4 xiang4
+w2324,讲座,jiang3 zuo4
+w2325,残疾,can2 ji2
+w2326,英俊,ying1 jun4
+w2327,舍不得,she3 bu5 de5
+w2328,日程,ri4 cheng2
+w2329,零食,ling2 shi2
+w2330,因而,yin1 er2
+w2331,融化,rong2 hua4
+w2332,巧妙,qiao3 miao4
+w2333,眉毛,mei2 mao5
+w2334,痛快,tong4 kuai4
+w2335,美术,mei3 shu4
+w2336,家务,jia1 wu4
+w2337,海鲜,hai3 xian1
+w2338,描写,miao2 xie3
+w2339,窗帘,chuang1 lian2
+w2340,武术,wu3 shu4
+w2341,开幕式,kai1 mu4 shi4
+w2342,鸽子,ge1 zi5
+w2343,舅舅,jiu4 jiu5
+w2344,主观,zhu3 guan1
+w2345,缩短,suo1 duan3
+w2346,长途,chang2 tu2
+w2347,广大,guang3 da4
+w2348,剪刀,jian3 dao1
+w2349,合影,he2 ying3
+w2350,议论,yi4 lun4
+w2351,操心,cao1 xin1
+w2352,熟练,shu2 lian4
+w2353,上当,shang4 dang4
+w2354,过期,guo4 qi1
+w2355,及格,ji2 ge2
+w2356,谦虚,qian1 xu1
+w2357,讲究,jiang3 jiu5
+w2358,测验,ce4 yan4
+w2359,丙,bing3
+w2360,发票,fa1 piao4
+w2361,抽屉,chou1 ti5
+w2362,叙述,xu4 shu4
+w2363,傍晚,bang4 wan3
+w2364,胡说,hu2 shuo1
+w2365,匆忙,cong1 mang2
+w2366,不要紧,bu4 yao4 jin3
+w2367,狡猾,jiao3 hua2
+w2368,行人,xing2 ren2
+w2369,初级,chu1 ji2
+w2370,光滑,guang1 hua2
+w2371,发抖,fa1 dou3
+w2372,灰尘,hui1 chen2
+w2373,盼望,pan4 wang4
+w2374,轮流,lun2 liu2
+w2375,硬件,ying4 jian4
+w2376,改正,gai3 zheng4
+w2377,结实,jie1 shi5
+w2378,幸亏,xing4 kui1
+w2379,明信片,ming2 xin4 pian4
+w2380,爱护,ai4 hu4
+w2381,黄瓜,huang2 gua1
+w2382,姑姑,gu1 gu5
+w2383,悲观,bei1 guan1
+w2384,祖先,zu3 xian1
+w2385,肥皂,fei2 zao4
+w2386,委屈,wei3 qu5
+w2387,作文,zuo4 wen2
+w2388,本领,ben3 ling3
+w2389,勤奋,qin2 fen4
+w2390,寿命,shou4 ming4
+w2391,体积,ti3 ji1
+w2392,动画片,dong4 hua4 pian4
+w2393,周到,zhou1 dao4
+w2394,操场,cao1 chang3
+w2395,难看,nan2 kan4
+w2396,罐头,guan4 tou5
+w2397,尖锐,jian1 rui4
+w2398,酱油,jiang4 you2
+w2399,艰巨,jian1 ju4
+w2400,陆地,lu4 di4
+w2401,滑冰,hua2 bing1
+w2402,惭愧,can2 kui4
+w2403,交际,jiao1 ji4
+w2404,字幕,zi4 mu4
+w2405,振动,zhen4 dong4
+w2406,感想,gan3 xiang3
+w2407,执照,zhi2 zhao4
+w2408,提倡,ti2 chang4
+w2409,概括,gai4 kuo4
+w2410,坦率,tan3 shuai4
+w2411,均匀,jun1 yun2
+w2412,火柴,huo3 chai2
+w2413,收据,shou1 ju4
+w2414,诚恳,cheng2 ken3
+w2415,多亏,duo1 kui1
+w2416,姥姥,lao3 lao5
+w2417,桔子,ju2 zi5
+w2418,丝绸,si1 chou2
+w2419,转告,zhuan3 gao4
+w2420,调皮,tiao2 pi2
+w2421,麦克风,mai4 ke4 feng1
+w2422,公元,gong1 yuan2
+w2423,戒烟,jie4 yan1
+w2424,健身房,jian4 shen1 fang2
+w2425,游览,you2 lan3
+w2426,抽象,chou1 xiang4
+w2427,悠久,you1 jiu3
+w2428,陆续,lu4 xu4
+w2429,试卷,shi4 juan4
+w2430,责备,ze2 bei4
+w2431,刻苦,ke4 ku3
+w2432,单调,dan1 diao4
+w2433,除夕,chu2 xi1
+w2434,管子,guan3 zi5
+w2435,小气,xiao3 qi4
+w2436,再三,zai4 san1
+w2437,不耐烦,bu4 nai4 fan2
+w2438,磁带,ci2 dai4
+w2439,平方,ping2 fang1
+w2440,嚷,rang3
+w2441,果实,guo3 shi2
+w2442,日历,ri4 li4
+w2443,往返,wang3 fan3
+w2444,灾害,zai1 hai4
+w2445,碰见,peng4 jian4
+w2446,内科,nei4 ke1
+w2447,轻视,qing1 shi4
+w2448,样式,yang4 shi4
+w2449,疼爱,teng2 ai4
+w2450,吃亏,chi1 kui1
+w2451,苗条,miao2 tiao5
+w2452,连续剧,lian2 xu4 ju4
+w2453,学问,xue2 wen4
+w2454,光盘,guang1 pan2
+w2455,与其,yu3 qi2
+w2456,寺庙,si4 miao4
+w2457,固体,gu4 ti3
+w2458,鲜艳,xian1 yan4
+w2459,看不起,kan4 bu5 qi3
+w2460,竹子,zhu2 zi5
+w2461,照常,zhao4 chang2
+w2462,象棋,xiang4 qi2
+w2463,慌张,huang1 zhang1
+w2464,敬爱,jing4 ai4
+w2465,空闲,kong4 xian2
+w2466,能干,neng2 gan4
+w2467,勤劳,qin2 lao2
+w2468,中旬,zhong1 xun2
+w2469,风俗,feng1 su2
+w2470,油炸,you2 zha2
+w2471,班主任,ban1 zhu3 ren4
+w2472,田野,tian2 ye3
+w2473,教材,jiao4 cai2
+w2474,躲藏,duo3 cang2
+w2475,馒头,man2 tou5
+w2476,书架,shu1 jia4
+w2477,煤炭,mei2 tan4
+w2478,充电器,chong1 dian4 qi4
+w2479,发愁,fa1 chou2
+w2480,朴素,pu3 su4
+w2481,次要,ci4 yao4
+w2482,片面,pian4 mian4
+w2483,本科,ben3 ke1
+w2484,鞭炮,bian1 pao4
+w2485,清淡,qing1 dan4
+w2486,不见得,bu4 jian4 de5
+w2487,孝顺,xiao4 shun4
+w2488,嘱咐,zhu3 fu4
+w2489,胡须,hu2 xu1
+w2490,元旦,yuan2 dan4
+w2491,汇率,hui4 lü4
+w2492,鼠标,shu3 biao1
+w2493,急忙,ji2 mang2
+w2494,结账,jie2 zhang4
+w2495,胶水,jiao1 shui3
+w2496,打喷嚏,da3 pen1 ti4
+w2497,国庆节,guo2 qing4 jie2
+w2498,省略,sheng3 lüe4
+w2499,夹子,jia1 zi5
+w2500,爱惜,ai4 xi1
+w2501,近代,jin4 dai4
+w2502,胡同,hu2 tong4
+w2503,灰心,hui1 xin1
+w2504,拐弯,guai3 wan1
+w2505,退步,tui4 bu4
+w2506,梳子,shu1 zi5
+w2507,雄伟,xiong2 wei3
+w2508,划船,hua2 chuan2
+w2509,着凉,zhao2 liang2
+w2510,立方,li4 fang1
+w2511,胆小鬼,dan3 xiao3 gui3
+w2512,华裔,hua2 yi4
+w2513,声调,sheng1 diao4
+w2514,池子,chi2 zi5
+w2515,厘米,li2 mi3
+w2516,文具,wen2 ju4
+w2517,日用品,ri4 yong4 pin3
+w2518,扇子,shan4 zi5
+w2519,成语,cheng2 yu3
+w2520,不免,bu4 mian3
+w2521,虚心,xu1 xin1
+w2522,谜语,mi2 yu3
+w2523,叉子,cha1 zi5
+w2524,粘贴,zhan1 tie1
+w2525,烤鸭,kao3 ya1
+w2526,推辞,tui1 ci2
+w2527,提纲,ti2 gang1
+w2528,挂号,gua4 hao4
+w2529,名胜,ming2 sheng4
+w2530,解说员,jie3 shuo1 yuan2
+w2531,太极拳,tai4 ji2 quan2
+w2532,朝代,chao2 dai4
+w2533,尺子,chi3 zi5
+w2534,标点,biao1 dian3
+w2535,劳驾,lao2 jia4
+w2536,干活儿,gan4 huo2 r5
+w2537,连忙,lian2 mang2
+w2538,使劲儿,shi3 jin4 r5
+w2539,柑橘,gan1 ju2
+w2540,系领带,xi4 ling3 dai4
+w2541,哦,o4
+w2542,啦,la5
+w2543,组,zu3
+w2544,嘛,ma5
+w2545,现场,xian4 chang3
+w2546,拥有,yong1 you3
+w2547,哇,wa1
+w2548,数,shu3
+w2549,数,shu4
+w2550,交易,jiao1 yi4
+w2551,死亡,si3 wang2
+w2552,事件,shi4 jian4
+w2553,啥,sha2
+w2554,选手,xuan3 shou3
+w2555,投票,tou2 piao4
+w2556,客户,ke4 hu4
+w2557,同志,tong2 zhi4
+w2558,或许,huo4 xu3
+w2559,媒体,mei2 ti3
+w2560,意识,yi4 shi2
+w2561,机构,ji1 gou4
+w2562,副,fu4
+w2563,事业,shi4 ye4
+w2564,而已,er2 yi3
+w2565,嗯,en4
+w2566,成员,cheng2 yuan2
+w2567,梦想,meng4 xiang3
+w2568,网络,wang3 luo4
+w2569,队伍,dui4 wu3
+w2570,事故,shi4 gu4
+w2571,协议,xie2 yi4
+w2572,攻击,gong1 ji1
+w2573,超级,chao1 ji2
+w2574,意味着,yi4 wei4 zhe5
+w2575,案件,an4 jian4
+w2576,确保,que4 bao3
+w2577,区域,qu1 yu4
+w2578,家伙,jia1 huo5
+w2579,爆炸,bao4 zha4
+w2580,展示,zhan3 shi4
+w2581,基地,ji1 di4
+w2582,战斗,zhan4 dou4
+w2583,人家,ren2 jia1
+w2584,军队,jun1 dui4
+w2585,基金,ji1 jin1
+w2586,社区,she4 qu1
+w2587,即将,ji2 jiang1
+w2588,欧洲,ou1 zhou1
+w2589,中央,zhong1 yang1
+w2590,州,zhou1
+w2591,显著,xian3 zhu4
+w2592,袭击,xi2 ji1
+w2593,承诺,cheng2 nuo4
+w2594,尽快,jin3 kuai4
+w2595,感染,gan3 ran3
+w2596,砸,za2
+w2597,党,dang3
+w2598,打击,da3 ji1
+w2599,转移,zhuan3 yi2
+w2600,生物,sheng1 wu4
+w2601,主题,zhu3 ti2
+w2602,人士,ren2 shi4
+w2603,集团,ji2 tuan2
+w2604,试验,shi4 yan4
+w2605,进展,jin4 zhan3
+w2606,性感,xing4 gan3
+w2607,系列,xi4 lie4
+w2608,真相,zhen1 xiang4
+w2609,搭,da1
+w2610,夫人,fu1 ren5
+w2611,毫无,hao2 wu2
+w2612,尝试,chang2 shi4
+w2613,疾病,ji2 bing4
+w2614,类似,lei4 si4
+w2615,联盟,lian2 meng2
+w2616,评论,ping2 lun4
+w2617,仪式,yi2 shi4
+w2618,进攻,jin4 gong1
+w2619,来源,lai2 yuan2
+w2620,生存,sheng1 cun2
+w2621,并非,bing4 fei1
+w2622,非法,fei1 fa3
+w2623,本身,ben3 shen1
+w2624,时光,shi2 guang1
+w2625,端,duan1
+w2626,实力,shi2 li4
+w2627,证实,zheng4 shi2
+w2628,恶心,e3 xin1
+w2629,盯,ding1
+w2630,将军,jiang1 jun1
+w2631,尸体,shi1 ti3
+w2632,分手,fen1 shou3
+w2633,模式,mo2 shi4
+w2634,异常,yi4 chang2
+w2635,档案,dang4 an4
+w2636,维持,wei2 chi2
+w2637,协会,xie2 hui4
+w2638,细胞,xi4 bao1
+w2639,症状,zheng4 zhuang4
+w2640,试图,shi4 tu2
+w2641,患者,huan4 zhe3
+w2642,艘,sou1
+w2643,刺,ci4
+w2644,灵魂,ling2 hun2
+w2645,镜头,jing4 tou2
+w2646,实施,shi2 shi1
+w2647,枚,mei2
+w2648,凌晨,ling2 chen2
+w2649,淘汰,tao2 tai4
+w2650,释放,shi4 fang4
+w2651,操作,cao1 zuo4
+w2652,达成,da2 cheng2
+w2653,本人,ben3 ren2
+w2654,嗨,hai1
+w2655,斗争,dou4 zheng1
+w2656,给予,ji3 yu3
+w2657,舞蹈,wu3 dao3
+w2658,突破,tu1 po4
+w2659,发布,fa1 bu4
+w2660,嘿,hei1
+w2661,哼,heng1
+w2662,主管,zhu3 guan3
+w2663,动力,dong4 li4
+w2664,奖励,jiang3 li4
+w2665,能量,neng2 liang4
+w2666,领先,ling3 xian1
+w2667,清理,qing1 li3
+w2668,声明,sheng1 ming2
+w2669,激情,ji1 qing2
+w2670,成交,cheng2 jiao1
+w2671,在乎,zai4 hu5
+w2672,造型,zao4 xing2
+w2673,装备,zhuang1 bei4
+w2674,障碍,zhang4 ai4
+w2675,危机,wei1 ji1
+w2676,公民,gong1 min2
+w2677,当初,dang1 chu1
+w2678,情报,qing2 bao4
+w2679,线索,xian4 suo3
+w2680,眼神,yan3 shen2
+w2681,石油,shi2 you2
+w2682,依靠,yi1 kao4
+w2683,警告,jing3 gao4
+w2684,基因,ji1 yin1
+w2685,孤独,gu1 du2
+w2686,蒙,meng2
+w2687,暴力,bao4 li4
+w2688,神奇,shen2 qi2
+w2689,尴尬,gan1 ga4
+w2690,发射,fa1 she4
+w2691,代价,dai4 jia4
+w2692,婴儿,ying1 er2
+w2693,团结,tuan2 jie2
+w2694,搜索,sou1 suo3
+w2695,涉及,she4 ji2
+w2696,耍,shua3
+w2697,发动,fa1 dong4
+w2698,策略,ce4 lüe4
+w2699,牺牲,xi1 sheng1
+w2700,位于,wei4 yu2
+w2701,陷入,xian4 ru4
+w2702,回报,hui2 bao4
+w2703,需求,xu1 qiu2
+w2704,展现,zhan3 xian4
+w2705,评估,ping2 gu1
+w2706,环节,huan2 jie2
+w2707,武装,wu3 zhuang1
+w2708,跟踪,gen1 zong1
+w2709,心灵,xin1 ling2
+w2710,活力,huo2 li4
+w2711,对付,dui4 fu5
+w2712,天堂,tian1 tang2
+w2713,航空,hang2 kong1
+w2714,先进,xian1 jin4
+w2715,屁股,pi4 gu5
+w2716,混乱,hun4 luan4
+w2717,火箭,huo3 jian4
+w2718,注射,zhu4 she4
+w2719,冲突,chong1 tu1
+w2720,惊讶,jing1 ya4
+w2721,肿瘤,zhong3 liu2
+w2722,敏感,min3 gan3
+w2723,提示,ti2 shi4
+w2724,防止,fang2 zhi3
+w2725,设置,she4 zhi4
+w2726,结局,jie2 ju2
+w2727,典型,dian3 xing2
+w2728,夫妇,fu1 fu4
+w2729,战略,zhan4 lüe4
+w2730,清醒,qing1 xing3
+w2731,艰难,jian1 nan2
+w2732,怀孕,huai2 yun4
+w2733,即便,ji2 bian4
+w2734,抱怨,bao4 yuan4
+w2735,失踪,shi1 zong1
+w2736,抢劫,qiang3 jie2
+w2737,卫星,wei4 xing1
+w2738,动手,dong4 shou3
+w2739,栋,dong4
+w2740,直播,zhi2 bo1
+w2741,监督,jian1 du1
+w2742,交往,jiao1 wang3
+w2743,遭遇,zao1 yu4
+w2744,时机,shi2 ji1
+w2745,治安,zhi4 an1
+w2746,恐惧,kong3 ju4
+w2747,折,zhe2
+w2748,渴望,ke3 wang4
+w2749,摆脱,bai3 tuo1
+w2750,完毕,wan2 bi4
+w2751,财富,cai2 fu4
+w2752,监狱,jian1 yu4
+w2753,模型,mo2 xing2
+w2754,爆发,bao4 fa1
+w2755,周年,zhou1 nian2
+w2756,扮演,ban4 yan3
+w2757,统计,tong3 ji4
+w2758,创作,chuang4 zuo4
+w2759,扎,zha1
+w2760,保障,bao3 zhang4
+w2761,吼,hou3
+w2762,资产,zi1 chan3
+w2763,皆,jie1
+w2764,运行,yun4 xing2
+w2765,局面,ju2 mian4
+w2766,期望,qi1 wang4
+w2767,当事人,dang1 shi4 ren2
+w2768,演讲,yan3 jiang3
+w2769,补偿,bu3 chang2
+w2770,诉讼,su4 song4
+w2771,负担,fu4 dan1
+w2772,毒品,du2 pin3
+w2773,年度,nian2 du4
+w2774,检验,jian3 yan4
+w2775,排除,pai2 chu2
+w2776,发行,fa1 xing2
+w2777,培训,pei2 xun4
+w2778,井,jing3
+w2779,判决,pan4 jue2
+w2780,被告,bei4 gao4
+w2781,欢乐,huan1 le4
+w2782,收藏,shou1 cang2
+w2783,团体,tuan2 ti3
+w2784,消防,xiao1 fang2
+w2785,太空,tai4 kong1
+w2786,指示,zhi3 shi4
+w2787,暴露,bao4 lu4
+w2788,官方,guan1 fang1
+w2789,逮捕,dai4 bu3
+w2790,机械,ji1 xie4
+w2791,引导,yin3 dao3
+w2792,协助,xie2 zhu4
+w2793,防守,fang2 shou3
+w2794,审判,shen3 pan4
+w2795,财务,cai2 wu4
+w2796,顾问,gu4 wen4
+w2797,助理,zhu4 li3
+w2798,潜力,qian2 li4
+w2799,折磨,zhe2 mo2
+w2800,消除,xiao1 chu2
+w2801,随意,sui2 yi4
+w2802,贼,zei2
+w2803,算了,suan4 le5
+w2804,策划,ce4 hua4
+w2805,预算,yu4 suan4
+w2806,行政,xing2 zheng4
+w2807,司法,si1 fa3
+w2808,冲动,chong1 dong4
+w2809,考验,kao3 yan4
+w2810,技巧,ji4 qiao3
+w2811,公正,gong1 zheng4
+w2812,和谐,he2 xie2
+w2813,呈现,cheng2 xian4
+w2814,无比,wu2 bi3
+w2815,信仰,xin4 yang3
+w2816,思维,si1 wei2
+w2817,规划,gui1 hua4
+w2818,不止,bu4 zhi3
+w2819,震惊,zhen4 jing1
+w2820,混合,hun4 he2
+w2821,播放,bo1 fang4
+w2822,坑,keng1
+w2823,导弹,dao3 dan4
+w2824,领袖,ling3 xiu4
+w2825,代理,dai4 li3
+w2826,过度,guo4 du4
+w2827,亦,yi4
+w2828,明明,ming2 ming2
+w2829,机关,ji1 guan1
+w2830,群众,qun2 zhong4
+w2831,按摩,an4 mo2
+w2832,绑架,bang3 jia4
+w2833,倾向,qing1 xiang4
+w2834,诱惑,you4 huo4
+w2835,产业,chan3 ye4
+w2836,居住,ju1 zhu4
+w2837,情形,qing2 xing5
+w2838,起码,qi3 ma3
+w2839,合并,he2 bing4
+w2840,嫉妒,ji2 du4
+w2841,带领,dai4 ling3
+w2842,探索,tan4 suo3
+w2843,财政,cai2 zheng4
+w2844,对抗,dui4 kang4
+w2845,迹象,ji4 xiang4
+w2846,支援,zhi1 yuan2
+w2847,以往,yi3 wang3
+w2848,娃娃,wa2 wa5
+w2849,犬,quan3
+w2850,签署,qian1 shu3
+w2851,欺骗,qi1 pian4
+w2852,金融,jin1 rong2
+w2853,子弹,zi3 dan4
+w2854,痕迹,hen2 ji4
+w2855,过于,guo4 yu2
+w2856,染,ran3
+w2857,清晰,qing1 xi1
+w2858,码头,ma3 tou2
+w2859,咋,za3
+w2860,崩溃,beng1 kui4
+w2861,循环,xun2 huan2
+w2862,汇报,hui4 bao4
+w2863,鉴定,jian4 ding4
+w2864,超越,chao1 yue4
+w2865,膜,mo2
+w2866,铺,pu4
+w2867,特色,te4 se4
+w2868,用户,yong4 hu4
+w2869,正义,zheng4 yi4
+w2870,穿越,chuan1 yue4
+w2871,抛弃,pao1 qi4
+w2872,跨,kua4
+w2873,战术,zhan4 shu4
+w2874,临床,lin2 chuang2
+w2875,欲望,yu4 wang4
+w2876,立场,li4 chang3
+w2877,认定,ren4 ding4
+w2878,跌,die1
+w2879,足以,zu2 yi3
+w2880,场面,chang3 mian4
+w2881,目光,mu4 guang1
+w2882,放手,fang4 shou3
+w2883,脱离,tuo1 li2
+w2884,解除,jie3 chu2
+w2885,惩罚,cheng2 fa2
+w2886,事务,shi4 wu4
+w2887,在意,zai4 yi4
+w2888,技能,ji4 neng2
+w2889,抵抗,di3 kang4
+w2890,动机,dong4 ji1
+w2891,情节,qing2 jie2
+w2892,预期,yu4 qi1
+w2893,侵犯,qin1 fan4
+w2894,乐趣,le4 qu4
+w2895,熬,ao2
+w2896,一向,yi1 xiang4
+w2897,天才,tian1 cai2
+w2898,绝望,jue2 wang4
+w2899,迷人,mi2 ren2
+w2900,职位,zhi2 wei4
+w2901,化妆,hua4 zhuang1
+w2902,节奏,jie2 zou4
+w2903,裁判,cai2 pan4
+w2904,角落,jiao3 luo4
+w2905,剧本,ju4 ben3
+w2906,版本,ban3 ben3
+w2907,干扰,gan1 rao3
+w2908,联络,lian2 luo4
+w2909,途径,tu2 jing4
+w2910,体系,ti3 xi4
+w2911,遭受,zao1 shou4
+w2912,轨道,gui3 dao4
+w2913,忍受,ren3 shou4
+w2914,新娘,xin1 niang2
+w2915,脆弱,cui4 ruo4
+w2916,引擎,yin3 qing2
+w2917,维修,wei2 xiu1
+w2918,漫画,man4 hua4
+w2919,窝,wo1
+w2920,继承,ji4 cheng2
+w2921,依据,yi1 ju4
+w2922,弥补,mi2 bu3
+w2923,扑,pu1
+w2924,天生,tian1 sheng1
+w2925,抵达,di3 da2
+w2926,登陆,deng1 lu4
+w2927,灵感,ling2 gan3
+w2928,忽略,hu1 lüe4
+w2929,失误,shi1 wu4
+w2930,支撑,zhi1 cheng1
+w2931,依旧,yi1 jiu4
+w2932,包装,bao1 zhuang1
+w2933,边缘,bian1 yuan2
+w2934,元素,yuan2 su4
+w2935,强迫,qiang3 po4
+w2936,别墅,bie2 shu4
+w2937,高潮,gao1 chao2
+w2938,钻石,zuan4 shi2
+w2939,仓库,cang1 ku4
+w2940,回顾,hui2 gu4
+w2941,前提,qian2 ti2
+w2942,岗位,gang3 wei4
+w2943,清洁,qing1 jie2
+w2944,场所,chang3 suo3
+w2945,焦点,jiao1 dian3
+w2946,福利,fu2 li4
+w2947,不可思议,bu4 ke3 si1 yi4
+w2948,宁愿,ning4 yuan4
+w2949,故障,gu4 zhang4
+w2950,手法,shou3 fa3
+w2951,指责,zhi3 ze2
+w2952,成本,cheng2 ben3
+w2953,拼命,pin1 ming4
+w2954,免疫,mian3 yi4
+w2955,割,ge1
+w2956,初步,chu1 bu4
+w2957,渣,zha1
+w2958,假设,jia3 she4
+w2959,布置,bu4 zhi4
+w2960,欺负,qi1 fu5
+w2961,优先,you1 xian1
+w2962,色彩,se4 cai3
+w2963,吊,diao4
+w2964,级别,ji2 bie2
+w2965,携带,xie2 dai4
+w2966,创新,chuang4 xin1
+w2967,指定,zhi3 ding4
+w2968,癌症,ai2 zheng4
+w2969,部位,bu4 wei4
+w2970,意志,yi4 zhi4
+w2971,激励,ji1 li4
+w2972,坚定,jian1 ding4
+w2973,许可,xu3 ke3
+w2974,灾难,zai1 nan4
+w2975,以便,yi3 bian4
+w2976,定义,ding4 yi4
+w2977,正当,zheng4 dang4
+w2978,修复,xiu1 fu4
+w2979,清除,qing1 chu2
+w2980,挣扎,zheng1 zha2
+w2981,依赖,yi1 lai4
+w2982,分散,fen1 san4
+w2983,履行,lü3 xing2
+w2984,器官,qi4 guan1
+w2985,捏,nie1
+w2986,竞赛,jing4 sai4
+w2987,争夺,zheng1 duo2
+w2988,分裂,fen1 lie4
+w2989,频率,pin2 lü4
+w2990,报复,bao4 fu4
+w2991,纤维,xian1 wei2
+w2992,罐,guan4
+w2993,提议,ti2 yi4
+w2994,保守,bao3 shou3
+w2995,轮胎,lun2 tai1
+w2996,暗示,an4 shi4
+w2997,原始,yuan2 shi3
+w2998,监视,jian1 shi4
+w2999,搭配,da1 pei4
+w3000,诞生,dan4 sheng1
+w3001,场合,chang3 he2
+w3002,担保,dan1 bao3
+w3003,擅长,shan4 chang2
+w3004,阴谋,yin1 mou2
+w3005,串,chuan4
+w3006,保卫,bao3 wei4
+w3007,磅,bang4
+w3008,背叛,bei4 pan4
+w3009,眼光,yan3 guang1
+w3010,占据,zhan4 ju4
+w3011,一流,yi1 liu2
+w3012,股份,gu3 fen4
+w3013,凶手,xiong1 shou3
+w3014,时装,shi2 zhuang1
+w3015,辐射,fu2 she4
+w3016,掏,tao1
+w3017,趴,pa1
+w3018,赌博,du3 bo2
+w3019,认可,ren4 ke3
+w3020,股东,gu3 dong1
+w3021,残酷,can2 ku4
+w3022,当前,dang1 qian2
+w3023,曝光,bao4 guang1
+w3024,家属,jia1 shu3
+w3025,浑身,hun2 shen1
+w3026,宪法,xian4 fa3
+w3027,难得,nan2 de2
+w3028,防御,fang2 yu4
+w3029,外表,wai4 biao3
+w3030,人格,ren2 ge2
+w3031,十足,shi2 zu2
+w3032,忠诚,zhong1 cheng2
+w3033,腐败,fu3 bai4
+w3034,鉴于,jian4 yu2
+w3035,局势,ju2 shi4
+w3036,大厦,da4 sha4
+w3037,隧道,sui4 dao4
+w3038,势力,shi4 li5
+w3039,品质,pin3 zhi4
+w3040,设立,she4 li4
+w3041,抑制,yi4 zhi4
+w3042,精心,jing1 xin1
+w3043,极端,ji2 duan1
+w3044,流氓,liu2 mang2
+w3045,珍贵,zhen1 gui4
+w3046,遗产,yi2 chan3
+w3047,竞选,jing4 xuan3
+w3048,理智,li3 zhi4
+w3049,风暴,feng1 bao4
+w3050,扁,bian3
+w3051,写作,xie3 zuo4
+w3052,呵,he1
+w3053,着手,zhuo2 shou3
+w3054,指望,zhi3 wang4
+w3055,搭档,da1 dang4
+w3056,使命,shi3 ming4
+w3057,残忍,can2 ren3
+w3058,住宅,zhu4 zhai2
+w3059,季度,ji4 du4
+w3060,丧失,sang4 shi1
+w3061,保密,bao3 mi4
+w3062,旋转,xuan2 zhuan3
+w3063,反抗,fan3 kang4
+w3064,等级,deng3 ji2
+w3065,资助,zi1 zhu4
+w3066,赞助,zan4 zhu4
+w3067,包围,bao1 wei2
+w3068,隔离,ge2 li2
+w3069,人性,ren2 xing4
+w3070,作风,zuo4 feng1
+w3071,美妙,mei3 miao4
+w3072,跪,gui4
+w3073,举动,ju3 dong4
+w3074,细菌,xi4 jun1
+w3075,本事,ben3 shi4
+w3076,纯粹,chun2 cui4
+w3077,收益,shou1 yi4
+w3078,种子,zhong3 zi5
+w3079,幢,zhuang4
+w3080,崇拜,chong2 bai4
+w3081,信念,xin4 nian4
+w3082,保姆,bao3 mu3
+w3083,更新,geng1 xin1
+w3084,模样,mu2 yang4
+w3085,当场,dang1 chang3
+w3086,特定,te4 ding4
+w3087,刑事,xing2 shi4
+w3088,翘,qiao4
+w3089,看待,kan4 dai4
+w3090,打架,da3 jia4
+w3091,助手,zhu4 shou3
+w3092,演绎,yan3 yi4
+w3093,孔,kong3
+w3094,典礼,dian3 li3
+w3095,生理,sheng1 li3
+w3096,拜托,bai4 tuo1
+w3097,滋味,zi1 wei4
+w3098,人间,ren2 jian1
+w3099,脂肪,zhi1 fang2
+w3100,审查,shen3 cha2
+w3101,港口,gang3 kou3
+w3102,著作,zhu4 zuo4
+w3103,放大,fang4 da4
+w3104,挖掘,wa1 jue2
+w3105,权威,quan2 wei1
+w3106,永恒,yong3 heng2
+w3107,覆盖,fu4 gai4
+w3108,渠道,qu2 dao4
+w3109,尊严,zun1 yan2
+w3110,宰,zai3
+w3111,交叉,jiao1 cha1
+w3112,缺陷,que1 xian4
+w3113,现状,xian4 zhuang4
+w3114,酒精,jiu3 jing1
+w3115,可笑,ke3 xiao4
+w3116,捞,lao1
+w3117,上级,shang4 ji2
+w3118,动脉,dong4 mai4
+w3119,扩散,kuo4 san4
+w3120,条款,tiao2 kuan3
+w3121,贿赂,hui4 lu4
+w3122,例外,li4 wai4
+w3123,沉重,chen2 zhong4
+w3124,仪器,yi2 qi4
+w3125,封锁,feng1 suo3
+w3126,命名,ming4 ming2
+w3127,部署,bu4 shu3
+w3128,严厉,yan2 li4
+w3129,示范,shi4 fan4
+w3130,赋予,fu4 yu3
+w3131,封闭,feng1 bi4
+w3132,血压,xue4 ya1
+w3133,遗传,yi2 chuan2
+w3134,识别,shi2 bie2
+w3135,纠正,jiu1 zheng4
+w3136,饮食,yin3 shi2
+w3137,颇,po1
+w3138,溜,liu1
+w3139,摇滚,yao2 gun3
+w3140,魔鬼,mo2 gui3
+w3141,期限,qi1 xian4
+w3142,外界,wai4 jie4
+w3143,奉献,feng4 xian4
+w3144,漫长,man4 chang2
+w3145,标记,biao1 ji4
+w3146,番,fan1
+w3147,挨,ai1
+w3148,辩护,bian4 hu4
+w3149,幸好,xing4 hao3
+w3150,测量,ce4 liang2
+w3151,走廊,zou3 lang2
+w3152,人质,ren2 zhi4
+w3153,嘴唇,zui3 chun2
+w3154,强制,qiang2 zhi4
+w3155,愚蠢,yu2 chun3
+w3156,盗窃,dao4 qie4
+w3157,人工,ren2 gong1
+w3158,冲击,chong1 ji1
+w3159,水泥,shui3 ni2
+w3160,警惕,jing3 ti4
+w3161,降临,jiang4 lin2
+w3162,职务,zhi2 wu4
+w3163,膝盖,xi1 gai4
+w3164,都市,du1 shi4
+w3165,发觉,fa1 jue2
+w3166,回收,hui2 shou1
+w3167,面子,mian4 zi5
+w3168,舱,cang1
+w3169,安置,an1 zhi4
+w3170,处置,chu3 zhi4
+w3171,视线,shi4 xian4
+w3172,间谍,jian4 die2
+w3173,巡逻,xun2 luo2
+w3174,投降,tou2 xiang2
+w3175,边境,bian1 jing4
+w3176,喉咙,hou2 long2
+w3177,隐瞒,yin3 man2
+w3178,征服,zheng1 fu2
+w3179,陈述,chen2 shu4
+w3180,迈,mai4
+w3181,垫,dian4
+w3182,嫌,xian2
+w3183,赞同,zan4 tong2
+w3184,确切,que4 qie4
+w3185,不惜,bu4 xi1
+w3186,发誓,fa1 shi4
+w3187,便利,bian4 li4
+w3188,共和国,gong4 he2 guo2
+w3189,延续,yan2 xu4
+w3190,空白,kong4 bai2
+w3191,电源,dian4 yuan2
+w3192,同胞,tong2 bao1
+w3193,学位,xue2 wei4
+w3194,地步,di4 bu4
+w3195,岁月,sui4 yue4
+w3196,考察,kao3 cha2
+w3197,开展,kai1 zhan3
+w3198,占领,zhan4 ling3
+w3199,伴随,ban4 sui2
+w3200,悲哀,bei1 ai1
+w3201,争议,zheng1 yi4
+w3202,决策,jue2 ce4
+w3203,终身,zhong1 shen1
+w3204,机遇,ji1 yu4
+w3205,嘲笑,chao2 xiao4
+w3206,贫困,pin2 kun4
+w3207,回避,hui2 bi4
+w3208,含义,han2 yi4
+w3209,遥远,yao2 yuan3
+w3210,紧密,jin3 mi4
+w3211,指甲,zhi3 jia5
+w3212,神圣,shen2 sheng4
+w3213,恶化,e4 hua4
+w3214,口气,kou3 qi4
+w3215,捧,peng3
+w3216,层次,ceng2 ci4
+w3217,指令,zhi3 ling4
+w3218,贵族,gui4 zu2
+w3219,制服,zhi4 fu2
+w3220,勉强,mian3 qiang3
+w3221,案例,an4 li4
+w3222,毁灭,hui3 mie4
+w3223,乐意,le4 yi4
+w3224,注重,zhu4 zhong4
+w3225,传达,chuan2 da2
+w3226,图案,tu2 an4
+w3227,撤销,che4 xiao1
+w3228,掩饰,yan3 shi4
+w3229,终止,zhong1 zhi3
+w3230,掩盖,yan3 gai4
+w3231,演习,yan3 xi2
+w3232,演奏,yan3 zou4
+w3233,彩票,cai3 piao4
+w3234,童话,tong2 hua4
+w3235,拨打,bo1 da3
+w3236,干涉,gan1 she4
+w3237,加工,jia1 gong1
+w3238,制止,zhi4 zhi3
+w3239,货币,huo4 bi4
+w3240,阻碍,zu3 ai4
+w3241,华丽,hua2 li4
+w3242,操纵,cao1 zong4
+w3243,激发,ji1 fa1
+w3244,相应,xiang1 ying4
+w3245,近来,jin4 lai2
+w3246,准则,zhun3 ze2
+w3247,报酬,bao4 chou5
+w3248,记载,ji4 zai3
+w3249,极限,ji2 xian4
+w3250,差距,cha1 ju4
+w3251,违背,wei2 bei4
+w3252,呕吐,ou3 tu4
+w3253,原告,yuan2 gao4
+w3254,周边,zhou1 bian1
+w3255,揍,zou4
+w3256,专利,zhuan1 li4
+w3257,证书,zheng4 shu1
+w3258,性命,xing4 ming4
+w3259,合成,he2 cheng2
+w3260,预料,yu4 liao4
+w3261,约束,yue1 shu4
+w3262,麻醉,ma2 zui4
+w3263,审理,shen3 li3
+w3264,内在,nei4 zai4
+w3265,粉色,fen3 se4
+w3266,首要,shou3 yao4
+w3267,公告,gong1 gao4
+w3268,任意,ren4 yi4
+w3269,字母,zi4 mu3
+w3270,开除,kai1 chu2
+w3271,拽,zhuai4
+w3272,答复,da2 fu4
+w3273,忙碌,mang2 lu4
+w3274,国务院,guo2 wu4 yuan4
+w3275,束,shu4
+w3276,是非,shi4 fei1
+w3277,言论,yan2 lun4
+w3278,跟随,gen1 sui2
+w3279,昏迷,hun1 mi2
+w3280,罕见,han3 jian4
+w3281,辉煌,hui1 huang2
+w3282,潮流,chao2 liu2
+w3283,流浪,liu2 lang4
+w3284,良心,liang2 xin1
+w3285,出卖,chu1 mai4
+w3286,充足,chong1 zu2
+w3287,魔术,mo2 shu4
+w3288,推销,tui1 xiao1
+w3289,抢救,qiang3 jiu4
+w3290,发育,fa1 yu4
+w3291,光芒,guang1 mang2
+w3292,热门,re4 men2
+w3293,终点,zhong1 dian3
+w3294,额外,e2 wai4
+w3295,精确,jing1 que4
+w3296,压抑,ya1 yi4
+w3297,伪造,wei3 zao4
+w3298,规范,gui1 fan4
+w3299,中断,zhong1 duan4
+w3300,拜访,bai4 fang3
+w3301,动态,dong4 tai4
+w3302,调节,tiao2 jie2
+w3303,频繁,pin2 fan2
+w3304,供给,gong1 ji3
+w3305,憋,bie1
+w3306,任命,ren4 ming4
+w3307,数目,shu4 mu4
+w3308,当选,dang1 xuan3
+w3309,容忍,rong2 ren3
+w3310,权益,quan2 yi4
+w3311,散发,san4 fa1
+w3312,丸,wan2
+w3313,折腾,zhe1 teng5
+w3314,侮辱,wu3 ru3
+w3315,杰出,jie2 chu1
+w3316,兜,dou1
+w3317,致力于,zhi4 li4 yu2
+w3318,树立,shu4 li4
+w3319,意图,yi4 tu2
+w3320,火焰,huo3 yan4
+w3321,消耗,xiao1 hao4
+w3322,以免,yi3 mian3
+w3323,平凡,ping2 fan2
+w3324,处境,chu3 jing4
+w3325,前景,qian2 jing3
+w3326,哄,hong3
+w3327,片刻,pian4 ke4
+w3328,沮丧,ju3 sang4
+w3329,隐私,yin3 si1
+w3330,庞大,pang2 da4
+w3331,储备,chu3 bei4
+w3332,智力,zhi4 li4
+w3333,资本,zi1 ben3
+w3334,出路,chu1 lu4
+w3335,盲目,mang2 mu4
+w3336,愈,yu4
+w3337,伴侣,ban4 lü3
+w3338,误解,wu4 jie3
+w3339,自主,zi4 zhu3
+w3340,书面,shu1 mian4
+w3341,交代,jiao1 dai4
+w3342,步伐,bu4 fa2
+w3343,姿态,zi1 tai4
+w3344,素质,su4 zhi4
+w3345,经费,jing1 fei4
+w3346,联想,lian2 xiang3
+w3347,纠纷,jiu1 fen1
+w3348,榜样,bang3 yang4
+w3349,幼稚,you4 zhi4
+w3350,随身,sui2 shen1
+w3351,走私,zou3 si1
+w3352,诈骗,zha4 pian4
+w3353,挽救,wan3 jiu4
+w3354,扩张,kuo4 zhang1
+w3355,眼下,yan3 xia4
+w3356,不顾,bu4 gu4
+w3357,歧视,qi2 shi4
+w3358,智能,zhi4 neng2
+w3359,气味,qi4 wei4
+w3360,推测,tui1 ce4
+w3361,思念,si1 nian4
+w3362,刹车,sha1 che1
+w3363,心态,xin1 tai4
+w3364,粥,zhou1
+w3365,原理,yuan2 li3
+w3366,威力,wei1 li4
+w3367,登录,deng1 lu4
+w3368,符号,fu2 hao4
+w3369,翼,yi4
+w3370,勿,wu4
+w3371,隆重,long2 zhong4
+w3372,盛,sheng4
+w3373,迷失,mi2 shi1
+w3374,守护,shou3 hu4
+w3375,清晨,qing1 chen2
+w3376,协商,xie2 shang1
+w3377,民间,min2 jian1
+w3378,委员,wei3 yuan2
+w3379,视野,shi4 ye3
+w3380,蹦,beng4
+w3381,占有,zhan4 you3
+w3382,样品,yang4 pin3
+w3383,雷达,lei2 da2
+w3384,边界,bian1 jie4
+w3385,嫌疑,xian2 yi2
+w3386,哎哟,ai1 yo1
+w3387,往事,wang3 shi4
+w3388,倾听,qing1 ting1
+w3389,消毒,xiao1 du2
+w3390,预言,yu4 yan2
+w3391,噪音,zao4 yin1
+w3392,原先,yuan2 xian1
+w3393,妥协,tuo3 xie2
+w3394,瞪,deng4
+w3395,探讨,tan4 tao3
+w3396,可恶,ke3 wu4
+w3397,主导,zhu3 dao3
+w3398,泡沫,pao4 mo4
+w3399,谴责,qian3 ze2
+w3400,论坛,lun4 tan2
+w3401,分歧,fen1 qi2
+w3402,城堡,cheng2 bao3
+w3403,烟花,yan1 hua1
+w3404,机密,ji1 mi4
+w3405,弱点,ruo4 dian3
+w3406,灿烂,can4 lan4
+w3407,损坏,sun3 huai4
+w3408,验证,yan4 zheng4
+w3409,拘留,ju1 liu2
+w3410,气象,qi4 xiang4
+w3411,将近,jiang1 jin4
+w3412,蛋白质,dan4 bai2 zhi4
+w3413,古怪,gu3 guai4
+w3414,岩石,yan2 shi2
+w3415,维生素,wei2 sheng1 su4
+w3416,精致,jing1 zhi4
+w3417,出身,chu1 shen1
+w3418,值班,zhi2 ban1
+w3419,动静,dong4 jing4
+w3420,授予,shou4 yu3
+w3421,臂,bi4
+w3422,掐,qia1
+w3423,忠实,zhong1 shi2
+w3424,一贯,yi1 guan4
+w3425,保管,bao3 guan3
+w3426,战役,zhan4 yi4
+w3427,视力,shi4 li4
+w3428,坦白,tan3 bai2
+w3429,掩护,yan3 hu4
+w3430,政权,zheng4 quan2
+w3431,虐待,nüe4 dai4
+w3432,胃口,wei4 kou3
+w3433,高尚,gao1 shang4
+w3434,虚假,xu1 jia3
+w3435,珍珠,zhen1 zhu1
+w3436,种族,zhong3 zu2
+w3437,辅助,fu3 zhu4
+w3438,采集,cai3 ji2
+w3439,生态,sheng1 tai4
+w3440,延伸,yan2 shen1
+w3441,设想,she4 xiang3
+w3442,舔,tian3
+w3443,崭新,zhan3 xin1
+w3444,高峰,gao1 feng1
+w3445,智商,zhi4 shang1
+w3446,副作用,fu4 zuo4 yong4
+w3447,拾,shi2
+w3448,温和,wen1 he2
+w3449,淋,lin2
+w3450,奇妙,qi2 miao4
+w3451,奴隶,nu2 li4
+w3452,干预,gan1 yu4
+w3453,无知,wu2 zhi1
+w3454,万分,wan4 fen1
+w3455,枝,zhi1
+w3456,旗帜,qi2 zhi4
+w3457,纯洁,chun2 jie2
+w3458,揭露,jie1 lu4
+w3459,打包,da3 bao1
+w3460,吩咐,fen1 fu4
+w3461,导航,dao3 hang2
+w3462,挽回,wan3 hui2
+w3463,商标,shang1 biao1
+w3464,三角,san1 jiao3
+w3465,条约,tiao2 yue1
+w3466,定期,ding4 qi1
+w3467,本能,ben3 neng2
+w3468,塑造,su4 zao4
+w3469,连锁,lian2 suo3
+w3470,薪水,xin1 shui3
+w3471,疲惫,pi2 bei4
+w3472,拧,ning2
+w3473,莫名其妙,mo4 ming2 qi2 miao4
+w3474,束缚,shu4 fu4
+w3475,健全,jian4 quan2
+w3476,先前,xian1 qian2
+w3477,债券,zhai4 quan4
+w3478,复活,fu4 huo2
+w3479,溪,xi1
+w3480,压迫,ya1 po4
+w3481,蔓延,man4 yan2
+w3482,模范,mo2 fan4
+w3483,调动,diao4 dong4
+w3484,不妨,bu4 fang2
+w3485,默默,mo4 mo4
+w3486,终究,zhong1 jiu1
+w3487,采购,cai3 gou4
+w3488,表决,biao3 jue2
+w3489,恰当,qia4 dang4
+w3490,疑惑,yi2 huo4
+w3491,注视,zhu4 shi4
+w3492,开支,kai1 zhi1
+w3493,擅自,shan4 zi4
+w3494,称号,cheng1 hao4
+w3495,追究,zhui1 jiu1
+w3496,目睹,mu4 du3
+w3497,刊登,kan1 deng1
+w3498,泄露,xie4 lu4
+w3499,拖延,tuo1 yan2
+w3500,无耻,wu2 chi3
+w3501,文物,wen2 wu4
+w3502,个体,ge4 ti3
+w3503,仍旧,reng2 jiu4
+w3504,昂贵,ang2 gui4
+w3505,圆满,yuan2 man3
+w3506,卡通,ka3 tong1
+w3507,奔驰,ben1 chi2
+w3508,生效,sheng1 xiao4
+w3509,名誉,ming2 yu4
+w3510,兑现,dui4 xian4
+w3511,拳头,quan2 tou5
+w3512,遵循,zun1 xun2
+w3513,下属,xia4 shu3
+w3514,选拔,xuan3 ba2
+w3515,英勇,ying1 yong3
+w3516,可行,ke3 xing2
+w3517,喜悦,xi3 yue4
+w3518,引用,yin3 yong4
+w3519,就业,jiu4 ye4
+w3520,要不然,yao4 bu4 ran2
+w3521,作弊,zuo4 bi4
+w3522,惊奇,jing1 qi2
+w3523,时常,shi2 chang2
+w3524,厌恶,yan4 wu4
+w3525,进化,jin4 hua4
+w3526,扛,kang2
+w3527,洪水,hong2 shui3
+w3528,偿还,chang2 huan2
+w3529,风光,feng1 guang1
+w3530,为难,wei2 nan2
+w3531,啃,ken3
+w3532,吸取,xi1 qu3
+w3533,帐篷,zhang4 peng5
+w3534,偏偏,pian1 pian1
+w3535,统统,tong3 tong3
+w3536,消极,xiao1 ji2
+w3537,要命,yao4 ming4
+w3538,颤抖,chan4 dou3
+w3539,充实,chong1 shi2
+w3540,解剖,jie3 pou1
+w3541,雕塑,diao1 su4
+w3542,国防,guo2 fang2
+w3543,着想,zhuo2 xiang3
+w3544,罢工,ba4 gong1
+w3545,颁发,ban1 fa1
+w3546,呼吁,hu1 yu4
+w3547,支配,zhi1 pei4
+w3548,堕落,duo4 luo4
+w3549,不禁,bu4 jin1
+w3550,支出,zhi1 chu1
+w3551,歹徒,dai3 tu2
+w3552,野蛮,ye3 man2
+w3553,分解,fen1 jie3
+w3554,看望,kan4 wang4
+w3555,敞开,chang3 kai1
+w3556,挪,nuo2
+w3557,周期,zhou1 qi1
+w3558,公关,gong1 guan1
+w3559,坡,po1
+w3560,信赖,xin4 lai4
+w3561,澄清,cheng2 qing1
+w3562,大不了,da4 bu4 liao3
+w3563,境界,jing4 jie4
+w3564,生育,sheng1 yu4
+w3565,劈,pi1
+w3566,撤退,che4 tui4
+w3567,悲惨,bei1 can3
+w3568,品尝,pin3 chang2
+w3569,粉碎,fen3 sui4
+w3570,撒谎,sa1 huang3
+w3571,忧郁,you1 yu4
+w3572,掀起,xian1 qi3
+w3573,界限,jie4 xian4
+w3574,旋律,xuan2 lü4
+w3575,固执,gu4 zhi2
+w3576,借助,jie4 zhu4
+w3577,形态,xing2 tai4
+w3578,摩擦,mo2 ca1
+w3579,一度,yi1 du4
+w3580,侧面,ce4 mian4
+w3581,局部,ju2 bu4
+w3582,签订,qian1 ding4
+w3583,渗透,shen4 tou4
+w3584,间接,jian4 jie1
+w3585,塌,ta1
+w3586,打仗,da3 zhang4
+w3587,把手,ba3 shou3
+w3588,和解,he2 jie3
+w3589,区分,qu1 fen1
+w3590,报社,bao4 she4
+w3591,解散,jie3 san4
+w3592,筹备,chou2 bei4
+w3593,严密,yan2 mi4
+w3594,题材,ti2 cai2
+w3595,排斥,pai2 chi4
+w3596,报仇,bao4 chou2
+w3597,收缩,shou1 suo1
+w3598,通用,tong1 yong4
+w3599,抚养,fu3 yang3
+w3600,兼职,jian1 zhi2
+w3601,大致,da4 zhi4
+w3602,较量,jiao4 liang4
+w3603,谣言,yao2 yan2
+w3604,探测,tan4 ce4
+w3605,瘫痪,tan1 huan4
+w3606,光辉,guang1 hui1
+w3607,大臣,da4 chen2
+w3608,配备,pei4 bei4
+w3609,难免,nan2 mian3
+w3610,泼,po1
+w3611,放射,fang4 she4
+w3612,容器,rong2 qi4
+w3613,欣慰,xin1 wei4
+w3614,性能,xing4 neng2
+w3615,过渡,guo4 du4
+w3616,元首,yuan2 shou3
+w3617,苍白,cang1 bai2
+w3618,残留,can2 liu2
+w3619,密度,mi4 du4
+w3620,赠送,zeng4 song4
+w3621,流通,liu2 tong1
+w3622,不时,bu4 shi2
+w3623,主流,zhu3 liu2
+w3624,扒,ba1
+w3625,扒,pa2
+w3626,向往,xiang4 wang3
+w3627,音响,yin1 xiang3
+w3628,钞票,chao1 piao4
+w3629,徘徊,pai2 huai2
+w3630,标题,biao1 ti2
+w3631,迷惑,mi2 huo5
+w3632,黎明,li2 ming2
+w3633,琢磨,zhuo2 mo2
+w3634,表态,biao3 tai4
+w3635,双胞胎,shuang1 bao1 tai1
+w3636,殴打,ou1 da3
+w3637,领土,ling3 tu3
+w3638,反馈,fan3 kui4
+w3639,无能为力,wu2 neng2 wei2 li4
+w3640,比喻,bi3 yu4
+w3641,跳跃,tiao4 yue4
+w3642,挫折,cuo4 zhe2
+w3643,新郎,xin1 lang2
+w3644,储存,chu3 cun2
+w3645,修建,xiu1 jian4
+w3646,惯例,guan4 li4
+w3647,荒唐,huang1 tang2
+w3648,正规,zheng4 gui1
+w3649,储蓄,chu3 xu4
+w3650,必定,bi4 ding4
+w3651,弦,xian2
+w3652,迫不及待,po4 bu4 ji2 dai4
+w3653,虚伪,xu1 wei3
+w3654,予以,yu3 yi3
+w3655,分泌,fen1 mi4
+w3656,后代,hou4 dai4
+w3657,扭转,niu3 zhuan3
+w3658,压制,ya1 zhi4
+w3659,窜,cuan4
+w3660,内涵,nei4 han2
+w3661,起初,qi3 chu1
+w3662,氧气,yang3 qi4
+w3663,推翻,tui1 fan1
+w3664,弹性,tan2 xing4
+w3665,富裕,fu4 yu4
+w3666,日益,ri4 yi4
+w3667,光彩,guang1 cai3
+w3668,株,zhu1
+w3669,冻结,dong4 jie2
+w3670,侦探,zhen1 tan4
+w3671,补贴,bu3 tie1
+w3672,印刷,yin4 shua1
+w3673,丢人,diu1 ren2
+w3674,公务,gong1 wu4
+w3675,口音,kou3 yin1
+w3676,行列,hang2 lie4
+w3677,持久,chi2 jiu3
+w3678,麻痹,ma2 bi4
+w3679,制裁,zhi4 cai2
+w3680,台风,tai2 feng1
+w3681,绅士,shen1 shi4
+w3682,报到,bao4 dao4
+w3683,承办,cheng2 ban4
+w3684,不堪,bu4 kan1
+w3685,别扭,bie4 niu5
+w3686,指标,zhi3 biao1
+w3687,款式,kuan3 shi4
+w3688,揉,rou2
+w3689,正经,zheng4 jing1
+w3690,盈利,ying2 li4
+w3691,书籍,shu1 ji2
+w3692,确信,que4 xin4
+w3693,销毁,xiao1 hui3
+w3694,况且,kuang4 qie3
+w3695,功课,gong1 ke4
+w3696,忍耐,ren3 nai4
+w3697,土壤,tu3 rang3
+w3698,抵制,di3 zhi4
+w3699,贪婪,tan1 lan2
+w3700,学历,xue2 li4
+w3701,得罪,de2 zui4
+w3702,繁殖,fan2 zhi2
+w3703,保重,bao3 zhong4
+w3704,奢侈,she1 chi3
+w3705,严峻,yan2 jun4
+w3706,被动,bei4 dong4
+w3707,巷,xiang4
+w3708,舆论,yu2 lun4
+w3709,当面,dang1 mian4
+w3710,事迹,shi4 ji4
+w3711,倾斜,qing1 xie2
+w3712,物资,wu4 zi1
+w3713,课题,ke4 ti2
+w3714,犹如,you2 ru2
+w3715,迄今为止,qi4 jin1 wei2 zhi3
+w3716,支柱,zhi1 zhu4
+w3717,饥饿,ji1 e4
+w3718,空虚,kong1 xu1
+w3719,竖,shu4
+w3720,门诊,men2 zhen3
+w3721,故乡,gu4 xiang1
+w3722,喇叭,la3 ba5
+w3723,免得,mian3 de5
+w3724,实质,shi2 zhi4
+w3725,人为,ren2 wei2
+w3726,计较,ji4 jiao4
+w3727,贩卖,fan4 mai4
+w3728,耀眼,yao4 yan3
+w3729,慢性,man4 xing4
+w3730,平面,ping2 mian4
+w3731,搂,lou3
+w3732,包袱,bao1 fu5
+w3733,诸位,zhu1 wei4
+w3734,要点,yao4 dian3
+w3735,胜负,sheng4 fu4
+w3736,发财,fa1 cai2
+w3737,往常,wang3 chang2
+w3738,隐蔽,yin3 bi4
+w3739,救济,jiu4 ji4
+w3740,分辨,fen1 bian4
+w3741,描绘,miao2 hui4
+w3742,观光,guan1 guang1
+w3743,赞扬,zan4 yang2
+w3744,派遣,pai4 qian3
+w3745,一如既往,yi1 ru2 ji4 wang3
+w3746,安宁,an1 ning2
+w3747,归还,gui1 huan2
+w3748,捕捉,bu3 zhuo1
+w3749,气势,qi4 shi4
+w3750,事项,shi4 xiang4
+w3751,天然气,tian1 ran2 qi4
+w3752,慎重,shen4 zhong4
+w3753,全力以赴,quan2 li4 yi3 fu4
+w3754,航天,hang2 tian1
+w3755,棕色,zong1 se4
+w3756,孤立,gu1 li4
+w3757,器材,qi4 cai2
+w3758,对应,dui4 ying4
+w3759,航行,hang2 xing2
+w3760,收音机,shou1 yin1 ji1
+w3761,起草,qi3 cao3
+w3762,麻木,ma2 mu4
+w3763,反感,fan3 gan3
+w3764,照样,zhao4 yang4
+w3765,方位,fang1 wei4
+w3766,当心,dang1 xin1
+w3767,衰老,shuai1 lao3
+w3768,轰动,hong1 dong4
+w3769,筛选,shai1 xuan3
+w3770,桥梁,qiao2 liang2
+w3771,手势,shou3 shi4
+w3772,猛烈,meng3 lie4
+w3773,示威,shi4 wei1
+w3774,重心,zhong4 xin1
+w3775,迷信,mi2 xin4
+w3776,慷慨,kang1 kai3
+w3777,壮观,zhuang4 guan1
+w3778,逢,feng2
+w3779,对策,dui4 ce4
+w3780,扰乱,rao3 luan4
+w3781,启示,qi3 shi4
+w3782,阵地,zhen4 di4
+w3783,溅,jian4
+w3784,资深,zi1 shen1
+w3785,崇高,chong2 gao1
+w3786,密封,mi4 feng1
+w3787,高明,gao1 ming2
+w3788,疤,ba1
+w3789,叼,diao1
+w3790,堵塞,du3 se4
+w3791,磕,ke1
+w3792,分明,fen1 ming2
+w3793,剧烈,ju4 lie4
+w3794,起伏,qi3 fu2
+w3795,否决,fou3 jue2
+w3796,挑衅,tiao3 xin4
+w3797,功劳,gong1 lao2
+w3798,演变,yan3 bian4
+w3799,精华,jing1 hua2
+w3800,反射,fan3 she4
+w3801,缺席,que1 xi2
+w3802,标本,biao1 ben3
+w3803,巩固,gong3 gu4
+w3804,皱纹,zhou4 wen2
+w3805,机动,ji1 dong4
+w3806,广阔,guang3 kuo4
+w3807,过滤,guo4 lü4
+w3808,偏见,pian1 jian4
+w3809,阶层,jie1 ceng2
+w3810,知觉,zhi1 jue2
+w3811,飞翔,fei1 xiang2
+w3812,词汇,ci2 hui4
+w3813,敏锐,min3 rui4
+w3814,冷却,leng3 que4
+w3815,化验,hua4 yan4
+w3816,成效,cheng2 xiao4
+w3817,平行,ping2 xing2
+w3818,声誉,sheng1 yu4
+w3819,众所周知,zhong4 suo3 zhou1 zhi1
+w3820,顽强,wan2 qiang2
+w3821,根源,gen1 yuan2
+w3822,妄想,wang4 xiang3
+w3823,要素,yao4 su4
+w3824,笼罩,long3 zhao4
+w3825,卓越,zhuo2 yue4
+w3826,保养,bao3 yang3
+w3827,全局,quan2 ju2
+w3828,响应,xiang3 ying4
+w3829,转让,zhuan3 rang4
+w3830,瀑布,pu4 bu4
+w3831,动员,dong4 yuan2
+w3832,顾虑,gu4 lü4
+w3833,恐吓,kong3 he4
+w3834,理所当然,li3 suo3 dang1 ran2
+w3835,数额,shu4 e2
+w3836,淹没,yan1 mo4
+w3837,闪烁,shan3 shuo4
+w3838,一再,yi1 zai4
+w3839,眨,zha3
+w3840,挑剔,tiao1 ti5
+w3841,培育,pei2 yu4
+w3842,内幕,nei4 mu4
+w3843,神情,shen2 qing2
+w3844,俘虏,fu2 lu3
+w3845,信誉,xin4 yu4
+w3846,锤,chui2
+w3847,租赁,zu1 lin4
+w3848,镇定,zhen4 ding4
+w3849,规章,gui1 zhang1
+w3850,屑,xie4
+w3851,施展,shi1 zhan3
+w3852,曲子,qu3 zi5
+w3853,齐全,qi2 quan2
+w3854,推理,tui1 li3
+w3855,潜水,qian2 shui3
+w3856,唠叨,lao2 dao5
+w3857,名额,ming2 e2
+w3858,管辖,guan3 xia2
+w3859,坟墓,fen2 mu4
+w3860,充当,chong1 dang1
+w3861,遍布,bian4 bu4
+w3862,衷心,zhong1 xin1
+w3863,司令,si1 ling4
+w3864,若干,ruo4 gan1
+w3865,批判,pi1 pan4
+w3866,鲜明,xian1 ming2
+w3867,难堪,nan2 kan1
+w3868,野心,ye3 xin1
+w3869,关照,guan1 zhao4
+w3870,油漆,you2 qi1
+w3871,切实,qie4 shi2
+w3872,古董,gu3 dong3
+w3873,调解,tiao2 jie3
+w3874,鉴别,jian4 bie2
+w3875,心血,xin1 xue4
+w3876,预先,yu4 xian1
+w3877,配套,pei4 tao4
+w3878,遗失,yi2 shi1
+w3879,公式,gong1 shi4
+w3880,四肢,si4 zhi1
+w3881,还原,huan2 yuan2
+w3882,烹饪,peng1 ren4
+w3883,陶瓷,tao2 ci2
+w3884,发火,fa1 huo3
+w3885,丰满,feng1 man3
+w3886,延期,yan2 qi1
+w3887,垂直,chui2 zhi2
+w3888,任性,ren4 xing4
+w3889,以致,yi3 zhi4
+w3890,蒸发,zheng1 fa1
+w3891,立体,li4 ti3
+w3892,高涨,gao1 zhang3
+w3893,治理,zhi4 li3
+w3894,宗旨,zong1 zhi3
+w3895,上游,shang4 you2
+w3896,幅度,fu2 du4
+w3897,上任,shang4 ren4
+w3898,探望,tan4 wang4
+w3899,荒谬,huang1 miu4
+w3900,率领,shuai4 ling3
+w3901,创立,chuang4 li4
+w3902,特长,te4 chang2
+w3903,果断,guo3 duan4
+w3904,主办,zhu3 ban4
+w3905,薄弱,bo2 ruo4
+w3906,公认,gong1 ren4
+w3907,平原,ping2 yuan2
+w3908,振奋,zhen4 fen4
+w3909,卑鄙,bei1 bi3
+w3910,务必,wu4 bi4
+w3911,百分点,bai3 fen1 dian3
+w3912,拥护,yong1 hu4
+w3913,意料,yi4 liao4
+w3914,僵硬,jiang1 ying4
+w3915,董事长,dong3 shi4 zhang3
+w3916,专题,zhuan1 ti2
+w3917,方针,fang1 zhen1
+w3918,工夫,gong1 fu5
+w3919,风味,feng1 wei4
+w3920,档次,dang4 ci4
+w3921,让步,rang4 bu4
+w3922,繁忙,fan2 mang2
+w3923,习俗,xi2 su2
+w3924,创业,chuang4 ye4
+w3925,狭窄,xia2 zhai3
+w3926,布局,bu4 ju2
+w3927,贪污,tan1 wu1
+w3928,峡谷,xia2 gu3
+w3929,沐浴,mu4 yu4
+w3930,口腔,kou3 qiang1
+w3931,高考,gao1 kao3
+w3932,废墟,fei4 xu1
+w3933,反驳,fan3 bo2
+w3934,划分,hua4 fen1
+w3935,驱逐,qu1 zhu2
+w3936,责怪,ze2 guai4
+w3937,对照,dui4 zhao4
+w3938,辨认,bian4 ren4
+w3939,备忘录,bei4 wang4 lu4
+w3940,埋怨,man2 yuan4
+w3941,过失,guo4 shi1
+w3942,宣誓,xuan1 shi4
+w3943,搅拌,jiao3 ban4
+w3944,床单,chuang2 dan1
+w3945,精通,jing1 tong1
+w3946,海滨,hai3 bin1
+w3947,利率,li4 lü4
+w3948,公道,gong1 dao4
+w3949,腐蚀,fu3 shi2
+w3950,辜负,gu1 fu4
+w3951,活该,huo2 gai1
+w3952,上瘾,shang4 yin3
+w3953,不愧,bu4 kui4
+w3954,垄断,long3 duan4
+w3955,玩弄,wan2 nong4
+w3956,开采,kai1 cai3
+w3957,见解,jian4 jie3
+w3958,氢,qing1
+w3959,酝酿,yun4 niang4
+w3960,揭发,jie1 fa1
+w3961,阵容,zhen4 rong2
+w3962,细致,xi4 zhi4
+w3963,畅销,chang4 xiao1
+w3964,拣,jian3
+w3965,附属,fu4 shu3
+w3966,适宜,shi4 yi2
+w3967,屈服,qu1 fu2
+w3968,捍卫,han4 wei4
+w3969,沸腾,fei4 teng2
+w3970,小心翼翼,xiao3 xin1 yi4 yi4
+w3971,合伙,he2 huo3
+w3972,共鸣,gong4 ming2
+w3973,乞丐,qi3 gai4
+w3974,申报,shen1 bao4
+w3975,冒充,mao4 chong1
+w3976,比方,bi3 fang5
+w3977,事态,shi4 tai4
+w3978,攒,zan3
+w3979,橙,cheng2
+w3980,局限,ju2 xian4
+w3981,风度,feng1 du4
+w3982,削弱,xue1 ruo4
+w3983,牢固,lao2 gu4
+w3984,亲热,qin1 re4
+w3985,恨不得,hen4 bu5 de5
+w3986,分量,fen1 liang4
+w3987,兑换,dui4 huan4
+w3988,遗留,yi2 liu2
+w3989,大肆,da4 si4
+w3990,悬念,xuan2 nian4
+w3991,祖父,zu3 fu4
+w3992,寂静,ji4 jing4
+w3993,畏惧,wei4 ju4
+w3994,压缩,ya1 suo1
+w3995,宫殿,gong1 dian4
+w3996,整顿,zheng3 dun4
+w3997,缺口,que1 kou3
+w3998,疲倦,pi2 juan4
+w3999,考古,kao3 gu3
+w4000,镇静,zhen4 jing4
+w4001,遥控,yao2 kong4
+w4002,排放,pai2 fang4
+w4003,顽固,wan2 gu4
+w4004,散布,san4 bu4
+w4005,搓,cuo1
+w4006,愣,leng4
+w4007,颗粒,ke1 li4
+w4008,构思,gou4 si1
+w4009,增添,zeng1 tian1
+w4010,暧昧,ai4 mei4
+w4011,灭亡,mie4 wang2
+w4012,弥漫,mi2 man4
+w4013,秤,cheng4
+w4014,辩解,bian4 jie3
+w4015,亚军,ya4 jun1
+w4016,紧迫,jin3 po4
+w4017,徒弟,tu2 di4
+w4018,规格,gui1 ge2
+w4019,思绪,si1 xu4
+w4020,宣扬,xuan1 yang2
+w4021,牵扯,qian1 che3
+w4022,致使,zhi4 shi3
+w4023,埋伏,mai2 fu2
+w4024,结算,jie2 suan4
+w4025,号召,hao4 zhao4
+w4026,格式,ge2 shi4
+w4027,间隔,jian4 ge2
+w4028,表彰,biao3 zhang1
+w4029,过瘾,guo4 yin3
+w4030,地质,di4 zhi4
+w4031,相差,xiang1 cha4
+w4032,师范,shi1 fan4
+w4033,寄托,ji4 tuo1
+w4034,报答,bao4 da2
+w4035,可观,ke3 guan1
+w4036,拿手,na2 shou3
+w4037,开阔,kai1 kuo4
+w4038,脉搏,mai4 bo2
+w4039,文献,wen2 xian4
+w4040,掰,bai1
+w4041,潮湿,chao2 shi1
+w4042,搏斗,bo2 dou4
+w4043,腐烂,fu3 lan4
+w4044,照料,zhao4 liao4
+w4045,请教,qing3 jiao4
+w4046,冷酷,leng3 ku4
+w4047,飞跃,fei1 yue4
+w4048,开拓,kai1 tuo4
+w4049,神仙,shen2 xian1
+w4050,柔和,rou2 he2
+w4051,昆虫,kun1 chong2
+w4052,迫害,po4 hai4
+w4053,谅解,liang4 jie3
+w4054,颠倒,dian1 dao3
+w4055,无从,wu2 cong2
+w4056,辛勤,xin1 qin2
+w4057,传授,chuan2 shou4
+w4058,成天,cheng2 tian1
+w4059,苏醒,su1 xing3
+w4060,解雇,jie3 gu4
+w4061,隐患,yin3 huan4
+w4062,郑重,zheng4 zhong4
+w4063,阐述,chan3 shu4
+w4064,轮廓,lun2 kuo4
+w4065,起源,qi3 yuan2
+w4066,倒闭,dao3 bi4
+w4067,妥善,tuo3 shan4
+w4068,坚固,jian1 gu4
+w4069,耳环,er3 huan2
+w4070,颁布,ban1 bu4
+w4071,钩子,gou1 zi5
+w4072,饲养,si4 yang3
+w4073,凝聚,ning2 ju4
+w4074,宽敞,kuan1 chang5
+w4075,为期,wei2 qi1
+w4076,恩怨,en1 yuan4
+w4077,面貌,mian4 mao4
+w4078,专程,zhuan1 cheng2
+w4079,分红,fen1 hong2
+w4080,奔波,ben1 bo1
+w4081,偏僻,pian1 pi4
+w4082,备份,bei4 fen4
+w4083,亲身,qin1 shen1
+w4084,领悟,ling3 wu4
+w4085,废除,fei4 chu2
+w4086,镇压,zhen4 ya1
+w4087,伺候,ci4 hou5
+w4088,随手,sui2 shou3
+w4089,鼻涕,bi2 ti4
+w4090,融洽,rong2 qia4
+w4091,拼搏,pin1 bo2
+w4092,功效,gong1 xiao4
+w4093,美满,mei3 man3
+w4094,口头,kou3 tou2
+w4095,埋葬,mai2 zang4
+w4096,配偶,pei4 ou3
+w4097,中立,zhong1 li4
+w4098,容纳,rong2 na4
+w4099,公然,gong1 ran2
+w4100,勇于,yong3 yu2
+w4101,反思,fan3 si1
+w4102,洞穴,dong4 xue2
+w4103,坚实,jian1 shi2
+w4104,向来,xiang4 lai2
+w4105,投机,tou2 ji1
+w4106,黄昏,huang2 hun1
+w4107,展望,zhan3 wang4
+w4108,庄严,zhuang1 yan2
+w4109,蹬,deng1
+w4110,冷淡,leng3 dan4
+w4111,草案,cao3 an4
+w4112,流露,liu2 lu4
+w4113,冤枉,yuan1 wang5
+w4114,生机,sheng1 ji1
+w4115,陷害,xian4 hai4
+w4116,考核,kao3 he2
+w4117,体谅,ti3 liang4
+w4118,起义,qi3 yi4
+w4119,缓和,huan3 he2
+w4120,戒备,jie4 bei4
+w4121,报销,bao4 xiao1
+w4122,严禁,yan2 jin4
+w4123,绣,xiu4
+w4124,结晶,jie2 jing1
+w4125,想方设法,xiang3 fang1 she4 fa3
+w4126,范畴,fan4 chou2
+w4127,索赔,suo3 pei2
+w4128,手艺,shou3 yi4
+w4129,领会,ling3 hui4
+w4130,参照,can1 zhao4
+w4131,摇摆,yao2 bai3
+w4132,优越,you1 yue4
+w4133,开朗,kai1 lang3
+w4134,哨,shao4
+w4135,制订,zhi4 ding4
+w4136,着迷,zhao2 mi2
+w4137,采纳,cai3 na4
+w4138,随即,sui2 ji2
+w4139,做主,zuo4 zhu3
+w4140,文凭,wen2 ping2
+w4141,捎,shao1
+w4142,无非,wu2 fei1
+w4143,启程,qi3 cheng2
+w4144,提拔,ti2 ba2
+w4145,皮革,pi2 ge2
+w4146,告诫,gao4 jie4
+w4147,踪迹,zong1 ji4
+w4148,沉思,chen2 si1
+w4149,精密,jing1 mi4
+w4150,对立,dui4 li4
+w4151,掠夺,lüe4 duo2
+w4152,剥削,bo1 xue1
+w4153,话筒,hua4 tong3
+w4154,晋升,jin4 sheng1
+w4155,溶解,rong2 jie3
+w4156,丰收,feng1 shou1
+w4157,栏目,lan2 mu4
+w4158,疏忽,shu1 hu5
+w4159,粉末,fen3 mo4
+w4160,衰退,shuai1 tui4
+w4161,田径,tian2 jing4
+w4162,呻吟,shen1 yin2
+w4163,讨价还价,tao3 jia4 huan2 jia4
+w4164,雕刻,diao1 ke4
+w4165,挥霍,hui1 huo4
+w4166,主权,zhu3 quan2
+w4167,恼火,nao3 huo3
+w4168,趣味,qu4 wei4
+w4169,争端,zheng1 duan1
+w4170,枯燥,ku1 zao4
+w4171,人道,ren2 dao4
+w4172,方言,fang1 yan2
+w4173,确立,que4 li4
+w4174,丰盛,feng1 sheng4
+w4175,后勤,hou4 qin2
+w4176,捣乱,dao3 luan4
+w4177,优异,you1 yi4
+w4178,媳妇,xi2 fu4
+w4179,腹泻,fu4 xie4
+w4180,逼迫,bi1 po4
+w4181,不得已,bu4 de2 yi3
+w4182,框架,kuang4 jia4
+w4183,北极,bei3 ji2
+w4184,复兴,fu4 xing1
+w4185,断定,duan4 ding4
+w4186,风趣,feng1 qu4
+w4187,曲折,qu1 zhe2
+w4188,搁,ge1
+w4189,博览会,bo2 lan3 hui4
+w4190,变质,bian4 zhi4
+w4191,混淆,hun4 xiao2
+w4192,捆绑,kun3 bang3
+w4193,急剧,ji2 ju4
+w4194,交涉,jiao1 she4
+w4195,锋利,feng1 li4
+w4196,思索,si1 suo3
+w4197,二氧化碳,er4 yang3 hua4 tan4
+w4198,改良,gai3 liang2
+w4199,编织,bian1 zhi1
+w4200,驻扎,zhu4 zha1
+w4201,急切,ji2 qie4
+w4202,施加,shi1 jia1
+w4203,处分,chu3 fen4
+w4204,私自,si1 zi4
+w4205,宏伟,hong2 wei3
+w4206,惦记,dian4 ji4
+w4207,岛屿,dao3 yu3
+w4208,茫茫,mang2 mang2
+w4209,敏捷,min3 jie2
+w4210,接连,jie1 lian2
+w4211,进而,jin4 er2
+w4212,简化,jian3 hua4
+w4213,懒惰,lan3 duo4
+w4214,可口,ke3 kou3
+w4215,柴油,chai2 you2
+w4216,殖民地,zhi2 min2 di4
+w4217,酗酒,xu4 jiu3
+w4218,未免,wei4 mian3
+w4219,池塘,chi2 tang2
+w4220,示意,shi4 yi4
+w4221,熄灭,xi1 mie4
+w4222,补救,bu3 jiu4
+w4223,开辟,kai1 pi4
+w4224,漂浮,piao1 fu2
+w4225,空洞,kong1 dong4
+w4226,反常,fan3 chang2
+w4227,打量,da3 liang5
+w4228,慰问,wei4 wen4
+w4229,泛滥,fan4 lan4
+w4230,大意,da4 yi4
+w4231,会晤,hui4 wu4
+w4232,焦急,jiao1 ji2
+w4233,体面,ti3 mian4
+w4234,胡乱,hu2 luan4
+w4235,凝固,ning2 gu4
+w4236,意向,yi4 xiang4
+w4237,源泉,yuan2 quan2
+w4238,觉悟,jue2 wu4
+w4239,夕阳,xi1 yang2
+w4240,海拔,hai3 ba2
+w4241,跟前,gen1 qian2
+w4242,摇晃,yao2 huang4
+w4243,发呆,fa1 dai1
+w4244,自卑,zi4 bei1
+w4245,连同,lian2 tong2
+w4246,夏令营,xia4 ling4 ying2
+w4247,圈套,quan1 tao4
+w4248,触犯,chu4 fan4
+w4249,干旱,gan1 han4
+w4250,茫然,mang2 ran2
+w4251,便于,bian4 yu2
+w4252,留恋,liu2 lian4
+w4253,阻挠,zu3 nao2
+w4254,凝视,ning2 shi4
+w4255,无赖,wu2 lai4
+w4256,轻而易举,qing1 er2 yi4 ju3
+w4257,吹牛,chui1 niu2
+w4258,无偿,wu2 chang2
+w4259,抽空,chou1 kong4
+w4260,花瓣,hua1 ban4
+w4261,性情,xing4 qing2
+w4262,坚硬,jian1 ying4
+w4263,快活,kuai4 huo5
+w4264,专科,zhuan1 ke1
+w4265,停顿,ting2 dun4
+w4266,舟,zhou1
+w4267,发扬,fa1 yang2
+w4268,鞠躬,ju1 gong1
+w4269,孕育,yun4 yu4
+w4270,文艺,wen2 yi4
+w4271,依次,yi1 ci4
+w4272,一律,yi1 lü4
+w4273,照耀,zhao4 yao4
+w4274,对称,dui4 chen4
+w4275,制约,zhi4 yue1
+w4276,顿时,dun4 shi2
+w4277,裁员,cai2 yuan2
+w4278,畅通,chang4 tong1
+w4279,截至,jie2 zhi4
+w4280,断绝,duan4 jue2
+w4281,贯彻,guan4 che4
+w4282,灵敏,ling2 min3
+w4283,名副其实,ming2 fu4 qi2 shi2
+w4284,妥当,tuo3 dang5
+w4285,科目,ke1 mu4
+w4286,悬挂,xuan2 gua4
+w4287,自发,zi4 fa1
+w4288,高超,gao1 chao1
+w4289,民用,min2 yong4
+w4290,深沉,shen1 chen2
+w4291,干劲,gan4 jin4
+w4292,反面,fan3 mian4
+w4293,调料,tiao2 liao4
+w4294,逝世,shi4 shi4
+w4295,沉着,chen2 zhuo2
+w4296,摸索,mo1 suo5
+w4297,打官司,da3 guan1 si5
+w4298,候选,hou4 xuan3
+w4299,来历,lai2 li4
+w4300,仁慈,ren2 ci2
+w4301,寻觅,xun2 mi4
+w4302,盘旋,pan2 xuan2
+w4303,杂交,za2 jiao1
+w4304,沉闷,chen2 men4
+w4305,玩意儿,wan2 yi4 r5
+w4306,微不足道,wei1 bu4 zu2 dao4
+w4307,心疼,xin1 teng2
+w4308,钦佩,qin1 pei4
+w4309,反倒,fan3 dao4
+w4310,书记,shu1 ji5
+w4311,敬礼,jing4 li3
+w4312,容貌,rong2 mao4
+w4313,桨,jiang3
+w4314,加剧,jia1 ju4
+w4315,长辈,zhang3 bei4
+w4316,得力,de2 li4
+w4317,诽谤,fei3 bang4
+w4318,譬如,pi4 ru2
+w4319,论证,lun4 zheng4
+w4320,竭尽全力,jie2 jin4 quan2 li4
+w4321,附件,fu4 jian4
+w4322,濒临,bin1 lin2
+w4323,屏障,ping2 zhang4
+w4324,就职,jiu4 zhi2
+w4325,专长,zhuan1 chang2
+w4326,化石,hua4 shi2
+w4327,陈旧,chen2 jiu4
+w4328,传单,chuan2 dan1
+w4329,淘气,tao2 qi4
+w4330,嫂子,sao3 zi5
+w4331,胸膛,xiong1 tang2
+w4332,眯,mi1
+w4333,繁华,fan2 hua2
+w4334,踏实,ta1 shi5
+w4335,摄氏度,she4 shi4 du4
+w4336,记性,ji4 xing5
+w4337,渺小,miao3 xiao3
+w4338,牲畜,sheng1 chu4
+w4339,大伙儿,da4 huo3 r5
+w4340,晾,liang4
+w4341,立足,li4 zu2
+w4342,耗费,hao4 fei4
+w4343,福气,fu2 qi5
+w4344,践踏,jian4 ta4
+w4345,清澈,qing1 che4
+w4346,借鉴,jie4 jian4
+w4347,亏损,kui1 sun3
+w4348,炎热,yan2 re4
+w4349,铸造,zhu4 zao4
+w4350,浸泡,jin4 pao4
+w4351,恰到好处,qia4 dao4 hao3 chu4
+w4352,心得,xin1 de2
+w4353,转达,zhuan3 da2
+w4354,倡导,chang4 dao3
+w4355,遏制,e4 zhi4
+w4356,昔日,xi1 ri4
+w4357,当务之急,dang1 wu4 zhi1 ji2
+w4358,涮,shuan4
+w4359,勾结,gou1 jie2
+w4360,火药,huo3 yao4
+w4361,作废,zuo4 fei4
+w4362,书法,shu1 fa3
+w4363,导向,dao3 xiang4
+w4364,媒介,mei2 jie4
+w4365,把戏,ba3 xi4
+w4366,迟疑,chi2 yi2
+w4367,播种,bo1 zhong4
+w4368,着重,zhuo2 zhong4
+w4369,惋惜,wan3 xi1
+w4370,缠绕,chan2 rao4
+w4371,教养,jiao4 yang3
+w4372,造反,zao4 fan3
+w4373,杂技,za2 ji4
+w4374,秃,tu1
+w4375,响亮,xiang3 liang4
+w4376,咀嚼,ju3 jue2
+w4377,更正,geng1 zheng4
+w4378,耸,song3
+w4379,转折,zhuan3 zhe2
+w4380,新颖,xin1 ying3
+w4381,总和,zong3 he2
+w4382,章程,zhang1 cheng2
+w4383,甭,beng2
+w4384,算数,suan4 shu4
+w4385,阻拦,zu3 lan2
+w4386,丛,cong2
+w4387,动荡,dong4 dang4
+w4388,腥,xing1
+w4389,摘要,zhai1 yao4
+w4390,和睦,he2 mu4
+w4391,毅力,yi4 li4
+w4392,爱戴,ai4 dai4
+w4393,仓促,cang1 cu4
+w4394,霸道,ba4 dao4
+w4395,诚挚,cheng2 zhi4
+w4396,粗鲁,cu1 lu3
+w4397,堆积,dui1 ji1
+w4398,凑合,cou4 he5
+w4399,承包,cheng2 bao1
+w4400,职能,zhi2 neng2
+w4401,气概,qi4 gai4
+w4402,波浪,bo1 lang4
+w4403,格局,ge2 ju2
+w4404,晴朗,qing2 lang3
+w4405,点缀,dian3 zhui4
+w4406,合乎,he2 hu1
+w4407,觉醒,jue2 xing3
+w4408,岳父,yue4 fu4
+w4409,动身,dong4 shen1
+w4410,督促,du1 cu4
+w4411,滞留,zhi4 liu2
+w4412,时而,shi2 er2
+w4413,盛开,sheng4 kai1
+w4414,周密,zhou1 mi4
+w4415,机智,ji1 zhi4
+w4416,倘若,tang3 ruo4
+w4417,素食,su4 shi2
+w4418,纺织,fang3 zhi1
+w4419,丑恶,chou3 e4
+w4420,时差,shi2 cha1
+w4421,简陋,jian3 lou4
+w4422,重叠,chong2 die2
+w4423,栽培,zai1 pei2
+w4424,灌溉,guan4 gai4
+w4425,向导,xiang4 dao3
+w4426,敷衍,fu1 yan3
+w4427,批发,pi1 fa1
+w4428,运算,yun4 suan4
+w4429,致辞,zhi4 ci2
+w4430,瓦解,wa3 jie3
+w4431,腐朽,fu3 xiu3
+w4432,多元化,duo1 yuan2 hua4
+w4433,误差,wu4 cha1
+w4434,含糊,han2 hu5
+w4435,攀登,pan1 deng1
+w4436,沼泽,zhao3 ze2
+w4437,歪曲,wai1 qu1
+w4438,颠簸,dian1 bo3
+w4439,嗅觉,xiu4 jue2
+w4440,固然,gu4 ran2
+w4441,千方百计,qian1 fang1 bai3 ji4
+w4442,招收,zhao1 shou1
+w4443,拐杖,guai3 zhang4
+w4444,以至,yi3 zhi4
+w4445,落实,luo4 shi2
+w4446,凄凉,qi1 liang2
+w4447,摧残,cui1 can2
+w4448,新陈代谢,xin1 chen2 dai4 xie4
+w4449,力争,li4 zheng1
+w4450,英明,ying1 ming2
+w4451,法人,fa3 ren2
+w4452,羞耻,xiu1 chi3
+w4453,应酬,ying4 chou5
+w4454,涌现,yong3 xian4
+w4455,偏差,pian1 cha1
+w4456,吝啬,lin4 se4
+w4457,惊动,jing1 dong4
+w4458,片断,pian4 duan4
+w4459,急躁,ji2 zao4
+w4460,狼狈,lang2 bei4
+w4461,盛行,sheng4 xing2
+w4462,真挚,zhen1 zhi4
+w4463,开水,kai1 shui3
+w4464,为首,wei2 shou3
+w4465,糟蹋,zao1 ta4
+w4466,打猎,da3 lie4
+w4467,告辞,gao4 ci2
+w4468,理睬,li3 cai3
+w4469,效益,xiao4 yi4
+w4470,停滞,ting2 zhi4
+w4471,提炼,ti2 lian4
+w4472,团圆,tuan2 yuan2
+w4473,恰巧,qia4 qiao3
+w4474,尖端,jian1 duan1
+w4475,反动,fan3 dong4
+w4476,气压,qi4 ya1
+w4477,贝壳,bei4 ke2
+w4478,无动于衷,wu2 dong4 yu2 zhong1
+w4479,参谋,can1 mou2
+w4480,传记,zhuan4 ji4
+w4481,吉祥,ji2 xiang2
+w4482,爽快,shuang3 kuai5
+w4483,不择手段,bu4 ze2 shou3 duan4
+w4484,大体,da4 ti3
+w4485,渔民,yu2 min2
+w4486,散文,san3 wen2
+w4487,迁徙,qian1 xi3
+w4488,扎实,zha1 shi5
+w4489,肖像,xiao4 xiang4
+w4490,过问,guo4 wen4
+w4491,解体,jie3 ti3
+w4492,现成,xian4 cheng2
+w4493,问世,wen4 shi4
+w4494,红包,hong2 bao1
+w4495,吃力,chi1 li4
+w4496,赤字,chi4 zi4
+w4497,公证,gong1 zheng4
+w4498,气色,qi4 se4
+w4499,辫子,bian4 zi5
+w4500,别致,bie2 zhi4
+w4501,赞叹,zan4 tan4
+w4502,里程碑,li3 cheng2 bei1
+w4503,留神,liu2 shen2
+w4504,防治,fang2 zhi4
+w4505,悔恨,hui3 hen4
+w4506,机灵,ji1 ling5
+w4507,品德,pin3 de2
+w4508,刊物,kan1 wu4
+w4509,端正,duan1 zheng4
+w4510,安详,an1 xiang2
+w4511,杠杆,gang4 gan3
+w4512,筐,kuang1
+w4513,灯笼,deng1 long2
+w4514,发炎,fa1 yan2
+w4515,押金,ya1 jin1
+w4516,畔,pan4
+w4517,攻克,gong1 ke4
+w4518,草率,cao3 shuai4
+w4519,隐约,yin3 yue1
+w4520,笨拙,ben4 zhuo1
+w4521,坚韧,jian1 ren4
+w4522,独裁,du2 cai2
+w4523,齐心协力,qi2 xin1 xie2 li4
+w4524,叹气,tan4 qi4
+w4525,水龙头,shui3 long2 tou2
+w4526,征收,zheng1 shou1
+w4527,喘气,chuan3 qi4
+w4528,历来,li4 lai2
+w4529,牵制,qian1 zhi4
+w4530,实惠,shi2 hui4
+w4531,变迁,bian4 qian1
+w4532,充沛,chong1 pei4
+w4533,简要,jian3 yao4
+w4534,自力更生,zi4 li4 geng1 sheng1
+w4535,梢,shao1
+w4536,港湾,gang3 wan1
+w4537,无理取闹,wu2 li3 qu3 nao4
+w4538,轮船,lun2 chuan2
+w4539,唯独,wei2 du2
+w4540,一帆风顺,yi1 fan1 feng1 shun4
+w4541,学说,xue2 shuo1
+w4542,胸怀,xiong1 huai2
+w4543,经商,jing1 shang1
+w4544,甘心,gan1 xin1
+w4545,浓厚,nong2 hou4
+w4546,平坦,ping2 tan3
+w4547,权衡,quan2 heng2
+w4548,庄重,zhuang1 zhong4
+w4549,势必,shi4 bi4
+w4550,贬低,bian3 di1
+w4551,反问,fan3 wen4
+w4552,普及,pu3 ji2
+w4553,胆怯,dan3 qie4
+w4554,狭隘,xia2 ai4
+w4555,狠心,hen3 xin1
+w4556,山脉,shan1 mai4
+w4557,淡水,dan4 shui3
+w4558,据悉,ju4 xi1
+w4559,款待,kuan3 dai4
+w4560,名次,ming2 ci4
+w4561,工艺品,gong1 yi4 pin3
+w4562,休养,xiu1 yang3
+w4563,昼夜,zhou4 ye4
+w4564,匪徒,fei3 tu2
+w4565,和蔼,he2 ai3
+w4566,奥秘,ao4 mi4
+w4567,钻研,zuan1 yan2
+w4568,通俗,tong1 su2
+w4569,烘,hong1
+w4570,常年,chang2 nian2
+w4571,精简,jing1 jian3
+w4572,反之,fan3 zhi1
+w4573,蔑视,mie4 shi4
+w4574,争气,zheng1 qi4
+w4575,外行,wai4 hang2
+w4576,本钱,ben3 qian2
+w4577,诧异,cha4 yi4
+w4578,力所能及,li4 suo3 neng2 ji2
+w4579,俗话,su2 hua4
+w4580,水利,shui3 li4
+w4581,奖赏,jiang3 shang3
+w4582,受罪,shou4 zui4
+w4583,湖泊,hu2 po1
+w4584,列举,lie4 ju3
+w4585,请示,qing3 shi4
+w4586,虚荣,xu1 rong2
+w4587,索性,suo3 xing4
+w4588,并列,bing4 lie4
+w4589,乘务员,cheng2 wu4 yuan2
+w4590,天文,tian1 wen2
+w4591,鼓动,gu3 dong4
+w4592,朗读,lang3 du2
+w4593,缴纳,jiao3 na4
+w4594,歌颂,ge1 song4
+w4595,迁就,qian1 jiu4
+w4596,推论,tui1 lun4
+w4597,空隙,kong4 xi4
+w4598,陈列,chen2 lie4
+w4599,世代,shi4 dai4
+w4600,投掷,tou2 zhi4
+w4601,世界观,shi4 jie4 guan1
+w4602,愚昧,yu2 mei4
+w4603,洽谈,qia4 tan2
+w4604,颈椎,jing3 zhui1
+w4605,肆无忌惮,si4 wu2 ji4 dan4
+w4606,纵横,zong4 heng2
+w4607,茎,jing1
+w4608,调和,tiao2 he2
+w4609,油腻,you2 ni4
+w4610,迟缓,chi2 huan3
+w4611,神色,shen2 se4
+w4612,迎面,ying2 mian4
+w4613,威信,wei1 xin4
+w4614,一目了然,yi1 mu4 liao3 ran2
+w4615,举足轻重,ju3 zu2 qing1 zhong4
+w4616,舒畅,shu1 chang4
+w4617,验收,yan4 shou1
+w4618,威风,wei1 feng1
+w4619,镶嵌,xiang1 qian4
+w4620,无忧无虑,wu2 you1 wu2 lü4
+w4621,固有,gu4 you3
+w4622,朴实,pu3 shi2
+w4623,呼啸,hu1 xiao4
+w4624,斯文,si1 wen2
+w4625,礼节,li3 jie2
+w4626,并存,bing4 cun2
+w4627,本着,ben3 zhe5
+w4628,败坏,bai4 huai4
+w4629,骨干,gu3 gan4
+w4630,预赛,yu4 sai4
+w4631,奠定,dian4 ding4
+w4632,用功,yong4 gong1
+w4633,杜绝,du4 jue2
+w4634,检讨,jian3 tao3
+w4635,拟定,ni3 ding4
+w4636,派别,pai4 bie2
+w4637,审美,shen3 mei3
+w4638,才干,cai2 gan4
+w4639,裁缝,cai2 feng2
+w4640,共计,gong4 ji4
+w4641,时事,shi2 shi4
+w4642,化肥,hua4 fei2
+w4643,雄厚,xiong2 hou4
+w4644,饱和,bao3 he2
+w4645,涂抹,tu2 mo3
+w4646,庸俗,yong1 su2
+w4647,次序,ci4 xu4
+w4648,靠拢,kao4 long3
+w4649,瘸,que2
+w4650,腮,sai1
+w4651,背诵,bei4 song4
+w4652,周转,zhou1 zhuan3
+w4653,荒凉,huang1 liang2
+w4654,嘈杂,cao2 za2
+w4655,耕地,geng1 di4
+w4656,衔接,xian2 jie1
+w4657,园林,yuan2 lin2
+w4658,近视,jin4 shi4
+w4659,取缔,qu3 di4
+w4660,牢骚,lao2 sao1
+w4661,美观,mei3 guan1
+w4662,总而言之,zong3 er2 yan2 zhi1
+w4663,实事求是,shi2 shi4 qiu2 shi4
+w4664,无可奈何,wu2 ke3 nai4 he2
+w4665,滔滔不绝,tao1 tao1 bu4 jue2
+w4666,夹杂,jia1 za2
+w4667,雪上加霜,xue3 shang4 jia1 shuang1
+w4668,弊端,bi4 duan1
+w4669,家喻户晓,jia1 yu4 hu4 xiao3
+w4670,感慨,gan3 kai3
+w4671,应邀,ying4 yao1
+w4672,留念,liu2 nian4
+w4673,萌芽,meng2 ya2
+w4674,启事,qi3 shi4
+w4675,摄取,she4 qu3
+w4676,预兆,yu4 zhao4
+w4677,暂且,zan4 qie3
+w4678,压榨,ya1 zha4
+w4679,及早,ji2 zao3
+w4680,合身,he2 shen1
+w4681,略微,lüe4 wei1
+w4682,隔阂,ge2 he2
+w4683,荧屏,ying2 ping2
+w4684,冰雹,bing1 bao2
+w4685,疙瘩,ge1 da5
+w4686,务实,wu4 shi2
+w4687,情理,qing2 li3
+w4688,风气,feng1 qi4
+w4689,依托,yi1 tuo1
+w4690,周折,zhou1 zhe2
+w4691,不言而喻,bu4 yan2 er2 yu4
+w4692,相等,xiang1 deng3
+w4693,抱负,bao4 fu4
+w4694,勘探,kan1 tan4
+w4695,枯竭,ku1 jie2
+w4696,答辩,da2 bian4
+w4697,比重,bi3 zhong4
+w4698,包庇,bao1 bi4
+w4699,眼色,yan3 se4
+w4700,谦逊,qian1 xun4
+w4701,利害,li4 hai4
+w4702,倡议,chang4 yi4
+w4703,谋求,mou2 qiu2
+w4704,变故,bian4 gu4
+w4705,熨,yun4
+w4706,诬陷,wu1 xian4
+w4707,落成,luo4 cheng2
+w4708,不由得,bu4 you2 de5
+w4709,沉淀,chen2 dian4
+w4710,雌雄,ci2 xiong2
+w4711,蕴藏,yun4 cang2
+w4712,破例,po4 li4
+w4713,霞,xia2
+w4714,兴高采烈,xing4 gao1 cai3 lie4
+w4715,乡镇,xiang1 zhen4
+w4716,有条不紊,you3 tiao2 bu4 wen3
+w4717,兴旺,xing1 wang4
+w4718,岔,cha4
+w4719,装卸,zhuang1 xie4
+w4720,凶恶,xiong1 e4
+w4721,生锈,sheng1 xiu4
+w4722,封建,feng1 jian4
+w4723,深奥,shen1 ao4
+w4724,出息,chu1 xi1
+w4725,扩充,kuo4 chong1
+w4726,一丝不苟,yi1 si1 bu4 gou3
+w4727,严寒,yan2 han2
+w4728,崇敬,chong2 jing4
+w4729,注释,zhu4 shi4
+w4730,和气,he2 qi5
+w4731,座右铭,zuo4 you4 ming2
+w4732,力图,li4 tu2
+w4733,拘束,ju1 shu4
+w4734,飙升,biao1 sheng1
+w4735,完备,wan2 bei4
+w4736,停泊,ting2 bo2
+w4737,闲话,xian2 hua4
+w4738,盖章,gai4 zhang1
+w4739,恭敬,gong1 jing4
+w4740,托运,tuo1 yun4
+w4741,唾沫,tuo4 mo5
+w4742,遭殃,zao1 yang1
+w4743,调剂,tiao2 ji4
+w4744,开明,kai1 ming2
+w4745,零星,ling2 xing1
+w4746,舰艇,jian4 ting3
+w4747,就近,jiu4 jin4
+w4748,逐年,zhu2 nian2
+w4749,条理,tiao2 li3
+w4750,见义勇为,jian4 yi4 yong3 wei2
+w4751,品行,pin3 xing2
+w4752,巴不得,ba1 bu5 de5
+w4753,忌讳,ji4 hui4
+w4754,宏观,hong2 guan1
+w4755,神态,shen2 tai4
+w4756,磨合,mo2 he2
+w4757,飘扬,piao1 yang2
+w4758,泄气,xie4 qi4
+w4759,层出不穷,ceng2 chu1 bu4 qiong2
+w4760,母语,mu3 yu3
+w4761,立交桥,li4 jiao1 qiao2
+w4762,请柬,qing3 jian3
+w4763,吃苦,chi1 ku3
+w4764,稿件,gao3 jian4
+w4765,断断续续,duan4 duan4 xu4 xu4
+w4766,文雅,wen2 ya3
+w4767,劲头,jin4 tou2
+w4768,寒暄,han2 xuan1
+w4769,威望,wei1 wang4
+w4770,抹杀,mo3 sha1
+w4771,盆地,pen2 di4
+w4772,叮嘱,ding1 zhu3
+w4773,馋,chan2
+w4774,再接再厉,zai4 jie1 zai4 li4
+w4775,遮挡,zhe1 dang3
+w4776,领事馆,ling3 shi4 guan3
+w4777,猖狂,chang1 kuang2
+w4778,哆嗦,duo1 suo5
+w4779,振兴,zhen4 xing1
+w4780,壮丽,zhuang4 li4
+w4781,毫米,hao2 mi3
+w4782,家常,jia1 chang2
+w4783,生疏,sheng1 shu1
+w4784,迸发,beng4 fa1
+w4785,屡次,lü3 ci4
+w4786,声势,sheng1 shi4
+w4787,魄力,po4 li4
+w4788,神气,shen2 qi4
+w4789,不屑一顾,bu4 xie4 yi1 gu4
+w4790,佳肴,jia1 yao2
+w4791,供不应求,gong1 bu4 ying4 qiu2
+w4792,元宵节,yuan2 xiao1 jie2
+w4793,照应,zhao4 ying4
+w4794,作息,zuo4 xi1
+w4795,饶恕,rao2 shu4
+w4796,服气,fu2 qi4
+w4797,衣裳,yi1 shang5
+w4798,吞咽,tun1 yan4
+w4799,鞭策,bian1 ce4
+w4800,姑且,gu1 qie3
+w4801,归纳,gui1 na4
+w4802,慈祥,ci2 xiang2
+w4803,怠慢,dai4 man4
+w4804,正月,zheng1 yue4
+w4805,把关,ba3 guan1
+w4806,哺乳,bu3 ru3
+w4807,恍然大悟,huang3 ran2 da4 wu4
+w4808,谢绝,xie4 jue2
+w4809,不相上下,bu4 xiang1 shang4 xia4
+w4810,辽阔,liao2 kuo4
+w4811,操劳,cao1 lao2
+w4812,不像话,bu4 xiang4 hua4
+w4813,敌视,di2 shi4
+w4814,起哄,qi3 hong4
+w4815,纲领,gang1 ling3
+w4816,归根到底,gui1 gen1 dao4 di3
+w4817,空想,kong1 xiang3
+w4818,珍稀,zhen1 xi1
+w4819,不料,bu4 liao4
+w4820,热泪盈眶,re4 lei4 ying2 kuang4
+w4821,挎,kua4
+w4822,半途而废,ban4 tu2 er2 fei4
+w4823,熏陶,xun1 tao2
+w4824,后顾之忧,hou4 gu4 zhi1 you1
+w4825,埋没,mai2 mo4
+w4826,拄,zhu3
+w4827,根深蒂固,gen1 shen1 di4 gu4
+w4828,闭塞,bi4 se4
+w4829,循序渐进,xun2 xu4 jian4 jin4
+w4830,刹那,cha4 na4
+w4831,沿海,yan2 hai3
+w4832,分寸,fen1 cun5
+w4833,污蔑,wu1 mie4
+w4834,船舶,chuan2 bo2
+w4835,合算,he2 suan4
+w4836,无微不至,wu2 wei1 bu4 zhi4
+w4837,吹捧,chui1 peng3
+w4838,没辙,mei2 zhe2
+w4839,耐用,nai4 yong4
+w4840,兴致勃勃,xing4 zhi4 bo2 bo2
+w4841,兴隆,xing1 long2
+w4842,查获,cha2 huo4
+w4843,壮烈,zhuang4 lie4
+w4844,微观,wei1 guan1
+w4845,伤脑筋,shang1 nao3 jin1
+w4846,无精打采,wu2 jing1 da3 cai3
+w4847,无穷无尽,wu2 qiong2 wu2 jin4
+w4848,寓言,yu4 yan2
+w4849,椭圆,tuo3 yuan2
+w4850,爱不释手,ai4 bu4 shi4 shou3
+w4851,气魄,qi4 po4
+w4852,斟酌,zhen1 zhuo2
+w4853,盛产,sheng4 chan3
+w4854,急功近利,ji2 gong1 jin4 li4
+w4855,赤道,chi4 dao4
+w4856,丘陵,qiu1 ling2
+w4857,咬牙切齿,yao3 ya2 qie4 chi3
+w4858,地势,di4 shi4
+w4859,附和,fu4 he4
+w4860,历代,li4 dai4
+w4861,指南针,zhi3 nan2 zhen1
+w4862,伯母,bo2 mu3
+w4863,挑拨,tiao3 bo1
+w4864,巴结,ba1 jie5
+w4865,与日俱增,yu3 ri4 ju4 zeng1
+w4866,支流,zhi1 liu2
+w4867,操练,cao1 lian4
+w4868,兢兢业业,jing1 jing1 ye4 ye4
+w4869,毅然,yi4 ran2
+w4870,争先恐后,zheng1 xian1 kong3 hou4
+w4871,正气,zheng4 qi4
+w4872,盛情,sheng4 qing2
+w4873,省会,sheng3 hui4
+w4874,乐谱,yue4 pu3
+w4875,公安局,gong1 an1 ju2
+w4876,剪彩,jian3 cai3
+w4877,季军,ji4 jun1
+w4878,常务,chang2 wu4
+w4879,廉洁,lian2 jie2
+w4880,边疆,bian1 jiang1
+w4881,陡峭,dou3 qiao4
+w4882,亏待,kui1 dai4
+w4883,辩证,bian4 zheng4
+w4884,肥沃,fei2 wo4
+w4885,淡季,dan4 ji4
+w4886,日新月异,ri4 xin1 yue4 yi4
+w4887,志气,zhi4 qi4
+w4888,茂盛,mao4 sheng4
+w4889,贤惠,xian2 hui4
+w4890,追悼,zhui1 dao4
+w4891,好客,hao4 ke4
+w4892,自满,zi4 man3
+w4893,棍棒,gun4 bang4
+w4894,踌躇,chou2 chu2
+w4895,拜年,bai4 nian2
+w4896,挺拔,ting3 ba2
+w4897,贫乏,pin2 fa2
+w4898,安居乐业,an1 ju1 le4 ye4
+w4899,慌忙,huang1 mang2
+w4900,刻不容缓,ke4 bu4 rong2 huan3
+w4901,惹祸,re3 huo4
+w4902,物美价廉,wu4 mei3 jia4 lian2
+w4903,得不偿失,de2 bu4 chang2 shi1
+w4904,优胜劣汰,you1 sheng4 lie4 tai4
+w4905,请帖,qing3 tie3
+w4906,一举两得,yi1 ju3 liang3 de2
+w4907,压岁钱,ya1 sui4 qian2
+w4908,须知,xu1 zhi1
+w4909,聋哑,long2 ya3
+w4910,无可奉告,wu2 ke3 feng4 gao4
+w4911,搀,chan1
+w4912,讥笑,ji1 xiao4
+w4913,瞻仰,zhan1 yang3
+w4914,磋商,cuo1 shang1
+w4915,伶俐,ling2 li4
+w4916,防疫,fang2 yi4
+w4917,精打细算,jing1 da3 xi4 suan4
+w4918,潜移默化,qian2 yi2 mo4 hua4
+w4919,豪迈,hao2 mai4
+w4920,上进心,shang4 jin4 xin1
+w4921,气功,qi4 gong1
+w4922,外向,wai4 xiang4
+w4923,聚精会神,ju4 jing1 hui4 shen2
+w4924,公婆,gong1 po2
+w4925,滋长,zi1 zhang3
+w4926,旷课,kuang4 ke4
+w4927,亭子,ting2 zi5
+w4928,难能可贵,nan2 neng2 ke3 gui4
+w4929,欣欣向荣,xin1 xin1 xiang4 rong2
+w4930,次品,ci4 pin3
+w4931,出神,chu1 shen2
+w4932,便条,bian4 tiao2
+w4933,诞辰,dan4 chen2
+w4934,混浊,hun4 zhuo2
+w4935,短促,duan3 cu4
+w4936,稻谷,dao4 gu3
+w4937,堤坝,di1 ba4
+w4938,连年,lian2 nian2
+w4939,畜牧,xu4 mu4
+w4940,统筹兼顾,tong3 chou2 jian1 gu4
+w4941,东张西望,dong1 zhang1 xi1 wang4
+w4942,络绎不绝,luo4 yi4 bu4 jue2
+w4943,举世闻名,ju3 shi4 wen2 ming2
+w4944,弊病,bi4 bing4
+w4945,不敢当,bu4 gan3 dang1
+w4946,任重道远,ren4 zhong4 dao4 yuan3
+w4947,东道主,dong1 dao4 zhu3
+w4948,清真,qing1 zhen1
+w4949,农历,nong2 li4
+w4950,铜矿,tong2 kuang4
+w4951,举世瞩目,ju3 shi4 zhu3 mu4
+w4952,宁肯,ning4 ken3
+w4953,走漏,zou3 lou4
+w4954,螺丝钉,luo2 si1 ding1
+w4955,联欢,lian2 huan1
+w4956,成心,cheng2 xin1
+w4957,朝气蓬勃,zhao1 qi4 peng2 bo2
+w4958,斩钉截铁,zhan3 ding1 jie2 tie3
+w4959,天伦之乐,tian1 lun2 zhi1 le4
+w4960,乌黑,wu1 hei1
+w4961,见闻,jian4 wen2
+w4962,序言,xu4 yan2
+w4963,旗袍,qi2 pao2
+w4964,见多识广,jian4 duo1 shi2 guang3
+w4965,精益求精,jing1 yi4 qiu2 jing1
+w4966,终年,zhong1 nian2
+w4967,从容不迫,cong2 rong2 bu4 po4
+w4968,稠密,chou2 mi4
+w4969,假使,jia3 shi3
+w4970,羽绒服,yu3 rong2 fu2
+w4971,籍贯,ji2 guan4
+w4972,理直气壮,li3 zhi2 qi4 zhuang4
+w4973,称心如意,chen4 xin1 ru2 yi4
+w4974,勉励,mian3 li4
+w4975,娇气,jiao1 qi4
+w4976,凹凸,ao1 tu1
+w4977,贬义,bian3 yi4
+w4978,锲而不舍,qie4 er2 bu4 she3
+w4979,津津有味,jin1 jin1 you3 wei4
+w4980,勤俭,qin2 jian3
+w4981,踊跃,yong3 yue4
+w4982,炉灶,lu2 zao4
+w4983,风土人情,feng1 tu3 ren2 qing2
+w4984,昌盛,chang1 sheng4
+w4985,相辅相成,xiang1 fu3 xiang1 cheng2
+w4986,繁体字,fan2 ti3 zi4
+w4987,知足常乐,zhi1 zu2 chang2 le4
+w4988,得天独厚,de2 tian1 du2 hou4
+w4989,递增,di4 zeng1
+w4990,布告,bu4 gao4
+w4991,华侨,hua2 qiao2
+w4992,过奖,guo4 jiang3
+w4993,急于求成,ji2 yu2 qiu2 cheng2
+w4994,博大精深,bo2 da4 jing1 shen1
+w4995,喜闻乐见,xi3 wen2 le4 jian4
+w4996,波涛汹涌,bo1 tao1 xiong1 yong3
+w4997,空前绝后,kong1 qian2 jue2 hou4
+w4998,川流不息,chuan1 liu2 bu4 xi1
+w4999,纪要,ji4 yao4
+w5000,斑纹,ban1 wen2
+w5001,岂有此理,qi3 you3 ci3 li3
+w5002,正负,zheng4 fu4
+w5003,各抒己见,ge4 shu1 ji3 jian4
+w5004,画蛇添足,hua4 she2 tian1 zu2
+w5005,对联,dui4 lian2
+w5006,泰斗,tai4 dou3
+w5007,悬崖峭壁,xuan2 ya2 qiao4 bi4
+w5008,武侠,wu3 xia2
+w5009,经纬,jing1 wei3
+w5010,出洋相,chu1 yang2 xiang4
+w5011,恳切,ken3 qie4
+w5012,继往开来,ji4 wang3 kai1 lai2
+w5013,苦尽甘来,ku3 jin4 gan1 lai2
+w5014,馅儿,xian4 r5
+w5015,温带,wen1 dai4
+w5016,勤恳,qin2 ken3
+w5017,做东,zuo4 dong1
+w5018,通货,tong1 huo4
+w5019,俯仰,fu3 yang3
+w5020,心眼儿,xin1 yan3 r5
+w5021,端午节,duan1 wu3 jie2
+w5022,丢三落四,diu1 san1 la4 si4
+w5023,沾光,zhan1 guang1
+w5024,简体字,jian3 ti3 zi4
+w5025,拔苗助长,ba2 miao2 zhu4 zhang3
+w5026,糖葫芦,tang2 hu2 lu5
+w5027,碧玉,bi4 yu4
+w5028,砖瓦,zhuan1 wa3
+w5029,锦绣前程,jin3 xiu4 qian2 cheng2
+w5030,深情厚谊,shen1 qing2 hou4 yi4
+w5031,重阳节,chong2 yang2 jie2
+w5032,纳闷儿,na4 men4 r5
+w5033,飞禽走兽,fei1 qin2 zou3 shou4
+w5034,饱经沧桑,bao3 jing1 cang1 sang1
+w5035,啰唆,luo1 suo5
+w5036,墨水儿,mo4 shui3 r5
+w5037,招投标,zhao1 tou2 biao1
+w5038,摊儿,tan1 r5
+w5039,涮火锅,shuan4 huo3 guo1
+w5040,烟花爆竹,yan1 hua1 bao4 zhu2
+w5041,素食主义,su4 shi2 zhu3 yi4
+w5042,纽扣儿,niu3 kou4 r5
+w5043,通货膨胀,tong1 huo4 peng2 zhang4
