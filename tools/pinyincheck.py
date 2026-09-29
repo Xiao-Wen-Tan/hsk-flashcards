@@ -48,7 +48,7 @@ from pypinyin import Style, pinyin
 from pypinyin.pinyin_dict import pinyin_dict
 
 from meaning import public_pos
-from pinyin_text import joints_of_py, num_to_marked, syllable_to_num, syllables_of_py
+from pinyin_text import DIGITS, joints_of_py, num_to_marked, syllable_to_num, syllables_of_py, yi_in_arithmetic
 from sentpinyin import NUMERALS, approximate, decimal_positions, number_words, potential
 
 _HANZI = re.compile(r"[\u3007\u4e00-\u9fff]")  # Chinese characters, with the 〇 of years (二〇〇八年)
@@ -79,9 +79,6 @@ _COUNTED = set("百千万亿刻个些下起样直定共切般边种位件本张�
 # 一号 and 一日 "yī hào", "yī rì" (the first day), 一班 (class one), 一年级 "yī niánjí", 一级, 一期,
 # 一季度, 一楼 and 一层 (the first floor).
 _ORDINAL_AFTER = ("号", "日", "班", "年级", "级", "期", "季度", "楼", "层")
-# The digits that a number read digit by digit is made of, before which a 一 keeps "yī" (一九九八年 "yī jiǔ jiǔ bā
-# nián"). 两 is not one, because 一两 is an approximate number ("yì-liǎng").
-_DIGITS = set("〇零一二三四五六七八九")
 # Particles after which a 了 still ends its sentence ("Nǐ lái le ma?").
 _FINAL_PARTICLES = set("吗吧呢啊呀啦嘛")
 # A run of numerals, with 几 as in 十几 and 几十.
@@ -610,7 +607,11 @@ def _tone_change_problems(sentence, cells, head, facts):
             if tone != "1":
                 problems.append(f"'{syl}' (一) follows {kept}, so it is part of a number, an ordinal or a weekday and "
                                 "keeps its first tone 'yī'")
-        elif sentence[i + 1:i + 2] in _DIGITS and i + 1 in cells:
+        elif yi_in_arithmetic(sentence, i, facts["counted"]):
+            if tone != "1":
+                problems.append(f"'{syl}' (一) is a number in arithmetic next to "
+                                f"{yi_in_arithmetic(sentence, i, facts['counted'])}, so it keeps its first tone 'yī'")
+        elif sentence[i + 1:i + 2] in DIGITS and i + 1 in cells:
             if tone != "1":
                 problems.append(f"'{syl}' (一) is read digit by digit before {sentence[i + 1]}, so it keeps its first "
                                 "tone 'yī'")
@@ -639,12 +640,15 @@ def _yi_open(sentence, i, cells, known):
     settle first. Here it may keep "yī":
     - at the end of a card or of a word of the public list, where the line ends the pinyin word
       (同一 in "tóngyī gè rén", 之一);
+    - before 月, where it starts a month name (一月 "yīyuè", style sheet point 2);
     - before a word that makes it an ordinal or a date (_ORDINAL_AFTER, 一楼 "yī lóu"), and before 点
       except in 一点儿 and 一点点, because 一点 may be one o'clock ("yī diǎn");
     - after a numeral or 第 that _keeps_yi left open, as before 百, 千, 万 or 亿 (三千一百), where a numeral
       before it settles nothing.
     """
     rest = sentence[i + 1:]
+    if rest[:1] == "月":
+        return True
     if rest.startswith(_ORDINAL_AFTER) or (rest[:1] == "点" and rest[1:2] not in ("儿", "点")):
         return True
     if i and sentence[i - 1] in NUMERALS | {"第"}:

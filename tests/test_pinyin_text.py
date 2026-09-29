@@ -204,3 +204,19 @@ def test_card_pinyin_follows_the_style_sheet():
     spoken = [("一起", ["yi1", "qi3"]), ("一下", ["yi1", "xia4"]), ("不是", ["bu4", "shi4"]), ("唯一", ["wei2", "yi1"]),
               ("不客气", ["bu4", "ke4", "qi5"])]
     assert [card_py(tone_change(hz, nums)) for hz, nums in spoken] == ["yìqǐ", "yíxià", "búshì", "wéiyī", "búkèqi"]
+
+
+def test_tone_change_of_yi_follows_the_checker_rules():
+    # The coordinator's decisions of 2026-09-29: the draft follows the checker's rules for 一.
+    # Before a neutral tone 一 still changes, and the draft writes yí (一个 "yí ge").
+    assert tone_change("一个", ["yi1", "ge5"]) == ["yi2", "ge5"]
+    # Before another digit it is read digit by digit (一九九八 "yī jiǔ jiǔ bā").
+    assert tone_change("一九九八年", ["yi1", "jiu3", "jiu3", "ba1", "nian2"])[0] == "yi1"
+    # Next to 加, 减, 乘, 除 or 等于 it is a number in arithmetic ("yī jiā yī děngyú èr").
+    assert tone_change("一加一等于二", ["yi1", "jia1", "yi1", "deng3", "yu2", "er4"]) == \
+        ["yi1", "jia1", "yi1", "deng3", "yu2", "er4"]
+    assert tone_change("一加一是二", ["yi1", "jia1", "yi1", "shi4", "er4"])[2] == "yi1"
+    # After an arithmetic word a 一 that counts with a measure word still changes (再加一个 "zài jiā yí gè").
+    assert tone_change("再加一个", ["zai4", "jia1", "yi1", "ge4"], counted={"个"})[2] == "yi2"
+    # A month name keeps yī (一月 "yīyuè", 十一月 "shíyīyuè").
+    assert tone_change("十一月", ["shi2", "yi1", "yue4"])[1] == "yi1"

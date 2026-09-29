@@ -98,18 +98,47 @@ def num_to_marked(syl):
     return base[:i] + _MARKS[base[i]][tone - 1] + base[i + 1:]
 
 
-def tone_change(hz, nums, keep=()):
+# The digits of a number read digit by digit, before which a 一 keeps yi1 (一九九八 "yī jiǔ jiǔ bā").
+# 两 is not one, because 一两 is an approximate number ("yì-liǎng").
+DIGITS = set("〇零一二三四五六七八九")
+# The words of arithmetic, next to which a 一 is a number and keeps yi1 ("yī jiā yī děngyú èr").
+ARITHMETIC = ("加", "减", "乘", "除", "等于")
+
+
+def yi_in_arithmetic(chars, i, counted=()):
+    """The arithmetic word next to the 一 at index i of chars, when that 一 keeps yi1 there, else "".
+
+    A 一 directly before or after 加, 减, 乘, 除 or 等于 is a number in arithmetic, as the coordinator
+    decided on 2026-09-29, so 一加一等于二 gives 加 for both 一. A 一 after such a word that counts
+    with a word of counted (the measure words, 个) still shows its tone change (再加一个 "zài jiā yí gè").
+    The draft (tone_change) and the checker (pinyincheck) share this rule.
+    """
+    chars = "".join(chars)
+    after = next((w for w in ARITHMETIC if chars[i + 1:i + 1 + len(w)] == w), "")
+    if after:
+        return after
+    before = next((w for w in ARITHMETIC if i >= len(w) and chars[i - len(w):i] == w), "")
+    if before and not any(chars[i + 1:i + 1 + n] in counted for n in (1, 2, 3, 4)):
+        return before
+    return ""
+
+
+def tone_change(hz, nums, keep=(), counted=()):
     """Apply the tone changes of 一 and 不 that textbooks write, and no others.
 
     hz: the characters, one per syllable (a 儿 ending counts as its own character, like "r5").
     nums: the numbered syllables, in dictionary tones. keep: positions of 一 that end a
-    word inside a sentence (统一 in 统一中国), which keep yi1.
+    word inside a sentence (统一 in 统一中国), which keep yi1. counted: the measure words, which
+    tell a 一 that counts after an arithmetic word (yi_in_arithmetic).
     Between two copies of one character, 一 and 不 lose their tone, so 看一看 gives kan4 yi5 kan4
     and 好不好 gives hao3 bu5 hao3. Otherwise these rules apply.
     不 (bu4) becomes bu2 before a fourth tone, so 不客气 bu4 ke4 qi5 gives bu2 ke4 qi5.
     一 (yi1) becomes yi2 before a fourth tone and yi4 before a first, second or third tone:
-    一下 gives yi2 xia4 and 一起 gives yi4 qi3. 一 keeps yi1 at the end (统一), after a
-    numeral or 第 (十一, 第一), before 月 (一月) and before a neutral tone.
+    一下 gives yi2 xia4 and 一起 gives yi4 qi3. Before a neutral tone it becomes yi2 (一个 yi2 ge5),
+    because the checker (pinyincheck) wants a tone change there too and most such syllables are a
+    fourth tone in the dictionary. 一 keeps yi1 at the end (统一), after a numeral or 第 (十一,
+    第一), before 月 in a month name (一月, 十一月), before another digit (一九九八) and next to an
+    arithmetic word (一加一), the same rules as the checker's.
     """
     out = list(nums)
     for i, (ch, syl) in enumerate(zip(hz, nums)):
@@ -122,8 +151,9 @@ def tone_change(hz, nums, keep=()):
         if ch == "不":
             if nxt == "4":
                 out[i] = "bu2"
-        elif not (i in keep or (i > 0 and hz[i - 1] in _NUMERALS) or hz[i + 1] == "月" or nxt == "5"):
-            out[i] = "yi2" if nxt == "4" else "yi4"
+        elif not (i in keep or (i > 0 and hz[i - 1] in _NUMERALS) or hz[i + 1] == "月" or hz[i + 1] in DIGITS
+                  or yi_in_arithmetic(hz, i, counted)):
+            out[i] = "yi2" if nxt in "45" else "yi4"
     return out
 
 

@@ -627,13 +627,15 @@ def regroup(sentence, words, hz, cut=None, known=()):
     return out
 
 
-def syllables(sentence, words, lookup, hz, head_nums, fixes=None):
+def syllables(sentence, words, lookup, hz, head_nums, fixes=None, counted=()):
     """One numbered syllable per sentence character (None for non-Chinese characters).
 
     words: the segmenter's words, which together spell the sentence. lookup(word) gives one
     numbered syllable per Chinese character of the word. The headword's characters get
     head_nums (the syllables its card shows). fixes: {index: syllable} from the polyphone check
-    and potential_readings, applied last. Then 一 and 不 change tone, except that a 一 that ends a
+    and potential_readings, applied last. counted: the measure words (pinyincheck.word_facts gives
+    them as "counted"), which tell a 一 that counts after an arithmetic word (再加一个 "zài jiā yí gè").
+    Then 一 and 不 change tone by pinyin_text.tone_change, which follows the checker's rules, except that a 一 that ends a
     word of two or more characters keeps its tone (统一 in 统一中国), and so do a 一 after 星期 or 礼拜
     (星期 + 一 + 下午 "xīngqīyī xiàwǔ", when the headword 星期 cuts 星期一) and a 一 of a decimal
     number (decimal_digits, "sān diǎn yī sì"). Every syllable of the headword but its last keeps the
@@ -662,7 +664,7 @@ def syllables(sentence, words, lookup, hz, head_nums, fixes=None):
         out[i] = syl
     idx = [i for i, s in enumerate(out) if s]
     changed = tone_change([sentence[i] for i in idx], [out[i] for i in idx],
-                          keep={n for n, i in enumerate(idx) if i in keep})
+                          keep={n for n, i in enumerate(idx) if i in keep}, counted=counted)
     for i, syl in zip(idx, changed):
         out[i] = syl
     for i, syl in zip(head, head_nums):

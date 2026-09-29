@@ -444,3 +444,52 @@ def test_yi_keeps_its_first_tone_where_it_is_an_ordinal_a_digit_or_ends_a_word()
     assert yi("一楼来。", "yī lóu lái.") == [] and yi("一楼来。", "yì lóu lái.") == []
     # A 一 that no syllable follows keeps "yī".
     assert yi("第一。", "dì-yī.", card("第", "dì", "di4")) == []
+
+
+def test_yi_keeps_its_first_tone_in_arithmetic_and_in_month_names():
+    come = card("来", "lái", "lai2")
+    reads = {**READ, **MORE_READ, "加": {"jia1"}, "等": {"deng3"}, "于": {"yu2"}, "冷": {"leng3"}, "再": {"zai4"}}
+    yi = lambda sentence, line, head=come: check_line(sentence, line, head, lambda ch: reads.get(ch, set()), NAMES,
+                                                     YI_FACTS)
+    two = card("二", "èr", "er4")
+    assert yi("一加一等于二。", "yī jiā yī děngyú èr.", two) == []
+    assert yi("一加一等于二。", "yì jiā yī děngyú èr.", two) == [
+        "'yì' (一) is a number in arithmetic next to 加, so it keeps its first tone 'yī'"]
+    assert yi("再加一个人来。", "zài jiā yí gè rén lái.") == []
+    cold = card("冷", "lěng", "leng3")
+    assert yi("一月很冷。", "yīyuè hěn lěng.", cold) == []
+    assert yi("十一月很冷。", "shíyīyuè hěn lěng.", cold) == []
+
+
+def test_the_draft_and_the_checker_agree_on_yi():
+    # The draft (sentpinyin.syllables with pinyin_text.tone_change) writes each line so the checker accepts it.
+    from sentpinyin import render, syllables, word_joints
+    table = {"他": ["ta1"], "一": ["yi1"], "看": ["kan4"], "就": ["jiu4"], "来": ["lai2"], "听": ["ting1"],
+             "我": ["wo3"], "个": ["ge4"], "人": ["ren2"], "一口气": ["yi1", "kou3", "qi4"], "跑": ["pao3"],
+             "一月": ["yi1", "yue4"], "十一月": ["shi2", "yi1", "yue4"], "很": ["hen3"], "冷": ["leng3"],
+             "加": ["jia1"], "等于": ["deng3", "yu2"], "二": ["er4"], "是": ["shi4"], "第一": ["di4", "yi1"],
+             "我们": ["wo3", "men5"], "统一": ["tong3", "yi1"], "去": ["qu4"], "一百": ["yi1", "bai3"],
+             "一十": ["yi1", "shi2"], "九": ["jiu3"], "八": ["ba1"], "年": ["nian2"]}
+    reads = {**READ, **MORE_READ, "加": {"jia1"}, "等": {"deng3"}, "于": {"yu2"}, "冷": {"leng3"}, "口": {"kou3"},
+             "气": {"qi4"}, "跑": {"pao3"}}
+    samples = [("他一看就来。", ["他", "一", "看", "就", "来", "。"], "tā yí kàn jiù lái."),
+               ("他一听就来。", ["他", "一", "听", "就", "来", "。"], "tā yì tīng jiù lái."),
+               ("我一个人来。", ["我", "一", "个", "人", "来", "。"], "wǒ yí gè rén lái."),
+               ("他一口气跑来。", ["他", "一口气", "跑", "来", "。"], "tā yìkǒuqì pǎo lái."),
+               ("一月很冷。", ["一月", "很", "冷", "。"], "yīyuè hěn lěng."),
+               ("十一月很冷。", ["十一月", "很", "冷", "。"], "shíyīyuè hěn lěng."),
+               ("一加一等于二。", ["一", "加", "一", "等于", "二", "。"], "yī jiā yī děngyú èr."),
+               ("他是第一。", ["他", "是", "第一", "。"], "tā shì dì-yī."),
+               ("我们统一去。", ["我们", "统一", "去", "。"], "wǒmen tǒngyī qù."),
+               ("一百一十个人来。", ["一百", "一十", "个", "人", "来", "。"], "yìbǎi yīshí gè rén lái."),
+               ("一九九八年来。", ["一", "九", "九", "八", "年", "来", "。"], "yī jiǔ jiǔ bā nián lái.")]
+    head = card("来", "lái", "lai2")
+    for sentence, words, want in samples:
+        h = head if "来" in sentence else card("是", "shì", "shi4") if "是" in sentence else \
+            card("很", "hěn", "hen3") if "很" in sentence else card("二", "èr", "er4") if "二" in sentence else \
+            card("去", "qù", "qu4")
+        sylls = syllables(sentence, words, lambda w: table[w], h["hz"], h["pyNum"].split(), counted=YI_FACTS["counted"])
+        line = render(sentence, words, sylls, joints_of=lambda w: word_joints(w, {}))
+        assert (sentence, line) == (sentence, want)
+        assert (sentence, check_line(sentence, line, h, lambda ch: reads.get(ch, set()), NAMES, YI_FACTS)) == \
+            (sentence, [])
