@@ -1,14 +1,12 @@
 """Step 11. Final checks on the latest docs/data/words_vNNN.json and every audio file it names.
 
-Input:  also the latest data/manual/capitals_vNNN.csv, whose names, with the capitalised cards that validate adds
-        (pinyincheck.names_of, as in steps 8c to 8e), may give a headword a capital in its sentence
+All pinyin is in lower case since the user's decision of 2026-09-29, so no names are read.
 Output: data/reports/validate_vNNN.txt. The script ends with an error when any check fails.
 """
 import sys
 from pathlib import Path
 
-from common import latest_version_path, next_version_path, read_csv, read_json, write_new_text
-from pinyin_text import name_rows
+from common import latest_version_path, next_version_path, read_json, write_new_text
 from ttsaudio import mp3_problem
 from validate import validate
 
@@ -25,8 +23,7 @@ def file_problem(path, kind):
 def main():
     path = latest_version_path("docs/data/words", ".json")
     data = read_json(path)
-    names, _ = name_rows(read_csv(latest_version_path("data/manual/capitals", ".csv")))
-    results = validate(data, file_problem, names=names)
+    results = validate(data, file_problem)
     size = path.stat().st_size
     results["file size"] = [] if size < MAX_BYTES else [f"{path} is {size} bytes, not under 4 MB"]
     results["scrambled codes"] = ["the file contains □, an undecoded glyph"] if "□" in path.read_text(

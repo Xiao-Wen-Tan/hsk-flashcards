@@ -324,8 +324,8 @@ def syllables_of_py(py, nums):
 def py_problems(hz, py, pynum):
     """Why a card's py does not fit its pyNum and the spacing rules; an empty list means it fits.
 
-    It checks four things. py holds only letters, spaces, hyphens and apostrophes (and "…" in a
-    pattern word). No space, hyphen or apostrophe stands at either end or two in a row. Its
+    It checks five things. py holds only letters, spaces, hyphens and apostrophes (and "…" in a
+    pattern word), in lower case since the user's decision of 2026-09-29. No space, hyphen or apostrophe stands at either end or two in a row. Its
     syllables spell pyNum with the same tones once the tone changes of 一 and 不 are removed. An
     apostrophe stands exactly before each syllable inside a word that starts with a, o or e.
     ("不客气", "bú kèqi", "bu4 ke4 qi5") and ("拔苗助长", "bámiáo-zhùzhǎng", "ba2 miao2 zhu4 zhang3")
@@ -335,6 +335,8 @@ def py_problems(hz, py, pynum):
     odd = sorted({ch for ch in py if not (ch.isalpha() or ch in " -'" or (ch == "…" and "…" in hz))})
     if odd:
         return [f"py {py!r} holds {''.join(odd)!r}; only letters, spaces, hyphens and apostrophes are allowed"]
+    if any(ch.isupper() for ch in py):
+        return [f"py {py!r} has a capital letter; all pinyin is in lower case"]
     if re.search(r"^[ \-']|[ \-']$|[ \-'…]{2}", py.rstrip("…")):
         return [f"py {py!r} has a space, hyphen or apostrophe at an end or two in a row"]
     found = _spell(py, nums)

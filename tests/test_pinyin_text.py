@@ -158,13 +158,15 @@ def test_joints_of_py():
 
 def test_py_problems_accepts_textbook_pinyin():
     good = [("不客气", "bú kèqi", "bu4 ke4 qi5"), ("拔苗助长", "bámiáo-zhùzhǎng", "ba2 miao2 zhu4 zhang3"),
-            ("一点儿", "yìdiǎnr", "yi1 dian3 r5"), ("女儿", "nǚ'ér", "nü3 er2"), ("北京", "Běijīng", "bei3 jing1"),
+            ("一点儿", "yìdiǎnr", "yi1 dian3 r5"), ("女儿", "nǚ'ér", "nü3 er2"), ("北京", "běijīng", "bei3 jing1"),
             ("受不了", "shòubuliǎo", "shou4 bu4 liao3"), ("第一", "dì-yī", "di4 yi1"), ("打电话", "dǎ diànhuà", "da3 dian4 hua4"),
-            ("虽然…但是…", "suīrán…dànshì…", "sui1 ran2 dan4 shi4"), ("黄河", "Huáng Hé", "huang2 he2")]
+            ("虽然…但是…", "suīrán…dànshì…", "sui1 ran2 dan4 shi4"), ("黄河", "huáng hé", "huang2 he2")]
     assert [py_problems(*row) for row in good] == [[]] * len(good)
 
 
 def test_py_problems_finds_each_kind():
+    # All pinyin is in lower case since the user's decision of 2026-09-29.
+    assert py_problems("北京", "Běijīng", "bei3 jing1") == ["py 'Běijīng' has a capital letter; all pinyin is in lower case"]
     assert py_problems("爱", "ài.", "ai4") == ["py 'ài.' holds '.'; only letters, spaces, hyphens and apostrophes are allowed"]
     assert py_problems("不客气", "bú  kèqi", "bu4 ke4 qi5") == \
         ["py 'bú  kèqi' has a space, hyphen or apostrophe at an end or two in a row"]

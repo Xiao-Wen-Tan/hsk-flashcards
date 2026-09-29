@@ -13,7 +13,7 @@ from meaning import LEFTOVER_LABEL
 from pdfbody import contains_head
 from pinyin_norm import toneless
 from pinyin_text import card_py, joints_of_py, py_base, py_problems, syllable_count, syllables_of_py
-from pinyincheck import names_of
+from pinyincheck import line_items, sentence_units
 
 POS_LABELS = {"n.", "v.", "adj.", "adv.", "m.", "pron.", "prep.", "conj.", "part.", "num.", "int."}
 _HANZI = re.compile(r"[\u3007\u4e00-\u9fff]")  # Chinese characters, with the 〇 of years (二〇〇八年)
@@ -28,9 +28,6 @@ _EX_KEYS = {"hz", "py", "en", "au", "src"}
 
 # The tones a 一 or 不 may show in a sentence, where the tone changes follow the next word.
 _TONES_OF = {("一", "yi1"): ["yi1", "yi2", "yi4", "yi5"], ("不", "bu4"): ["bu4", "bu2", "bu5"]}
-# Where render (Plan 3b sentpinyin) starts a sentence, so a capital may stand there. A quotation
-# after a colon also starts one, with or without quotation marks ('shuō: "Nǐ kàn."', "shuō: Nǐ kàn.").
-_SENTENCE_START = r'(?:^|[.!?]"?\s+|:\s+)"?\(?'
 # The headword's syllables may stand as a word of their own or inside a longer word, as long as
 # they start and end at syllable edges there. A longer word holds them in a known word (男人
 # "nánrén" for the card 男), with a joined particle, suffix or result ("kànzhe", "jiàshǐyuán",
@@ -61,61 +58,32 @@ def head_forms(hz, py, pynum):
     return {py} | {card_py(list(c), joints) for c in itertools.product(*options)}
 
 
-def name_starts(sentence, names):
-    """Indexes of the sentence characters where a word of a name starts that takes a capital.
-
-    names: {hz: (words, capitals)} as Plan 3b pinyincheck.names_of gives them, which are the names of
-    data/manual/capitals (Plan 3a pinyin_text.name_rows) and every card whose py starts with a
-    capital. So with the row 山东省 (山东 省, Y), 我来自山东省。 gives {3, 5}, and there the card 省 may
-    show "Shěng" ("Wǒ láizì Shāndōng Shěng."), because the style sheet capitalises every word of a
-    place name. With the card 长城 "Chángchéng", 我去过长城。 gives {3}, so the card 长 may show "Cháng".
-    """
-    out = set()
-    for hz, (parts, flags) in (names or {}).items():
-        at = sentence.find(hz)
-        while at >= 0:
-            offset = at
-            for part, flag in zip(parts, flags):
-                if flag:
-                    out.add(offset)
-                offset += len(part)
-            at = sentence.find(hz, at + 1)
-    return out
-
-
-def head_py_problem(w, names=None):
+def head_py_problem(w):
     """Why ex.py does not show the headword as on its card, or None.
 
-    ex.py must hold the card's py exactly, except that the tone of a final 一 or 不 may differ
-    (head_forms), a word may take a capital where a sentence starts or where a word of a name of
-    a card or data/manual/capitals starts (names, see name_starts), and an 儿 ending that
+    ex.py must hold the card's py exactly, in lower case like all pinyin since the user's decision of
+    2026-09-29, except that the tone of a final 一 or 不 may differ (head_forms), and an 儿 ending that
     follows the headword in ex.hz adds its "r" (这 "zhè" in 这儿 "zhèr"). It may stand as a word
     of its own or inside a longer word at syllable edges (_BEFORE and _AFTER), such as a known
-    word ("nánrén" for 男, "Chūntiān" for 春), a joined particle ("kànzhe" for 看 and for 着) or a
-    number word ("yìqiān" for 千, "jǐshí" for 几). So for 东西 "dōngxi", "Wǒ mǎile hěn duō
+    word ("nánrén" for 男, "chūntiān" for 春), a joined particle ("kànzhe" for 看 and for 着) or a
+    number word ("yìqiān" for 千, "jǐshí" for 几). So for 东西 "dōngxi", "wǒ mǎile hěn duō
     dōngxi." passes, while "... hěn duō Dōngxi." and "... hěn duō dōngxī." do not, and for 户 "hù"
     "zhù" does not. A pattern word is checked half by half.
     """
     sentence = unicodedata.normalize("NFC", w["ex"]["py"])
     halves = [h for h in w["hz"].split("…") if h]
     pys = [p for p in unicodedata.normalize("NFC", w["py"]).split("…") if p]
-    nums, k, found = w["pyNum"].split(), 0, 0
-    named = name_starts(w["ex"]["hz"], names)
+    nums, k = w["pyNum"].split(), 0
     if len(halves) != len(pys):
         return f"py {w['py']!r} does not have one part per part of hz"
     for half, half_py in zip(halves, pys):
         forms = head_forms(half, half_py, " ".join(nums[k:k + len(half)]))
         k += len(half)
-        found = w["ex"]["hz"].find(half, found)
         if half + "儿" in w["ex"]["hz"] and not half.endswith("儿"):
             forms |= {f + "r" for f in forms}
         before = {f: _BEFORE_AOE if f[:1].lower() in "aāáǎàoōóǒòeēéěè" else _BEFORE for f in forms}
         inside = any(re.search(before[f] + re.escape(f) + _AFTER, sentence) for f in forms)
-        first = any(re.search(_SENTENCE_START + re.escape(f[:1].upper() + f[1:]) + _AFTER, sentence) for f in forms)
-        name = found in named and any(re.search(before[f] + re.escape(f[:1].upper() + f[1:]) + _AFTER, sentence)
-                                      for f in forms)
-        found += len(half)
-        if not (inside or first or name):
+        if not inside:
             return f"ex.py {w['ex']['py']!r} does not show {half_py!r} as on the card"
     return None
 
@@ -153,8 +121,22 @@ def check_themes(themes, words, min_size, max_size):
     return problems
 
 
-def check_word(w, theme_ids, names=None):
-    """Every field of one word, against the schema. names: see head_py_problem."""
+def lower_case_problem(sentence, line):
+    """Why the sentence pinyin has a capital letter, or None (the user's decision of 2026-09-29).
+
+    Only the Latin letters of the sentence keep their capitals, as in the strict checker (pinyincheck
+    check_line point 6), so for 这是IT工作。 "zhè shì IT gōngzuò." passes and "Zhè shì IT gōngzuò." does not.
+    """
+    literals = {text for kind, text in sentence_units(sentence) if kind == "literal"}
+    for kind, text, _ in line_items(line):
+        if kind == "word" and text not in literals and any(ch.isupper() for ch in text):
+            return (f"ex.py {line!r} has a capital letter in {text!r}; all pinyin is in lower case, the start of a "
+                    "sentence and names included")
+    return None
+
+
+def check_word(w, theme_ids):
+    """Every field of one word, against the schema."""
     wid = w.get("id")
     if set(w) != _WORD_KEYS:
         return [f"{wid}: fields {sorted(set(w) ^ _WORD_KEYS)} are missing or extra"]
@@ -197,13 +179,13 @@ def check_word(w, theme_ids, names=None):
     else:
         if not ex["hz"] or "～" in ex["hz"] or "~" in ex["hz"] or not contains_head(ex["hz"], w["hz"]):
             p.append(f"ex.hz {ex['hz']!r} does not contain the headword written out")
-        head = head_py_problem(w, names) if ex["py"] and card_pinyin_ok else None
+        head = head_py_problem(w) if ex["py"] and card_pinyin_ok else None
         if not ex["py"] or not ex["en"]:
             p.append("ex.py or ex.en is empty")
         elif _HANZI.search(ex["py"]):
             p.append(f"ex.py {ex['py']!r} contains Chinese characters")
-        elif head:
-            p.append(head)
+        else:
+            p += [x for x in (head, lower_case_problem(ex["hz"], ex["py"])) if x]
         if not _AUDIO["s"].match(ex["au"]) or not ex["au"].startswith(f"s/{wid}_"):
             p.append(f"ex.au {ex['au']!r} is not s/{wid}_<hash>.mp3")
         if ex["src"] not in ("pdf", "claude"):
@@ -268,20 +250,18 @@ def check_audio(words, file_problem):
     return problems
 
 
-def validate(data, file_problem, word_range=(4800, 5300), min_theme=40, max_theme=350, names=None):
+def validate(data, file_problem, word_range=(4800, 5300), min_theme=40, max_theme=350):
     """Every check on the whole data file. Returns {check name: problems}.
 
-    names: the names of data/manual/capitals (Plan 3a pinyin_text.name_rows), whose words may give a
-    headword a capital in its sentence. The capitalised cards are added to them with pinyincheck.names_of,
-    so the validator knows the same names as the strict checker of the sentence pinyin (Task 13).
+    Since the user's decision of 2026-09-29 all pinyin is in lower case, so the validator needs no
+    names: a name gives no capital anywhere, as in the strict checker of the sentence pinyin (Task 13).
     """
     top = check_top(data)
     if top:
         return {"top": top}
     words, themes = data["words"], data["themes"]
-    names = names_of(names or {}, words)
     theme_ids = [t["id"] for t in themes]
-    fields = [p for w in words for p in check_word(w, set(theme_ids), names)]
+    fields = [p for w in words for p in check_word(w, set(theme_ids))]
     results = {"top": [], "word count": [] if word_range[0] <= len(words) <= word_range[1]
                else [f"{len(words)} words, expected {word_range[0]} to {word_range[1]}"],
                "themes": check_themes(themes, words, min_theme, max_theme), "fields": fields}
