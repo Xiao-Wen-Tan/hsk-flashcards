@@ -13,15 +13,16 @@ a corrected line only when it finds no problem. It checks that:
 4. the punctuation maps one to one, where PUNCTUATION turns each Chinese mark into its Western mark;
 5. the headword shows the syllables its card shows, tones included, with the card's word spacing
    between them. Only a 一 or 不 at its end may show its tone change ("bú shì" for the card 不 "bù");
-6. capitals stand only where the style sheet allows them, which is at the start of a sentence and
-   of a quotation after a colon, and on a word of a name that the cards or data/manual/capitals write
-   with a capital (people and places, languages, countries and peoples). Such a name where the line
-   writes it as a name (_capital_problems), the start of the line and the start of a sentence after
-   . ! or ? must have their capital;
+6. the line is in lower case, with no capital letter at the start of a sentence, after a colon or on
+   a name, as the user decided on 2026-09-29 ("wǒ qù běijīng."). Only the Latin letters of the
+   sentence keep their capitals ("IT") (_lower_case_problems);
 7. 一 and 不 show their tone changes where a rule settles them (style sheet points 6 and 8, see
    _tone_change_problems). That is "bú" and "yí" before a fourth tone, "bù" and "yì" before the
-   other tones, "yī" in a decimal and after 第, a numeral, 星期 or 礼拜 ("dì-yī", "shíyī"), a tone
-   change for a 一 that counts ("yí gè", "yìqiān"), and a neutral "bu" or "yi" only in a doubled word
+   other tones, "yī" in a decimal, before another digit and after 第, a numeral, 星期 or 礼拜
+   ("dì-yī", "shíyī", "yī jiǔ jiǔ bā nián"), a tone change for every other 一 before a syllable
+   ("yí gè", "yìqiān", "yí kàn"), since the user's decision of 2026-09-29, unless it ends a card or
+   a word of the public list ("tǒngyī") or starts an ordinal or a date ("yī lóu"), and a neutral
+   "bu" or "yi" only in a doubled word
    ("kàn yi kàn"), in a potential complement ("zhǎo bu dào") and where a card or the public list
    shows it ("duìbuqǐ"). A 一 or 不 inside a card that the line writes as its card shows the card's
    tone ("yíhuìr", or at its end the spoken tone change, "bùdébú qù"), and a 一 before a measure
@@ -33,8 +34,8 @@ a corrected line only when it finds no problem. It checks that:
    apart from its measure word ("sān gè", "sān gōngjīn"), and a fraction and the digits of a decimal syllable by
    syllable ("sān fēn zhī yī", "sān diǎn yī sì");
 10. a 了 that ends a sentence or a clause is a word of its own ("xià yǔ le.", point 3);
-11. the words of a name are spaced as data/manual/capitals or its card gives them ("Lǐ lǎoshī",
-    "Shāndōng Shěng", "Běijīng"), wherever the line writes it as a name (point 7).
+11. the words of a name are spaced as data/manual/capitals gives them ("lǐ lǎoshī", "shāndōng
+    shěng", "běijīng"), wherever the line writes it as a name (point 7).
 It also checks the form of each syllable, which is at most one tone mark, on the vowel the rules
 name, and an apostrophe before a syllable inside a word that starts with a, o or e, and nowhere else,
 and that no space stands before a closing mark such as , . ! or ?.
@@ -78,6 +79,9 @@ _COUNTED = set("百千万亿刻个些下起样直定共切般边种位件本张�
 # 一号 and 一日 "yī hào", "yī rì" (the first day), 一班 (class one), 一年级 "yī niánjí", 一级, 一期,
 # 一季度, 一楼 and 一层 (the first floor).
 _ORDINAL_AFTER = ("号", "日", "班", "年级", "级", "期", "季度", "楼", "层")
+# The digits that a number read digit by digit is made of, before which a 一 keeps "yī" (一九九八年 "yī jiǔ jiǔ bā
+# nián"). 两 is not one, because 一两 is an approximate number ("yì-liǎng").
+_DIGITS = set("〇零一二三四五六七八九")
 # Particles after which a 了 still ends its sentence ("Nǐ lái le ma?").
 _FINAL_PARTICLES = set("吗吧呢啊呀啦嘛")
 # A run of numerals, with 几 as in 十几 and 几十.
@@ -140,16 +144,14 @@ def known_readings(listed, cards):
 
 
 def names_of(name_table, cards):
-    """{hz: (words, capitals)} for every name that takes a capital in a sentence.
+    """{hz: (words, capitals)} for every name whose words the checker spaces (check_line point 11).
 
-    name_table: Plan 3a pinyin_text.name_rows of data/manual/capitals. cards: the card rows. A card
-    whose py starts with a capital (中国 "Zhōngguó", 北京 "Běijīng") is a name of one word with a capital.
+    name_table: Plan 3a pinyin_text.name_rows of data/manual/capitals. The names are its rows with a
+    Y (李老师 "李 老师"). cards: the card rows, which no longer add names, because since the user's
+    decision of 2026-09-29 every card is in lower case (北京 "běijīng"); capitals_v002 lists the
+    card names that the HSK PDFs print with a capital instead. The argument stays for the callers.
     """
-    out = {hz: v for hz, v in name_table.items() if any(v[1])}
-    for w in cards:
-        if w["py"][:1].isupper() and "…" not in w["hz"] and w["hz"] not in name_table:
-            out[w["hz"]] = ([w["hz"]], [True])
-    return out
+    return {hz: v for hz, v in name_table.items() if any(v[1])}
 
 
 def word_facts(complete, listed, cards):
@@ -481,17 +483,17 @@ def check_line(sentence, line, head, readings_of, names, facts):
     problems += _one_word_problems(sentence, cells, head)
     problems += _number_problems(sentence, cells, head, facts)
     problems += _final_le_problems(sentence, cells, facts)
-    problems += _capital_problems(sentence, items, cells, names, literal_items)
+    problems += _lower_case_problems(sentence, items, cells, literal_items)
     problems += _name_word_problems(sentence, cells, head, names)
     return problems
 
 
 def _name_word_problems(sentence, cells, head, names):
-    """The words of a name stand apart and each word is joined, as the capitals file or its card gives
-    them (known open item 5, style sheet point 7), wherever the line writes it as a name, that is, where
+    """The words of a name stand apart and each word is joined, as the capitals file gives them (known
+    open item 5, style sheet point 7), wherever the line writes it as a name, that is, where
     its first character starts a pinyin word and its last character ends one.
 
-    So with the name 李老师 (李 + 老师) "Lǐ lǎoshī" passes and "Lǐlǎoshī" fails. Joints between two
+    So with the name 李老师 (李 + 老师) "lǐ lǎoshī" passes and "lǐlǎoshī" fails. Joints between two
     characters of the headword are left to the headword check.
     """
     head_at, problems = set(head_positions(sentence, head["hz"])), []
@@ -608,17 +610,47 @@ def _tone_change_problems(sentence, cells, head, facts):
             if tone != "1":
                 problems.append(f"'{syl}' (一) follows {kept}, so it is part of a number, an ordinal or a weekday and "
                                 "keeps its first tone 'yī'")
+        elif sentence[i + 1:i + 2] in _DIGITS and i + 1 in cells:
+            if tone != "1":
+                problems.append(f"'{syl}' (一) is read digit by digit before {sentence[i + 1]}, so it keeps its first "
+                                "tone 'yī'")
         elif tone == "4" and after == "4":
             problems.append(f"'{syl}' (一) comes before the fourth tone of '{nxt[0]}', so it is written 'yí'")
         elif tone == "2" and after in ("1", "2", "3"):
             problems.append(f"'{syl}' (一) comes before '{nxt[0]}', which is not a fourth tone, so it is written 'yì'")
         elif tone in ("2", "4") and not after:
             problems.append(f"'{syl}' (一) has no syllable after it, so it keeps its first tone 'yī'")
-        elif tone == "1" and joint and _counts(sentence, i, facts["counted"]) \
-                and not (i and sentence[i - 1] in NUMERALS | {"第"}):
-            problems.append(f"'{syl}' (一) counts with {_counts(sentence, i, facts['counted'])} here, so it shows its "
-                            "tone change, 'yí' before a fourth tone and 'yì' before the other tones")
+        elif tone == "1" and after and not _yi_open(sentence, i, cells, facts["known"]):
+            counted = _counts(sentence, i, facts["counted"]) if joint else ""
+            if counted:
+                problems.append(f"'{syl}' (一) counts with {counted} here, so it shows its tone change, 'yí' before a "
+                                "fourth tone and 'yì' before the other tones")
+            else:
+                problems.append(f"'{syl}' (一) comes before '{nxt[0]}', so it shows its spoken tone change, 'yí' before "
+                                "a fourth tone and 'yì' before the other tones")
     return problems
+
+
+def _yi_open(sentence, i, cells, known):
+    """True when the 一 at index i may keep "yī" before the syllable after it.
+
+    Since the user's decision of 2026-09-29 a 一 before a syllable shows its spoken tone change ("yí kàn",
+    "yì tīng"), except where it keeps "yī" as an ordinal or a number, which _keeps_yi and the digit rule
+    settle first. Here it may keep "yī":
+    - at the end of a card or of a word of the public list, where the line ends the pinyin word
+      (同一 in "tóngyī gè rén", 之一);
+    - before a word that makes it an ordinal or a date (_ORDINAL_AFTER, 一楼 "yī lóu"), and before 点
+      except in 一点儿 and 一点点, because 一点 may be one o'clock ("yī diǎn");
+    - after a numeral or 第 that _keeps_yi left open, as before 百, 千, 万 or 亿 (三千一百), where a numeral
+      before it settles nothing.
+    """
+    rest = sentence[i + 1:]
+    if rest.startswith(_ORDINAL_AFTER) or (rest[:1] == "点" and rest[1:2] not in ("儿", "点")):
+        return True
+    if i and sentence[i - 1] in NUMERALS | {"第"}:
+        return True
+    word_end = i + 1 not in cells or cells[i + 1][2] != cells[i][2]
+    return word_end and any(i >= k and sentence[i - k:i + 1] in known for k in (1, 2, 3))
 
 
 def _card_tones(sentence, i, cells, cards):
@@ -830,81 +862,21 @@ def _final_le_problems(sentence, cells, facts):
     return problems
 
 
-def _capital_problems(sentence, items, cells, names, literal_items):
-    """Capitals only where the style sheet allows them, and where it needs them (check_line point 6).
+def _lower_case_problems(sentence, items, cells, literal_items):
+    """No capital letter in the pinyin (check_line point 6), as the user decided on 2026-09-29.
 
     literal_items: the items that are Latin letters of the sentence ("IT"), which keep their own capitals.
-    A name needs its capitals, and may have them, only where the line writes it as a name, that is,
-    where its first character starts a pinyin word and its last character ends one or the whole name
-    stands inside one word ("Zhōngguórén"). So in 小李明天来。 with the names 小李 and 李明, "Xiǎo Lǐ
-    míngtiān lái." passes and "Xiǎo Lǐ Míngtiān lái." fails, because 明天 is one word there.
+    A word that lines up with no Chinese character is left to the other checks. So "wǒ ài běijīng." and
+    "zhè shì IT gōngzuò." pass, while "Wǒ ài běijīng." and "wǒ ài Běijīng." fail.
     """
-    must, may = {}, set()
-    for hz, (parts, flags) in names.items():
-        at = sentence.find(hz)
-        while at >= 0:
-            end = at + len(hz) - 1
-            starts = at in cells and (at - 1 not in cells or cells[at - 1][2] != cells[at][2])
-            ends = end in cells and (end + 1 not in cells or cells[end + 1][2] != cells[end][2])
-            inside = at in cells and end in cells and cells[at][2] == cells[end][2]
-            offset = at
-            for part, flag in zip(parts, flags):
-                if flag and starts and (ends or inside):
-                    must.setdefault(offset, hz)
-                    may |= set(range(offset, offset + len(part)))
-                offset += len(part)
-            at = sentence.find(hz, at + 1)
-    first_char = {}  # the first sentence character that each pinyin word of the line stands for
-    for index in sorted(cells):
-        first_char.setdefault(cells[index][2], index)
-    problems, state, before = [], "start", None
-    for n, (kind, text, spaced) in enumerate(items):
-        if kind == "mark":
-            if text in ".!?":
-                state = "start"
-            elif text == "...":
-                state = "may"
-            elif text == ":":
-                state = "colon"
-            elif text in "\"'":
-                if state == "colon" or (state == "start" and spaced):
-                    state = "start"
-                elif state == "start" and before in (".", "!", "?"):
-                    state = "may"
-            elif text not in "()":
-                state = "none"
-            before = text
-            continue
-        before = None
-        if kind == "joint":
-            continue
-        if kind != "word" or n in literal_items:
-            state = "none"
-            continue
-        joined = n and items[n - 1][0] == "joint"
-        index = first_char.get(n)
-        if index is None:
-            state = "none"
+    problems = []
+    for n, (kind, text, _) in enumerate(items):
+        if kind != "word" or n in literal_items or not any(ch.isupper() for ch in text):
             continue
         chars = "".join(sentence[i] for i in sorted(cells) if cells[i][2] == n)
-        upper = any(ch.isupper() for ch in text[1:])
-        if upper:
-            problems.append(f"'{text}' has a capital letter inside the word")
-        if joined:
-            if text[:1].isupper():
-                problems.append(f"'{text}' after a hyphen starts with a capital, which only a word can have")
-            continue
-        capital = text[:1].isupper()
-        needed = state == "start" or index in must
-        allowed = needed or state in ("may", "colon") or index in may
-        if capital and not allowed:
-            problems.append(f"'{text}' ({chars}) starts with a capital, but the style sheet allows one only at the "
-                            "start of a sentence or of a quotation after a colon, and on a name that the cards or "
-                            "data/manual/capitals write with a capital")
-        elif needed and not capital:
-            why = "starts a sentence" if state == "start" else f"starts the name {must[index]}"
-            problems.append(f"'{text}' ({chars}) needs a capital, because it {why}")
-        state = "none"
+        if chars:
+            problems.append(f"'{text}' ({chars}) has a capital letter, but all pinyin is in lower case, the start "
+                            "of a sentence and names included")
     return problems
 
 
