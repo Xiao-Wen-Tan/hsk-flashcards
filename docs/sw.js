@@ -44,6 +44,7 @@ const APP_FILES = [
   'js/store.js',
   'js/strokes.js',
   'js/study.js',
+  'js/sync.js',
   'js/ui/card.js',
   'js/ui/dom.js',
   'js/ui/screens.js',
