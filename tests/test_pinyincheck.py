@@ -352,6 +352,25 @@ def test_the_words_of_a_name_are_spaced_as_the_capitals_file_gives_them():
         "'shān dōng shěng'"]
 
 
+def test_a_name_word_may_hold_the_ordinal_hyphen_of_point_6():
+    # Coordinator's decision of 2026-09-30: 第一 inside a name keeps the hyphen of point 6 ("dì-yī cì shìjiè
+    # dàzhàn"), while any other wrong spacing of the name's words still fails.
+    war = {"第一次世界大战": (["第一", "次", "世界", "大战"], [True])}
+    read = {"这": {"zhe4"}, "是": {"shi4"}, "第": {"di4"}, "一": {"yi1", "yi2", "yi4", "yi5"}, "次": {"ci4"},
+            "世": {"shi4"}, "界": {"jie4"}, "大": {"da4"}, "战": {"zhan4"}}
+    this = card("这", "zhè", "zhe4")
+
+    def war_check(line):
+        return check_line("这是第一次世界大战。", line, this, lambda ch: read.get(ch, set()), war, FACTS)
+    assert war_check("zhè shì dì-yī cì shìjiè dàzhàn.") == []
+    assert war_check("zhè shì dì-yī cì shì-jiè dàzhàn.") == [
+        "the name 第一次世界大战 is written as the words 第一 次 世界 大战 (point 7 of the style sheet), but the line "
+        "has 'dì-yī cì shì-jiè dàzhàn'"]
+    assert war_check("zhè shì dì-yī cì shìjièdàzhàn.") == [
+        "the name 第一次世界大战 is written as the words 第一 次 世界 大战 (point 7 of the style sheet), but the line "
+        "has 'dì-yī cì shìjièdàzhàn'"]
+
+
 def test_a_numeral_stands_apart_from_a_measure_word_of_two_characters():
     # Known open item 5 and style sheet point 6: "sān gōngjīn", as "sān gè".
     buy = card("买", "mǎi", "mai3")

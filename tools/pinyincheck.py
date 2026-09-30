@@ -491,9 +491,15 @@ def _name_word_problems(sentence, cells, head, names):
     its first character starts a pinyin word and its last character ends one.
 
     So with the name 李老师 (李 + 老师) "lǐ lǎoshī" passes and "lǐlǎoshī" fails. Joints between two
-    characters of the headword are left to the headword check.
+    characters of the headword are left to the headword check. Inside a word of the name, 第 and a numeral
+    after it may take the hyphen of point 6 (the coordinator's decision of 2026-09-30), so the name
+    第一次世界大战 (第一 + 次 + 世界 + 大战) passes as "dì-yī cì shìjiè dàzhàn".
     """
     head_at, problems = set(head_positions(sentence, head["hz"])), []
+
+    def fits(j, joint):
+        return _joint(cells, j) == joint or (joint == "" and _joint(cells, j) == "-" and sentence[j - 1] == "第"
+                                             and sentence[j] in NUMERALS)
     for hz, (parts, _) in names.items():
         want, offset = {}, 0
         for n, part in enumerate(parts):
@@ -507,7 +513,7 @@ def _name_word_problems(sentence, cells, head, names):
             span = list(range(at, end + 1))
             if all(i in cells for i in span) and (at - 1 not in cells or _joint(cells, at) != "") \
                     and (end + 1 not in cells or _joint(cells, end + 1) != "") \
-                    and any(_joint(cells, at + k) != joint for k, joint in want.items()
+                    and any(not fits(at + k, joint) for k, joint in want.items()
                             if not (at + k in head_at and at + k - 1 in head_at)):
                 what = f"as the words {' '.join(parts)}" if len(parts) > 1 else "as one word"
                 problems.append(f"the name {hz} is written {what} (point 7 of the style sheet), but the line has "
