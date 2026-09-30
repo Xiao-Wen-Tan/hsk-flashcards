@@ -1,0 +1,60 @@
+hz,words,capital,where
+除夕,,Y,card
+元旦,,Y,card
+国庆节,,Y,card
+华裔,,Y,card
+欧洲,,Y,card
+国务院,,Y,card
+摄氏度,,Y,card
+元宵节,,Y,card
+正月,,N,card
+华侨,,Y,card
+端午节,,Y,card
+重阳节,,Y,card
+中华,,Y,sentence
+奥运会,,Y,sentence
+星期天,,N,sentence
+星期日,,N,sentence
+春节,,Y,sentence
+美元,,N,sentence
+联合国,,Y,sentence
+英语,,Y,sentence
+英镑,,N,sentence
+西方,,N,sentence
+道教,,Y,sentence
+中国,,Y,card
+北京,,Y,card
+汉语,,Y,card
+中文,,Y,card
+黄河,,Y,card
+亚洲,,Y,card
+长城,,Y,card
+长江,,Y,card
+李明,李 明,Y,sentence
+李华,李 华,Y,sentence
+曹操,曹 操,Y,sentence
+张绣,张 绣,Y,sentence
+金庸,金 庸,Y,sentence
+李老师,李 老师,Y N,sentence
+王老师,王 老师,Y N,sentence
+张老师,张 老师,Y N,sentence
+李小姐,李 小姐,Y N,sentence
+李医生,李 医生,Y N,sentence
+王医生,王 医生,Y N,sentence
+王先生,王 先生,Y N,sentence
+张先生,张 先生,Y N,sentence
+李博士,李 博士,Y N,sentence
+王教授,王 教授,Y N,sentence
+李教授,李 教授,Y N,sentence
+李大夫,李 大夫,Y N,sentence
+李总,李 总,Y N,sentence
+小王,小 王,Y,sentence
+小李,小 李,Y,sentence
+老王,老 王,Y,sentence
+福建省,福建 省,Y,sentence
+山东省,山东 省,Y,sentence
+天安门广场,天安门 广场,Y,sentence
+中央公园,中央 公园,Y,sentence
+黄土高原,黄土 高原,Y,sentence
+第一次世界大战,第一 次 世界 大战,Y,sentence
+南昌起义,南昌 起义,Y,sentence
