@@ -18,7 +18,11 @@ function fakeCaches() {
         stores.set(name, {
           files,
           async match(req) { return files.get(keyOf(req)); },
-          async put(req, res) { files.set(keyOf(req), res); },
+          async put(req, res) {
+            // As in browsers, a part of a file (status 206) cannot be saved.
+            if (res.status === 206) throw new TypeError('Partial response (status code 206) is unsupported');
+            files.set(keyOf(req), res);
+          },
           async add(url) { throw new TypeError(`404 ${url}`); },
           async addAll(urls) { for (const u of urls) files.set(keyOf(u), new Response(`cached ${u}`)); },
         });
@@ -45,8 +49,9 @@ function loadSw({ fetchImpl } = {}) {
     self, caches, console: { warn: () => {} }, Response, URL,
     fetch: async (req) => {
       const url = typeof req === 'string' ? req : req.url;
+      const range = typeof req === 'string' ? null : req.headers?.get('Range') ?? null;
       fetched.push(url);
-      return fetchImpl ? fetchImpl(url) : new Response(`net ${url}`);
+      return fetchImpl ? fetchImpl(url, range) : new Response(`net ${url}`);
     },
   };
   vm.runInNewContext(readFileSync(new URL('../../docs/sw.js', import.meta.url), 'utf8'), context);
@@ -55,9 +60,9 @@ function loadSw({ fetchImpl } = {}) {
 
 // Sends one GET request through the fetch handler. Returns the response, or null when the
 // worker leaves the request to the browser.
-async function get(handlers, path, mode = 'no-cors') {
+async function get(handlers, path, mode = 'no-cors', headers = new Headers()) {
   let answer = null;
-  handlers.fetch({ request: { url: SCOPE + path, method: 'GET', mode }, respondWith: (p) => { answer = p; } });
+  handlers.fetch({ request: { url: SCOPE + path, method: 'GET', mode, headers }, respondWith: (p) => { answer = p; } });
   return answer ? answer : null;
 }
 
@@ -100,6 +105,23 @@ test('an audio file is fetched once, kept, and then played from the phone', asyn
   assert.ok(second);
   assert.equal(fetched.length, 1);
   assert.ok(caches.stores.has(sw.MEDIA_CACHE));
+});
+
+// A phone's sound player asks for a byte range ("Range: bytes=0-"), and GitHub Pages answers
+// such a request with a part of the file (status 206), which a cache refuses to save. Before
+// this was handled, the refusal made every sound that was not saved yet fail on the phone.
+test('a sound the player asks for in byte ranges is fetched whole, kept, and played', async () => {
+  const { sw, handlers, caches, fetched } = loadSw({
+    fetchImpl: (url, range) => (range ? new Response('part', { status: 206 }) : new Response(`net ${url}`)),
+  });
+  const ranged = new Headers({ Range: 'bytes=0-' });
+  const first = await get(handlers, 'audio/w/w0026_6ce06b7e.mp3', 'no-cors', ranged);
+  assert.equal(first.status, 200);
+  assert.equal(await first.text(), `net ${SCOPE}audio/w/w0026_6ce06b7e.mp3`);
+  assert.ok(await caches.stores.get(sw.MEDIA_CACHE).match('audio/w/w0026_6ce06b7e.mp3'));
+  const second = await get(handlers, 'audio/w/w0026_6ce06b7e.mp3', 'no-cors', ranged);
+  assert.equal(second.status, 200);
+  assert.equal(fetched.length, 1);
 });
 
 test('other requests and non-GET requests are left to the browser', async () => {

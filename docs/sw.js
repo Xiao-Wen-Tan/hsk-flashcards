@@ -9,7 +9,7 @@
 // A new version waits until the learner taps "Update available, tap to reload", which
 // sends the message 'skipWaiting'.
 // RELEASE and WORDS_FILE repeat docs/js/release.js, and tests/js/release.test.mjs checks them.
-const RELEASE = 'r004';
+const RELEASE = 'r005';
 const WORDS_FILE = 'data/words_v001.json';
 const MEDIA_CACHE = 'media-v1';
 const APP_CACHE = `app-${RELEASE}`;
@@ -107,12 +107,15 @@ async function fromApp(request) {
   }
 }
 
+// A sound's player asks for a byte range ("Range: bytes=0-"), which GitHub Pages answers with a
+// part of the file (status 206) that a cache cannot keep. So a file that is not saved yet is
+// fetched whole by its address, saved, and given to the player, which accepts the whole file.
 async function fromMedia(request) {
   const cache = await caches.open(MEDIA_CACHE);
   const hit = await cache.match(request);
   if (hit) return hit;
-  const res = await fetch(request);
-  if (res.ok) await cache.put(request, res.clone());
+  const res = await fetch(request.url);
+  if (res.status === 200) await cache.put(request, res.clone());
   return res;
 }
 
