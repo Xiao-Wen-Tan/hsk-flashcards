@@ -1,0 +1,377 @@
+id_a,id_b,reason
+w0015,w0755,synonyms: speak / talk
+w0015,w2003,one narrows the other: speak / speech
+w0015,w2768,one narrows the other: speak / speech
+w0025,w0335,shared sense: want to / think
+w0025,w0396,shared sense: want to / think or believe
+w0025,w0422,near-synonyms: want to / be willing
+w0025,w0481,synonyms: want to / be going to do sth.
+w0025,w0703,shared sense: want to / think
+w0025,w2816,shared sense: want to / thinking
+w0025,w4019,shared sense: want to / thinking
+w0025,w4196,shared sense: want to / thinking
+w0107,w0755,synonyms: speak / talk
+w0107,w2003,one narrows the other: speak / speech
+w0107,w2768,one narrows the other: speak / speech
+w0184,w0240,near-synonyms: know / understand
+w0184,w0760,near-synonyms: know / understand
+w0184,w1860,one narrows the other: know / to know from experience
+w0184,w3165,one narrows the other: know / come to know
+w0184,w4129,near-synonyms: know / understand
+w0197,w0335,shared sense: feel / think
+w0197,w0396,shared sense: feel / think or believe
+w0197,w0703,shared sense: feel / think
+w0197,w2816,near-synonyms: feel / thinking
+w0197,w4019,near-synonyms: feel / thinking
+w0197,w4196,near-synonyms: feel / thinking
+w0209,w1731,one narrows the other: ask / to request
+w0209,w1848,one narrows the other: ask / to inquire
+w0209,w2252,one narrows the other: ask / ask about
+w0209,w2288,one narrows the other: ask / to solicit
+w0209,w4045,one narrows the other: ask / consult
+w0209,w4551,one narrows the other: ask / ask (a question) in reply
+w0210,w0393,near-synonyms: tell / speak
+w0210,w0832,near-synonyms: tell / inform
+w0210,w2362,near-synonyms: tell / to relate
+w0210,w2419,near-synonyms: tell / to pass on
+w0210,w2488,synonyms: tell / to tell
+w0240,w0361,near-synonyms: understand / know
+w0240,w0416,near-synonyms: understand / know
+w0240,w4084,shared sense: understand / comprehend
+w0240,w4807,one narrows the other: understand / come to understand suddenly
+w0256,w2574,shared sense: meaning / to signify
+w0258,w3272,synonyms: answer / reply
+w0335,w0396,shared sense: think / think or believe
+w0335,w1603,one narrows the other: think / to reflect on
+w0335,w2816,near-synonyms: think / thinking
+w0335,w3543,shared sense: think / sake
+w0335,w3633,one narrows the other: think / ponder
+w0335,w4019,near-synonyms: think / thinking
+w0335,w4148,one narrows the other: think / ponder
+w0335,w4196,near-synonyms: think / thinking
+w0335,w4852,one narrows the other: think / think over
+w0340,w3165,near-synonyms: find out / come to know
+w0361,w0760,near-synonyms: know / understand
+w0361,w1860,one narrows the other: know / to know from experience
+w0361,w3165,one narrows the other: know / come to know
+w0361,w4084,shared sense: know / comprehend
+w0361,w4129,near-synonyms: know / understand
+w0365,w1018,shared sense: decide / decision
+w0365,w1941,near-synonyms: decide / determination
+w0365,w4139,shared sense: decide / determine
+w0376,w1731,one narrows the other: ask / to request
+w0376,w1848,one narrows the other: ask / to inquire
+w0376,w2252,one narrows the other: ask / ask about
+w0376,w2288,one narrows the other: ask / to solicit
+w0376,w4045,one narrows the other: ask / consult
+w0376,w4551,one narrows the other: ask / ask (a question) in reply
+w0380,w0396,shared sense: believe in / think or believe
+w0380,w3081,shared sense: believe in / faith
+w0380,w3692,one narrows the other: believe in / firmly believe
+w0380,w4796,shared sense: believe in / be convinced
+w0392,w4923,near-synonyms: pay attention to / concentrate one's attention on
+w0393,w0755,synonyms: speak / talk
+w0393,w2003,one narrows the other: speak / speech
+w0393,w2488,near-synonyms: speak / to tell
+w0393,w2768,one narrows the other: speak / speech
+w0393,w3341,near-synonyms: speak / tell
+w0393,w3460,near-synonyms: speak / tell
+w0396,w0703,shared sense: think or believe / think
+w0396,w2816,near-synonyms: think or believe / thinking
+w0396,w2958,shared sense: think or believe / assume
+w0396,w3692,near-synonyms: think or believe / firmly believe
+w0396,w4019,near-synonyms: think or believe / thinking
+w0396,w4196,near-synonyms: think or believe / thinking
+w0416,w0760,near-synonyms: know / understand
+w0416,w1860,one narrows the other: know / to know from experience
+w0416,w3165,one narrows the other: know / come to know
+w0416,w4084,shared sense: know / comprehend
+w0416,w4129,near-synonyms: know / understand
+w0418,w0959,near-synonyms: remember / recall
+w0418,w1519,synonyms: remember / to remember
+w0435,w0906,synonyms: express / to express
+w0435,w4353,shared sense: express / convey
+w0451,w2103,near-synonyms: agree / to approve
+w0451,w3019,near-synonyms: agree / acceptance
+w0451,w3183,near-synonyms: agree / approval
+w0677,w3019,synonyms: accept / acceptance
+w0696,w1578,shared sense: guarantee / promise
+w0696,w2593,shared sense: guarantee / commitment
+w0703,w1603,one narrows the other: think / to reflect on
+w0703,w2816,near-synonyms: think / thinking
+w0703,w3543,shared sense: think / sake
+w0703,w3633,one narrows the other: think / ponder
+w0703,w4019,near-synonyms: think / thinking
+w0703,w4148,one narrows the other: think / ponder
+w0703,w4196,near-synonyms: think / thinking
+w0703,w4852,one narrows the other: think / think over
+w0738,w0778,shared sense: suggest / view
+w0738,w1586,near-synonyms: suggest / to recommend
+w0738,w1883,shared sense: suggest / to advise
+w0738,w2993,synonyms: suggest / propose
+w0748,w2627,near-synonyms: prove / confirm
+w0748,w4319,shared sense: prove / argumentation
+w0755,w0788,one narrows the other: talk / discuss
+w0755,w1138,one narrows the other: talk / consult
+w0755,w2350,one narrows the other: talk / to comment
+w0755,w2362,one narrows the other: talk / to relate
+w0757,w3341,shared sense: explain / tell
+w0757,w4014,near-synonyms: explain / provide an explanation
+w0757,w4063,near-synonyms: explain / expound
+w0760,w4084,shared sense: understand / comprehend
+w0760,w4807,one narrows the other: understand / come to understand suddenly
+w0765,w2993,shared sense: tote / propose
+w0772,w3341,shared sense: explain / tell
+w0772,w4014,near-synonyms: explain / provide an explanation
+w0772,w4063,near-synonyms: explain / expound
+w0778,w1009,synonyms: view / opinion
+w0778,w1099,synonyms: view / opinion
+w0778,w1537,shared sense: view / angle
+w0778,w2195,shared sense: view / to advocate
+w0778,w2876,near-synonyms: view / position
+w0788,w1138,shared sense: discuss / consult
+w0788,w2089,shared sense: discuss / to argue
+w0788,w2255,shared sense: discuss / debate
+w0788,w2350,shared sense: discuss / to comment
+w0788,w3395,shared sense: discuss / probe
+w0832,w2488,near-synonyms: inform / to tell
+w0832,w3341,near-synonyms: inform / tell
+w0832,w3460,near-synonyms: inform / tell
+w0874,w2526,synonyms: decline / to decline
+w0885,w0978,near-synonyms: estimate / guess
+w0885,w1018,shared sense: estimate / decision
+w0885,w3360,near-synonyms: estimate / speculate
+w0891,w2103,near-synonyms: agree / to approve
+w0891,w3019,near-synonyms: agree / acceptance
+w0891,w3183,near-synonyms: agree / approval
+w0900,w2683,shared sense: remind / warn
+w0900,w4146,shared sense: remind / warn
+w0900,w4772,shared sense: remind / urge again and again
+w0906,w4353,shared sense: to express / convey
+w0923,w2108,shared sense: doubt / question
+w0930,w2419,shared sense: communicate / to pass on
+w0959,w1519,shared sense: recall / to remember
+w0959,w2940,near-synonyms: recall / look back
+w0959,w4336,shared sense: recall / memory
+w0978,w3360,near-synonyms: guess / speculate
+w1009,w1537,shared sense: opinion / angle
+w1009,w1595,synonyms: opinion / view
+w1009,w2195,shared sense: opinion / to advocate
+w1009,w2876,near-synonyms: opinion / position
+w1009,w3957,synonyms: opinion / view
+w1018,w1808,shared sense: decision / conclusion
+w1041,w2089,shared sense: noisy / to argue
+w1094,w1642,shared sense: criticize / to ascertain
+w1094,w2350,shared sense: criticize / to comment
+w1094,w2430,shared sense: criticize / to blame
+w1094,w2616,shared sense: criticize / comment
+w1094,w2951,shared sense: criticize / censure
+w1094,w3865,near-synonyms: criticize / criticism
+w1095,w3224,near-synonyms: attach importance to / emphasize
+w1095,w4368,near-synonyms: attach importance to / stress
+w1099,w1537,shared sense: opinion / angle
+w1099,w1595,synonyms: opinion / view
+w1099,w2004,shared sense: opinion / idea
+w1099,w2195,shared sense: opinion / to advocate
+w1099,w2876,near-synonyms: opinion / position
+w1099,w3957,synonyms: opinion / view
+w1118,w1131,one narrows the other: make a joke / joke
+w1118,w3326,shared sense: make a joke / fool
+w1131,w2176,shared sense: joke / irony
+w1131,w4912,shared sense: joke / ridicule
+w1138,w4130,shared sense: consult / refer to
+w1158,w4801,shared sense: summarize / induce
+w1337,w1355,synonyms: apparently / it seems
+w1372,w1563,shared sense: call / to yell
+w1404,w1670,"shared sense: reason / reason, principle"
+w1415,w3428,shared sense: admit / frank
+w1444,w1520,near-synonyms: to declare / make known to the public
+w1444,w2668,shared sense: to declare / state
+w1444,w3634,synonyms: to declare / declare
+w1452,w2004,shared sense: thought / idea
+w1452,w2816,synonyms: thought / thinking
+w1452,w4019,synonyms: thought / thinking
+w1452,w4196,synonyms: thought / thinking
+w1470,w1871,near-synonyms: to imagine / delusion
+w1470,w3441,synonyms: to imagine / imagine
+w1470,w3822,near-synonyms: to imagine / wishful thinking
+w1470,w4817,near-synonyms: to imagine / fancy
+w1493,w4227,near-synonyms: observe / size up
+w1498,w2996,shared sense: indicate / hint
+w1498,w3561,shared sense: indicate / clarify
+w1498,w3634,near-synonyms: indicate / declare
+w1519,w4336,shared sense: to remember / memory
+w1520,w4020,near-synonyms: make known to the public / advocate
+w1537,w1595,shared sense: angle / view
+w1537,w2876,near-synonyms: angle / position
+w1537,w3957,shared sense: angle / view
+w1555,w2627,synonyms: to confirm / confirm
+w1563,w2440,synonyms: to yell / to shout
+w1573,w4227,near-synonyms: to evaluate / size up
+w1578,w2593,shared sense: promise / commitment
+w1578,w3186,near-synonyms: promise / vow
+w1595,w2195,shared sense: view / to advocate
+w1595,w2876,near-synonyms: view / position
+w1603,w2816,near-synonyms: to reflect on / thinking
+w1603,w3633,synonyms: to reflect on / ponder
+w1603,w4019,near-synonyms: to reflect on / thinking
+w1603,w4101,near-synonyms: to reflect on / rethink
+w1603,w4148,synonyms: to reflect on / ponder
+w1603,w4196,near-synonyms: to reflect on / thinking
+w1603,w4852,near-synonyms: to reflect on / think over
+w1642,w2430,shared sense: to ascertain / to blame
+w1642,w2951,shared sense: to ascertain / censure
+w1642,w3865,shared sense: to ascertain / criticism
+w1695,w1805,shared sense: to scold / to provide guidance
+w1695,w2430,near-synonyms: to scold / to blame
+w1731,w2288,shared sense: to request / to solicit
+w1807,w2419,shared sense: communicate / to pass on
+w1808,w4185,shared sense: conclusion / conclude
+w1808,w4596,near-synonyms: conclusion / inference
+w1808,w4801,shared sense: conclusion / induce
+w1848,w2252,synonyms: to inquire / ask about
+w1854,w2193,shared sense: deny / negative
+w1860,w2560,shared sense: to know from experience / awareness
+w1860,w3165,shared sense: to know from experience / come to know
+w1860,w4084,shared sense: to know from experience / comprehend
+w1860,w4807,near-synonyms: to know from experience / come to understand suddenly
+w1871,w2567,near-synonyms: delusion / dream
+w1871,w3441,near-synonyms: delusion / imagine
+w1871,w3822,shared sense: delusion / wishful thinking
+w1871,w4817,shared sense: delusion / fancy
+w1883,w2005,shared sense: to advise / urge
+w1883,w2041,shared sense: to advise / to persuade
+w1883,w2971,near-synonyms: to advise / encourage
+w1883,w4772,shared sense: to advise / urge again and again
+w1883,w4799,shared sense: to advise / spur on
+w1883,w4974,shared sense: to advise / encourage
+w1899,w3224,synonyms: to emphasize (a statement) / emphasize
+w1899,w4368,shared sense: to emphasize (a statement) / stress
+w1925,w2608,synonyms: truth / the truth
+w1941,w4139,near-synonyms: determination / determine
+w1968,w3741,synonyms: to describe / describe
+w2005,w2971,near-synonyms: urge / encourage
+w2005,w4772,near-synonyms: urge / urge again and again
+w2005,w4799,near-synonyms: urge / spur on
+w2005,w4974,near-synonyms: urge / encourage
+w2089,w2255,synonyms: to argue / debate
+w2089,w4014,shared sense: to argue / provide an explanation
+w2089,w4319,near-synonyms: to argue / argumentation
+w2103,w3019,shared sense: to approve / acceptance
+w2103,w3183,synonyms: to approve / approval
+w2108,w3490,shared sense: question / doubt
+w2176,w4912,near-synonyms: irony / ridicule
+w2189,w2364,shared sense: superfluous words / to talk nonsense
+w2195,w2408,synonyms: to advocate / to promote
+w2195,w3957,shared sense: to advocate / view
+w2195,w4020,synonyms: to advocate / advocate
+w2195,w4354,shared sense: to advocate / initiate
+w2243,w2284,shared sense: to admire / to boast
+w2243,w2306,shared sense: to admire / praise
+w2243,w3743,shared sense: to admire / praise
+w2243,w4501,shared sense: to admire / praise
+w2243,w4594,near-synonyms: to admire / sing the praises of
+w2243,w4837,near-synonyms: to admire / flatter
+w2255,w4014,shared sense: debate / provide an explanation
+w2255,w4319,near-synonyms: debate / argumentation
+w2284,w2306,shared sense: to boast / praise
+w2284,w3743,shared sense: to boast / praise
+w2284,w4501,shared sense: to boast / praise
+w2284,w4594,shared sense: to boast / sing the praises of
+w2306,w4594,shared sense: praise / sing the praises of
+w2306,w4837,shared sense: praise / flatter
+w2338,w3741,synonyms: to describe / describe
+w2350,w2616,synonyms: to comment / comment
+w2362,w2488,near-synonyms: to relate / to tell
+w2362,w3341,near-synonyms: to relate / tell
+w2362,w3460,near-synonyms: to relate / tell
+w2408,w4020,synonyms: to promote / advocate
+w2408,w4354,shared sense: to promote / initiate
+w2408,w4591,synonyms: to promote / promote
+w2409,w4801,shared sense: summarize / induce
+w2419,w2488,near-synonyms: to pass on / to tell
+w2419,w3225,synonyms: to pass on / pass on
+w2419,w3341,near-synonyms: to pass on / tell
+w2419,w3460,near-synonyms: to pass on / tell
+w2419,w4353,near-synonyms: to pass on / convey
+w2430,w2951,synonyms: to blame / censure
+w2430,w3865,near-synonyms: to blame / criticism
+w2430,w3936,synonyms: to blame / blame
+w2488,w3341,synonyms: to tell / tell
+w2488,w3460,synonyms: to tell / tell
+w2488,w4772,shared sense: to tell / urge again and again
+w2526,w4808,synonyms: to decline / decline
+w2560,w3165,shared sense: awareness / come to know
+w2560,w4084,shared sense: awareness / comprehend
+w2567,w4817,one narrows the other: dream / fancy
+w2574,w3208,shared sense: to signify / meaning
+w2593,w3186,near-synonyms: commitment / vow
+w2668,w3179,shared sense: state / statement
+w2668,w3634,shared sense: state / declare
+w2668,w4063,shared sense: state / expound
+w2683,w4772,shared sense: warn / urge again and again
+w2816,w3633,near-synonyms: thinking / ponder
+w2816,w4148,near-synonyms: thinking / ponder
+w2816,w4852,near-synonyms: thinking / think over
+w2876,w3957,near-synonyms: position / view
+w2877,w3134,near-synonyms: identify / recognize
+w2877,w3589,near-synonyms: identify / distinguish
+w2877,w3740,near-synonyms: identify / distinguish
+w2877,w3874,near-synonyms: identify / distinguish
+w2951,w3865,near-synonyms: censure / criticism
+w2951,w3936,shared sense: censure / blame
+w2971,w4799,near-synonyms: encourage / spur on
+w2993,w4354,shared sense: propose / initiate
+w2996,w4220,near-synonyms: hint / give a signal
+w2996,w4699,shared sense: hint / meaningful glance
+w3019,w3183,shared sense: acceptance / approval
+w3019,w4137,synonyms: acceptance / accept
+w3092,w3854,near-synonyms: deductive / reasoning
+w3092,w4596,near-synonyms: deductive / inference
+w3134,w3589,near-synonyms: recognize / distinguish
+w3134,w3740,near-synonyms: recognize / distinguish
+w3134,w3874,near-synonyms: recognize / distinguish
+w3134,w3938,shared sense: recognize / identify
+w3165,w4084,shared sense: come to know / comprehend
+w3165,w4807,near-synonyms: come to know / come to understand suddenly
+w3179,w4063,near-synonyms: statement / expound
+w3224,w4368,synonyms: emphasize / stress
+w3225,w4353,shared sense: pass on / convey
+w3260,w3913,synonyms: expect / expectation
+w3376,w4130,shared sense: consult / refer to
+w3393,w3921,near-synonyms: compromise / yield
+w3441,w3822,near-synonyms: imagine / wishful thinking
+w3441,w4817,near-synonyms: imagine / fancy
+w3458,w4953,near-synonyms: expose / divulge
+w3543,w4852,shared sense: sake / think over
+w3589,w3938,near-synonyms: distinguish / identify
+w3633,w4019,near-synonyms: ponder / thinking
+w3633,w4196,near-synonyms: ponder / thinking
+w3633,w4852,near-synonyms: ponder / think over
+w3640,w3976,shared sense: metaphor or simile / analogy
+w3740,w3938,near-synonyms: distinguish / identify
+w3743,w4594,shared sense: praise / sing the praises of
+w3743,w4837,shared sense: praise / flatter
+w3822,w4817,shared sense: wishful thinking / fancy
+w3854,w4596,shared sense: reasoning / inference
+w3856,w4665,near-synonyms: chatter / rattle
+w3874,w3938,near-synonyms: distinguish / identify
+w4019,w4148,near-synonyms: thinking / ponder
+w4019,w4852,near-synonyms: thinking / think over
+w4020,w4354,shared sense: advocate / initiate
+w4045,w4130,shared sense: consult / refer to
+w4084,w4129,shared sense: comprehend / understand
+w4084,w4807,near-synonyms: comprehend / come to understand suddenly
+w4129,w4807,one narrows the other: understand / come to understand suddenly
+w4146,w4772,shared sense: warn / urge again and again
+w4148,w4196,near-synonyms: ponder / thinking
+w4148,w4852,near-synonyms: ponder / think over
+w4185,w4596,near-synonyms: conclude / inference
+w4185,w4801,shared sense: conclude / induce
+w4196,w4852,near-synonyms: thinking / think over
+w4501,w4594,shared sense: praise / sing the praises of
+w4501,w4837,shared sense: praise / flatter
+w4594,w4837,near-synonyms: sing the praises of / flatter
+w4772,w4799,near-synonyms: urge again and again / spur on
+w4772,w4974,shared sense: urge again and again / encourage
+w4799,w4974,near-synonyms: spur on / encourage

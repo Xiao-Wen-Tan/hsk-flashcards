@@ -5,8 +5,8 @@ License) holds one small JSON file of strokes per character. Both are fetched on
 npm registry as pinned versions, checked against the registry's published checksum, and
 unpacked. The app then loads them from its own site, so stroke order works offline.
 
-A stroke file is named by the character's code point in hexadecimal: 爱 (U+7231) is
-"7231.json". docs/js/strokes.js uses the same names.
+A stroke file is named by the character's code point in hexadecimal, in a folder named by its first two
+digits: 爱 (U+7231) is "72/7231.json". docs/js/strokes.js uses the same names.
 """
 import base64
 import hashlib
@@ -80,8 +80,10 @@ def han_chars(words):
 
 
 def stroke_name(ch):
-    """stroke_name("爱") gives "7231.json"."""
-    return f"{ord(ch):x}.json"
+    """stroke_name("爱") gives "72/7231.json": the folder is the first two hex digits of the code point, so
+    no folder holds more than a few dozen of the 2,637 files. docs/js/strokes.js strokeUrl makes the same name."""
+    code = f"{ord(ch):x}"
+    return f"{code[:2]}/{code}.json"
 
 
 def write_same_or_new(path, data):

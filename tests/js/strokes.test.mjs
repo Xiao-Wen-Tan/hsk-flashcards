@@ -9,12 +9,12 @@ test('only Chinese characters get a stroke animation', () => {
 });
 
 test('stroke files are named by code point', () => {
-  assert.equal(strokeUrl('爱'), 'strokes/7231.json');
-  assert.equal(strokeUrl('苹'), 'strokes/82f9.json');
+  assert.equal(strokeUrl('爱'), 'strokes/72/7231.json');
+  assert.equal(strokeUrl('苹'), 'strokes/82/82f9.json');
 });
 
 test('stroke data loads per character, and a missing file gives a plain message', async () => {
-  const files = { 'strokes/82f9.json': { strokes: ['a'] }, 'strokes/679c.json': { strokes: ['b'] } };
+  const files = { 'strokes/82/82f9.json': { strokes: ['a'] }, 'strokes/67/679c.json': { strokes: ['b'] } };
   const fetchFn = async (url) => (files[url]
     ? { ok: true, json: async () => files[url] }
     : { ok: false, status: 404 });

@@ -1,0 +1,321 @@
+id_a,id_b,reason
+w0048,w0049,shared sense in full meaning: love / like or be interested in
+w0048,w1961,one includes the other: love / to love ardently
+w0048,w4307,one includes the other: love / love dearly
+w0048,w4392,one includes the other: love / love and esteem
+w0048,w4850,shared sense in full meaning: love / like
+w0049,w0628,shared sense in full meaning: like or be interested in / interest
+w0049,w4850,one includes the other: like or be interested in / like
+w0111,w0528,near-synonyms: happy / pleased
+w0111,w2334,near-synonyms: happy / delighted
+w0111,w3517,near-synonyms: happy / joy
+w0111,w3613,near-synonyms: happy / be gratified
+w0111,w4714,near-synonyms: happy / be jubilant
+w0111,w4840,near-synonyms: happy / be in the best of spirits
+w0200,w1411,near-synonyms: hope / to look forward to
+w0200,w1735,shared sense in full meaning: hope / desire
+w0200,w2373,near-synonyms: hope / to hope for
+w0200,w2766,near-synonyms: hope / expectation
+w0200,w2875,near-synonyms: hope / desire
+w0222,w1593,shared sense in full meaning: laugh / smile
+w0239,w0528,near-synonyms: happy / pleased
+w0239,w2334,near-synonyms: happy / delighted
+w0239,w3517,near-synonyms: happy / joy
+w0239,w3613,near-synonyms: happy / be gratified
+w0239,w4714,near-synonyms: happy / be jubilant
+w0239,w4840,near-synonyms: happy / be in the best of spirits
+w0354,w0794,near-synonyms: worry / feel nervous
+w0354,w1127,shared sense in full meaning: worry / vexation
+w0354,w3985,shared sense in full meaning: worry / very anxious to
+w0354,w4206,shared sense in full meaning: worry / remember with concern
+w0354,w4232,shared sense in full meaning: worry / anxious
+w0354,w4752,shared sense in full meaning: worry / anxious
+w0438,w1212,near-synonyms: cry / to shed tears
+w0438,w4820,near-synonyms: cry / tearful
+w0492,w1149,shared sense in full meaning: be afraid / feel afraid suddenly
+w0492,w1472,shared sense in full meaning: be afraid / terrible
+w0492,w1523,shared sense in full meaning: be afraid / to frighten
+w0492,w1554,shared sense in full meaning: be afraid / awful
+w0492,w2746,near-synonyms: be afraid / fear
+w0492,w3993,near-synonyms: be afraid / fear
+w0502,w1459,shared sense in full meaning: be satisfied / to satisfy
+w0502,w3613,near-synonyms: be satisfied / be gratified
+w0502,w4029,near-synonyms: be satisfied / satisfy a craving
+w0520,w1779,near-synonyms: take offence / anger
+w0520,w3884,near-synonyms: take offence / get angry
+w0520,w4167,near-synonyms: take offence / annoyed
+w0520,w4857,one includes the other: take offence / gnash the teeth in anger
+w0528,w0714,near-synonyms: pleased / happy
+w0528,w0766,near-synonyms: pleased / happy
+w0528,w1050,near-synonyms: pleased / happy
+w0528,w1194,one includes the other: pleased / be pleased with oneself
+w0528,w1856,near-synonyms: pleased / comfort
+w0528,w2781,near-synonyms: pleased / happy
+w0528,w3613,near-synonyms: pleased / be gratified
+w0528,w4263,near-synonyms: pleased / happy
+w0528,w4616,shared sense in full meaning: pleased / comfortable
+w0544,w1025,near-synonyms: have a hard time / sad
+w0544,w1417,near-synonyms: have a hard time / pain
+w0544,w2084,near-synonyms: have a hard time / fall on hard time
+w0544,w3147,near-synonyms: have a hard time / suffer
+w0544,w4582,near-synonyms: have a hard time / suffer
+w0587,w0794,near-synonyms: worry / feel nervous
+w0587,w1127,shared sense in full meaning: worry / vexation
+w0587,w3985,shared sense in full meaning: worry / very anxious to
+w0587,w4232,shared sense in full meaning: worry / anxious
+w0587,w4752,shared sense in full meaning: worry / anxious
+w0709,w2709,shared sense in full meaning: spirit / soul
+w0714,w2334,near-synonyms: happy / delighted
+w0714,w3517,near-synonyms: happy / joy
+w0714,w3613,near-synonyms: happy / be gratified
+w0714,w4714,near-synonyms: happy / be jubilant
+w0714,w4840,near-synonyms: happy / be in the best of spirits
+w0766,w2334,near-synonyms: happy / delighted
+w0766,w3517,near-synonyms: happy / joy
+w0766,w3613,near-synonyms: happy / be gratified
+w0766,w4343,near-synonyms: happy / happy lot
+w0766,w4714,near-synonyms: happy / be jubilant
+w0766,w4840,near-synonyms: happy / be in the best of spirits
+w0774,w3732,near-synonyms: pressure / burden
+w0794,w1994,near-synonyms: feel nervous / unpeaceful
+w0794,w2463,near-synonyms: feel nervous / flustered
+w0794,w4232,near-synonyms: feel nervous / anxious
+w0833,w2669,one includes the other: feeling / intense emotion
+w0843,w1788,shared sense in full meaning: mood / atmosphere
+w0843,w3363,near-synonyms: mood / mentality
+w0864,w1495,near-synonyms: be tired of / to hate
+w0864,w3182,near-synonyms: be tired of / mislike
+w0864,w3396,near-synonyms: be tired of / hateful
+w0864,w3524,shared sense in full meaning: be tired of / disgust
+w0864,w3763,near-synonyms: be tired of / repugnant
+w0894,w4136,shared sense in full meaning: attract / fascinated
+w0920,w0998,shared sense in full meaning: light / relax
+w0931,w0941,shared sense in full meaning: excited / stir
+w0941,w1035,shared sense in full meaning: stir / move or touch sb
+w0941,w1548,near-synonyms: stir / stimulate
+w0941,w3243,near-synonyms: stir / arouse
+w0957,w1033,near-synonyms: regrettable / regret
+w0957,w1495,shared sense in full meaning: regrettable / to hate
+w0957,w1538,near-synonyms: regrettable / regret
+w0957,w1831,near-synonyms: regrettable / too bad
+w0957,w2084,shared sense in full meaning: regrettable / fall on hard time
+w0957,w4369,near-synonyms: regrettable / regretful
+w0957,w4505,near-synonyms: regrettable / regret deeply
+w0967,w2319,shared sense in full meaning: lose hope / to have no alternative
+w0967,w2503,near-synonyms: lose hope / to lose heart
+w0967,w2898,near-synonyms: lose hope / give up all hope
+w0967,w3642,shared sense in full meaning: lose hope / setback
+w0967,w4758,near-synonyms: lose hope / lose heart
+w1025,w3200,shared sense in full meaning: sad / grief
+w1033,w1495,shared sense in full meaning: regret / to hate
+w1033,w4369,near-synonyms: regret / regretful
+w1033,w4505,near-synonyms: regret / regret deeply
+w1050,w2334,near-synonyms: happy / delighted
+w1050,w3517,near-synonyms: happy / joy
+w1050,w3613,near-synonyms: happy / be gratified
+w1050,w4714,near-synonyms: happy / be jubilant
+w1050,w4840,near-synonyms: happy / be in the best of spirits
+w1062,w1194,shared sense in full meaning: proud / be pleased with oneself
+w1090,w1858,shared sense in full meaning: lone / lonely
+w1090,w2685,shared sense in full meaning: lone / lonely
+w1109,w1942,shared sense in full meaning: can't bear / cannot help
+w1109,w3867,near-synonyms: can't bear / intolerable
+w1127,w2351,shared sense in full meaning: vexation / worry
+w1127,w2479,shared sense in full meaning: vexation / worry
+w1127,w4167,near-synonyms: vexation / annoyed
+w1127,w4232,shared sense in full meaning: vexation / anxious
+w1127,w4845,near-synonyms: vexation / troublesome
+w1149,w1523,shared sense in full meaning: feel afraid suddenly / to frighten
+w1149,w2720,near-synonyms: feel afraid suddenly / surprised
+w1149,w2819,shared sense in full meaning: feel afraid suddenly / shock
+w1149,w3522,near-synonyms: feel afraid suddenly / wonder
+w1149,w4457,shared sense in full meaning: feel afraid suddenly / startle
+w1149,w4577,near-synonyms: feel afraid suddenly / surprised
+w1151,w1617,near-synonyms: admire / to appreciate
+w1151,w2216,near-synonyms: admire / to admire
+w1151,w2840,shared sense in full meaning: admire / be jealous of
+w1151,w3080,near-synonyms: admire / worship
+w1151,w4728,near-synonyms: admire / respect
+w1156,w2134,shared sense in full meaning: sympathize / love
+w1194,w2021,shared sense in full meaning: be pleased with oneself / proud
+w1205,w4553,shared sense in full meaning: shy / eeriness
+w1212,w4820,near-synonyms: to shed tears / tearful
+w1374,w1617,shared sense in full meaning: to enjoy / to appreciate
+w1374,w2894,shared sense in full meaning: to enjoy / pleasure
+w1411,w2373,near-synonyms: to look forward to / to hope for
+w1411,w2766,near-synonyms: to look forward to / expectation
+w1411,w3054,near-synonyms: to look forward to / hope
+w1411,w3626,shared sense in full meaning: to look forward to / yearn for
+w1411,w4752,shared sense in full meaning: to look forward to / anxious
+w1417,w2799,shared sense in full meaning: pain / torment
+w1417,w3147,shared sense in full meaning: pain / suffer
+w1417,w4582,shared sense in full meaning: pain / suffer
+w1459,w3613,near-synonyms: to satisfy / be gratified
+w1459,w4029,one includes the other: to satisfy / satisfy a craving
+w1472,w1554,shared sense in full meaning: terrible / awful
+w1472,w1831,shared sense in full meaning: terrible / too bad
+w1472,w2746,near-synonyms: terrible / fear
+w1472,w3993,near-synonyms: terrible / fear
+w1495,w1538,shared sense in full meaning: to hate / regret
+w1495,w2327,shared sense in full meaning: to hate / to hate to do sth
+w1495,w3396,near-synonyms: to hate / hateful
+w1495,w3524,shared sense in full meaning: to hate / disgust
+w1495,w4369,shared sense in full meaning: to hate / regretful
+w1495,w4505,shared sense in full meaning: to hate / regret deeply
+w1510,w1788,shared sense in full meaning: mood / atmosphere
+w1510,w3363,near-synonyms: mood / mentality
+w1516,w1800,shared sense in full meaning: fortunate / luck (good or bad)
+w1516,w4343,shared sense in full meaning: fortunate / happy lot
+w1523,w4457,near-synonyms: to frighten / startle
+w1533,w3843,shared sense in full meaning: expression / look
+w1533,w4611,near-synonyms: expression / look
+w1538,w4369,near-synonyms: regret / regretful
+w1538,w4505,near-synonyms: regret / regret deeply
+w1548,w3243,shared sense in full meaning: stimulate / arouse
+w1554,w1831,shared sense in full meaning: awful / too bad
+w1554,w2746,near-synonyms: awful / fear
+w1554,w3993,near-synonyms: awful / fear
+w1617,w1877,shared sense in full meaning: to appreciate / appreciate
+w1617,w2216,near-synonyms: to appreciate / to admire
+w1617,w3080,near-synonyms: to appreciate / worship
+w1617,w4308,near-synonyms: to appreciate / admire
+w1617,w4728,near-synonyms: to appreciate / respect
+w1669,w3386,same function: oh / ouch
+w1735,w2766,near-synonyms: desire / expectation
+w1735,w3054,near-synonyms: desire / hope
+w1773,w1867,near-synonyms: to miss / to cherish the memory of
+w1773,w3361,near-synonyms: to miss / miss
+w1773,w4206,near-synonyms: to miss / remember with concern
+w1779,w3884,near-synonyms: anger / get angry
+w1779,w4167,near-synonyms: anger / annoyed
+w1779,w4857,one includes the other: anger / gnash the teeth in anger
+w1781,w3746,near-synonyms: tranquil / peaceful
+w1781,w3848,near-synonyms: tranquil / equanimous
+w1781,w4000,near-synonyms: tranquil / sedation
+w1781,w4510,near-synonyms: tranquil / serene
+w1800,w4343,near-synonyms: luck (good or bad) / happy lot
+w1831,w2084,shared sense in full meaning: too bad / fall on hard time
+w1856,w4616,near-synonyms: comfort / comfortable
+w1867,w3361,near-synonyms: to cherish the memory of / miss
+w1867,w4206,near-synonyms: to cherish the memory of / remember with concern
+w1887,w2380,shared sense in full meaning: to treasure / protect
+w1929,w4981,near-synonyms: enthusiastic / enthusiastically
+w1942,w3867,shared sense in full meaning: cannot help / intolerable
+w1961,w2134,one includes the other: to love ardently / love
+w1961,w4307,one includes the other: to love ardently / love dearly
+w1961,w4392,one includes the other: to love ardently / love and esteem
+w1994,w4232,near-synonyms: unpeaceful / anxious
+w2134,w4307,one includes the other: love / love dearly
+w2134,w4392,one includes the other: love / love and esteem
+w2182,w3631,shared sense in full meaning: muddled / puzzle
+w2182,w5032,near-synonyms: muddled / feel puzzled
+w2214,w3243,near-synonyms: inspire / arouse
+w2214,w3908,near-synonyms: inspire / rouse oneself
+w2216,w3080,near-synonyms: to admire / worship
+w2216,w4308,near-synonyms: to admire / admire
+w2216,w4728,near-synonyms: to admire / respect
+w2305,w2380,shared sense in full meaning: care for N / protect
+w2305,w2671,one includes the other: care for N / care
+w2305,w2887,one includes the other: care for N / care
+w2319,w3642,shared sense in full meaning: to have no alternative / setback
+w2319,w4838,near-synonyms: to have no alternative / can find no way out
+w2327,w4252,near-synonyms: to hate to do sth / be reluctant to leave
+w2327,w4850,shared sense in full meaning: to hate to do sth / like
+w2334,w2781,near-synonyms: delighted / happy
+w2334,w3517,near-synonyms: delighted / joy
+w2334,w4029,shared sense in full meaning: delighted / satisfy a craving
+w2334,w4263,near-synonyms: delighted / happy
+w2334,w4714,near-synonyms: delighted / be jubilant
+w2351,w4232,shared sense in full meaning: worry / anxious
+w2351,w4752,shared sense in full meaning: worry / anxious
+w2371,w3538,synonyms: to tremble / tremble
+w2373,w2748,near-synonyms: to hope for / dying to
+w2373,w2766,near-synonyms: to hope for / expectation
+w2373,w3054,near-synonyms: to hope for / hope
+w2373,w3626,shared sense in full meaning: to hope for / yearn for
+w2373,w4752,shared sense in full meaning: to hope for / anxious
+w2380,w2671,one includes the other: protect / care
+w2380,w2887,one includes the other: protect / care
+w2402,w2689,shared sense in full meaning: ashamed / awkward
+w2402,w3673,near-synonyms: ashamed / lose face
+w2402,w4452,near-synonyms: ashamed / shamed
+w2437,w4201,shared sense in full meaning: impatient / eager
+w2479,w4232,shared sense in full meaning: worry / anxious
+w2479,w4752,shared sense in full meaning: worry / anxious
+w2503,w2898,near-synonyms: to lose heart / give up all hope
+w2503,w3328,near-synonyms: to lose heart / dispirited
+w2503,w4758,synonyms: to lose heart / lose heart
+w2689,w3530,shared sense in full meaning: awkward / make sb feel difficult or…
+w2689,w3867,shared sense in full meaning: awkward / intolerable
+w2720,w2819,near-synonyms: surprised / shock
+w2720,w3522,shared sense in full meaning: surprised / wonder
+w2748,w2875,near-synonyms: dying to / desire
+w2748,w3626,near-synonyms: dying to / yearn for
+w2748,w3985,near-synonyms: dying to / very anxious to
+w2748,w4201,near-synonyms: dying to / eager
+w2748,w4752,near-synonyms: dying to / anxious
+w2766,w3054,near-synonyms: expectation / hope
+w2781,w3517,near-synonyms: happy / joy
+w2781,w3613,near-synonyms: happy / be gratified
+w2781,w4714,near-synonyms: happy / be jubilant
+w2781,w4840,near-synonyms: happy / be in the best of spirits
+w2799,w3147,shared sense in full meaning: torment / suffer
+w2799,w4582,shared sense in full meaning: torment / suffer
+w2819,w3522,near-synonyms: shock / wonder
+w2819,w4457,near-synonyms: shock / startle
+w2819,w4577,near-synonyms: shock / surprised
+w2894,w3517,shared sense in full meaning: pleasure / joy
+w2898,w4758,near-synonyms: give up all hope / lose heart
+w2913,w3147,shared sense in full meaning: endure / suffer
+w3080,w4308,near-synonyms: worship / admire
+w3080,w4728,near-synonyms: worship / respect
+w3182,w3524,near-synonyms: mislike / disgust
+w3182,w3763,near-synonyms: mislike / repugnant
+w3243,w3908,near-synonyms: arouse / rouse oneself
+w3296,w4733,near-synonyms: oppress / restrict
+w3328,w3571,near-synonyms: dispirited / gloomy
+w3328,w4304,near-synonyms: dispirited / depressing
+w3328,w4758,shared sense in full meaning: dispirited / lose heart
+w3328,w4846,near-synonyms: dispirited / listless
+w3361,w4206,near-synonyms: miss / remember with concern
+w3396,w3524,near-synonyms: hateful / disgust
+w3396,w3763,near-synonyms: hateful / repugnant
+w3517,w4263,near-synonyms: joy / happy
+w3517,w4714,near-synonyms: joy / be jubilant
+w3522,w4577,shared sense in full meaning: wonder / surprised
+w3524,w3763,near-synonyms: disgust / repugnant
+w3524,w4573,near-synonyms: disgust / despise
+w3530,w3867,shared sense in full meaning: make sb feel difficult or… / intolerable
+w3571,w4304,near-synonyms: gloomy / depressing
+w3571,w4846,near-synonyms: gloomy / listless
+w3613,w4263,near-synonyms: be gratified / happy
+w3626,w4752,shared sense in full meaning: yearn for / anxious
+w3631,w5032,near-synonyms: puzzle / feel puzzled
+w3673,w4452,near-synonyms: lose face / shamed
+w3746,w3848,near-synonyms: peaceful / equanimous
+w3746,w4000,near-synonyms: peaceful / sedation
+w3746,w4510,near-synonyms: peaceful / serene
+w3848,w4000,near-synonyms: equanimous / sedation
+w3848,w4510,near-synonyms: equanimous / serene
+w3884,w4167,near-synonyms: get angry / annoyed
+w3884,w4857,one includes the other: get angry / gnash the teeth in anger
+w3940,w4660,near-synonyms: complain / complaint
+w3985,w4201,near-synonyms: very anxious to / eager
+w3985,w4232,shared sense in full meaning: very anxious to / anxious
+w3985,w4752,near-synonyms: very anxious to / anxious
+w4000,w4510,near-synonyms: sedation / serene
+w4006,w4243,shared sense in full meaning: distracted / stare blankly
+w4006,w4931,near-synonyms: distracted / be spellbound
+w4110,w4478,near-synonyms: treat coldly / unmoved
+w4136,w4931,near-synonyms: fascinated / be spellbound
+w4201,w4752,near-synonyms: eager / anxious
+w4243,w4931,near-synonyms: stare blankly / be spellbound
+w4252,w4850,near-synonyms: be reluctant to leave / like
+w4263,w4714,near-synonyms: happy / be jubilant
+w4263,w4840,near-synonyms: happy / be in the best of spirits
+w4307,w4392,one includes the other: love dearly / love and esteem
+w4308,w4728,near-synonyms: admire / respect
+w4369,w4505,near-synonyms: regretful / regret deeply
+w4392,w4728,shared sense in full meaning: love and esteem / respect
+w4524,w4670,one includes the other: sigh / sigh with emotion
+w4714,w4840,shared sense in full meaning: be jubilant / be in the best of spirits

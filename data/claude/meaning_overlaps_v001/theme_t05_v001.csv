@@ -1,0 +1,64 @@
+id_a,id_b,reason
+w0012,w1314,near-synonyms: person / individual
+w0012,w1430,en overlap: person
+w0012,w2257,narrows: people / ordinary people
+w0012,w2602,en overlap: person
+w0046,w1325,en overlap: family; household
+w0046,w2583,en overlap: household; family
+w0046,w3024,narrows: family / family member
+w0065,w0954,near-synonyms: year (of age) / age
+w0065,w1802,near-synonyms: year (of age) / age
+w0095,w0203,narrows: son / son or daughter
+w0106,w0203,narrows: daughter / son or daughter
+w0203,w0913,en overlap: child
+w0220,w1583,near-synonyms: woman / lady
+w0220,w1896,narrows: woman / married woman
+w0223,w1583,near-synonyms: woman / lady
+w0223,w1896,narrows: woman / married woman
+w0228,w0236,synonyms: a man / man
+w0228,w1973,narrows: a man / young man
+w0228,w2578,"near-synonyms: a man / fellow, guy"
+w0228,w3681,near-synonyms: a man / gentleman
+w0236,w1973,narrows: man / young man
+w0236,w2578,"near-synonyms: man / fellow, guy"
+w0236,w3681,near-synonyms: man / gentleman
+w0260,w1896,near-synonyms: wife / married woman
+w0260,w2728,narrows: wife / husband and wife
+w0260,w4096,narrows: spouse / wife
+w0260,w4178,en overlap: wife / son's wife
+w0267,w2728,narrows: husband / husband and wife
+w0267,w4096,narrows: spouse / husband
+w0270,w4315,narrows: elder / elder sister
+w0272,w1364,narrows: brothers / elder brother
+w0272,w4315,narrows: elder / elder brother
+w0285,w1364,en overlap: younger brother
+w0449,w1562,en overlap: get married / marriage
+w0449,w1613,near-synonyms: get married / to marry
+w0449,w1884,near-synonyms: get married / to marry
+w0461,w1926,"near-synonyms: young / adolescent, youth"
+w0461,w1969,near-synonyms: young / youth
+w0461,w1973,narrows: young / young man
+w0546,w2416,en overlap: grandmother / maternal grandmother
+w0562,w2343,en overlap: uncle / maternal uncle
+w1168,w3024,near-synonyms: relative / family member
+w1314,w1430,near-synonyms: individual / person
+w1314,w2602,near-synonyms: individual / person
+w1325,w2583,en overlap: household; family
+w1325,w3024,narrows: family / family member
+w1357,w2692,synonyms: baby / infant
+w1562,w1676,en overlap: wedding
+w1583,w1725,near-synonyms: lady / woman
+w1583,w1896,en overlap: madam
+w1613,w1884,en overlap: to marry
+w1725,w1896,narrows: woman / married woman
+w1845,w4294,synonyms: pass away / die
+w1926,w1969,en overlap: youth
+w1926,w1973,en overlap: youth / lad
+w1973,w2578,en overlap: guy
+w2449,w2464,near-synonyms: love dearly / respect and love
+w2583,w3024,narrows: family / family member
+w2728,w4096,near-synonyms: husband and wife / spouse
+w3337,w4096,near-synonyms: companion / spouse
+w3417,w4971,en overlap: origin
+w3656,w4599,narrows: generations / later generations
+w4093,w4959,en overlap: happy / happiness of a family reunion

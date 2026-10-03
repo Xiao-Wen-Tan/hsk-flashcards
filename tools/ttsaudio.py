@@ -21,9 +21,13 @@ def spoken(hz):
 
 
 def audio_path(kind, wid, text, rate, voice=VOICE):
-    """The path relative to docs/audio/ for kind "w" (word) or "s" (sentence), a word ID and a text."""
+    """The path relative to docs/audio/ for kind "w" (word) or "s" (sentence), a word ID and a text.
+
+    The files of 100 IDs share a folder named by the ID's first two digits, so no folder holds more than
+    100 files ("w/00/w0001_3fa2b1c9.mp3", "s/50/w5034_823a1194.mp3"), which Box and Windows handle easily.
+    """
     digest = hashlib.sha1(f"{voice}|{rate}|{text}".encode("utf-8")).hexdigest()[:8]
-    return f"{kind}/{wid}_{digest}.mp3"
+    return f"{kind}/{wid[1:3]}/{wid}_{digest}.mp3"
 
 
 def mp3_problem(data, kind):

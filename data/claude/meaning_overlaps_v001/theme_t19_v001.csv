@@ -1,0 +1,54 @@
+id_a,id_b,reason
+w0227,w0284,shared sense: to play (soccer) / play
+w0227,w0315,narrower: play basketball / play
+w0227,w0317,narrower: play soccer / play
+w0227,w0400,shared sense: play
+w0227,w0464,shared sense: play
+w0227,w1020,shared sense: to play (an instrument) / play
+w0227,w1287,narrower: play the piano / play
+w0227,w2756,narrower: play the part of / play
+w0259,w0571,synonyms: take exercise / physical training
+w0284,w0317,"shared sense: kick, play soccer / play soccer"
+w0284,w2696,shared sense: to play (soccer) / play
+w0315,w2696,narrower: play basketball / play
+w0317,w2696,narrower: play soccer / play
+w0352,w1622,narrower: finals / competition
+w0352,w3602,near-synonyms: compete / measure one's strength with
+w0352,w4630,narrower: preliminary contest / competition
+w0400,w1608,near-synonyms: recreation / entertainment
+w0400,w2696,shared sense: play
+w0464,w0882,near-synonyms: perform / performance
+w0464,w2696,shared sense: play
+w0464,w3232,narrower: instrumental performance / perform
+w0507,w0594,shared sense: interest
+w0571,w0702,synonyms: take exercise / physical training
+w0571,w1352,near-synonyms: physical training / train
+w0631,w4435,narrower: climb mountains / climb
+w0770,w1439,synonyms: win / victory
+w0882,w2756,near-synonyms: act / performance
+w0882,w3232,narrower: instrumental performance / performance
+w1020,w1287,shared sense: play a string instrument / play the piano
+w1020,w2696,shared sense: to play (an instrument) / play
+w1020,w3232,shared sense: play an instrument / instrumental performance
+w1020,w3380,"shared sense: spring, leap / jump, bounce"
+w1020,w3641,"shared sense: spring, leap / jump, leap"
+w1103,w2340,near-synonyms: Kung Fu / martial skill
+w1287,w2696,narrower: play the piano / play
+w1287,w3232,narrower: play the piano / instrumental performance
+w1352,w4867,"near-synonyms: train, drill / practice, drill"
+w1439,w3735,inclusion: victory / victory or defeat
+w1622,w2986,narrower: finals / competition
+w1794,w2064,shared sense: shoot
+w1801,w2848,narrower: doll / plaything
+w1801,w4305,synonyms: plaything / toy
+w1901,w3018,near-synonyms: take chances / gamble
+w2082,w2090,near-synonyms: outside working hours / not working
+w2082,w2465,near-synonyms: spare time / free time
+w2090,w2465,shared sense: leisure
+w2340,w2531,narrower: Taiji / martial skill
+w2696,w2756,narrower: play the part of / play
+w2848,w4305,"narrower: doll / toy, plaything"
+w2918,w3506,shared sense: cartoon
+w2986,w3602,near-synonyms: competition / measure one's strength with
+w2986,w4630,narrower: preliminary contest / competition
+w3574,w3852,shared sense: melody

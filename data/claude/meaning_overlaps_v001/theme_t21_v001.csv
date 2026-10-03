@@ -1,0 +1,265 @@
+id_a,id_b,reason
+w0387,w1996,near-synonyms: hard-working / strive one's hardest
+w0387,w2389,synonyms: hard-working / hardworking
+w0387,w2431,synonyms: hard-working / hardworking
+w0387,w2467,synonyms: hard-working / hardworking
+w0387,w4449,near-synonyms: hard-working / work hard for
+w0387,w4980,includes: hard-working / hardworking and thrifty
+w0387,w5016,synonyms: diligent / hardworking
+w0439,w4100,near-synonyms: dare to do / be brave in
+w0454,w1852,shared sense: serious
+w0454,w3689,shared sense: serious
+w0454,w4062,shared sense: serious
+w0454,w5011,shared sense: earnest
+w0483,w0990,shared sense: careful
+w0483,w1995,near-synonyms: cautious / take care
+w0483,w3752,shared sense: careful
+w0483,w3962,shared sense: careful
+w0483,w3970,near-synonyms: cautiously / take care
+w0483,w4503,synonyms: be careful / take care
+w0513,w1803,shared sense: intelligent
+w0513,w4415,near-synonyms: clever / quick-witted
+w0513,w4450,near-synonyms: clever / wise
+w0513,w4506,synonyms: bright; clever / clever
+w0513,w4915,synonyms: bright / clever; bright
+w0522,w2274,near-synonyms: fervent / enthusiastic
+w0522,w4291,near-synonyms: fervent / enthusiasm
+w0902,w3981,near-synonyms: manner / demeanour
+w0940,w2014,synonyms: respect / to respect
+w0940,w4739,near-synonyms: respectful / respect
+w0942,w2353,shared sense: be deceived / deceive
+w0942,w3570,near-synonyms: lie / deceive
+w0963,w2801,near-synonyms: casual / at will
+w0984,w1924,near-synonyms: optimistic / positive
+w0984,w2050,near-synonyms: active / positive
+w0984,w4291,shared sense: vigour / vigorous
+w0990,w1995,near-synonyms: careful / cautious
+w0990,w2393,shared sense: attentive
+w0990,w3962,shared sense: careful
+w0990,w3970,near-synonyms: cautiously / careful
+w0990,w4503,synonyms: careful / be careful
+w0990,w4726,near-synonyms: careful / meticulous
+w0990,w4836,near-synonyms: careful / meticulous
+w0990,w4917,narrows: careful / careful in reckoning
+w0991,w3128,shared sense: strict
+w0991,w4726,shared sense: strict
+w1015,w2043,near-synonyms: of one's own accord / voluntary
+w1015,w2282,shared sense: on one's own initiative
+w1029,w4972,shared sense: self-confident
+w1059,w1774,near-synonyms: brave / courage
+w1059,w3515,shared sense: brave
+w1059,w4100,shared sense: brave
+w1059,w4787,near-synonyms: boldness / brave
+w1059,w4919,near-synonyms: bold / brave
+w1064,w1693,near-synonyms: character / personality
+w1064,w3030,near-synonyms: character / personality
+w1064,w4261,shared sense: temperament; nature
+w1078,w2199,near-synonyms: amiable / friendly; amicable
+w1078,w4565,near-synonyms: affable / friendly
+w1078,w4802,near-synonyms: affable / friendly
+w1115,w1393,shared sense: foolish
+w1115,w1447,shared sense: dull
+w1115,w3155,near-synonyms: stupid / silly
+w1115,w4520,shared sense: stupid; clumsy
+w1125,w4261,shared sense: disposition
+w1160,w4186,shared sense: humorous
+w1176,w1937,includes: good and honest / honest
+w1176,w2414,near-synonyms: honest / sincere
+w1176,w4395,near-synonyms: honest / sincere
+w1176,w4462,near-synonyms: honest / sincere
+w1176,w5011,near-synonyms: honest / sincere
+w1220,w2050,shared sense: lively
+w1220,w4788,near-synonyms: spirited / lively
+w1220,w4957,near-synonyms: lively / bubble over with life
+w1276,w4158,near-synonyms: careless / negligence
+w1279,w4158,near-synonyms: careless / negligence
+w1297,w4257,near-synonyms: brag / show off
+w1329,w3073,near-synonyms: action / movement
+w1329,w4751,shared sense: conduct; behavior
+w1393,w3155,synonyms: foolish / silly
+w1393,w4602,near-synonyms: fatuous / foolish
+w1654,w2711,near-synonyms: treat / deal with
+w1654,w4882,includes: treat / treat unfairly
+w1680,w2072,near-synonyms: staunch / firm
+w1680,w2972,near-synonyms: staunch / firm
+w1680,w3820,near-synonyms: staunch / tenacious
+w1693,w4261,near-synonyms: temperament / personality
+w1703,w2899,near-synonyms: charm / charming
+w1774,w3515,near-synonyms: valiant / valor
+w1774,w4401,near-synonyms: mettle / courage
+w1774,w4787,near-synonyms: boldness / courage
+w1803,w4450,near-synonyms: wise / wisdom
+w1850,w3448,shared sense: gentle
+w1850,w4624,includes: gentle / gentle and soft
+w1850,w4730,includes: gentle / gentle and soft
+w1852,w3689,near-synonyms: serious / solemn
+w1852,w4062,shared sense: solemn; serious
+w1868,w2060,shared sense: honour; glory
+w1868,w3509,near-synonyms: honor / reputation
+w1879,w2075,shared sense: well-behaved
+w1937,w2075,includes: good and honest / honest
+w1937,w4300,near-synonyms: kindness / kindhearted
+w1937,w4565,near-synonyms: kindly / kindhearted
+w1937,w4730,near-synonyms: kind / kindhearted
+w1937,w4802,near-synonyms: kindly / kindhearted
+w1938,w4334,near-synonyms: dependable / reliable
+w1950,w3309,near-synonyms: put up with / tolerate
+w1950,w4763,shared sense: hardships
+w1986,w1996,near-synonyms: struggle / strive
+w1995,w3752,shared sense: cautious; prudent
+w1995,w3970,synonyms: cautiously / cautious
+w1995,w4503,near-synonyms: cautious / be careful
+w1996,w4449,near-synonyms: spare no effort / do all one can
+w2011,w3975,shared sense: pretend
+w2014,w4739,near-synonyms: respectful / to respect
+w2024,w3457,shared sense: pure
+w2027,w3207,shared sense: avoid; evade
+w2043,w2282,near-synonyms: own initiative / voluntary
+w2050,w4957,near-synonyms: lively / bubble over with life
+w2056,w4158,near-synonyms: neglect / negligence
+w2072,w3903,shared sense: resolute
+w2072,w4869,shared sense: resolute
+w2072,w4958,shared sense: resolute
+w2075,w2414,near-synonyms: honest / sincere
+w2075,w4395,near-synonyms: honest / sincere
+w2075,w4462,near-synonyms: honest / sincere
+w2075,w5011,near-synonyms: honest / sincere
+w2111,w3787,near-synonyms: good at / skillful
+w2111,w4036,shared sense: adept
+w2112,w3948,near-synonyms: fair / impartial
+w2136,w4622,shared sense: artless
+w2166,w3967,near-synonyms: yield to / obey
+w2199,w4565,near-synonyms: kindly; affable / amiable
+w2199,w4802,near-synonyms: kindly; affable / amiable
+w2263,w4919,includes: bold and generous / generous
+w2266,w2393,synonyms: thoughtful / considerate
+w2266,w4836,shared sense: considerate
+w2274,w4291,shared sense: enthusiasm
+w2353,w2851,shared sense: be deceived / deceive
+w2356,w2521,near-synonyms: modest / humble
+w2356,w4700,synonyms: humble / modest
+w2383,w3536,shared sense: negative
+w2388,w4638,shared sense: ability
+w2389,w4056,synonyms: hard-working / hardworking
+w2389,w4980,includes: hardworking / hardworking and thrifty
+w2389,w5016,synonyms: diligent / hardworking
+w2393,w4836,shared sense: considerate
+w2414,w4395,synonyms: sincerely / sincere
+w2414,w4462,synonyms: sincerely / sincere
+w2414,w5011,synonyms: sincerely / sincere
+w2431,w4056,synonyms: hard-working / hardworking
+w2431,w4980,includes: hardworking / hardworking and thrifty
+w2431,w5016,synonyms: diligent / hardworking
+w2447,w2459,shared sense: despise
+w2447,w4789,near-synonyms: contempt / disdain
+w2459,w4789,near-synonyms: look down upon / disdain
+w2466,w4316,shared sense: competent
+w2466,w4638,near-synonyms: capable / competence
+w2467,w4056,synonyms: hard-working / hardworking
+w2467,w4980,includes: hardworking / hardworking and thrifty
+w2467,w5016,synonyms: diligent / hardworking
+w2521,w4700,shared sense: humble
+w2521,w4744,near-synonyms: enlightened / open-minded
+w2851,w3570,near-synonyms: lie / deceive
+w2890,w4920,near-synonyms: motivated / motivation
+w2935,w3220,includes: force to do sth. / force
+w2970,w4391,near-synonyms: willpower / will
+w2972,w3903,near-synonyms: firm / resolute
+w2972,w4869,near-synonyms: firm / resolutely
+w2972,w4958,near-synonyms: resolute / firm
+w3021,w3552,near-synonyms: barbaric / brutal
+w3021,w4046,near-synonyms: cruel / unfeeling
+w3021,w4555,near-synonyms: cruel / heartless
+w3030,w4261,near-synonyms: temperament / personality
+w3057,w4046,near-synonyms: cruel / unfeeling
+w3057,w4555,near-synonyms: cruel / heartless
+w3075,w4638,shared sense: ability
+w3109,w4108,near-synonyms: dignified / dignity
+w3128,w4726,shared sense: strict
+w3155,w4602,near-synonyms: fatuous / silly
+w3167,w3509,shared sense: reputation
+w3177,w3228,shared sense: conceal
+w3177,w3230,near-synonyms: hide / cover
+w3205,w4814,near-synonyms: jeer / ridicule
+w3220,w4180,includes: force to do sth. / force
+w3309,w3696,near-synonyms: tolerate / patience (endure)
+w3339,w4534,near-synonyms: autonomous / self-reliance
+w3448,w4624,shared sense: gentle
+w3448,w4730,shared sense: gentle
+w3515,w4100,shared sense: brave
+w3515,w4401,shared sense: heroic
+w3515,w4919,shared sense: heroic
+w3536,w3706,shared sense: passive
+w3552,w4777,near-synonyms: barbaric / savage
+w3575,w3888,near-synonyms: willfulness / obstinate
+w3575,w4003,synonyms: stubborn / obstinate
+w3689,w4108,near-synonyms: serious / solemn
+w3689,w4233,shared sense: decent
+w3689,w4548,near-synonyms: serious / solemn
+w3752,w3962,shared sense: careful
+w3752,w3970,near-synonyms: cautiously / careful
+w3752,w4503,synonyms: careful / be careful
+w3752,w4726,near-synonyms: careful / meticulous
+w3752,w4836,near-synonyms: careful / meticulous
+w3752,w4917,narrows: careful / careful in reckoning
+w3776,w4919,includes: bold and generous / generous
+w3787,w4036,near-synonyms: adept / skillful
+w3787,w4450,shared sense: brilliant
+w3820,w4391,near-synonyms: tenacious / perseverance
+w3840,w4975,near-synonyms: finicky / picky
+w3868,w4693,includes: wild ambition / ambition
+w3868,w4887,shared sense: ambition
+w3888,w4003,near-synonyms: willfulness / stubborn
+w3903,w4869,synonyms: resolute / resolutely
+w3903,w4958,shared sense: resolute; decisive
+w3955,w4863,includes: play / play off
+w3962,w3970,near-synonyms: scrupulous / meticulous
+w3962,w4503,shared sense: careful
+w3970,w4503,near-synonyms: cautiously / be careful
+w3970,w4726,near-synonyms: scrupulous / meticulous
+w3970,w4836,near-synonyms: scrupulous / meticulous
+w4046,w4555,near-synonyms: unfeeling / heartless
+w4056,w4980,includes: hard-working / hardworking and thrifty
+w4056,w5016,synonyms: diligent / hardworking
+w4062,w4108,shared sense: solemn; serious
+w4062,w4548,shared sense: solemn; serious
+w4100,w4787,near-synonyms: boldness / courage
+w4158,w4518,near-synonyms: careless / negligence
+w4176,w4537,shared sense: make trouble
+w4176,w4814,near-synonyms: kick up a fuss / create a disturbance
+w4176,w4901,shared sense: make trouble / cause trouble
+w4291,w4851,near-synonyms: drive; vigour / verve
+w4300,w4565,near-synonyms: kindly / kindness
+w4300,w4730,near-synonyms: kind / kindness
+w4300,w4802,near-synonyms: kindly / kindness
+w4316,w4638,near-synonyms: competent / competence
+w4391,w4774,near-synonyms: persistent efforts / perseverance
+w4391,w4978,shared sense: perseverance
+w4401,w4787,near-synonyms: mettle / boldness
+w4401,w4788,shared sense: spirit
+w4401,w4851,near-synonyms: verve / mettle
+w4401,w4919,shared sense: heroic
+w4415,w4506,near-synonyms: clever / quick-witted
+w4415,w4915,near-synonyms: clever / quick-witted
+w4450,w4506,near-synonyms: clever / wise
+w4450,w4915,near-synonyms: clever / wise
+w4483,w4605,shared sense: unscrupulous
+w4503,w4917,narrows: be careful / careful in reckoning
+w4537,w4814,near-synonyms: kick up a fuss / make trouble
+w4537,w4901,shared sense: make trouble / cause trouble
+w4542,w5020,shared sense: mind
+w4565,w4730,near-synonyms: kind / kindly
+w4605,w4777,near-synonyms: unbridled / rampant
+w4693,w4887,synonyms: ambition / aspiration
+w4716,w4749,near-synonyms: methodically / orderliness
+w4720,w4777,near-synonyms: fierce / savage
+w4730,w4802,near-synonyms: kind / kindly
+w4774,w4978,near-synonyms: perseverance / persistent efforts
+w4787,w4851,near-synonyms: verve / boldness
+w4787,w4919,shared sense: bold
+w4788,w4957,near-synonyms: spirited / full of spirit
+w4814,w5010,near-synonyms: make a scene / kick up a fuss
+w4854,w4993,shared sense: anxious for success
+w4869,w4958,shared sense: resolute
+w4920,w4965,shared sense: do better
+w4980,w5016,synonyms: diligent / hardworking

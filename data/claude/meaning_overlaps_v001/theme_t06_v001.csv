@@ -1,0 +1,76 @@
+id_a,id_b,reason
+w0050,w4979,narrower: eat / eat with appetite
+w0050,w5039,narrower: eat / eat hot pot
+w0069,w0559,category: beverage / water
+w0069,w1258,narrower: water / mineral water
+w0069,w4463,narrower: water / boiled water
+w0072,w0559,shared sense: drink
+w0125,w0617,shared sense: dish
+w0125,w1250,category: vegetable / tomato
+w0125,w1945,synonyms: vegetable / vegetables
+w0125,w2124,category: vegetable / potato
+w0125,w2196,category: vegetable / hot pepper
+w0125,w2381,category: vegetable / cucumber
+w0132,w0559,category: beverage / tea
+w0138,w0141,category: fruit / apple
+w0141,w0308,category: fruit / watermelon
+w0141,w0600,category: fruit / banana
+w0141,w0606,category: fruit / grape
+w0141,w2172,category: fruit / peach
+w0141,w2272,category: fruit / pear
+w0141,w2417,category: fruit / tangerine
+w0141,w2539,narrower: fruit / citrus fruit
+w0141,w3979,category: fruit / orange
+w0141,w5026,narrower: fruit / candied fruit
+w0146,w0155,synonyms: restaurant
+w0146,w1070,synonyms: restaurant
+w0150,w1494,narrower: cup / handleless cup
+w0261,w2337,category: seafood / fish
+w0273,w0559,category: beverage / coffee
+w0287,w4214,synonyms: delicious / good to eat
+w0294,w0559,category: beverage / milk
+w0541,w0559,category: beverage / beer
+w0541,w3114,category: alcohol / beer
+w0542,w2312,"category: pastry, dessert / cake"
+w0559,w0614,category: beverage / juice
+w0559,w1258,category: beverage / mineral water
+w0583,w2475,narrower: bread / steamed bread
+w0915,w1079,shared sense: taste
+w0915,w1990,shared sense: flavor / tastes
+w0915,w3097,synonyms: flavor; taste / taste
+w0915,w3568,shared sense: taste; savour
+w0915,w3919,narrower: flavor / special flavour
+w0946,w4214,synonyms: delicious / good to eat
+w0980,w1505,synonyms: food / foodstuff
+w1079,w1990,shared sense: taste / tastes
+w1102,w4293,category: seasoning / salt
+w1244,w2329,synonyms: snack / snacks
+w1250,w1945,category: vegetables / tomato
+w1269,w2475,narrower: steamed bun / steamed stuffed bun
+w1505,w2180,synonyms: food / foodstuff
+w1591,w2147,narrower: fry / pan fry
+w1591,w2470,narrower: fry / deep fry
+w1640,w2197,near-synonyms: soft / tender
+w1729,w2895,shared sense: boil
+w1729,w3882,near-synonyms: to cook / cooking
+w1729,w3969,shared sense: boil
+w1895,w2267,shared sense: pot
+w1945,w2124,category: vegetables / potato
+w1945,w2196,category: vegetables / hot pepper
+w1945,w2381,category: vegetables / cucumber
+w1990,w3097,shared sense: tastes / taste
+w1990,w3568,shared sense: taste / tastes
+w1990,w3919,shared sense: flavor / special flavour
+w2124,w2219,shared sense: peanut
+w2180,w4007,shared sense: grain / cereals
+w2283,w4293,category: seasoning / vinegar
+w2396,w2992,"synonyms: can / tin, can"
+w2398,w4293,category: seasoning / soy sauce
+w2417,w2539,narrower: oranges and tangerines / tangerine
+w2417,w3979,near-synonyms: orange / tangerine
+w2539,w3979,narrower: oranges and tangerines / orange
+w2957,w3850,near-synonyms: residue / crumbs
+w3097,w3919,near-synonyms: taste / special flavour
+w3531,w4376,near-synonyms: gnaw / chew
+w4043,w4190,synonyms: go bad / become putrid
+w4417,w5041,near-synonyms: vegetarian food / vegetarianism

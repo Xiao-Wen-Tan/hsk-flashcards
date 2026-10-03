@@ -1,0 +1,118 @@
+id_a,id_b,reason
+w0070,w2387,narrower: write / write an essay
+w0070,w3051,synonyms: write / writing
+w0070,w3340,overlap: write / written
+w0073,w2145,narrower: school / nursery school
+w0073,w4032,narrower: school / normal school
+w0087,w0629,narrower: book / dictionary
+w0087,w0635,narrower: book / dictionary
+w0087,w3691,synonyms: book / books
+w0093,w1209,narrower: student / graduate student
+w0099,w0633,narrower: study / study in a foreign country
+w0099,w1649,shared sense: study
+w0099,w2207,overlap: learn / learning
+w0099,w2453,overlap: learn / learning
+w0100,w0893,narrower: teacher / professor
+w0100,w2471,narrower: teacher / head teacher
+w0109,w3368,shared sense: character
+w0109,w4986,narrower: Chinese character / complex form character
+w0109,w5024,narrower: Chinese character / simplified character
+w0115,w1649,synonyms: read / to read
+w0115,w4592,narrower: read / read loudly
+w0131,w1209,narrower: student / graduate student
+w0154,w0630,narrower: Chinese language / Mandarin Chinese
+w0154,w0944,narrower: language / Chinese language
+w0271,w0473,shared sense: class
+w0271,w1770,"near-synonyms: lesson, class / course"
+w0274,w2358,"synonyms: examination, take a test / test"
+w0274,w2429,overlap: examination / examination paper
+w0274,w3196,shared sense: examination
+w0274,w3931,narrower: examination / college entrance examination
+w0290,w2066,overlap: questions / to question
+w0290,w3713,shared sense: problems / problem
+w0309,w2516,narrower: stationery / pencil
+w0452,w0819,synonyms: teach / educate
+w0452,w2258,near-synonyms: teach / give guidance
+w0511,w0613,near-synonyms: score / grade
+w0537,w3695,synonyms: school assignment / homework
+w0548,w2229,narrower: subject / mathematics
+w0548,w4285,narrower: subject / mathematics
+w0556,w2471,"synonyms: principal, headmaster / head teacher"
+w0607,w0630,narrower: Chinese language / Mandarin Chinese
+w0607,w0944,narrower: language / Chinese language
+w0622,w2519,narrower: word and phrase / idiom
+w0622,w3812,near-synonyms: word and phrase / vocabulary
+w0629,w0635,narrower: dictionary / Chinese character dictionary
+w0629,w3691,narrower: books / dictionary
+w0630,w0944,narrower: language / Mandarin Chinese
+w0633,w1649,narrower: study / study in a foreign country
+w0635,w3691,narrower: books / dictionary
+w0819,w4057,synonyms: educate / teach
+w0922,w1209,overlap: graduate / graduate student
+w0935,w4696,near-synonyms: answer / reply
+w0944,w4172,narrower: language / dialect
+w0944,w4760,narrower: language / mother tongue
+w0949,w1964,near-synonyms: article / paper
+w0949,w2387,shared sense: essay / write an essay
+w0961,w1378,synonyms: reference material / material
+w0961,w2127,shared sense: reference / reference material
+w0961,w2473,narrower: material / teaching material
+w0993,w2207,near-synonyms: knowledge / learning
+w0993,w2453,shared sense: knowledge
+w0993,w4352,shared sense: knowledge / gained knowledge
+w1007,w3193,narrower: academic degree / doctor degree
+w1007,w3700,narrower: degree / doctor degree
+w1144,w1649,synonyms: read / to read
+w1144,w4592,narrower: read / read loudly
+w1152,w1776,"synonyms: sign up, enroll / register, enroll"
+w1152,w4442,shared sense: enroll
+w1235,w3193,narrower: academic degree / master's degree
+w1235,w3700,narrower: degree / master's degree
+w1272,w2516,narrower: stationery / eraser
+w1378,w2473,narrower: material / teaching material
+w1649,w4592,narrower: to read / read loudly
+w1770,w2229,near-synonyms: course / subject
+w1770,w2324,overlap: course / a course of lectures
+w1770,w2483,narrower: course / undergraduate course
+w1770,w4285,near-synonyms: course / subject
+w1776,w4442,shared sense: enroll
+w1810,w2229,narrower: subject / chemistry
+w1810,w4285,narrower: subject / chemistry
+w1970,w3532,synonyms: to absorb / absorb
+w2016,w2215,shared sense: copy / to copy
+w2037,w2229,narrower: subject / physics
+w2037,w4285,narrower: subject / physics
+w2066,w2358,shared sense: to quiz / test
+w2067,w4442,"near-synonyms: admit / recruit, enroll"
+w2207,w4352,near-synonyms: learning / gained knowledge
+w2210,w2229,narrower: subject / geography
+w2210,w4285,narrower: subject / geography
+w2258,w4057,near-synonyms: teach / give guidance
+w2358,w2429,overlap: test / test paper
+w2358,w3931,narrower: test / college entrance examination
+w2376,w4377,"synonyms: correct, amend / make corrections, amend"
+w2387,w3051,near-synonyms: write an essay / writing
+w2453,w4352,shared sense: knowledge / gained knowledge
+w2483,w3193,narrower: academic degree / Bachelor Degree
+w2483,w3700,narrower: degree / Bachelor Degree
+w2495,w2516,narrower: stationery / glue
+w2516,w2533,narrower: stationery / ruler
+w2516,w5036,narrower: stationery / ink
+w2527,w4389,near-synonyms: synopsis / summary
+w2527,w4729,shared sense: notes / note
+w2527,w4932,shared sense: notes / note
+w2534,w3368,narrower: symbol / punctuation
+w3003,w3945,near-synonyms: be good at / be proficient in
+w3051,w3340,overlap: writing / written
+w3129,w3348,shared sense: set an example / example
+w3135,w4377,synonyms: correct / make corrections
+w3193,w3700,synonyms: academic degree / degree
+w3193,w4140,near-synonyms: academic degree / diploma
+w3196,w4567,near-synonyms: investigation / research
+w3257,w4140,near-synonyms: certificate / diploma
+w3332,w3445,near-synonyms: intelligence / IQ
+w3368,w4986,narrower: character / complex form character
+w3368,w5024,narrower: character / simplified character
+w3700,w4140,near-synonyms: degree / diploma
+w3801,w4926,narrower: absent / absent from school
+w4592,w4651,near-synonyms: read aloud / recite

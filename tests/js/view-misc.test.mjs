@@ -56,7 +56,7 @@ test('a file that is not a backup is refused with a plain message', () => {
 
 test('a word brings its two sounds and the stroke data of each character', () => {
   assert.deepEqual(filesForWords([word(data, '苹果')]),
-    ['audio/w/w0026_6ce06b7e.mp3', 'audio/s/w0026_814ba0af.mp3', 'strokes/82f9.json', 'strokes/679c.json']);
+    ['audio/w/w0026_6ce06b7e.mp3', 'audio/s/w0026_814ba0af.mp3', 'strokes/82/82f9.json', 'strokes/67/679c.json']);
   assert.equal(filesForWords([word(data, '谢谢')]).filter((f) => f.startsWith('strokes/')).length, 1); // 谢 once
   const all = filesForWords(data.words);
   assert.equal(new Set(all).size, all.length);

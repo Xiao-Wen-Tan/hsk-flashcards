@@ -1,0 +1,45 @@
+id_a,id_b,reason
+w0114,w0577,includes: computer / laptop
+w0119,w3235,near-synonyms: make a phone call / dial
+w0281,w3590,overlap: newspaper / newspaper office
+w0281,w4508,includes: publication / newspaper
+w0377,w0620,overlap: mail / email
+w0427,w2645,near-synonyms: photo / shot
+w0432,w0674,full meanings share: news
+w0432,w0706,full meanings share: news
+w0432,w0761,near-synonyms: news / news report
+w0432,w1653,full meanings share: news
+w0432,w1894,full meanings share: news / news story
+w0432,w4641,near-synonyms: news / current events
+w0444,w1360,same word: show / to show
+w0444,w1500,full meanings share: program
+w0444,w2392,includes: show / cartoon
+w0444,w2452,includes: show / serialized drama (show in parts)
+w0577,w1104,includes: computer / laptop
+w0674,w1894,full meanings share: news / news story
+w0706,w1894,full meanings share: news / news story
+w0761,w1894,full meanings share: report / news story; dispatch
+w0761,w4558,overlap: to report / it is reported
+w0897,w4508,near-synonyms: magazine / journal
+w1083,w2740,narrows: broadcasting / live telecast
+w1083,w2821,near-synonyms: broadcasting / broadcast
+w1083,w3760,shared sense: broadcasting / radio
+w1161,w2568,full meanings share: internet
+w1506,w1698,full meanings share: publish
+w1506,w2776,full meanings share: publish
+w1564,w1888,synonyms: disseminate / spread
+w1698,w1757,full meanings share: publish
+w1698,w2659,full meanings share: publish
+w1698,w2776,full meanings share: publish
+w1698,w3497,full meanings share: publish
+w1757,w2776,full meanings share: publish
+w1866,w2725,near-synonyms: install / set up
+w2117,w3760,overlap: radio station / radio
+w2404,w3630,near-synonyms: caption; subtitle / title; heading
+w2421,w4153,synonyms: microphone
+w2559,w4364,synonyms: media / medium
+w2659,w2776,full meanings share: publish
+w2740,w2821,narrows: live telecast / broadcast
+w2776,w2906,overlap: issue / edition
+w2776,w3497,full meanings share: publish
+w3023,w3498,near-synonyms: expose / disclose

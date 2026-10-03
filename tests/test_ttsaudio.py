@@ -8,7 +8,9 @@ def test_spoken():
 
 def test_audio_path_changes_with_text_rate_and_voice():
     a = audio_path("w", "w0001", "爱", "-10%")
-    assert a.startswith("w/w0001_") and a.endswith(".mp3") and len(a) == len("w/w0001_12345678.mp3")
+    assert a.startswith("w/00/w0001_") and a.endswith(".mp3") and len(a) == len("w/00/w0001_12345678.mp3")
+    # A folder holds the files of 100 IDs, so no folder has more than 100 files.
+    assert audio_path("s", "w5034", "爱", "-15%").startswith("s/50/w5034_")
     assert a == audio_path("w", "w0001", "爱", "-10%")
     assert a != audio_path("w", "w0001", "爱", "-15%")
     assert a != audio_path("w", "w0001", "爱你", "-10%")

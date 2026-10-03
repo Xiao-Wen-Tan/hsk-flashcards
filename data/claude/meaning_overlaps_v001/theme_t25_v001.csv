@@ -1,0 +1,104 @@
+id_a,id_b,reason
+w1145,w3206,synonyms: poor / poverty
+w1145,w2017,en overlap: poor / become impoverished
+w2017,w3206,en overlap: poverty / become impoverished
+w3665,w4717,near-synonyms: prosperous / thriving
+w4717,w4841,near-synonyms: thriving / prosperous
+w4717,w4984,near-synonyms: thriving / prosperous
+w2293,w4717,near-synonyms: prosperous / thriving
+w3665,w4929,near-synonyms: prosperous / thriving
+w4841,w4929,near-synonyms: prosperous / thriving
+w4929,w4984,near-synonyms: thriving / prosperous
+w2293,w4929,near-synonyms: prosperous / thriving
+w3665,w4853,en overlap: well-to-do / rich
+w4643,w4853,en overlap: abundant / abound with
+w2751,w3665,near-synonyms: wealth / well-to-do
+w2751,w4853,near-synonyms: wealth / rich
+w1679,w2751,near-synonyms: property / wealth
+w1679,w2762,near-synonyms: property / assets
+w1679,w4576,en overlap: property / asset
+w2762,w4576,en overlap: assets / asset
+w2751,w2762,near-synonyms: wealth / assets
+w2762,w3333,near-synonyms: assets / capital
+w1521,w3333,en overlap: capital
+w1521,w4576,en overlap: capital
+w1521,w2585,near-synonyms: funds / fund
+w2585,w3345,near-synonyms: fund / funds
+w3333,w3345,near-synonyms: capital / funds
+w3345,w4576,near-synonyms: funds / capital
+w2585,w3333,near-synonyms: fund / capital
+w2585,w4576,near-synonyms: fund / capital
+w1886,w3690,synonyms: profits / profit
+w1886,w3077,near-synonyms: profits / earnings
+w3077,w3690,near-synonyms: income; gain / profit
+w0977,w3690,near-synonyms: make a profit / profit
+w0977,w1886,near-synonyms: make a profit / profits
+w0977,w3077,en overlap: gain; earn / gain; earnings
+w1572,w3077,near-synonyms: benefit / gain
+w3077,w4469,near-synonyms: gain / benefit
+w1572,w2192,en overlap: interest / interest (on a loan)
+w2192,w3947,includes: interest / interest rate
+w1713,w3012,en overlap: stock / share; stock
+w0971,w1953,en overlap: trade / (commercial) trade
+w1577,w1953,en overlap: trade / (commercial) trade
+w0971,w1239,includes: business / to do business
+w1239,w1577,includes: to do business / business
+w0971,w2159,includes: business / to do business
+w1577,w2159,includes: business / to do business
+w1953,w2159,en overlap: trade / to trade
+w1239,w1953,near-synonyms: to do business / trade
+w1239,w4543,synonyms: to do business / be in business
+w2159,w4543,synonyms: to do business / be in business
+w1953,w4543,includes: trade / engage in trade
+w0971,w4543,includes: business; trade / engage in trade
+w1577,w4543,includes: business; trade / engage in trade
+w1239,w1526,near-synonyms: to do business / engage in business
+w1526,w2159,near-synonyms: engage in business / to do business
+w1526,w4543,near-synonyms: engage in business / engage in trade
+w0971,w1526,includes: business / engage in business
+w1526,w1577,includes: engage in business / business
+w1577,w1612,near-synonyms: business / company
+w0971,w1612,near-synonyms: business / company
+w1667,w3901,synonyms: establish; found / found
+w3901,w3924,near-synonyms: found / start an undertaking
+w1667,w3924,near-synonyms: establish / start an undertaking
+w1590,w2839,near-synonyms: combine / merge
+w1504,w2571,near-synonyms: contract / agreement
+w1504,w4399,en overlap: contract / contract with
+w3818,w3845,near-synonyms: reputation / credit
+w4347,w4496,en overlap: deficit
+w2208,w3712,includes: material / raw material
+w3304,w3712,near-synonyms: supply / supplies
+w3065,w3671,synonyms: subsidize / subsidy
+w3065,w3066,near-synonyms: provide financial aid / sponsor
+w3066,w3671,near-synonyms: sponsor / subsidy
+w2017,w4066,synonyms: go bankrupt
+w1730,w4194,synonyms: to negotiate / negotiate
+w1730,w4603,synonyms: to negotiate / negotiate
+w1730,w4914,en overlap: negotiate
+w4194,w4914,en overlap: negotiate
+w4603,w4914,en overlap: negotiate
+w0754,w3354,en overlap: expand
+w0754,w4725,en overlap: expand
+w0754,w1100,en overlap: expand / to expand
+w1100,w3354,synonyms: to expand / expand
+w1100,w4725,synonyms: to expand / expand
+w1100,w2158,near-synonyms: expand / extend
+w2158,w3354,near-synonyms: extend / expand
+w2158,w4725,near-synonyms: extend / expand
+w0754,w1750,en overlap: develop / to develop
+w0754,w4779,en overlap: develop / develop vigorously
+w1750,w4779,en overlap: to develop / develop vigorously
+w0754,w2132,near-synonyms: develop / developed
+w1750,w2132,en overlap: to develop / developed
+w1750,w4152,en overlap: exploit
+w2158,w4779,near-synonyms: popularize / promote
+w0754,w1096,near-synonyms: develop; expand / grow
+w1096,w1100,near-synonyms: grow; increase / expand; enlarge
+w1096,w3354,near-synonyms: grow / expand
+w1096,w4725,near-synonyms: grow / expand
+w1096,w4734,narrows: increase / rise violently
+w0888,w1517,synonyms: manufacture / make
+w0888,w1582,en overlap: manufacture
+w1517,w1582,en overlap: manufacture
+w1552,w4427,narrows: sell / sell by bulk

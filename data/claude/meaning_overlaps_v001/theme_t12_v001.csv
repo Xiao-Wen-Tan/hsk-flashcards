@@ -1,0 +1,58 @@
+id_a,id_b,reason
+w0074,w0524,shared sense: sit / sit on the back of
+w0074,w1175,shared sense: travel by vehicle / take a ride
+w0074,w1751,shared sense: travel by vehicle / ride
+w0074,w2609,shared sense: travel by vehicle / take
+w0226,w1172,narrowing: road / expressway
+w0255,w1280,narrowing: ticket / boarding pass
+w0265,w4538,narrowing: boat; ship / steamship
+w0265,w4746,narrowing: boat / naval ships and boats
+w0265,w4834,shared sense: ship / shipping (vessels)
+w0288,w2425,near-synonyms: travel / tour
+w0288,w3742,near-synonyms: travel / go sightseeing
+w0288,w3759,narrowing: travel / voyage
+w0395,w0918,shared sense: leave
+w0395,w4143,near-synonyms: leave / set out
+w0395,w4409,narrowing: leave / leave for a distant place
+w0524,w1175,near-synonyms: ride / take a ride
+w0524,w1751,narrowing: ride / ride (an animal or bicycle)
+w0608,w2926,shared sense: land
+w0736,w3362,shared sense: stop
+w0736,w3790,narrowing: stop / stop up
+w0851,w1864,narrowing: speed / high speed
+w0909,w1249,narrowing: traffic / traffic jam
+w0918,w2697,shared sense: start off / start
+w0918,w4409,near-synonyms: set out / leave
+w0964,w4438,shared sense: bump
+w0972,w2609,near-synonyms: catch / take (a bus)
+w1002,w2425,near-synonyms: travel / tour
+w1002,w3742,near-synonyms: travel / go sightseeing
+w1002,w3759,narrowing: travel / voyage
+w1075,w1112,shared sense: visit
+w1075,w2425,shared sense: visit
+w1075,w3742,near-synonyms: visit / go sightseeing
+w1112,w2425,shared sense: visit
+w1112,w3742,near-synonyms: go sightseeing / visit
+w1172,w1864,shared sense: expressway
+w1175,w1751,near-synonyms: take a ride / ride
+w1175,w2609,near-synonyms: take a ride / take
+w1243,w4425,narrowing: guide / tour guide
+w1249,w3790,near-synonyms: traffic jam / block up
+w1751,w2609,near-synonyms: ride / take
+w1885,w2965,shared sense: carry
+w1885,w4740,near-synonyms: transport / consign for shipment
+w1885,w4834,near-synonyms: transport / shipping
+w2128,w3790,shared sense: block
+w2425,w3742,synonyms: go sightseeing
+w2529,w3529,shared sense: scenic spot / scene
+w2697,w4143,shared sense: start on a journey / start
+w2858,w3101,shared sense: harbour
+w2858,w4536,near-synonyms: wharf / dock and harbour
+w3101,w4536,shared sense: harbour
+w4143,w4409,near-synonyms: set out / leave
+w4266,w4538,narrowing: boat / steamship
+w4266,w4746,narrowing: boat / naval ships and boats
+w4266,w4834,shared sense: boat / shipping (vessels)
+w4538,w4834,narrowing: steamship / shipping (vessels)
+w4740,w4834,near-synonyms: consign for shipment / shipping
+w4746,w4834,narrowing: naval ships / shipping (vessels)

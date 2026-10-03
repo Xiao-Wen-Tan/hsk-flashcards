@@ -1,0 +1,151 @@
+id_a,id_b,reason
+w0037,w0052,full meaning shares: now; today
+w0037,w1311,synonyms: now / at the present time
+w0037,w1665,full meaning shares: now; nowadays
+w0037,w3022,synonyms: now / current; present
+w0037,w3355,synonyms: now / at the moment; now
+w0038,w3195,near-synonyms: year / years
+w0044,w0190,full meaning shares: time
+w0044,w0523,synonyms: moment / a moment
+w0044,w1489,full meaning shares: period; time
+w0044,w1490,full meaning shares: time; moment
+w0044,w1569,full meaning shares: period
+w0044,w2624,full meaning shares: time
+w0052,w1311,full meaning shares: at present
+w0052,w1665,full meaning shares: now
+w0052,w3022,full meaning shares: present / at present
+w0052,w3355,full meaning shares: now
+w0053,w4804,narrows: month / the first month of the lunar year
+w0066,w0071,includes: date / day or date
+w0071,w1915,includes: day or date / date
+w0077,w1334,full meaning shares: tomorrow
+w0135,w3375,narrows: morning / early morning
+w0190,w1489,full meaning shares: time
+w0190,w3195,full meaning shares: time / time and tide
+w0234,w1366,near-synonyms: evening / night
+w0234,w2363,near-synonyms: evening / nightfall
+w0234,w4106,near-synonyms: evening / dusk
+w0257,w3375,narrows: morning / early morning
+w0342,w0408,near-synonyms: all the time / always
+w0342,w0827,full meaning shares: all the time / at all times
+w0342,w1129,near-synonyms: all the time / always
+w0342,w1567,full meaning shares: all the time / at all times
+w0342,w1753,near-synonyms: all the time / all along
+w0342,w4058,synonyms: all the time / all day long; all the time
+w0342,w4528,near-synonyms: all the time / always
+w0358,w2677,near-synonyms: first / at the beginning
+w0358,w3392,near-synonyms: first / original
+w0358,w3661,near-synonyms: first / at first
+w0362,w0388,near-synonyms: in the past / before
+w0362,w2073,near-synonyms: in the past / before
+w0362,w3392,near-synonyms: in the past / former
+w0362,w3476,near-synonyms: in the past / previously
+w0362,w3737,narrows: in the past / habitually in the past
+w0362,w4356,near-synonyms: in the past / formerly
+w0375,w0458,full meaning shares: later; afterwards
+w0375,w1028,full meaning shares: later
+w0388,w2073,synonyms: before (a point of time) / before
+w0388,w2847,full meaning shares: before
+w0388,w3392,near-synonyms: before / former
+w0388,w3476,near-synonyms: before / previously
+w0388,w4356,near-synonyms: before / formerly
+w0403,w0724,narrows: recently / just recently
+w0405,w0652,full meaning shares: finally
+w0408,w0699,near-synonyms: always / forever
+w0408,w0827,full meaning shares: always
+w0408,w1753,near-synonyms: always / all along
+w0408,w4058,near-synonyms: always / all the time
+w0434,w1528,synonyms: immediately / forthwith
+w0434,w1712,full meaning shares: at once
+w0434,w2594,near-synonyms: immediately / as soon as possible
+w0434,w4679,near-synonyms: immediately / as soon as possible
+w0442,w3303,synonyms: often / frequently
+w0458,w1028,full meaning shares: later
+w0466,w0724,full meaning shares: a moment ago
+w0523,w1490,full meaning shares: moment
+w0523,w3327,synonyms: a moment / moment
+w0523,w4830,synonyms: a moment / moment
+w0568,w2354,near-synonyms: be late / be overdue
+w0570,w3059,includes: quarter of an hour / quarter
+w0699,w0827,near-synonyms: forever / always
+w0699,w1129,near-synonyms: forever / always
+w0699,w4528,near-synonyms: forever / always
+w0724,w3245,narrows: just recently / recently
+w0827,w1129,full meaning shares: always
+w0827,w1567,full meaning shares: at all times
+w0827,w1753,near-synonyms: from the beginning / all along
+w0827,w4058,full meaning shares: at all times / all the time
+w0827,w4528,full meaning shares: always
+w0983,w1759,full meaning shares: temporarily / temporary
+w0992,w1191,near-synonyms: in time / on time
+w0992,w1211,near-synonyms: in time / on time
+w0992,w1567,full meaning shares: just right / at the right time
+w1028,w1334,synonyms: in the future / future
+w1045,w1535,full meaning shares: usually; normal
+w1045,w3737,near-synonyms: usually / habitually
+w1107,w4412,near-synonyms: occasionally / sometimes
+w1129,w1753,near-synonyms: always / all along
+w1129,w4058,near-synonyms: always / all the time
+w1196,w2249,synonyms: put off; postpone / delay
+w1196,w3886,synonyms: put off; postpone / delay
+w1311,w1665,synonyms: at the present time / nowadays
+w1311,w3022,synonyms: at the present time / current
+w1311,w3355,synonyms: at the moment / at the present time
+w1328,w3579,full meaning shares: once
+w1366,w2363,near-synonyms: night / nightfall
+w1375,w1604,synonyms: since
+w1489,w1490,full meaning shares: time
+w1489,w1569,synonyms: period of time / period
+w1489,w2624,full meaning shares: time
+w1490,w3195,full meaning shares: time / time and tide
+w1490,w3327,full meaning shares: moment
+w1490,w4830,full meaning shares: moment
+w1524,w1528,synonyms: immediately / forthwith
+w1524,w1712,synonyms: immediately / at once
+w1524,w2594,near-synonyms: immediately / as soon as possible
+w1524,w4679,near-synonyms: immediately / as soon as possible
+w1528,w1712,synonyms: forthwith / at once
+w1528,w2594,near-synonyms: forthwith / as soon as possible
+w1528,w4679,near-synonyms: forthwith / as soon as possible
+w1535,w3466,near-synonyms: regular / regularly
+w1535,w3737,near-synonyms: usual / habitually
+w1545,w1569,full meaning shares: phase
+w1567,w4058,full meaning shares: at all times / all the time
+w1665,w3022,synonyms: nowadays / current
+w1665,w3355,full meaning shares: now
+w1712,w2594,near-synonyms: at once; quickly / as soon as possible
+w1712,w4679,near-synonyms: at once; quickly / as soon as possible
+w1753,w4058,near-synonyms: all along / all the time
+w1753,w4528,near-synonyms: all along / always
+w1949,w2677,near-synonyms: first; initial / at the beginning
+w1949,w3392,near-synonyms: initial / original
+w1949,w3661,near-synonyms: first; initial / at first
+w2013,w4785,full meaning shares: repeatedly; time and again
+w2073,w2847,full meaning shares: before
+w2073,w3392,full meaning shares: former
+w2073,w3476,near-synonyms: before / previously
+w2073,w4356,near-synonyms: former / formerly
+w2149,w2249,full meaning shares: to delay / delay
+w2149,w3886,full meaning shares: to delay / delay
+w2363,w4106,synonyms: nightfall / dusk
+w2442,w4949,narrows: calendar / the lunar calendar
+w2624,w3195,full meaning shares: time / time and tide
+w2648,w3375,near-synonyms: small hours / early morning
+w2677,w3392,full meaning shares: originally
+w2677,w3661,synonyms: at the beginning / at first; originally
+w2773,w3195,near-synonyms: year / years
+w2847,w3392,near-synonyms: in the past / former
+w2847,w3476,near-synonyms: in the past / previously
+w2847,w3737,narrows: in the past / habitually in the past
+w2847,w4356,near-synonyms: in the past / formerly
+w3022,w3355,synonyms: at the moment / current
+w3303,w3523,full meaning shares: frequently; often
+w3303,w3622,full meaning shares: frequently; often
+w3375,w3632,near-synonyms: early morning / dawn
+w3392,w3476,near-synonyms: former / previously
+w3392,w3661,full meaning shares: originally
+w3392,w4356,near-synonyms: former / formerly
+w3476,w4356,near-synonyms: previously / formerly
+w4058,w4528,near-synonyms: all the time / always
+w4075,w4279,near-synonyms: by a definite date / up to
+w4748,w4938,synonyms: year after year / in successive years

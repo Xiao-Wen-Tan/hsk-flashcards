@@ -1,0 +1,85 @@
+id_a,id_b,reason
+w0059,w0956,cash narrows money
+w0059,w1001,en share money: money / money spent
+w0059,w1260,change narrows money
+w0059,w1278,Renminbi narrows money
+w0059,w2315,coin narrows money
+w0059,w3239,synonyms: money / currency; money
+w0059,w3628,paper money narrows money
+w0059,w5018,near-synonyms: money / currency
+w0064,w1057,go shopping includes buy
+w0079,w1278,near-synonyms: RMB Yuan / Renminbi
+w0142,w0586,supermarket narrows shop
+w0142,w5038,near-synonyms: booth; stall / shop
+w0237,w3288,near-synonyms: sell / market
+w0237,w3727,en share sell: sell / traffic; sell
+w0237,w3963,sell well narrows sell
+w0244,w1278,near-synonyms: RMB Yuan / Renminbi
+w0291,w4902,cheap and fine includes cheap
+w0381,w1987,en share spend: spend / to spend
+w0381,w3492,near-synonyms: spend / spending
+w0381,w3550,near-synonyms: spend / expend
+w0381,w4165,spend lavishly narrows spend
+w0381,w4342,near-synonyms: spend / expend
+w0404,w1795,synonyms: change; exchange money / to exchange
+w0404,w3987,synonyms: change; exchange money / exchange
+w0489,w1688,en share lend / loan
+w0530,w0847,en share tenth of one Yuan
+w0586,w2866,supermarket narrows shop
+w0817,w3288,en share market: marketplace / market
+w0956,w1260,change narrows cash
+w0956,w2315,coin narrows cash
+w0956,w3628,bank note narrows cash
+w0973,w1217,en share save: keep; save / economize; save
+w0973,w2230,en share save: keep; save / saving
+w0973,w3649,synonyms: keep; save; deposit / deposit; save
+w1001,w3492,synonyms: expenditure / expense
+w1001,w3550,near-synonyms: expend / expense
+w1001,w4342,en share cost: expend; cost / expense; cost
+w1036,w2556,synonyms: customer / customers; client
+w1217,w2230,synonyms: economize / saving
+w1217,w3649,en share save: deposit; save / economize; save
+w1234,w2494,pay the bill narrows pay
+w1234,w3510,en share pay: pay cash / pay
+w1234,w3528,pay back narrows pay
+w1234,w4835,paying looks like pay
+w1247,w2747,synonyms: give a discount / discount
+w1278,w3239,Renminbi narrows currency
+w1278,w5018,Renminbi narrows currency
+w1795,w3987,synonyms: to exchange / exchange
+w1881,w2517,articles for daily use narrows goods
+w1881,w4930,substandard goods narrows goods
+w1987,w3492,near-synonyms: to spend / spending
+w1987,w3550,near-synonyms: to spend / expend
+w1987,w4165,spend lavishly narrows to spend
+w1987,w4342,synonyms: to consume / consume
+w2109,w2932,en share pack / package
+w2188,w3920,high-grade includes grade
+w2230,w3649,en share save: deposit; save / saving
+w2494,w3550,pay the bill narrows pay
+w2494,w4024,en share settle accounts
+w2494,w4593,pay the bill narrows pay
+w2494,w4835,paying looks like pay the bill
+w2550,w2670,transaction / clinch a deal
+w2670,w4163,bargain / strike a bargain
+w2866,w5038,near-synonyms: booth; stall / shop
+w3239,w3628,en share money: money / paper money
+w3288,w3727,near-synonyms: market / peddle
+w3492,w3550,synonyms: expenditure / expend
+w3492,w4165,spend lavishly narrows spending
+w3492,w4342,near-synonyms: expenditure / expend
+w3510,w3550,en share pay: pay cash / pay
+w3510,w4593,en share pay: pay cash / pay
+w3528,w3550,pay back narrows pay
+w3528,w3747,near-synonyms: pay back / return
+w3528,w4593,pay back narrows pay
+w3528,w4835,paying looks like pay back
+w3550,w4165,spend lavishly narrows expend
+w3550,w4342,en share expend
+w3550,w4835,paying looks like pay
+w3628,w5018,bank note narrows currency
+w3649,w4515,en share deposit: deposit / cash pledge; deposit
+w3726,w4163,en share haggle: bargain / haggle over
+w3727,w3963,sell well narrows sell
+w4165,w4342,spend lavishly narrows expend
+w4593,w4835,paying looks like pay

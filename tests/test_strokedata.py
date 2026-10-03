@@ -21,8 +21,8 @@ def make_tgz(files):
 
 
 def test_names_and_urls():
-    assert stroke_name("爱") == "7231.json"
-    assert stroke_name("苹") == "82f9.json"
+    assert stroke_name("爱") == "72/7231.json"
+    assert stroke_name("苹") == "82/82f9.json"
     assert tarball_url(HANZI_WRITER) == "https://registry.npmjs.org/hanzi-writer/-/hanzi-writer-3.7.3.tgz"
 
 
@@ -61,7 +61,7 @@ def test_vendor_writes_library_licences_and_strokes(tmp_path):
     assert (tmp_path / "vendor" / "hanzi-writer-3.7.3.esm.js").read_bytes() == b"export default 1;"
     assert (tmp_path / "vendor" / "hanzi-writer-LICENSE.txt").read_bytes() == b"MIT"
     assert (tmp_path / "strokes" / "ARPHICPL.TXT").read_bytes() == b"APL"
-    assert (tmp_path / "strokes" / "7231.json").read_bytes() == b'{"strokes":[]}'
+    assert (tmp_path / "strokes" / "72" / "7231.json").read_bytes() == b'{"strokes":[]}'
     again = vendor(tmp_path, [{"hz": "爱"}], writer, data)
     assert again == {"new": 0, "same": 4, "missing": []}
 

@@ -1,0 +1,33 @@
+id_a,id_b,reason
+w0485,w5033,includes: animal / birds and animals
+w0493,w5033,includes: bird / birds and animals
+w0525,w3479,near-synonyms: river / stream
+w0815,w3320,near-synonyms: fire / flame
+w1460,w2400,narrower: land / dry land
+w1460,w2472,narrower: land / field; open land
+w1460,w3697,full meaning: land; soil / soil
+w1460,w4655,narrower: land / cultivated land
+w1599,w2822,full meaning: hole / pit; hole
+w1599,w4102,full meaning: hole; cave / cave
+w1762,w4413,synonyms: to bloom / bloom
+w1790,w3414,synonyms: stone / rock
+w2036,w4224,synonyms: to float / float
+w2198,w2223,full meaning: sandy shore / shore
+w2198,w3946,near-synonyms: beach / strand
+w2223,w3946,near-synonyms: shore / seashore
+w2223,w4516,near-synonyms: shore / bank
+w2444,w2974,synonyms: calamity; disaster / disaster
+w2472,w4655,near-synonyms: field / cultivated land
+w2761,w4623,full meaning: roar / whistle; howl; roar
+w3078,w4367,full meaning: seed / sow; seed
+w3702,w3841,near-synonyms: reproduce / breed
+w3702,w4269,near-synonyms: reproduce / breed
+w3841,w4072,near-synonyms: nurture / raise
+w3841,w4269,full meaning: breed / breed
+w3841,w4423,full meaning: nurture; cultivate / cultivate
+w4072,w4269,near-synonyms: raise / breed
+w4072,w4939,narrower: raise / raise livestock
+w4338,w4939,includes: livestock / raise livestock
+w4402,w4996,narrower: wave / roaring waves
+w4423,w4655,full meaning: cultivate / till; cultivated land
+w4881,w5007,full meaning: cliffy / cliffs

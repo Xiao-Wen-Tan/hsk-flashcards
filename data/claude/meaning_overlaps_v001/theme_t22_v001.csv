@@ -1,0 +1,71 @@
+id_a,id_b,reason
+w2057,w3984,shared sense: intimate (close / affectionate)
+w0962,w2057,shared sense: familiar (know well / close)
+w1114,w5030,narrows: friendship / the profound friendship
+w0068,w1706,"near-synonyms: friend / partner, companion"
+w0545,w2062,narrows: guest / esteemed guest
+w1644,w4947,shared sense: host (master / host)
+w4947,w5017,includes: host / act as host to sb.
+w1644,w5017,shared sense: host (master / act as host)
+w1240,w5017,near-synonyms: give a dinner party / act as host
+w1240,w2304,shared sense: entertain guests
+w1240,w4559,shared sense: entertain guests / entertain
+w2304,w4559,shared sense: entertain (guests) / entertain
+w1240,w4453,shared sense: dinner party
+w2304,w4453,near-synonyms: offer hospitality / treat with courtesy
+w4453,w4559,near-synonyms: treat with courtesy / entertain
+w2403,w4453,shared sense: social intercourse / social activities
+w2304,w5017,near-synonyms: hold a reception / act as host
+w4559,w5017,near-synonyms: entertain / act as host
+w4762,w4905,synonyms: invitation / invitation card
+w0908,w4905,shared sense: invite / invitation
+w0908,w4671,shared sense: invite / on invitation
+w0908,w3554,shared sense: call on
+w0908,w1240,narrows: invite / invite to dinner
+w0811,w1666,synonyms: love / (romantic) love
+w1077,w4955,shared sense: get-together
+w0510,w1077,shared sense: meet / meeting
+w0460,w1077,shared sense: meet / meeting
+w0460,w2445,near-synonyms: meet / run into
+w0510,w2445,shared sense: meet / run into
+w0075,w0962,narrows: get to know / know well
+w0221,w3620,synonyms: give as a gift / handsel
+w0221,w0722,narrows: give / give sb. sth. as a gift
+w0722,w3620,narrows: give / handsel (give as a gift)
+w0233,w0690,"shared sense: help, assist / assist"
+w0508,w0690,near-synonyms: help / assist
+w3869,w4793,shared sense: look after
+w0495,w4793,shared sense: look after / care
+w0469,w4793,near-synonyms: care for / care
+w0469,w0495,near-synonyms: care for / look after
+w0469,w3869,near-synonyms: care for / look after
+w0829,w3731,shared sense: embrace (hold / hug)
+w0829,w1875,shared sense: embrace
+w1875,w3731,synonyms: embrace / hug
+w2883,w4280,near-synonyms: break away / break off
+w2632,w4280,near-synonyms: break up / break off
+w2632,w2883,near-synonyms: break up / break away
+w3300,w3554,shared sense: visit / call on
+w3554,w3898,shared sense: call on / visit
+w0715,w2403,near-synonyms: communicate / communication
+w0715,w2742,shared sense: contact
+w2299,w2742,shared sense: contact / have dealings with
+w1912,w2742,shared sense: associate / contact
+w1540,w2742,shared sense: contact
+w2403,w2742,near-synonyms: social intercourse / associate with
+w0715,w2299,shared sense: contact
+w0715,w1912,shared sense: contact
+w0715,w1540,shared sense: contact
+w1912,w2299,near-synonyms: be in contact / have dealings with
+w1540,w2299,shared sense: contact
+w1540,w1912,shared sense: contact
+w2299,w2403,near-synonyms: have dealings with / communication
+w1912,w2403,near-synonyms: interact / social intercourse
+w0359,w0715,near-synonyms: relation / association
+w1989,w3090,near-synonyms: quarrel / fight
+w3588,w4608,shared sense: reconcile
+w3588,w4595,near-synonyms: compromise / accommodate
+w2702,w4034,near-synonyms: return / repay
+w0950,w3560,synonyms: to trust / trust
+w0221,w0797,shared sense: escort / accompany
+w2035,w4559,near-synonyms: amuse / entertain

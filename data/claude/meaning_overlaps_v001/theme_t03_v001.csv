@@ -1,0 +1,107 @@
+id_a,id_b,reason
+w0011,w0213,same job: general classifier for things
+w0011,w2642,generic 'measures word' fits any measure word
+w0011,w2647,same job: general classifier like ge
+w0039,w0773,synonyms: a lot of / many
+w0039,w1785,near-synonyms: a lot of / countless
+w0060,w2294,both count books: volume / copy
+w0060,w2642,generic 'measures word' fits any measure word
+w0083,w0091,full meanings overlap: not much / a little bit
+w0091,w2549,near-synonyms: some / several (数 shù)
+w0091,w2642,generic 'measures word' fits any measure word
+w0091,w3864,near-synonyms: some / several
+w0094,w0871,pair (two people) / two
+w0176,w0871,pair (two people) / two
+w0183,w0862,near-synonyms: counting times / time / times
+w0183,w1073,near-synonyms: counting times / time / times
+w0183,w2642,generic 'measures word' fits any measure word
+w0183,w3146,near-synonyms: counting times / time / times
+w0213,w2642,generic 'measures word' fits any measure word
+w0215,w1305,same job: classifier for flat things
+w0215,w2642,generic 'measures word' fits any measure word
+w0303,w2642,generic 'measures word' fits any measure word
+w0326,w1889,same job: classifier for animals / horses
+w0326,w2642,generic 'measures word' fits any measure word
+w0337,w2642,generic 'measures word' fits any measure word
+w0339,w2642,generic 'measures word' fits any measure word
+w0355,w2642,generic 'measures word' fits any measure word
+w0410,w2562,full meaning shares: a pair
+w0410,w2642,generic 'measures word' fits any measure word
+w0412,w0704,near-synonyms: section / part
+w0412,w0818,"full meanings share: section, period"
+w0412,w2642,generic 'measures word' fits any measure word
+w0414,w2642,generic 'measures word' fits any measure word
+w0419,w2642,generic 'measures word' fits any measure word
+w0421,w1285,half narrows fraction
+w0471,w2642,generic 'measures word' fits any measure word
+w0591,w4381,near-synonyms: altogether / sum
+w0657,w2642,generic 'measures word' fits any measure word
+w0704,w0818,near-synonyms: section / part
+w0704,w2642,generic 'measures word' fits any measure word
+w0717,w2642,generic 'measures word' fits any measure word
+w0733,w2642,generic 'measures word' fits any measure word
+w0773,w1785,near-synonyms: many / countless
+w0789,w2818,near-synonyms: outstrip / more than
+w0813,w2642,generic 'measures word' fits any measure word
+w0818,w2642,generic 'measures word' fits any measure word
+w0854,w3411,near-synonyms: almost / approximately
+w0856,w0862,near-synonyms: counting times / time / times
+w0856,w1073,near-synonyms: counting times / time / times
+w0856,w2642,generic 'measures word' fits any measure word
+w0856,w3146,near-synonyms: counting times / time / times
+w0862,w1073,near-synonyms: counting times / time / times
+w0862,w2642,generic 'measures word' fits any measure word
+w0862,w3146,near-synonyms: counting times / time / times
+w0871,w2562,full meaning shares: a pair
+w0895,w2642,generic 'measures word' fits any measure word
+w0907,w0969,"synonyms: figure, number / number"
+w0907,w2151,"synonyms: figure, number / number"
+w0907,w2549,"synonyms: figure, number / number"
+w0907,w3307,"synonyms: figure, number / number"
+w0912,w2642,generic 'measures word' fits any measure word
+w0969,w1058,near-synonyms: amount / number
+w1004,w2642,generic 'measures word' fits any measure word
+w1022,w2642,generic 'measures word' fits any measure word
+w1058,w2151,near-synonyms: amount / number
+w1058,w2549,near-synonyms: amount / number
+w1058,w3307,near-synonyms: amount / number
+w1073,w2642,generic 'measures word' fits any measure word
+w1073,w3146,near-synonyms: counting times / time / times
+w1137,w2642,generic 'measures word' fits any measure word
+w1137,w3668,same job: measure word for plants
+w1165,w2642,generic 'measures word' fits any measure word
+w1285,w1289,percent narrows fraction
+w1289,w3911,near-synonyms: percent / percentage point
+w1305,w2642,generic 'measures word' fits any measure word
+w1327,w2642,generic 'measures word' fits any measure word
+w1341,w2642,generic 'measures word' fits any measure word
+w1427,w2031,same job: classifier for small grains
+w1427,w2642,generic 'measures word' fits any measure word
+w1427,w2647,same job: classifier for small things
+w1483,w1889,full meaning shares: measure word for cloth
+w1483,w2642,generic 'measures word' fits any measure word
+w1798,w2642,generic 'measures word' fits any measure word
+w1889,w2642,generic 'measures word' fits any measure word
+w1914,w2642,generic 'measures word' fits any measure word
+w1930,w2642,generic 'measures word' fits any measure word
+w2031,w2642,generic 'measures word' fits any measure word
+w2179,w4381,full meaning shares: in sum / sum
+w2294,w2642,generic 'measures word' fits any measure word
+w2439,w2642,generic 'measures word' fits any measure word
+w2510,w2642,generic 'measures word' fits any measure word
+w2515,w2642,generic 'measures word' fits any measure word
+w2549,w3864,full meaning shares: several
+w2562,w2642,generic 'measures word' fits any measure word
+w2607,w2642,generic 'measures word' fits any measure word
+w2607,w4647,near-synonyms: series / sequence
+w2642,w2647,generic 'measures word' fits any measure word
+w2642,w2739,generic 'measures word' fits any measure word
+w2642,w3007,generic 'measures word' fits any measure word
+w2642,w3079,generic 'measures word' fits any measure word
+w2642,w3146,generic 'measures word' fits any measure word
+w2642,w3275,generic 'measures word' fits any measure word
+w2642,w3455,generic 'measures word' fits any measure word
+w2642,w3668,generic 'measures word' fits any measure word
+w2642,w4781,generic 'measures word' fits any measure word
+w2739,w3079,same job: measure word for buildings
+w4381,w4640,full meaning shares: total / sum

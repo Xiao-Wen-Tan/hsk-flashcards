@@ -1,0 +1,14 @@
+id_a,id_b,reason
+w1268,w4041,"near-synonyms: moist / damp, humid"
+w1221,w4249,"shared sense dry: to dry / drought, arid, dry"
+w0310,w4404,"near-synonyms: fine, clear / sunny"
+w1876,w4273,narrows: (of the sun) to shine on / shine
+w0636,w1532,narrows: blow (of wind) / blow
+w3824,w4012,"near-synonyms: envelop, shroud / suffuse, pervade"
+w0149,w3449,"shared sense: rain / sprinkle, pour, drench"
+w0582,w0588,narrows: spring / season
+w0573,w0588,narrows: summer / season
+w0588,w0601,"narrows: season / fall, autumn"
+w0588,w0597,narrows: season / winter
+w0129,w1200,near-synonyms: weather / climate
+w3049,w3680,narrows: storm / typhoon

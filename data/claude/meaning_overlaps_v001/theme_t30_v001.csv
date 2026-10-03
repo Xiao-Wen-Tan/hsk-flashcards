@@ -1,0 +1,13 @@
+id_a,id_b,reason
+w4125,w4441,synonyms: try various devices / make every attempt
+w3753,w4320,synonyms: go all out / strain every nerve
+w3753,w4441,near-synonyms: spare no effort / every possible effort
+w4320,w4441,near-synonyms: do all in one's full strength / every possible effort
+w3753,w4125,near-synonyms: go all out / do everything possible
+w4125,w4320,near-synonyms: do everything possible / do all in one's full strength
+w4614,w4691,near-synonyms: be absolutely clear / self-evident
+w3834,w4691,near-synonyms: of course / self-evident
+w3819,w4669,near-synonyms: well-known / known to every family
+w3819,w4691,near-synonyms: well-known / self-evident
+w3639,w4664,near-synonyms: can do nothing / have no way out
+w2947,w3473,near-synonyms: inconceivable / baffling

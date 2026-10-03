@@ -1,7 +1,7 @@
 // Stroke-order animation with Hanzi Writer (MIT licence), a stroke-animation library kept
 // in docs/vendor/, and its character data (Arphic Public License) kept in docs/strokes/.
 // Each character's data file is named by its Unicode code point in hexadecimal, so 爱
-// (U+7231) is strokes/7231.json. The functions above animateWord never touch the page.
+// (U+7231) is strokes/72/7231.json, in a folder named by the first two digits. The functions above animateWord never touch the page.
 
 export const HANZI_WRITER = '../vendor/hanzi-writer-3.7.3.esm.js'; // relative to this file
 export const STROKES_BASE = 'strokes/'; // relative to index.html
@@ -12,9 +12,11 @@ export function charsOf(hz) {
   return [...hz].filter((ch) => /\p{Script=Han}/u.test(ch));
 }
 
-// strokeUrl('爱') gives 'strokes/7231.json'.
+// strokeUrl('爱') gives 'strokes/72/7231.json'. The folder is the first two hex digits, so no folder
+// holds more than a few dozen files (tools/strokedata.py stroke_name makes the same name).
 export function strokeUrl(ch, base = STROKES_BASE) {
-  return `${base}${ch.codePointAt(0).toString(16)}.json`;
+  const code = ch.codePointAt(0).toString(16);
+  return `${base}${code.slice(0, 2)}/${code}.json`;
 }
 
 // Loads the stroke data of every character, or fails with a plain message when one file

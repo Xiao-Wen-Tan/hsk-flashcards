@@ -1,0 +1,27 @@
+id_a,id_b,reason
+w2714,w4474,narrower: advanced / most advanced
+w4433,w4455,near-synonyms: error / deviation
+w1696,w2790,near-synonyms: machine / machinery
+w1443,w3365,shared sense: theory / principle; theory
+w1906,w2785,near-synonyms: universe / outer space
+w4159,w4360,narrower: powder / gunpowder
+w1920,w2966,near-synonyms: invent / innovation
+w3994,w4073,near-synonyms: compress / condense
+w2842,w3604,near-synonyms: explore / probe
+w0695,w3604,near-synonyms: investigate / probe
+w0695,w2842,near-synonyms: investigate / explore
+w2842,w4694,narrower: explore / prospect
+w3604,w4694,near-synonyms: probe / prospect
+w1530,w2604,shared sense: experiment; test / test
+w1530,w2774,shared sense: experiment; test / test
+w2690,w3611,shared sense: launch; radiate / radiate
+w2690,w3015,shared sense: radiate / radiation
+w3015,w3611,near-synonyms: radiation / radiate
+w1749,w4428,shared sense: compute
+w1749,w2757,near-synonyms: count / statistics; census
+w2651,w3242,shared sense: operation / operate
+w3242,w4428,shared sense: operate
+w2651,w4428,shared sense: operation / operate
+w2764,w3242,near-synonyms: run / operate
+w2651,w2764,near-synonyms: operation / run
+w2764,w4428,near-synonyms: run / operate

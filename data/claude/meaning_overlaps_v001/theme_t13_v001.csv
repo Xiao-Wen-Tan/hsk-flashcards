@@ -1,0 +1,58 @@
+id_a,id_b,reason
+w0035,w0436,shared sense: under
+w0036,w0659,synonyms: interior / inner (inside)
+w0130,w4241,shared sense: in front
+w0238,w3209,synonyms: far / distant
+w0238,w4081,near-synonyms: far / remote
+w0249,w0277,shared sense: near / nearby
+w0249,w0455,near-synonyms: close / nearby
+w0249,w1496,overlap: close / get close to
+w0249,w4648,overlap: close / draw close
+w0249,w4747,near-synonyms: close / nearby
+w0252,w0919,near-synonyms: away from / be apart from
+w0277,w0455,shared sense: nearby
+w0277,w1121,narrowing: side / the opposite side
+w0277,w4747,shared sense: nearby
+w0349,w1356,shared sense: place
+w0349,w2545,near-synonyms: place / site
+w0349,w3765,near-synonyms: place / position
+w0364,w1984,narrowing: country / motherland
+w0364,w2590,near-synonyms: country / state
+w0425,w1479,shared sense: building
+w0425,w3036,shared sense: building / large building
+w0455,w0903,near-synonyms: nearby / surrounding
+w0455,w2095,narrowing: nearby / next door
+w0455,w3254,near-synonyms: nearby / surrounding
+w0512,w2589,synonyms: center / centre
+w0521,w4657,near-synonyms: park / garden
+w0566,w2502,narrowing: street / lane
+w0566,w3707,narrowing: street / lane
+w0735,w1413,synonyms: to / toward
+w0816,w3765,shared sense: direction
+w0903,w4747,near-synonyms: nearby / surrounding
+w0936,w1356,shared sense: place
+w0936,w2545,shared sense: site / spot
+w0936,w3765,near-synonyms: place / position
+w0974,w4761,narrowing: bridge / viaduct
+w1121,w3580,narrowing: side / the opposite side
+w1225,w1377,narrowing: area / rural area
+w1225,w2577,narrowing: area / rural area
+w1225,w4715,shared sense: village
+w1318,w2589,synonyms: center / centre
+w1356,w2944,shared sense: place
+w1377,w4880,narrowing: area / border area
+w1479,w3036,shared sense: building
+w1496,w4648,synonyms: approach / draw close
+w2095,w4747,narrowing: nearby / next door
+w2545,w2944,shared sense: site
+w2577,w4880,narrowing: area / border area
+w2933,w3573,near-synonyms: border / boundary
+w2933,w4880,narrowing: border / border area
+w2944,w3765,near-synonyms: place / position
+w3175,w3573,near-synonyms: border / boundary
+w3175,w4880,narrowing: border / border area (frontier)
+w3209,w4081,shared sense: remote
+w3254,w4747,near-synonyms: nearby / surrounding
+w3384,w3573,near-synonyms: border / boundary
+w3384,w4880,narrowing: border / border area
+w3770,w4761,narrowing: bridge / viaduct

@@ -1,0 +1,53 @@
+id_a,id_b,reason
+w0145,w1136,narrows: furniture / desk
+w0147,w1116,en overlap: arm chair / chair
+w0147,w1136,narrows: furniture / chair
+w0266,w1180,narrows: room / living room
+w0266,w1980,en overlap: room
+w0266,w2010,narrows: room / bedroom
+w0532,w0945,narrows: wipe to clean / clean
+w0532,w1082,near-synonyms: tidy / clean
+w0532,w2667,narrows: clean / clean up
+w0605,w0945,narrows: wipe to clean / clean
+w0605,w1082,near-synonyms: tidy / clean
+w0605,w2667,narrows: clean / clean up
+w0924,w1184,en overlap: repair
+w0924,w2917,near-synonyms: service / repair
+w0924,w2959,"near-synonyms: fix up / decorate, repair"
+w0924,w2978,en overlap: repair
+w0945,w2667,narrows: wipe to clean / clean up
+w0945,w2943,narrows: wipe to clean / clean
+w1040,w1522,"en overlap: put, arrange / put in order"
+w1040,w2667,near-synonyms: put in order / clean up
+w1040,w2959,en overlap: arrange
+w1082,w1522,near-synonyms: arrange / put in order
+w1082,w2667,near-synonyms: tidy / clean up
+w1082,w2943,near-synonyms: tidy / clean
+w1082,w2959,near-synonyms: arrange / put in order
+w1082,w2979,en overlap: clear up / clear away
+w1116,w1136,narrows: furniture / sofa
+w1136,w2476,narrows: furniture / bookshelf
+w1166,w1681,en overlap: glass
+w1184,w2917,near-synonyms: repair / service
+w1184,w2959,near-synonyms: fix up / repair
+w1184,w2978,synonyms: repair
+w1193,w3612,narrows: container / box
+w1203,w3612,narrows: container / bottle
+w1254,w3612,narrows: container / trash can
+w1522,w2959,en overlap: arrange
+w1522,w3181,narrows: put / put under
+w1559,w1979,near-synonyms: drip / leak
+w1744,w3058,narrows: residence / apartment
+w1893,w2959,near-synonyms: fix up / decorate
+w1980,w2936,narrows: house / villa
+w1980,w3058,near-synonyms: house / residence
+w2153,w3612,narrows: container / basin
+w2167,w2268,en overlap: water / sprinkle
+w2201,w3181,en overlap: rug / mat
+w2667,w2943,narrows: clean / clean up
+w2667,w2979,near-synonyms: clear up / clean up
+w2917,w2959,near-synonyms: fix up / service
+w2917,w2978,near-synonyms: repair / service
+w2936,w3058,narrows: residence / villa
+w2959,w2978,near-synonyms: fix up / repair
+w3612,w4512,narrows: container / basket

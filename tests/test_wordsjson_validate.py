@@ -1,4 +1,4 @@
-from wordsjson import LICENSE, build, stale
+from wordsjson import LICENSE, build, extra_no_distract, fix_short_meanings, stale
 
 ROWS = [("w0001", "爱", "ài", "ai4", "ai", "love"), ("w0002", "八", "bā", "ba1", "ba", "eight"),
         ("w0003", "爸爸", "bàba", "ba4 ba5", "baba", "father"), ("w0004", "杯子", "bēizi", "bei1 zi5", "beizi", "cup"),
@@ -37,6 +37,48 @@ def test_stale_names_pinyin_and_audio_made_from_other_text():
         "w0002: the pinyin was made from '八本书。' but the final sentence is '八个人。'",
         "w0002: the audio map has s/w0002_00000000.mp3 where the final texts give s/w0002_89abcdef.mp3"]
     assert stale(sentences, pinyin_rows[:1], {"w0001": audio["w0001"]}, {"w0001": expected["w0001"]}) == []
+
+
+def card(wid, hz, en, short=None):
+    return {"id": wid, "hz": hz, "en": en, "enShort": short or en}
+
+
+def test_fix_short_meanings_replaces_a_cut_off_meaning_and_names_a_stale_fix():
+    words = [card("w0002", "了", "used at the end of a sentence to indicate change in status", "used at the end of a…"),
+             card("w0040", "吗", "used at the end of a sentence, indicating a question", "used at the end of a sentence")]
+    fixes = [{"id": "w0002", "old": "used at the end of a…", "new": "marks a change or completion"}]
+    fixed, problems = fix_short_meanings(words, fixes)
+    assert [w["enShort"] for w in fixed] == ["marks a change or completion", "used at the end of a sentence"]
+    assert problems == [] and words[0]["enShort"] == "used at the end of a…"  # the input is not changed
+    _, problems = fix_short_meanings(words, [{"id": "w0040", "old": "something else", "new": "question word"}])
+    assert problems == ["w0040: the fix expects the short meaning 'something else' but the card has "
+                        "'used at the end of a sentence'"]
+
+
+def test_extra_no_distract_joins_agent_pairs_and_meanings_that_begin_another():
+    words = [card("w0002", "了", "used at the end of a sentence to indicate change in status", "marks a change"),
+             card("w0040", "吗", "used at the end of a sentence, indicating a question", "used at the end of a sentence"),
+             card("w0010", "高兴", "happy; glad", "happy"), card("w0011", "愉快", "pleased; joyful", "pleased"),
+             card("w0012", "吃", "to eat", "eat")]
+    extra, problems = extra_no_distract(words, [{"id_a": "w0010", "id_b": "w0011"}, {"id_a": "w0012", "id_b": "w9999"}])
+    # 吗's "used at the end of a sentence" begins 了's full meaning, so they are kept apart without any pair.
+    assert extra["w0002"] == {"w0040"} and extra["w0040"] == {"w0002"}
+    assert extra["w0010"] == {"w0011"} and extra["w0011"] == {"w0010"}
+    assert extra["w0012"] == set()
+    assert problems == ["w0012 and w9999: w9999 is not a card"]
+
+
+def test_build_adds_the_extra_overlaps_to_no_distract():
+    data = sample()
+    assert data["words"][0]["noDistract"] == []
+    extra = {"w0001": {"w0003"}, "w0003": {"w0001"}}
+    words = [{**w, "freq": 1} for w in data["words"]]
+    curriculum = [{"id": w["id"], "theme": "t01", "ord": w["ord"], "noDistract": []} for w in data["words"]]
+    sentences = [{"id": w["id"], "sentence": w["ex"]["hz"], "en": w["ex"]["en"], "src": "claude"} for w in data["words"]]
+    rebuilt = build("v002", "2026-10-06", words, curriculum, data["themes"], sentences,
+                    {w["id"]: w["ex"]["py"] for w in data["words"]},
+                    {w["id"]: {"w": w["au"], "s": w["ex"]["au"]} for w in data["words"]}, extra=extra)
+    assert rebuilt["words"][0]["noDistract"] == ["w0003"] and rebuilt["words"][2]["noDistract"] == ["w0001"]
 
 
 import copy

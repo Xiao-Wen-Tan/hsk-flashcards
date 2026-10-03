@@ -1,0 +1,715 @@
+id_a,id_b,reason
+w0018,w0189,shared sense: can / may
+w0018,w1330,near-synonyms: can / be able to
+w0027,w0189,shared sense: can / may
+w0027,w1330,near-synonyms: can / be able to
+w0164,w0644,same job: used after a verb
+w0165,w0167,shared sense: for
+w0165,w0343,shared sense: for
+w0165,w0707,near-synonyms: hand over / give
+w0165,w1298,shared sense: for
+w0165,w2656,near-synonyms: hand over / give
+w0165,w3130,near-synonyms: hand over / give
+w0165,w3654,near-synonyms: hand over / give
+w0166,w0372,shared sense: make
+w0168,w0189,shared sense: can / may
+w0168,w1330,near-synonyms: can / be able to
+w0170,w0719,shared sense: get; obtain
+w0171,w0642,same job: structural auxiliary word
+w0172,w0336,shared sense: must / should; have to
+w0172,w0341,near-synonyms: necessarily / must
+w0172,w1068,shared sense: must / have to
+w0172,w4181,shared sense: must / have to
+w0173,w0644,same job: used after a verb
+w0174,w0898,shared sense: since
+w0175,w0374,near-synonyms: in fact / indeed
+w0175,w0751,synonyms: indeed / really
+w0175,w1066,shared sense: really
+w0175,w1508,shared sense: really
+w0179,w0929,shared sense: yet
+w0179,w3503,shared sense: yet
+w0181,w0764,narrower: again / once again
+w0181,w1389,shared sense: further / more
+w0181,w2436,narrower: again / over and over again
+w0181,w3838,near-synonyms: again / repeatedly
+w0182,w0314,"narrower: because / because ..., so"
+w0182,w0775,shared sense: owing to
+w0188,w0639,shared sense: but; however
+w0188,w0917,shared sense: however
+w0188,w0929,shared sense: but; however
+w0189,w0700,near-synonyms: may / perhaps / maybe / probably
+w0189,w0892,near-synonyms: may / perhaps / maybe / probably
+w0189,w0989,near-synonyms: may / perhaps / maybe / probably
+w0189,w2019,near-synonyms: may / perhaps / maybe / probably
+w0189,w2558,near-synonyms: may / perhaps / maybe / probably
+w0191,w3053,near-synonyms: start / set about
+w0191,w4065,shared sense: beginning
+w0196,w0314,"narrower: so / because ..., so"
+w0196,w0808,shared sense: therefore / as a result
+w0196,w1965,near-synonyms: thus / therefore
+w0196,w3889,shared sense: therefore / as a result
+w0198,w0640,shared sense: to
+w0202,w0482,near-synonyms: very / extremely
+w0202,w1154,near-synonyms: very / extremely
+w0202,w3137,near-synonyms: very / quite
+w0202,w3454,near-synonyms: very / extremely
+w0211,w0651,shared sense: circumstance
+w0211,w1849,near-synonyms: matter / thing
+w0211,w2837,shared sense: circumstances
+w0211,w3324,shared sense: circumstances
+w0216,w4236,near-synonyms: intend / intention
+w0225,w0385,near-synonyms: finished / finish
+w0225,w0386,near-synonyms: finished / finish
+w0225,w2750,near-synonyms: finished / complete
+w0229,w1292,shared sense: just doing / in the process of
+w0313,w1414,shared word: once
+w0316,w0382,"narrower: although / although ..., (still)"
+w0316,w0781,"narrower: although / although ..., (still)"
+w0318,w0672,shared sense: exclamation of surprise
+w0318,w2541,shared sense: ah
+w0318,w2542,same job: final particle
+w0318,w2544,same job: modal particle
+w0318,w2547,near-synonyms: surprise / wow
+w0318,w3052,near-synonyms: surprise / oh
+w0319,w1300,shared sense: deal with
+w0319,w1981,shared sense: deal with
+w0319,w3170,shared sense: deal with
+w0321,w1631,shared sense: oneself
+w0321,w2623,shared sense: self
+w0321,w2653,shared sense: oneself
+w0322,w0660,shared sense: pass
+w0323,w0643,near-synonyms: using / use
+w0323,w1336,narrower: use / make use of
+w0323,w2114,narrower: use / make use of
+w0323,w4346,narrower: use / make use of
+w0324,w0675,narrower: if / only if
+w0324,w1414,shared sense: if / in case
+w0324,w1664,shared sense: if / in case
+w0325,w0764,narrower: again / once again
+w0325,w2436,narrower: again / over and over again
+w0325,w3838,near-synonyms: again / repeatedly
+w0327,w0331,shared sense: only
+w0327,w0675,narrower: only / only if
+w0327,w0742,shared sense: only
+w0327,w2564,shared sense: only
+w0327,w4142,shared sense: only
+w0327,w4539,shared sense: only
+w0329,w1391,near-synonyms: need / necessary
+w0330,w0642,same job: structural auxiliary word
+w0331,w0667,shared sense: only
+w0331,w0742,shared sense: only
+w0331,w4539,shared sense: only
+w0332,w0640,shared sense: with
+w0332,w4245,near-synonyms: with / together with
+w0334,w0914,shared sense: had better
+w0334,w0929,synonyms: still / yet
+w0334,w3503,synonyms: still / yet
+w0336,w0348,shared sense: must / should; have to
+w0336,w0889,shared sense: must / should; have to
+w0336,w0914,near-synonyms: should / had better
+w0336,w1068,shared sense: have to
+w0336,w4181,shared sense: have to
+w0341,w0348,near-synonyms: necessarily / must
+w0341,w0378,shared sense: certainly
+w0341,w0682,shared sense: certainly; surely
+w0341,w0889,near-synonyms: necessarily / must
+w0341,w2079,near-synonyms: necessarily / inevitable
+w0341,w3650,near-synonyms: surely / be sure to
+w0341,w3910,near-synonyms: be sure / surely
+w0341,w4549,near-synonyms: surely / be bound to
+w0346,w0409,shared sense: besides / in addition / moreover
+w0346,w0637,shared sense: but also
+w0346,w0639,near-synonyms: and / but also
+w0346,w0726,shared sense: besides / in addition / moreover
+w0346,w0745,shared sense: besides / in addition / moreover
+w0346,w0876,shared sense: not only ... but also
+w0346,w1134,shared sense: not only ... but also
+w0346,w1643,shared sense: besides / in addition / moreover
+w0346,w1865,shared sense: besides / in addition / moreover
+w0346,w2232,shared sense: besides / in addition / moreover
+w0346,w3694,shared sense: besides / in addition / moreover
+w0348,w1068,shared sense: must / have to
+w0348,w1391,near-synonyms: must / necessary
+w0348,w4181,shared sense: must / have to
+w0351,w0370,narrower: other / other people
+w0351,w1939,shared sense: other / the others
+w0353,w1123,shared sense: then
+w0353,w4211,narrower: then / and then
+w0360,w0648,shared sense: happen
+w0360,w2813,shared sense: appear
+w0360,w4454,near-synonyms: appear / emerge
+w0360,w4493,"narrower: come out / come out, happen"
+w0368,w1908,shared sense: or / or else
+w0368,w3520,shared sense: or / or else
+w0370,w1939,near-synonyms: other people / the others
+w0372,w0826,shared sense: cause
+w0372,w1344,shared sense: cause
+w0372,w1401,shared sense: cause
+w0372,w4022,shared sense: cause
+w0374,w0751,near-synonyms: in fact / really; indeed
+w0374,w1426,near-synonyms: in fact / indeed
+w0378,w0682,shared sense: certainly
+w0378,w4440,shared sense: of course
+w0382,w0780,near-synonyms: although / even if
+w0382,w1947,shared sense: even though
+w0382,w2733,near-synonyms: although / even if
+w0384,w1298,shared sense: with regard to
+w0384,w1687,near-synonyms: with regard to / as for
+w0385,w0386,shared sense: finish
+w0385,w1382,near-synonyms: accomplish / achieve
+w0385,w1397,near-synonyms: accomplish / achieve
+w0385,w2750,shared sense: complete
+w0386,w0899,synonyms: to stop / stop
+w0386,w2750,near-synonyms: finish / complete
+w0386,w3229,shared sense: end
+w0389,w0694,shared sense: way
+w0389,w2909,shared sense: way / approach
+w0389,w3334,narrower: way / way out
+w0390,w0482,near-synonyms: very / extremely
+w0390,w0994,near-synonyms: specially / particularly
+w0390,w1003,shared sense: particularly
+w0390,w1154,near-synonyms: very / extremely
+w0390,w2181,near-synonyms: specially / particularly
+w0390,w2322,near-synonyms: particularly / especially
+w0390,w3137,near-synonyms: very / quite
+w0390,w3454,near-synonyms: very / extremely
+w0399,w0446,shared sense: influence
+w0409,w0726,shared sense: besides / in addition / moreover
+w0409,w0745,shared sense: besides / in addition / moreover
+w0409,w1643,shared sense: except
+w0409,w1865,shared sense: besides / in addition / moreover
+w0409,w2232,shared sense: besides / in addition / moreover
+w0409,w3694,shared sense: besides / in addition / moreover
+w0409,w4539,shared sense: except
+w0417,w0858,near-synonyms: according to / on the basis of
+w0417,w1606,near-synonyms: according to / on the basis of
+w0417,w2921,near-synonyms: according to / on the basis of
+w0417,w4627,near-synonyms: according to / on the basis of
+w0430,w2461,near-synonyms: usually / as usual
+w0430,w3601,near-synonyms: generally / on the whole
+w0430,w3764,near-synonyms: usually / as usual
+w0430,w4484,near-synonyms: generally / in general
+w0446,w0855,shared sense: effect
+w0446,w3816,shared sense: effect
+w0453,w0892,shared sense: almost
+w0453,w0955,shared sense: nearly
+w0453,w0981,near-synonyms: nearly / about
+w0478,w1783,shared sense: change
+w0478,w4531,shared sense: change
+w0482,w0728,near-synonyms: very / extremely
+w0482,w0796,near-synonyms: very / extremely
+w0482,w2307,near-synonyms: very / extremely
+w0482,w3537,near-synonyms: extremely / terribly
+w0484,w0648,shared sense: take place
+w0484,w0658,near-synonyms: perform / execute
+w0488,w1350,shared sense: standard
+w0488,w1442,near-synonyms: level / degree
+w0514,w1294,shared word: how
+w0637,w0876,shared sense: not only
+w0637,w1134,shared sense: not only ... but also
+w0639,w0646,shared sense: but; however
+w0639,w0649,shared sense: but; however
+w0639,w0670,shared sense: but; however
+w0639,w0917,shared sense: however
+w0639,w0929,shared sense: but; however
+w0639,w1304,shared sense: and
+w0639,w4211,narrower: and / and then
+w0640,w4245,near-synonyms: with / together with
+w0641,w3860,shared sense: act as
+w0643,w0710,near-synonyms: using / use
+w0643,w3576,near-synonyms: by means of / with the help of
+w0646,w0917,shared sense: however
+w0646,w0929,shared sense: but; however
+w0646,w3503,shared sense: yet
+w0647,w1347,narrower: life / life (one's time on earth)
+w0648,w3161,near-synonyms: happen / befall
+w0649,w0917,shared sense: however
+w0649,w0929,shared sense: but; however
+w0650,w0723,shared sense: all / whole; all
+w0650,w0783,near-synonyms: all / every
+w0650,w2318,near-synonyms: all / every
+w0651,w1421,shared sense: situation / circumstances
+w0651,w2765,shared sense: situation / circumstances
+w0651,w2837,shared sense: situation / circumstances
+w0651,w3113,shared sense: situation / circumstances
+w0651,w3194,shared sense: condition
+w0651,w3324,shared sense: situation / circumstances
+w0651,w3827,narrower: situation / overall situation
+w0651,w3977,shared sense: situation / circumstances
+w0658,w2646,near-synonyms: carry out / put into effect
+w0658,w4281,shared sense: carry out
+w0661,w2611,near-synonyms: have not / none
+w0662,w0723,shared sense: all / whole; all
+w0662,w0783,near-synonyms: all / every
+w0662,w2318,near-synonyms: all / every
+w0666,w0855,shared sense: result
+w0666,w1787,near-synonyms: result / consequences
+w0666,w3816,shared sense: result
+w0666,w4022,shared word: result
+w0667,w0675,narrower: only / only if
+w0667,w0742,shared sense: only
+w0667,w2564,shared sense: only
+w0667,w4142,shared sense: only
+w0667,w4539,shared sense: only
+w0668,w0723,shared sense: completely / complete
+w0668,w1332,shared sense: absolutely / absolute
+w0668,w3535,shared sense: completely / totally
+w0670,w0917,shared sense: however
+w0670,w0929,shared sense: but; however
+w0670,w3503,shared sense: yet
+w0671,w0680,narrower: even / even (used for emphasis)
+w0671,w0780,narrower: even / even if
+w0671,w1947,shared sense: even
+w0671,w2428,near-synonyms: in succession / successively
+w0671,w2733,narrower: even / even if
+w0671,w4210,shared sense: in succession
+w0671,w4271,near-synonyms: in succession / successively
+w0672,w2542,same job: sentence-final particle
+w0672,w2544,same job: sentence-final particle
+w0672,w2547,near-synonyms: surprise / wow
+w0673,w4022,shared word: cause
+w0675,w0867,narrower: if / only if
+w0675,w1870,narrower: if / only if
+w0675,w4416,narrower: if / only if
+w0675,w4969,narrower: if / only if
+w0680,w0780,narrower: even / even if
+w0680,w1687,shared sense: go so far as to
+w0680,w2733,narrower: even / even if
+w0680,w2975,near-synonyms: so much so that / so that
+w0680,w4444,near-synonyms: so much so that / so that
+w0682,w3650,shared sense: surely / be sure to
+w0682,w3910,near-synonyms: surely / be sure
+w0682,w4549,near-synonyms: certainly / be bound to
+w0692,w1783,shared sense: change
+w0692,w4531,shared sense: change
+w0693,w0752,shared sense: whether or not
+w0694,w1299,shared sense: method; way
+w0694,w2909,shared sense: way / approach
+w0700,w0892,near-synonyms: may / perhaps / maybe / probably
+w0700,w0989,near-synonyms: may / perhaps / maybe / probably
+w0700,w2019,near-synonyms: may / perhaps / maybe / probably
+w0700,w2558,near-synonyms: may / perhaps / maybe / probably
+w0710,w1336,narrower: use / make use of
+w0710,w2114,narrower: use / make use of
+w0710,w4346,narrower: use / make use of
+w0716,w0808,shared sense: therefore / as a result
+w0716,w1965,near-synonyms: thus / therefore
+w0716,w3889,shared sense: therefore / as a result
+w0718,w4384,near-synonyms: calculate / count
+w0723,w2318,shared sense: all / whole; all
+w0723,w2763,shared sense: all / whole; all
+w0723,w3535,shared sense: all / whole; all
+w0723,w4272,shared sense: all / whole; all
+w0726,w0745,shared sense: besides / in addition / moreover
+w0726,w1643,shared sense: besides / in addition / moreover
+w0726,w2232,shared sense: besides / in addition / moreover
+w0726,w3694,shared sense: besides / in addition / moreover
+w0728,w1154,near-synonyms: very / extremely
+w0728,w1381,shared sense: considerably / quite
+w0728,w3137,near-synonyms: very / quite
+w0728,w3454,near-synonyms: very / extremely
+w0729,w1630,near-synonyms: as if / seem
+w0729,w1672,near-synonyms: as if / seem
+w0729,w3714,shared sense: as if; like
+w0740,w2115,shared sense: include
+w0740,w2695,shared sense: involve
+w0740,w4021,shared sense: involve
+w0741,w0799,near-synonyms: original / originally
+w0742,w4539,shared sense: only
+w0745,w1643,shared sense: besides / in addition / moreover
+w0745,w1865,shared sense: besides / in addition / moreover
+w0745,w2232,shared sense: besides / in addition / moreover
+w0745,w3694,shared sense: besides / in addition / moreover
+w0751,w1426,synonyms: indeed / really
+w0751,w1508,shared sense: really
+w0752,w0793,shared sense: no matter
+w0753,w3906,near-synonyms: accept / accepted
+w0775,w0808,shared phrase: as a result
+w0775,w2415,near-synonyms: owing to / thanks to
+w0775,w3034,near-synonyms: owing to / in view of
+w0775,w3889,shared phrase: as a result
+w0780,w0781,near-synonyms: although / even if
+w0780,w1947,shared sense: even if
+w0781,w1947,shared sense: even though
+w0781,w2733,near-synonyms: although / even if
+w0783,w1830,near-synonyms: every / each
+w0783,w2763,near-synonyms: all / every
+w0783,w3535,near-synonyms: all / every
+w0783,w4272,near-synonyms: all / every
+w0784,w0929,synonyms: still / yet
+w0784,w3503,synonyms: still / yet
+w0790,w1092,shared sense: for example
+w0790,w4318,shared sense: for example
+w0796,w1154,near-synonyms: very / extremely
+w0796,w3137,near-synonyms: very / quite
+w0796,w3454,near-synonyms: very / extremely
+w0800,w2941,near-synonyms: prerequisite / premise
+w0803,w1708,shared sense: factor
+w0803,w3823,shared sense: key factor / key element
+w0808,w1965,near-synonyms: thus / therefore
+w0808,w2330,shared sense: therefore / as a result
+w0814,w2879,shared sense: enough
+w0826,w1344,shared sense: cause
+w0826,w1401,shared sense: cause
+w0826,w4022,shared sense: cause
+w0830,w3724,shared sense: substance
+w0834,w1317,near-synonyms: aim / goal
+w0834,w4236,near-synonyms: purpose / intention
+w0849,w1660,near-synonyms: scope / domain
+w0849,w3980,shared sense: limit
+w0849,w4126,shared sense: scope
+w0855,w1787,near-synonyms: outcome / consequences
+w0858,w1606,near-synonyms: according to / on the basis of
+w0858,w2921,near-synonyms: according to / on the basis of
+w0858,w4627,near-synonyms: according to / on the basis of
+w0861,w3823,near-synonyms: key point / key element
+w0867,w1414,shared sense: if / in case
+w0867,w1664,shared sense: if / in case
+w0869,w4572,shared sense: otherwise
+w0876,w1134,shared sense: not only
+w0886,w1348,shared word: lose
+w0886,w3060,shared word: lose
+w0889,w1068,shared sense: must / have to
+w0889,w4181,shared sense: must / have to
+w0892,w0955,near-synonyms: almost / about; nearly
+w0892,w0981,near-synonyms: almost / about
+w0892,w0989,near-synonyms: may / perhaps / maybe / probably
+w0892,w2019,near-synonyms: may / perhaps / maybe / probably
+w0892,w2558,near-synonyms: may / perhaps / maybe / probably
+w0892,w3601,near-synonyms: almost / roughly
+w0892,w4484,near-synonyms: almost / roughly
+w0899,w3229,near-synonyms: cease / end
+w0899,w4265,near-synonyms: stop / pause
+w0899,w4385,synonyms: to stop / stop
+w0899,w4633,synonyms: to stop / stop
+w0914,w3484,shared sense: may as well / might as well
+w0914,w4587,shared sense: may as well / might as well
+w0917,w0929,shared sense: however
+w0917,w1549,shared sense: anyhow / anyway
+w0929,w1544,synonyms: still / yet
+w0929,w2931,synonyms: still / yet
+w0933,w3758,near-synonyms: correspond with / corresponding
+w0933,w4406,shared sense: conform to
+w0955,w3601,near-synonyms: about / roughly
+w0955,w4484,near-synonyms: about / roughly
+w0981,w3601,near-synonyms: approximately / roughly
+w0981,w4484,near-synonyms: approximately / roughly
+w0989,w2019,near-synonyms: may / perhaps / maybe / probably
+w0994,w1003,near-synonyms: specially / especially
+w0994,w2322,near-synonyms: specially / especially
+w1003,w2181,near-synonyms: specially / especially
+w1037,w1257,shared sense: form
+w1037,w2001,shared sense: constitute
+w1066,w1426,near-synonyms: really / indeed
+w1066,w1508,shared sense: really
+w1067,w3199,near-synonyms: along with / accompany
+w1067,w4245,near-synonyms: along with / together with
+w1068,w4181,shared sense: have to
+w1068,w4708,shared sense: cannot but
+w1084,w2314,near-synonyms: gradually / step by step
+w1113,w4088,shared sense: conveniently
+w1113,w4251,near-synonyms: conveniently / convenient for
+w1123,w1340,shared sense: then
+w1123,w1350,shared sense: then
+w1123,w2270,near-synonyms: secondly / second in order
+w1141,w2113,shared sense: a bit
+w1141,w4218,shared sense: a bit / a little
+w1141,w4681,synonyms: a little / slightly
+w1143,w1689,shared sense: lack
+w1143,w1746,near-synonyms: lack / not enough
+w1154,w2307,near-synonyms: very / extremely
+w1154,w3537,near-synonyms: extremely / terribly
+w1228,w4397,shared sense: accumulate
+w1257,w1625,shared sense: form
+w1294,w2553,shared sense: what
+w1295,w1319,shared sense: action; deed
+w1298,w1687,near-synonyms: with regard to / as for
+w1299,w2909,shared sense: way / approach
+w1299,w3334,narrower: way / way out
+w1300,w1981,shared sense: deal with
+w1300,w3170,shared sense: deal with
+w1304,w2827,near-synonyms: too / also
+w1304,w4245,near-synonyms: as well as / together with
+w1308,w3547,near-synonyms: control / dominate
+w1313,w4626,narrower: exist / exist side by side
+w1315,w1742,near-synonyms: keep / retain
+w1317,w1536,shared word: target
+w1317,w3894,near-synonyms: goal / aim
+w1336,w1934,near-synonyms: make use of / take advantage of
+w1336,w2114,near-synonyms: make use of / put to use
+w1336,w3851,near-synonyms: make use of / put to good use
+w1339,w3660,near-synonyms: meaning / connotation
+w1340,w4211,narrower: then / and then
+w1344,w1401,shared sense: cause
+w1344,w1446,shared sense: create
+w1344,w3468,shared sense: create
+w1344,w4022,shared sense: cause
+w1346,w2930,shared sense: support; sustain
+w1348,w3060,shared sense: lose
+w1350,w3298,shared sense: standard; norm
+w1350,w4211,narrower: then / and then
+w1351,w1634,shared sense: face
+w1362,w3098,near-synonyms: human race / human
+w1367,w1399,near-synonyms: fact / reality
+w1381,w3137,shared sense: considerably / quite
+w1382,w1397,shared sense: achieve
+w1382,w2646,near-synonyms: implement / put into effect
+w1382,w4281,shared sense: implement
+w1388,w3318,shared sense: establish
+w1388,w4173,shared sense: establish
+w1388,w4631,shared sense: establish
+w1397,w2652,near-synonyms: attain / reach
+w1400,w2896,shared sense: constantly
+w1400,w4104,near-synonyms: constantly / always
+w1400,w4210,near-synonyms: nonstop / on end
+w1401,w4022,shared sense: cause
+w1402,w1536,shared sense: focus
+w1402,w3774,shared sense: focus
+w1414,w1664,shared sense: if / in case
+w1414,w1870,shared sense: if / in case
+w1414,w4416,shared sense: if / in case
+w1414,w4969,shared sense: if / in case
+w1419,w2317,shared sense: clearly
+w1419,w2828,shared sense: obviously
+w1421,w2765,shared sense: situation / circumstances
+w1421,w2837,shared sense: situation / circumstances
+w1421,w3113,shared sense: situation / circumstances
+w1421,w3194,shared sense: condition
+w1421,w3324,shared sense: situation / circumstances
+w1421,w3563,shared sense: state
+w1421,w3827,narrower: situation / overall situation
+w1421,w3977,shared sense: situation / circumstances
+w1426,w1508,near-synonyms: indeed / really
+w1442,w3563,narrower: extent / extent reached
+w1446,w3468,shared sense: create
+w1487,w1934,shared sense: take
+w1487,w4517,shared sense: take
+w1536,w2094,near-synonyms: focus on / center on
+w1536,w3774,shared sense: focus
+w1539,w1849,shared sense: object
+w1544,w2461,near-synonyms: as before / as usual
+w1544,w3503,synonyms: still / yet
+w1544,w3764,shared sense: as before
+w1557,w2185,shared sense: there is no need
+w1581,w2724,near-synonyms: avoid / prevent
+w1581,w3322,narrower: avoid / in order to avoid
+w1581,w3723,shared sense: avoid
+w1606,w2921,near-synonyms: according to / on the basis of
+w1606,w4627,near-synonyms: according to / on the basis of
+w1606,w4689,shared sense: rely on
+w1609,w4572,shared sense: otherwise
+w1620,w2724,shared sense: prevent
+w1620,w3240,near-synonyms: block / obstruct
+w1620,w4385,near-synonyms: prevent; block / stop
+w1625,w2001,near-synonyms: form / constitute
+w1630,w1672,near-synonyms: as if / seem
+w1630,w1978,near-synonyms: as if / seem
+w1630,w2813,shared sense: appear
+w1631,w2653,shared sense: oneself
+w1638,w2706,shared sense: link
+w1638,w2820,near-synonyms: combine / mix
+w1638,w4656,shared sense: link
+w1643,w1865,shared sense: besides / in addition / moreover
+w1643,w2232,shared sense: besides / in addition / moreover
+w1643,w2749,shared sense: get rid of
+w1643,w3694,shared sense: besides / in addition / moreover
+w1660,w4126,shared sense: domain
+w1663,w4816,near-synonyms: after all / in the final analysis
+w1664,w1870,shared sense: if / in case
+w1664,w4416,shared sense: if / in case
+w1664,w4969,shared sense: if / in case
+w1672,w1978,near-synonyms: as if / seem
+w1672,w3714,shared sense: as if; like
+w1689,w1746,near-synonyms: lack / not enough
+w1692,w2436,near-synonyms: repeat / over and over again
+w1692,w3838,near-synonyms: repeat / repeatedly
+w1697,w2063,near-synonyms: mark / emblem
+w1697,w3145,shared sense: mark
+w1708,w3823,shared sense: factor / element
+w1717,w2450,shared sense: suffer
+w1717,w2743,shared sense: suffer
+w1717,w2771,shared sense: bear
+w1717,w2911,shared sense: suffer
+w1717,w4742,shared sense: suffer
+w1724,w2001,shared sense: composition / compose
+w1724,w4182,near-synonyms: structure / frame
+w1734,w1830,near-synonyms: respectively / respective
+w1742,w2636,near-synonyms: retain / keep
+w1783,w2599,shared sense: shift
+w1783,w3615,near-synonyms: change / transition
+w1783,w4379,near-synonyms: change / transition
+w1783,w4531,shared sense: change
+w1787,w3816,near-synonyms: result / consequences
+w1811,w4662,synonyms: all in all / in a word
+w1865,w2232,shared sense: besides / in addition / moreover
+w1865,w3694,shared sense: besides / in addition / moreover
+w1908,w4572,shared sense: otherwise
+w1934,w4517,shared sense: take
+w1947,w2733,shared sense: even if
+w1965,w2330,near-synonyms: thus / therefore
+w1965,w3889,near-synonyms: thus / therefore
+w1978,w3714,shared sense: as if; like
+w1981,w3170,shared sense: deal with
+w1991,w2546,shared sense: possess; have
+w2019,w2558,near-synonyms: may / perhaps / maybe / probably
+w2046,w3486,shared sense: finally / eventually
+w2046,w3601,shared sense: on the whole
+w2048,w2599,shared sense: transfer
+w2063,w3145,shared sense: symbol
+w2065,w2154,shared sense: nature
+w2065,w3724,shared sense: essence
+w2070,w2646,near-synonyms: put into practice / put into effect
+w2079,w2520,shared sense: inevitably / inevitable
+w2079,w3609,near-synonyms: hard to avoid / inevitable
+w2079,w3650,near-synonyms: inevitable / be bound to
+w2079,w4549,near-synonyms: inevitable / be bound to
+w2093,w2256,synonyms: no wonder
+w2099,w4473,near-synonyms: incidentally / by chance
+w2113,w4681,near-synonyms: slightest / slightly
+w2114,w3851,shared sense: put to use
+w2115,w4098,shared word: contain
+w2115,w4355,shared word: contain
+w2115,w4529,shared word: contain
+w2181,w2322,near-synonyms: specially / especially
+w2181,w3534,near-synonyms: deliberately / intentionally
+w2181,w4956,shared sense: intentionally
+w2184,w4267,shared sense: promote
+w2217,w2674,near-synonyms: hinder / obstacle
+w2217,w4253,near-synonyms: hinder / obstruct
+w2232,w3694,shared sense: besides / in addition / moreover
+w2276,w2428,shared sense: one after another
+w2276,w4210,near-synonyms: one after another / in succession
+w2276,w4271,near-synonyms: one after another / successively
+w2278,w4022,shared word: cause
+w2297,w2455,near-synonyms: would rather / rather than
+w2297,w2948,near-synonyms: would rather / rather than
+w2297,w4952,near-synonyms: would rather / rather than
+w2307,w3137,near-synonyms: very / quite
+w2307,w3454,near-synonyms: very / extremely
+w2307,w3537,near-synonyms: extremely / terribly
+w2317,w2828,near-synonyms: clear / obviously
+w2318,w2763,near-synonyms: all / every
+w2318,w3535,near-synonyms: all / every
+w2318,w4272,near-synonyms: all / every
+w2330,w3889,shared sense: therefore / as a result
+w2374,w2428,near-synonyms: take turns / in turn
+w2428,w4210,near-synonyms: one after the other / in succession
+w2428,w4271,shared sense: successively
+w2436,w3838,synonyms: again and again / repeatedly
+w2450,w2743,shared sense: suffer
+w2450,w2911,shared sense: suffer
+w2450,w4742,shared sense: suffer
+w2455,w2948,near-synonyms: would rather / rather than
+w2455,w4952,near-synonyms: would rather / rather than
+w2461,w2931,near-synonyms: still / as usual
+w2493,w2537,near-synonyms: hastily / promptly
+w2493,w4138,near-synonyms: hastily / immediately
+w2520,w3609,synonyms: hard to avoid / unavoidably
+w2537,w4138,near-synonyms: at once / immediately
+w2537,w4276,near-synonyms: at once / immediately
+w2541,w2547,near-synonyms: oh / wow
+w2542,w2544,same job: sentence-final modal particle
+w2547,w3052,near-synonyms: oh / wow
+w2564,w4142,shared sense: nothing more
+w2565,w2661,narrower: hum / hum (showing agreement)
+w2576,w2760,shared sense: ensure
+w2612,w2640,shared sense: try; attempt
+w2612,w4732,narrower: try / try hard to
+w2619,w4065,shared sense: source / origin
+w2619,w4237,shared sense: source / origin
+w2619,w4299,shared sense: source / origin
+w2623,w2653,shared sense: self
+w2640,w4732,near-synonyms: attempt / try hard to
+w2646,w4281,shared sense: put into effect
+w2663,w4786,near-synonyms: power / impetus
+w2674,w3240,near-synonyms: obstacle / hinder
+w2674,w4253,near-synonyms: obstacle / obstruct
+w2706,w4656,shared sense: link
+w2743,w2911,shared sense: suffer
+w2743,w3778,near-synonyms: encounter / meet; come upon
+w2743,w4742,shared sense: suffer
+w2765,w2837,shared sense: situation / circumstances
+w2765,w3113,shared sense: situation / circumstances
+w2765,w3324,shared sense: situation / circumstances
+w2765,w3827,narrower: situation / overall situation
+w2765,w3977,shared sense: situation / circumstances
+w2775,w2800,near-synonyms: exclude / eliminate
+w2800,w2884,shared sense: remove
+w2800,w4633,near-synonyms: eliminate / eradicate
+w2820,w4666,near-synonyms: mix / be mixed up with
+w2828,w4440,near-synonyms: undoubtedly / no doubt
+w2837,w3113,shared sense: situation / circumstances
+w2837,w3324,shared sense: situation / circumstances
+w2837,w3827,narrower: situation / overall situation
+w2845,w4676,near-synonyms: sign / omen
+w2855,w4218,narrower: too / a bit too
+w2896,w3424,near-synonyms: always / consistent
+w2911,w4742,shared sense: suffer
+w2921,w4627,near-synonyms: according to / on the basis of
+w2922,w4222,shared sense: remedy
+w2931,w3503,synonyms: still / yet
+w2931,w3764,near-synonyms: still / as before
+w2975,w3889,near-synonyms: so that / as a result
+w3041,w3261,near-synonyms: restrain / restrict
+w3041,w4275,near-synonyms: restrain / restrict
+w3041,w4355,near-synonyms: restrain / keep within limits
+w3069,w3098,near-synonyms: humanity / human
+w3113,w3324,shared sense: situation / circumstances
+w3113,w3827,narrower: situation / overall situation
+w3113,w3977,shared sense: situation / circumstances
+w3122,w4712,narrower: exception / make an exception
+w3171,w3379,near-synonyms: sight / vision
+w3194,w3563,narrower: extent / extent reached
+w3222,w4465,near-synonyms: ruin / spoil
+w3222,w4770,near-synonyms: destroy / obliterate
+w3229,w4633,near-synonyms: end / put an end to
+w3240,w4253,shared sense: obstruct
+w3240,w4385,near-synonyms: obstruct / stop
+w3261,w3474,near-synonyms: constraint / bound
+w3261,w3980,near-synonyms: restrict / limit
+w3261,w4275,shared sense: restrict
+w3322,w3723,shared sense: to avoid
+w3324,w3977,shared sense: situation / circumstances
+w3353,w3462,near-synonyms: save / redeem
+w3353,w4222,near-synonyms: save / remedy
+w3424,w4104,near-synonyms: always / consistent
+w3454,w3537,near-synonyms: extremely / terribly
+w3462,w4222,near-synonyms: redeem / remedy
+w3484,w4587,shared sense: might as well
+w3486,w4816,near-synonyms: after all / in the final analysis
+w3520,w4572,shared sense: otherwise
+w3534,w4956,near-synonyms: deliberately / intentionally
+w3549,w4708,shared sense: can not help
+w3601,w4484,shared sense: roughly
+w3618,w3988,near-synonyms: be left over / leave over
+w3638,w3828,near-synonyms: feedback / response
+w3650,w3910,shared sense: be sure
+w3724,w3799,shared sense: essence
+w3758,w4406,near-synonyms: corresponding / correspond to
+w3821,w4065,shared sense: source / origin
+w3821,w4237,shared sense: source / origin
+w3821,w4299,shared sense: source / origin
+w3827,w3977,narrower: situation / overall situation
+w3889,w4444,near-synonyms: as a result / so that
+w3894,w4236,near-synonyms: purpose / intention
+w3980,w4275,near-synonyms: limit / restrict
+w4065,w4237,shared sense: source / origin
+w4088,w4251,near-synonyms: conveniently / convenient for
+w4088,w4544,shared sense: readily
+w4098,w4355,shared word: contain
+w4098,w4529,shared word: contain
+w4138,w4276,shared sense: immediately
+w4181,w4708,near-synonyms: have no alternative but / can not but
+w4210,w4271,near-synonyms: in succession / successively
+w4218,w4681,shared sense: a bit / a little
+w4237,w4299,shared sense: source / origin
+w4238,w4407,near-synonyms: become aware / awaken
+w4253,w4385,near-synonyms: obstruct / stop
+w4267,w4925,shared sense: develop
+w4301,w4703,near-synonyms: search / seek
+w4355,w4529,shared sense: contain
+w4430,w4491,shared sense: disintegrate
+w4468,w4490,near-synonyms: pay attention to / concern oneself with
+w4588,w4626,shared sense: side by side
+w4677,w4800,near-synonyms: for the time being / tentatively
+w4703,w4732,shared sense: strive

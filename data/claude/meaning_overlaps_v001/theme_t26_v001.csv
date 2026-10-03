@@ -1,0 +1,169 @@
+id_a,id_b,reason
+w0743,w3026,narrower: constitution / law
+w0743,w4382,narrower: constitution / law
+w0802,w1513,near-synonyms: policeman / officer
+w0809,w1541,shared sense: rule
+w0809,w2100,shared sense: rule
+w0809,w3849,near-synonyms: rule / regulation
+w1054,w4122,narrower: forbid / strictly forbid
+w1054,w4659,synonyms: forbid / ban
+w1303,w1946,shared sense: cause to perish / kill
+w1303,w2572,shared sense: to attack
+w1303,w2618,shared sense: to attack
+w1303,w3110,shared sense: slaughter / kill
+w1333,w4636,shared sense: group / faction
+w1353,w2824,narrower: leader / president
+w1353,w3616,near-synonyms: president / head of state
+w1392,w2736,shared sense: rob
+w1392,w3156,near-synonyms: rob / steal
+w1392,w4151,shared sense: rob
+w1403,w2582,near-synonyms: war / fighting
+w1403,w2719,shared sense: conflict
+w1403,w3426,near-synonyms: war / battle
+w1403,w3586,shared sense: war / go to war
+w1434,w1450,narrower: weapon / gun
+w1450,w2707,shared sense: arms
+w1450,w2823,narrower: weapon / guided missile
+w1453,w1946,near-synonyms: annihilate / destruction
+w1453,w4628,shared sense: wreck / ruin
+w1461,w3833,shared sense: threaten
+w1486,w3310,includes: right / rights and interests
+w1513,w2630,narrower: officer / general
+w1513,w3863,narrower: officer / commander
+w1541,w2020,shared word: rule
+w1541,w3110,shared word: rule
+w1541,w3849,near-synonyms: regulation / rule
+w1561,w3659,shared sense: flee
+w1598,w2811,shared sense: fair
+w1602,w2788,shared sense: authority
+w1602,w3105,shared sense: authority
+w1602,w3430,narrower: power / political power
+w1623,w2118,shared sense: premier
+w1623,w2824,narrower: leader / chairperson
+w1627,w2569,near-synonyms: soldier / troops
+w1627,w2584,shared sense: troops
+w1646,w2807,near-synonyms: court / judiciary
+w1755,w3063,near-synonyms: revolution / revolt
+w1755,w4118,near-synonyms: revolution / uprising
+w1755,w4372,near-synonyms: revolution / rebel
+w1777,w3047,shared sense: election
+w1777,w3308,near-synonyms: to elect / be elected
+w1786,w3006,synonyms: to defend / defend
+w1786,w3028,near-synonyms: defense / to defend
+w1786,w3148,synonyms: to defend / defend
+w1786,w3968,synonyms: to defend / defend
+w1786,w4120,near-synonyms: guard / to defend
+w1789,w3251,shared sense: violate
+w1789,w4248,shared sense: violate
+w1869,w2650,near-synonyms: liberate / release
+w1882,w3035,shared sense: situation
+w1910,w3512,synonyms: comply with / follow
+w1936,w2745,shared sense: social order / public order
+w1946,w4085,near-synonyms: put an end to / abolish
+w2020,w2100,shared word: rule
+w2020,w3110,synonyms: to rule / govern
+w2020,w3858,near-synonyms: administer / to rule
+w2020,w3893,synonyms: to rule / govern
+w2044,w3773,near-synonyms: protest / demonstrate
+w2071,w2146,narrower: criminal / thief
+w2071,w3087,narrower: criminal / thief
+w2100,w3110,shared word: rule
+w2100,w3849,near-synonyms: regulation / rule
+w2118,w2824,narrower: leader / premier
+w2118,w3607,near-synonyms: prime minister / chancellor
+w2144,w2407,near-synonyms: certificate / license
+w2144,w2973,near-synonyms: certificate / license
+w2146,w2802,narrower: criminal / thief
+w2146,w3013,narrower: criminal / murderer
+w2146,w4564,narrower: criminal / gangster
+w2225,w2885,narrower: fine / punishment
+w2225,w4203,narrower: fine / punish
+w2228,w2893,near-synonyms: invade / encroach
+w2555,w3488,shared sense: vote
+w2569,w2584,synonyms: troops / army
+w2569,w2707,near-synonyms: troops / armed forces
+w2572,w2592,shared sense: assault
+w2572,w2598,shared sense: strike / attack
+w2575,w2770,near-synonyms: case / lawsuit
+w2579,w2754,near-synonyms: explode / burst out
+w2582,w2655,near-synonyms: fighting / fight
+w2582,w2987,near-synonyms: fighting / fight
+w2582,w3426,near-synonyms: combat / battle
+w2582,w3586,near-synonyms: fighting / fight
+w2582,w4042,near-synonyms: fighting / fight
+w2584,w2707,near-synonyms: army / armed forces
+w2592,w2598,near-synonyms: assault / strike
+w2592,w2618,synonyms: assault / attack
+w2597,w2780,same shown word: party / defendant
+w2597,w3253,same shown word: party / plaintiff
+w2598,w2618,shared sense: strike / attack
+w2622,w3493,near-synonyms: illegal / unauthorized
+w2630,w3863,near-synonyms: general / commander
+w2708,w3512,includes: follow / follow the tracks of
+w2719,w2844,near-synonyms: clash / confrontation
+w2736,w3156,near-synonyms: rob / steal
+w2736,w4151,shared sense: rob
+w2745,w4875,includes: public security / bureau of public security
+w2767,w2780,narrower: party (litigant) / defendant
+w2767,w3253,narrower: party (litigant) / plaintiff
+w2770,w3221,near-synonyms: case / lawsuit
+w2770,w4297,shared sense: lawsuit
+w2788,w3038,near-synonyms: authority / power
+w2789,w3409,near-synonyms: arrest / detain
+w2789,w3844,near-synonyms: arrest / capture
+w2794,w3263,near-synonyms: put to trial / hear a case
+w2802,w3087,narrower: criminal / thief
+w2811,w2869,near-synonyms: just / justice
+w2824,w3616,narrower: leader / head of state
+w2844,w2889,shared sense: resist
+w2844,w3063,shared sense: resist
+w2844,w3698,shared sense: resist
+w2885,w3679,near-synonyms: punishment / sanction
+w2885,w4203,synonyms: punishment / punish
+w2889,w3063,shared sense: resist
+w2889,w3698,shared sense: resist
+w3004,w4359,near-synonyms: conspiracy / collude
+w3006,w3028,near-synonyms: defense / defend
+w3006,w4120,near-synonyms: guard / defend
+w3013,w3087,narrower: criminal / murderer
+w3028,w3148,near-synonyms: defense / defend
+w3028,w3542,narrower: defense / national defense
+w3028,w3968,near-synonyms: defense / defend
+w3028,w4120,near-synonyms: guard / defense
+w3038,w3105,near-synonyms: power / authority
+w3038,w3430,narrower: power / political power
+w3044,w3551,synonyms: rogue / scoundrel
+w3044,w4564,near-synonyms: hoodlum / gangster
+w3063,w3698,shared sense: resist
+w3063,w4118,shared sense: revolt / uprising
+w3063,w4372,shared sense: revolt / rebel
+w3087,w4564,narrower: criminal / gangster
+w3100,w3495,near-synonyms: examine / investigate
+w3110,w3858,near-synonyms: administer / govern
+w3148,w4120,near-synonyms: guard / defend
+w3156,w3625,near-synonyms: steal / pilfer
+w3156,w4151,near-synonyms: steal / plunder
+w3178,w3198,near-synonyms: conquer / occupy
+w3227,w4085,near-synonyms: rescind / annul
+w3236,w3452,synonyms: interfere / intervene
+w3246,w3917,near-synonyms: guidelines / guiding principle
+w3246,w4815,near-synonyms: guidelines / guiding principle
+w3251,w4248,shared sense: violate
+w3253,w4127,near-synonyms: plaintiff / claimant
+w3267,w4070,near-synonyms: announcement / promulgate
+w3429,w4698,shared sense: shield
+w3431,w4052,near-synonyms: maltreat / persecute
+w3480,w3658,near-synonyms: oppression / suppress
+w3480,w4052,near-synonyms: oppression / persecution
+w3480,w4086,shared sense: repression
+w3545,w4070,shared sense: issue
+w3546,w4025,synonyms: appeal / call
+w3551,w4564,near-synonyms: scoundrel / gangster
+w3658,w4086,shared sense: suppress
+w3679,w4203,near-synonyms: sanction / punish
+w3858,w3893,near-synonyms: administer / govern
+w3917,w4815,shared sense: guiding principle
+w3968,w4120,shared sense: guard
+w4115,w4706,synonyms: frame / frame-up
+w4118,w4372,shared sense: revolt
+w4122,w4659,near-synonyms: strictly forbid / ban

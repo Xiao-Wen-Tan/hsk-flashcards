@@ -1,0 +1,36 @@
+id_a,id_b,reason
+w0057,w2157,synonyms: call / call
+w0058,w3096,overlap: request / request sb. to do sth.
+w0089,w1164,synonyms: Mr. / mister or sir
+w0103,w0297,narrower: name / surname
+w0121,w1218,overlap: hello / say hello
+w0121,w2654,synonyms: hello / hi
+w0121,w2660,overlap: hello / say hello
+w0128,w1048,synonyms: I'm sorry / sorry
+w0128,w1072,near-synonyms: I'm sorry / make an apology
+w0128,w1163,synonyms: I'm sorry / be sorry
+w0136,w2007,synonyms: goodbye / farewell
+w0136,w4467,near-synonyms: goodbye / take leave
+w0143,w0156,shared sense: you're welcome
+w0143,w0247,overlap: you are welcome / welcome
+w0143,w0654,near-synonyms: that's all right / all right
+w0143,w2366,synonyms: that's all right / it doesn't matter
+w0156,w0247,overlap: you're welcome / welcome
+w0156,w0654,near-synonyms: you're welcome / no problem
+w0470,w1093,near-synonyms: wish / congratulate
+w0654,w2366,near-synonyms: no problem / it doesn't matter
+w1043,w1048,shared sense: excuse / excuse me
+w1043,w2535,shared sense: excuse / excuse me
+w1048,w1072,near-synonyms: sorry / make an apology
+w1048,w1163,synonyms: sorry / be sorry
+w1048,w2535,shared sense: excuse me
+w1072,w1163,near-synonyms: make an apology / be sorry
+w1195,w4625,synonyms: politeness / courtesy
+w1218,w2161,near-synonyms: greet / send a greeting
+w1218,w2654,overlap: say hello / hi
+w1218,w2660,"synonyms: greet, say hello / say hello"
+w1218,w4768,near-synonyms: greet / exchange greetings
+w2007,w4467,near-synonyms: farewell / take leave
+w2161,w4768,near-synonyms: send a greeting / exchange greetings
+w2654,w2660,overlap: hi / say hello
+w4945,w4992,near-synonyms: don't deserve / undeserved compliment

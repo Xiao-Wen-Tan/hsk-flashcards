@@ -1,0 +1,86 @@
+id_a,id_b,reason
+w0023,w0061,narrower: go / go back
+w0023,w0178,narrower: go / go out
+w0023,w0185,full meanings share: go; leave
+w0029,w0105,near-synonyms: look / see
+w0029,w0812,narrower: look / look (into the mirror)
+w0029,w1763,narrower: look / look at
+w0029,w2629,narrower: look / fix one's eyes on
+w0029,w3491,full meanings share: watch
+w0029,w4254,narrower: look / gaze
+w0029,w4941,narrower: look / look around
+w0030,w0769,near-synonyms: make / do
+w0030,w1293,near-synonyms: make / do
+w0056,w3555,full meanings share: open
+w0105,w1763,full meanings share: see
+w0105,w3496,narrower: see / witness
+w0177,w4087,full meanings share: wait
+w0185,w1188,narrower: walk / take a walk
+w0193,w1438,synonyms: seek / look for
+w0263,w2227,"synonyms: relax, have a rest / to rest"
+w0264,w0563,narrower: wash / take a bath
+w0264,w3929,narrower: wash / bath
+w0338,w0357,full meanings share: take
+w0338,w0820,full meanings share: take
+w0338,w1473,narrower: carry / carry on the back
+w0338,w3215,narrower: carry / carry in both hands
+w0338,w3350,near-synonyms: carry / (take) with
+w0338,w3526,narrower: carry / carry on the shoulder
+w0338,w4141,near-synonyms: take along / bring
+w0338,w4821,narrower: carry / carry on the arm
+w0357,w0820,full meanings share: take
+w0357,w2625,narrower: hold / hold level with both hands
+w0357,w3016,narrower: take / take out
+w0357,w3215,narrower: hold / hold in both hands
+w0357,w3789,narrower: hold / hold in the mouth
+w0357,w4141,narrower: take / take along
+w0550,w0621,narrower: to brush / brush one's teeth
+w0563,w3929,synonyms: bath / take a bath
+w0681,w1902,full meanings share: pull
+w0681,w3271,near-synonyms: pull / drag
+w0737,w0934,full meanings share: lie down
+w0737,w3017,full meanings share: lie / lie down
+w0798,w2963,full meanings share: hang
+w0820,w3016,narrower: take / take out
+w0820,w4141,narrower: take / take along
+w0863,w2730,near-synonyms: wide awake / wake
+w0934,w3017,narrower: lie / lie down
+w1006,w1872,narrower: throw away / to throw
+w1006,w3313,near-synonyms: throw away / toss
+w1098,w1551,full meanings share: move
+w1098,w3556,full meanings share: move
+w1410,w2923,full meanings share: rush
+w1410,w3507,near-synonyms: rush / run quickly
+w1410,w4080,narrower: rush / rush about
+w1462,w4087,full meanings share: wait
+w1551,w3556,synonyms: move / to move
+w1763,w2629,narrower: look at / fix one's eyes on
+w1763,w3491,near-synonyms: look at / watch
+w1763,w4254,narrower: look at / gaze
+w1771,w2872,narrower: step / step on
+w1771,w3180,narrower: step / step on
+w1771,w4344,synonyms: step on / tread on
+w1778,w4242,synonyms: shake / to shake
+w1832,w1872,full meanings share: throw
+w1832,w2955,full meanings share: cut
+w1832,w3565,full meanings share: chop
+w1872,w3313,near-synonyms: to throw / toss
+w1944,w3447,synonyms: pick up
+w1999,w4911,full meanings share: help sb. up / by the arm
+w2022,w2923,full meanings share: rush
+w2022,w3507,near-synonyms: rush / run quickly
+w2022,w4080,narrower: rush / rush about
+w2168,w4087,full meanings share: wait
+w2242,w3180,full meanings share: pass
+w2625,w3215,near-synonyms: hold with both hands
+w2629,w3491,near-synonyms: watch / gaze at
+w2629,w4254,synonyms: gaze / stare at
+w2730,w4059,near-synonyms: wide awake / wake
+w2759,w4192,narrower: tie / tie up
+w2872,w4344,narrower: step / tread on
+w2955,w3565,near-synonyms: cut / hack
+w3116,w3271,narrower: drag / drag for
+w3180,w4344,narrower: step / tread on
+w3350,w4141,near-synonyms: take along / (take) with
+w3491,w4254,synonyms: watch / gaze
+w3688,w4005,full meanings share: rub

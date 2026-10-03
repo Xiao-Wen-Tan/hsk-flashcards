@@ -1,0 +1,60 @@
+id_a,id_b,reason
+w0110,w0837,synonyms: good-looking (pretty; beautiful) / beautiful
+w0110,w0875,near-synonyms: good-looking / handsome
+w0110,w2326,near-synonyms: good-looking / handsome
+w0126,w0572,narrows: clothing / trousers
+w0126,w0595,narrows: clothing / shirt
+w0126,w0599,narrows: clothing / skirt
+w0126,w1331,full meanings share dress
+w0126,w1661,synonyms: clothing / dress; clothing
+w0126,w2260,narrows: clothing / jeans
+w0126,w3014,narrows: clothing / fashionable dress
+w0126,w3219,narrows: clothing / uniform
+w0126,w4797,synonyms: clothing / clothes
+w0126,w4963,narrows: clothing / cheongsam
+w0126,w4970,narrows: clothing / down jacket
+w0231,w1661,near-synonyms: wear; put on / dress
+w0231,w2540,narrows: wear / wear a tie
+w0476,w0627,narrows: shoe / leather shoes
+w0531,w3885,near-synonyms: fat / plump
+w0538,w2451,near-synonyms: thin / slim
+w0572,w1661,narrows: dress; clothing / trousers
+w0572,w2260,narrows: trousers / jeans
+w0572,w4797,narrows: clothes / trousers
+w0595,w1661,narrows: dress; clothing / shirt
+w0595,w4797,narrows: clothes / shirt
+w0599,w1661,narrows: dress; clothing / skirt
+w0599,w4797,narrows: clothes / skirt
+w0626,w1818,full meanings share height (stature)
+w0926,w2540,narrows: wear / wear a tie
+w1039,w1499,full meanings share fashionable
+w1039,w2308,synonyms: popular (fashionable) / in vogue
+w1146,w1331,near-synonyms: dress up / adorn
+w1146,w1661,narrows: dress / dress up
+w1146,w2901,synonyms: dress up; make up / make up
+w1331,w1661,full meanings share dress
+w1331,w4797,full meanings share dress / clothes
+w1485,w2418,narrows: cloth / silk cloth
+w1499,w2308,synonyms: fashion (fashionable) / in vogue
+w1499,w3014,narrows: fashion / fashionable dress
+w1499,w3687,near-synonyms: fashion / style
+w1661,w2260,narrows: dress; clothing / jeans
+w1661,w3014,narrows: dress; clothing / fashionable dress
+w1661,w3219,narrows: dress; clothing / uniform
+w1661,w4797,synonyms: dress; clothing / clothes
+w1661,w4963,narrows: dress; clothing / cheongsam
+w1661,w4970,narrows: dress; clothing / down jacket
+w2260,w4797,narrows: clothes / jeans
+w2672,w3687,near-synonyms: styling / style
+w2680,w4755,narrows: expression / expression in one's eyes
+w2999,w4680,near-synonyms: match / fit
+w3014,w4797,narrows: clothes / fashionable dress
+w3029,w3084,near-synonyms: external (outlook) / appearance
+w3029,w4077,near-synonyms: external (outlook) / appearance
+w3029,w4312,near-synonyms: external (outlook) / appearance
+w3084,w4077,synonyms: appearance / face; appearance
+w3219,w4797,narrows: clothes / uniform
+w3343,w4755,near-synonyms: attitude; posture / demeanor
+w4077,w4312,synonyms: face; appearance / appearance
+w4797,w4963,narrows: clothes / cheongsam
+w4797,w4970,narrows: clothes / down jacket

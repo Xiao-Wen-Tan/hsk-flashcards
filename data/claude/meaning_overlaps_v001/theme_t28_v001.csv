@@ -1,0 +1,73 @@
+id_a,id_b,reason
+w0429,w1782,narrows: story / legend
+w0429,w2155,narrows: story / legend
+w0429,w3234,narrows: story / fairy tale
+w0429,w4848,narrows: story / fable
+w0437,w3387,near-synonyms: past / history
+w0496,w1796,shared sense: culture / civilized (civilization; culture)
+w0560,w2433,narrows: holiday / New Year's Eve
+w0560,w2490,narrows: holiday / New Year's Day
+w0560,w2497,narrows: holiday / National Day
+w0560,w4792,narrows: holiday / the Lantern Festival
+w0560,w5021,narrows: holiday / the Dragon Boat Festival
+w0560,w5031,narrows: holiday / the Double Ninth Festival
+w0878,w1423,narrows: art / work (of art)
+w0878,w3541,narrows: art / sculpture
+w0878,w4270,includes: art / literature and art
+w0878,w4362,narrows: art / calligraphy
+w0878,w4561,narrows: art / art work
+w1019,w1424,shared sense: age / modern times (modern age)
+w1019,w2301,near-synonyms: modern times / contemporary
+w1019,w2501,shared sense: modern times
+w1284,w2092,narrows: a drama / Beijing Opera
+w1284,w2905,narrows: drama / Beijing Opera
+w1420,w2469,near-synonyms: custom / tradition
+w1420,w3046,near-synonyms: heritage / tradition
+w1420,w3923,near-synonyms: custom / tradition
+w1420,w4983,near-synonyms: local customs / tradition
+w1423,w2335,narrows: art / work (of art)
+w1423,w2758,near-synonyms: creation / work (of art)
+w1423,w3102,near-synonyms: works / work (of art)
+w1423,w4561,synonyms: work (of art) / art work
+w1458,w4843,near-synonyms: heroic / hero
+w1645,w2262,shared sense: classical / the classics (classical)
+w1690,w1976,narrows: literature / poem
+w1732,w4890,near-synonyms: commemorate / mourn
+w1782,w3234,near-synonyms: fairy tale / legend
+w1782,w4848,near-synonyms: fable / legend
+w1838,w2815,near-synonyms: religion / belief
+w1976,w4270,includes: literature / literature and art
+w1976,w4486,narrows: literature / prose
+w2058,w4601,near-synonyms: philosophy / worldview
+w2083,w2160,overlap: ancient / ancient times
+w2083,w3872,near-synonyms: ancient / antique
+w2092,w2905,synonyms: a drama / drama
+w2155,w3234,shared sense: fairy tale / legend (fairy tale)
+w2155,w4848,near-synonyms: fable / legend
+w2335,w3541,narrows: art / sculpture
+w2335,w4270,includes: art / literature and art
+w2335,w4362,narrows: art / calligraphy
+w2335,w4489,narrows: art (painting) / portrait
+w2335,w4561,narrows: art / art work
+w2341,w2617,narrows: ceremony / opening ceremony
+w2341,w3094,narrows: ceremony / opening ceremony
+w2469,w4983,narrows: custom / local customs and practices
+w2484,w3403,near-synonyms: firecracker / fireworks
+w2484,w5040,near-synonyms: firecracker / fireworks
+w2501,w3387,narrows: past / not-very-distant past
+w2532,w4860,narrows: dynasty / past dynasties
+w2758,w3102,near-synonyms: creation / works
+w2815,w3775,narrows: belief / superstition
+w2927,w3781,near-synonyms: inspiration / revelation
+w3046,w3501,near-synonyms: cultural relic / heritage
+w3102,w4561,narrows: works / art work
+w3234,w4848,near-synonyms: fable / fairy tale
+w3387,w4860,narrows: past / past dynasties
+w3478,w4184,shared sense: revive
+w3501,w3872,near-synonyms: antique / cultural relic
+w3541,w4164,near-synonyms: work of carving / sculpture
+w3781,w4823,near-synonyms: enlightenment / edification
+w3923,w4983,narrows: custom / local customs and practices
+w4494,w4907,synonyms: red packet / lucky money
+w4579,w4731,narrows: saying / motto
+w4943,w4951,near-synonyms: known to all the world / worldwide attention

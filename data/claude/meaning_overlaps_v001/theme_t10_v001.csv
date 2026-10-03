@@ -1,0 +1,56 @@
+id_a,id_b,reason
+w0241,w2446,includes: medicine / internal medicine
+w0241,w3312,narrows: medicine / pill
+w0262,w2245,synonyms: tired / fatigue
+w0262,w3998,synonyms: tired / weary
+w0301,w0567,narrows: fall sick / have a cold
+w0301,w1105,near-synonyms: fall ill / feel ill
+w0301,w2509,narrows: fall sick / catch cold
+w0301,w2613,shared sense: fall ill / illness
+w0301,w2628,near-synonyms: fall sick / feel sick
+w0407,w0459,shared sense: mouth
+w0407,w3930,includes: mouth / mouth cavity
+w0413,w3815,near-synonyms: examine / assay
+w0445,w3475,near-synonyms: healthy / sound
+w0459,w3930,includes: mouth / mouth cavity
+w0486,w3717,synonyms: hungry / hunger
+w0497,w1105,shared sense: hurt / suffer pain
+w0497,w1441,shared sense: hurt / harmed
+w0567,w2509,synonyms: catch a cold / catch cold
+w0645,w2551,synonyms: die / death
+w0720,w2390,includes: life / life span
+w1044,w1768,shared sense: stomach
+w1105,w2628,near-synonyms: feel unwell / feel sick
+w1259,w2718,synonyms: injection / inject
+w1324,w4504,shared sense: treat / cure
+w1395,w3289,synonyms: save / rescue
+w1396,w3336,shared sense: restore / recover
+w1396,w4562,near-synonyms: restore / recuperate
+w1474,w1820,shared sense: back / lower back
+w1553,w4527,narrows: breathe / pant
+w1611,w1700,shared sense: heart
+w1700,w2984,narrows: organ / heart
+w1768,w2984,narrows: organ / stomach
+w1825,w2984,narrows: organ / lungs
+w1837,w2710,shared sense: energy
+w1916,w2325,narrows: physically disabled / blind
+w1992,w2969,shared sense: position
+w2076,w4504,includes: prevent / prevention and cure
+w2076,w4916,narrows: prevent / epidemic prevention
+w2105,w4675,shared sense: absorb
+w2119,w4604,narrows: bone / vertebra
+w2245,w3998,synonyms: fatigue / weary
+w2325,w3605,narrows: physically disabled / paralysis
+w2325,w4649,narrows: physically disabled / lame
+w2325,w4909,narrows: physically disabled / deaf-mute
+w2390,w3258,includes: life / life span
+w2613,w2968,narrows: disease / cancer
+w2641,w3720,includes: patient / outpatient
+w2721,w2968,near-synonyms: tumor / cancer
+w3262,w3678,near-synonyms: anaesthetize / benumb
+w3262,w3762,shared sense: anaesthetize / anaesthetic
+w3336,w4562,near-synonyms: recover / recuperate
+w3605,w3678,shared sense: paralysis
+w3678,w3762,synonyms: benumb / numb
+w3826,w4044,includes: take care of / take good care of one's health
+w4504,w4916,shared sense: prevention

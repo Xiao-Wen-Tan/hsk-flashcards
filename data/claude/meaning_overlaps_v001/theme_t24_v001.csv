@@ -1,0 +1,460 @@
+id_a,id_b,reason
+w0016,w0828,share sense good: great / good
+w0016,w3416,near-synonyms: fine / good
+w0034,w1425,near-synonyms: big / huge
+w0034,w1456,near-synonyms: big / huge
+w0034,w1764,share sense large: big / large-scale
+w0034,w2347,near-synonyms: big / vast
+w0034,w3330,near-synonyms: big / huge
+w0034,w3806,near-synonyms: big / vast
+w0034,w4208,near-synonyms: big / vast
+w0043,w3597,share sense become smaller: small / shrink
+w0043,w4337,narrower: small / tiny
+w0160,w2977,near-synonyms: right / rightful
+w0160,w3489,share sense proper: right / appropriate
+w0160,w4284,share sense proper: right / appropriate
+w0192,w3443,narrower: new / brand-new
+w0192,w4380,share sense new: new / novel
+w0194,w1671,share sense fast: fast / rapid
+w0194,w4193,near-synonyms: fast / rapidly
+w0194,w4209,synonyms: fast / quick
+w0195,w2087,share sense compare: comparison / contrast
+w0195,w3937,share sense compare: comparison / contrast
+w0207,w2427,narrower: long (history) / long
+w0212,w3785,near-synonyms: tall (high) / lofty
+w0235,w2929,share sense mistake: mistake / wrong
+w0242,w1027,share sense dark: dark / black
+w0242,w1723,share sense black: green / black
+w0242,w4960,narrower: black / pitch-black
+w0333,w1931,share sense alike: similar / look alike
+w0333,w2614,near-synonyms: likeness / look alike
+w0344,w0519,synonyms: same / the same
+w0344,w4692,near-synonyms: equal / same
+w0344,w4809,near-synonyms: roughly the same / same
+w0347,w0457,near-synonyms: major / important
+w0347,w3266,near-synonyms: primary / important
+w0350,w0503,share sense old: aged / old
+w0391,w0805,share sense difficult: trouble / difficult
+w0391,w1016,share sense hard: difficult / hard
+w0391,w2399,share sense difficult: arduous / difficult
+w0391,w4262,share sense hard: difficult / hard
+w0391,w4495,near-synonyms: strenuous / difficult
+w0402,w1873,near-synonyms: relatively / fairly
+w0411,w1488,share sense unexpected: sudden / unexpected
+w0415,w3187,share sense easy: convenient / easy
+w0420,w2480,share sense simple: easy / plain and simple
+w0420,w3187,share sense easy: convenient / easy
+w0420,w4421,share sense simple: easy / simple and crude
+w0426,w0911,share sense clear: bright / clear
+w0426,w1637,narrower: clear-cut / clear
+w0426,w2209,near-synonyms: transparent / clear
+w0426,w4345,share sense clear: limpid / clear
+w0433,w0986,share sense sound: sound / make a sound
+w0443,w1065,share sense lower: low / lower
+w0448,w2187,share sense bad: adverse / bad
+w0448,w4897,share sense poor: poor / bad
+w0450,w4935,near-synonyms: briefness / short
+w0457,w1368,share sense main: major / basic
+w0457,w3266,near-synonyms: primary / major
+w0474,w2187,share sense bad: adverse / bad
+w0494,w1723,share sense blue: green / blue
+w0498,w1997,near-synonyms: odd / strange
+w0498,w2634,near-synonyms: odd / abnormal
+w0498,w4226,near-synonyms: odd / unusual
+w0503,w4327,near-synonyms: old / outmoded
+w0519,w4692,near-synonyms: equal / same
+w0519,w4809,near-synonyms: roughly the same / same
+w0536,w2177,share sense quiet: noiseless / quiet
+w0536,w3485,near-synonyms: silently / noiseless
+w0536,w3992,share sense quiet: noiseless / quiet
+w0604,w2591,near-synonyms: notable / famous
+w0689,w0852,share sense true: genuine / true
+w0689,w0953,share sense real: genuine / real
+w0689,w1407,share sense true: genuine / true
+w0697,w1432,near-synonyms: direct / straight
+w0725,w0825,share sense regular: normal / formal
+w0725,w1956,near-synonyms: ordinary / normal
+w0725,w3323,near-synonyms: ordinary / normal
+w0725,w3648,share sense regular: normal / regular
+w0739,w3705,near-synonyms: grave / severe
+w0739,w3793,share sense acute: grave / violent
+w0771,w1429,near-synonyms: be filled with / filled
+w0771,w1641,near-synonyms: filled / full
+w0771,w3031,near-synonyms: filled / full
+w0782,w1674,share sense deep: profound / deep
+w0782,w4723,share sense deep: profound / deep
+w0791,w3434,synonyms: fake / false
+w0804,w1574,share sense form: image / appearance
+w0804,w1662,share sense appearance: appearance / outer appearance
+w0804,w2139,share sense form: appearance / form
+w0804,w3577,share sense form: appearance / form
+w0805,w0879,same root: trouble / troublesome
+w0805,w2204,share sense difficult: trouble / difficult
+w0805,w2731,share sense difficult: trouble / difficult
+w0810,w2977,near-synonyms: right / rightful
+w0810,w3489,share sense proper: right / appropriate
+w0810,w4284,share sense proper: right / appropriate
+w0823,w2716,share sense confusion: messy / confusion
+w0824,w0966,share sense fit: fit / suit
+w0824,w1014,near-synonyms: suitable / suit
+w0824,w3489,share sense appropriate: appropriate / suit
+w0824,w3966,near-synonyms: be suitable / suit
+w0824,w4284,share sense appropriate: appropriate / suit
+w0825,w3648,share sense regular: regular / formal
+w0828,w0910,near-synonyms: great / outstanding
+w0828,w1425,share sense great: huge / great
+w0828,w1556,near-synonyms: great / outstanding
+w0828,w1601,share sense good: great / good
+w0828,w2143,near-synonyms: great / amazing
+w0828,w2573,near-synonyms: great / super
+w0828,w3011,near-synonyms: first-rate / great
+w0828,w3071,near-synonyms: great / wonderful
+w0828,w3315,near-synonyms: great / outstanding
+w0828,w3450,near-synonyms: great / marvellous
+w0828,w3825,near-synonyms: great / outstanding
+w0828,w4177,share sense excellent: great / excellent
+w0828,w4288,share sense excellent: great / excellent
+w0839,w1619,near-synonyms: break into pieces / broken
+w0844,w2929,share sense mistake: mistake / wrong
+w0845,w1167,near-synonyms: qualified / up to standard
+w0852,w0953,share sense real: true / real
+w0873,w2591,near-synonyms: notable / famous
+w0881,w2458,narrower: bright-colored / bright
+w0881,w3071,share sense beautiful: wonderful / bright
+w0881,w3281,near-synonyms: brilliant / bright
+w0881,w3606,near-synonyms: brilliance / bright
+w0881,w3728,narrower: dazzling / bright
+w0881,w4661,share sense beautiful: beautiful / bright
+w0910,w1425,share sense great: huge / outstanding
+w0910,w1922,share sense outstanding: prominent / outstanding
+w0910,w3011,near-synonyms: first-rate / outstanding
+w0910,w4132,share sense superior: superior / outstanding
+w0910,w4177,synonyms: excellent / outstanding
+w0910,w4288,synonyms: excellent / outstanding
+w0911,w1326,share sense clear: bright / clear
+w0911,w2458,narrower: bright-colored / bright
+w0911,w2857,share sense clear: bright / clear
+w0911,w3281,near-synonyms: brilliant / bright
+w0911,w3606,near-synonyms: brilliance / bright
+w0911,w3728,narrower: dazzling / bright
+w0911,w3792,share sense clear: bright / clear
+w0911,w4375,near-synonyms: resounding / resonant
+w0928,w2059,share word light: bright / light
+w0928,w2068,share sense light (color): shallow / light
+w0939,w3705,near-synonyms: grave / severe
+w0939,w3793,share sense acute: grave / violent
+w0953,w1407,share sense real: true / real
+w0966,w1014,share sense suitable: fit / suitable
+w0966,w3489,share sense appropriate: appropriate / fit
+w0966,w3966,share sense suitable: fit / be suitable
+w0966,w4067,share sense appropriate: fit / properly
+w0966,w4284,share sense appropriate: appropriate / fit
+w1011,w1065,share sense reduce: lower / reduce
+w1011,w2098,same meaning: reduce / to reduce
+w1011,w3597,near-synonyms: shrink / reduce
+w1014,w3489,synonyms: appropriate / suitable
+w1014,w3966,synonyms: suitable / be suitable
+w1014,w4284,synonyms: appropriate / suitable
+w1016,w2204,share sense hard: difficult / hard
+w1016,w2399,share sense hard: arduous / hard
+w1016,w2731,share sense hard: difficult / hard
+w1016,w3983,near-synonyms: firm / hard
+w1016,w4068,near-synonyms: firm / hard
+w1016,w4103,near-synonyms: solid / hard
+w1016,w4488,share sense solid: sturdy / hard
+w1016,w4495,share sense hard: strenuous / hard
+w1021,w4168,same root: interesting / interest
+w1024,w1179,share sense advantage: good point / merit
+w1024,w1566,share sense advantage: good point / superiority
+w1026,w3250,share sense disparity: gap / difference
+w1026,w4031,same root: differ / difference
+w1027,w4960,near-synonyms: dark / pitch-black
+w1042,w1061,near-synonyms: rich / abundant
+w1042,w3286,share sense abundant: adequate / abundant
+w1052,w3295,synonyms: exact / accurate
+w1053,w1482,near-synonyms: detailed / thorough
+w1053,w3042,share sense careful: detailed / meticulously
+w1053,w4414,near-synonyms: detailed / elaborate
+w1055,w1466,share sense round: circle / round
+w1055,w4302,share sense circle: spiral / circle
+w1065,w2098,share sense reduce: lower / to reduce
+w1074,w2194,share sense flexible: soft / flexible
+w1074,w3805,share sense flexible: soft / flexible
+w1091,w2173,share sense wide: widely / wide
+w1091,w3806,share sense wide: wide / vast
+w1091,w4037,same root: widen / wide
+w1097,w1873,share sense opposite: relatively / opposite
+w1097,w2187,share sense adverse: adverse / opposite
+w1097,w4150,share sense opposite: opposite / oppose
+w1097,w4292,share sense opposite: reverse side / opposite
+w1170,w2051,share sense defect: fault / defect
+w1179,w1566,share sense advantage: merit / superiority
+w1183,w2173,near-synonyms: widely / universal
+w1183,w3598,share sense general: universal / general
+w1187,w2269,share sense lively: lively / vivid
+w1189,w1226,share sense order: arrange / order
+w1229,w2411,share sense even: even / orderly
+w1296,w1829,near-synonyms: only / unique
+w1296,w4500,near-synonyms: only / unique
+w1309,w1677,share sense total: all-around / whole
+w1309,w1728,near-synonyms: whole / complete
+w1309,w1966,near-synonyms: whole / whole entity
+w1312,w4422,share sense overlap: overlap / layer
+w1326,w1637,narrower: clear-cut / clear
+w1326,w2209,near-synonyms: transparent / clear
+w1326,w4345,share sense clear: limpid / clear
+w1368,w3266,near-synonyms: primary / basic
+w1371,w2175,near-synonyms: kind / variety
+w1371,w2448,share sense type: type / kind
+w1406,w4735,share sense perfect: perfect / complete
+w1409,w3190,narrower: blank space / space
+w1425,w1764,near-synonyms: large-scale / huge
+w1425,w2347,near-synonyms: huge / vast
+w1425,w2507,share sense grand: huge / grand
+w1425,w3241,share sense grand: huge / magnificent
+w1425,w3406,share sense grand: huge / magnificent
+w1425,w3806,near-synonyms: huge / vast
+w1425,w4205,share sense grand: huge / magnificent
+w1425,w4208,near-synonyms: huge / vast
+w1425,w4780,share sense grand: huge / magnificent
+w1429,w1641,share sense full: be filled with / full
+w1429,w3031,share sense full: be filled with / full
+w1451,w4302,share sense circle: spiral / circle
+w1456,w1764,near-synonyms: large-scale / huge
+w1456,w2347,near-synonyms: huge / vast
+w1456,w3806,near-synonyms: huge / vast
+w1456,w4208,near-synonyms: huge / vast
+w1467,w3131,share word close: close / tight
+w1467,w3593,share sense strict: strict / tight
+w1475,w3011,near-synonyms: first-rate / top
+w1476,w2634,share sense unusual: special / abnormal
+w1476,w3086,share sense particular: specific / special
+w1476,w4226,share sense unusual: special / unusual
+w1477,w1637,share sense definite: concrete / clear-cut
+w1477,w3086,share sense specific: concrete / specific
+w1477,w3184,share sense definite: exact / concrete
+w1482,w1728,near-synonyms: thorough / complete
+w1482,w3853,near-synonyms: thorough / complete
+w1482,w4414,near-synonyms: elaborate / thorough
+w1482,w4735,near-synonyms: thorough / complete
+w1492,w2411,near-synonyms: even / flat
+w1492,w2964,share word level: level / flat
+w1492,w3730,share sense flat: plane / flat
+w1492,w4692,share sense equal: equal / flat
+w1556,w1922,share sense outstanding: prominent / outstanding
+w1556,w3011,near-synonyms: first-rate / outstanding
+w1556,w4177,synonyms: excellent / outstanding
+w1556,w4288,synonyms: excellent / outstanding
+w1560,w1568,share sense roll: to roll up / roll
+w1566,w4132,same root: superior / superiority
+w1574,w1662,share sense form: image / outer appearance
+w1574,w2139,share sense form: image / form
+w1574,w3577,share sense form: image / form
+w1596,w2049,share sense strong: concentrated / strong
+w1596,w2377,share sense strong: rugged / strong
+w1596,w2397,share sense intense: sharp / strong
+w1596,w4488,share sense strong: sturdy / strong
+w1596,w4618,near-synonyms: powerful / strong
+w1601,w1958,share sense favorable: good / advantageous
+w1601,w3416,near-synonyms: fine / good
+w1619,w3569,share sense shatter: break into pieces / smash
+w1637,w2857,narrower: clear-cut / clear
+w1637,w3184,share sense definite: exact / clear-cut
+w1637,w3792,narrower: clear-cut / clear
+w1641,w3286,share sense sufficient: adequate / full
+w1662,w2139,share sense form: outer appearance / form
+w1662,w3577,share sense form: outer appearance / form
+w1671,w4193,same sense: rapid / rapidly
+w1671,w4209,synonyms: quick / rapid
+w1674,w4290,share sense deep: profound / deep
+w1677,w1967,share sense comprehensive: all-around / comprehensive
+w1677,w2126,share sense comprehensive: all-around / comprehensive
+w1722,w2170,share sense surface: area / surface
+w1728,w3505,share sense complete: successful / complete
+w1738,w3359,share sense smell: smelly / odor
+w1764,w3330,near-synonyms: large-scale / huge
+w1815,w4187,share sense winding: to wind / tortuous
+w1815,w4370,near-synonyms: to wind / twine
+w1823,w2688,near-synonyms: magical / miraculous
+w1857,w2131,near-synonyms: superfluous / excessive
+w1873,w4150,share sense opposite: relatively / oppose
+w1922,w2591,near-synonyms: prominent / notable
+w1922,w3315,share sense outstanding: prominent / outstanding
+w1922,w3825,share sense outstanding: prominent / outstanding
+w1931,w2614,share sense similar: similar / likeness
+w1931,w4809,near-synonyms: roughly the same / similar
+w1958,w4132,share sense advantageous: superior / advantageous
+w1997,w2634,near-synonyms: strange / abnormal
+w1997,w4226,near-synonyms: strange / unusual
+w2049,w4545,share sense strong: concentrated / strong
+w2049,w4968,share sense dense: concentrated / dense
+w2051,w3112,share sense defect: fault / defect
+w2059,w2458,narrower: bright-colored / bright
+w2059,w3281,near-synonyms: brilliant / bright
+w2059,w3606,near-synonyms: brilliance / bright
+w2059,w3728,narrower: dazzling / bright
+w2096,w2264,near-synonyms: inclined / askew
+w2096,w3711,near-synonyms: tilt / askew
+w2098,w3597,share sense shrink: shrink / to reduce
+w2101,w4519,share sense vague: faint / vague
+w2102,w3250,share sense disparity: gap / difference
+w2102,w4031,same root: differ / difference
+w2120,w3045,synonyms: precious / valuable
+w2126,w4177,share sense excellent: comprehensive / excellent
+w2126,w4288,share sense excellent: comprehensive / excellent
+w2131,w2826,near-synonyms: superfluous / excessive
+w2131,w3294,near-synonyms: superfluous / extra
+w2143,w3071,near-synonyms: amazing / wonderful
+w2143,w3450,near-synonyms: amazing / marvellous
+w2173,w3806,share sense wide: widely / vast
+w2175,w2448,near-synonyms: type / variety
+w2177,w3485,share sense quietly: silently / quiet
+w2194,w4209,share sense nimble: quick / flexible
+w2204,w2399,share sense difficult: arduous / difficult
+w2204,w4262,share sense hard: difficult / hard
+w2204,w4495,near-synonyms: strenuous / difficult
+w2209,w2857,near-synonyms: transparent / clear
+w2209,w3792,near-synonyms: transparent / clear
+w2209,w4345,near-synonyms: transparent / limpid
+w2238,w3416,share sense fine: graceful / fine
+w2238,w4661,near-synonyms: beautiful / graceful
+w2264,w2833,share sense inclination: tendency / inclined
+w2264,w3711,share sense incline: inclined / tilt
+w2292,w3516,near-synonyms: practical / feasible
+w2298,w4900,near-synonyms: urgent / brook no delay
+w2347,w3330,near-synonyms: huge / vast
+w2352,w2810,same root: skill / skilled
+w2365,w4899,near-synonyms: hastily / hurriedly
+w2377,w3983,near-synonyms: firm / rugged
+w2377,w4068,near-synonyms: firm / rugged
+w2377,w4103,near-synonyms: solid / rugged
+w2377,w4488,share sense sturdy: sturdy / rugged
+w2377,w4545,share sense strong: rugged / strong
+w2397,w4545,share sense intense: sharp / strong
+w2399,w2731,share sense difficult: arduous / difficult
+w2399,w4262,share sense hard: arduous / hard
+w2399,w4495,near-synonyms: strenuous / arduous
+w2411,w3050,near-synonyms: even / flat
+w2411,w4546,near-synonyms: even / flat
+w2432,w4170,near-synonyms: uninteresting / monotonous
+w2458,w3866,narrower: bright-colored / bright
+w2480,w4421,near-synonyms: plain and simple / simple and crude
+w2507,w3241,synonyms: grand / magnificent
+w2507,w3406,synonyms: grand / magnificent
+w2507,w3777,near-synonyms: grand / spectacular
+w2507,w4205,synonyms: grand / magnificent
+w2507,w4780,synonyms: grand / magnificent
+w2633,w3226,share sense pattern: model / pattern
+w2633,w4403,share sense pattern: model / pattern
+w2634,w4226,near-synonyms: unusual / abnormal
+w2688,w3450,near-synonyms: magical / marvellous
+w2731,w4262,share sense hard: difficult / hard
+w2731,w4495,near-synonyms: strenuous / difficult
+w2810,w2950,near-synonyms: skill / technique
+w2814,w4997,near-synonyms: incomparable / unmatched
+w2854,w4147,share sense trace: mark / trace
+w2857,w4345,share sense clear: limpid / clear
+w2915,w3905,share sense weak: weak / fragile
+w2924,w3264,near-synonyms: by nature / inherent
+w2964,w3216,share sense levels: level / layer
+w2977,w3489,share sense proper: appropriate / rightful
+w2977,w4067,share sense proper: properly / rightful
+w2977,w4284,share sense proper: appropriate / rightful
+w2982,w3311,near-synonyms: disperse / distribute
+w2982,w4745,share sense scattered: disperse / fragmentary
+w2997,w3266,share sense primary: primary / original
+w2997,w4380,near-synonyms: original / novel
+w3011,w3292,near-synonyms: first-rate / top
+w3011,w3315,near-synonyms: first-rate / outstanding
+w3011,w3825,near-synonyms: first-rate / outstanding
+w3011,w4132,near-synonyms: first-rate / superior
+w3011,w4177,near-synonyms: first-rate / excellent
+w3011,w4288,near-synonyms: first-rate / excellent
+w3027,w3280,share sense rare: rare / seldom seen
+w3042,w4414,near-synonyms: elaborate / meticulously
+w3043,w3249,near-synonyms: the limit / extremes
+w3050,w3730,share sense flat: plane / flat
+w3071,w3450,synonyms: wonderful / marvellous
+w3071,w4661,share sense beautiful: wonderful / beautiful
+w3106,w3144,near-synonyms: endless / eternal
+w3106,w3677,near-synonyms: eternal / lasting
+w3106,w4847,near-synonyms: endless / eternal
+w3107,w4422,share sense overlap: overlap / cover
+w3115,w3647,near-synonyms: absurd / laughable
+w3115,w3899,near-synonyms: absurd / laughable
+w3115,w4812,near-synonyms: laughable / unreasonable
+w3131,w3210,share word close: close / close together
+w3131,w3593,share word close: close / strict
+w3131,w4828,share sense close: close / stop up
+w3184,w3295,synonyms: exact / accurate
+w3210,w3593,share sense close: strict / close together
+w3241,w3281,share sense splendid: brilliant / magnificent
+w3241,w3777,near-synonyms: spectacular / magnificent
+w3250,w4597,near-synonyms: interval / gap
+w3268,w4234,near-synonyms: carelessly / arbitrarily
+w3281,w3406,share sense splendid: brilliant / magnificent
+w3281,w3606,same root: brilliant / brilliance
+w3281,w3667,share sense splendour: brilliant / lustre
+w3281,w3728,near-synonyms: brilliant / dazzling
+w3281,w3866,near-synonyms: brilliant / bright
+w3281,w4205,share sense splendid: brilliant / magnificent
+w3281,w4780,share sense splendid: brilliant / magnificent
+w3286,w3372,share sense abundant: adequate / abundant
+w3286,w4532,share sense abundant: adequate / abundant
+w3315,w4177,synonyms: excellent / outstanding
+w3315,w4288,synonyms: excellent / outstanding
+w3330,w3806,near-synonyms: huge / vast
+w3330,w4208,near-synonyms: huge / vast
+w3406,w3777,near-synonyms: spectacular / magnificent
+w3416,w4177,share sense exquisite: fine / excellent
+w3416,w4288,share sense exquisite: fine / excellent
+w3443,w4380,share sense new: brand-new / novel
+w3485,w3992,share sense quietly: silently / quiet
+w3489,w3966,share sense appropriate: appropriate / be suitable
+w3489,w4067,same sense: appropriate / properly
+w3505,w3853,share sense complete: successful / complete
+w3505,w4735,share sense complete: successful / complete
+w3516,w3871,share sense feasible: practical / feasible
+w3539,w4035,near-synonyms: substantial / considerable
+w3569,w3693,near-synonyms: destroy / smash
+w3593,w3705,near-synonyms: severe / strict
+w3606,w3667,near-synonyms: brilliance / lustre
+w3606,w3866,near-synonyms: brilliance / bright
+w3647,w4812,near-synonyms: absurd / unreasonable
+w3705,w3793,share sense severe: severe / violent
+w3728,w3866,narrower: dazzling / bright
+w3730,w4546,share sense flat: plane / flat
+w3777,w4205,near-synonyms: spectacular / magnificent
+w3777,w4780,near-synonyms: spectacular / magnificent
+w3792,w4345,share sense clear: limpid / clear
+w3825,w4177,synonyms: excellent / outstanding
+w3825,w4288,synonyms: excellent / outstanding
+w3853,w3877,share sense complete set: complete / form a complete set
+w3899,w4812,near-synonyms: absurd / unreasonable
+w3926,w4403,near-synonyms: pattern (setup) / layout
+w3966,w4284,share sense appropriate: appropriate / be suitable
+w3983,w4103,near-synonyms: firm / solid
+w3983,w4262,near-synonyms: firm / hard
+w3983,w4488,near-synonyms: firm / sturdy
+w3997,w4597,near-synonyms: interval / gap
+w4016,w4900,near-synonyms: urgent / brook no delay
+w4067,w4284,same sense: appropriate / properly
+w4068,w4103,near-synonyms: firm / solid
+w4068,w4262,near-synonyms: firm / hard
+w4068,w4488,near-synonyms: firm / sturdy
+w4103,w4262,near-synonyms: solid / hard
+w4103,w4488,share sense solid: solid / sturdy
+w4150,w4292,share sense opposite: reverse side / oppose
+w4193,w4209,near-synonyms: quick / rapidly
+w4230,w4234,share sense careless: main idea / carelessly
+w4262,w4488,share sense solid: sturdy / hard
+w4262,w4495,share sense hard: strenuous / hard
+w4290,w4723,share sense deep: profound / deep
+w4393,w4899,near-synonyms: hastily / hurriedly
+w4434,w4519,share sense vague: faint / vague
+w4458,w4745,same root: fragmentary / fragment
+w4488,w4545,share sense strong: sturdy / strong
+w4533,w4935,near-synonyms: briefness / concise
+w4545,w4618,near-synonyms: powerful / strong
+w4692,w4809,share sense equal: roughly the same / equal
+w4721,w4783,same sense: rusty / get rusty

@@ -1,0 +1,148 @@
+id_a,id_b,reason
+w0045,w0268,near-synonyms: work / go to work
+w0045,w0676,share sense: work
+w0045,w0846,near-synonyms: job / occupation
+w0045,w2028,share sense: work
+w0045,w2042,near-synonyms: job; work / do work for sb
+w0045,w2536,share sense: work
+w0045,w2900,share sense: job
+w0045,w3162,near-synonyms: job / position
+w0045,w3600,narrower: job / part-time job
+w0205,w2561,narrower: organization / company
+w0208,w2662,share sense: chief; head / person in charge
+w0268,w2028,narrower: work / go to work
+w0268,w2536,narrower: work / go to work
+w0268,w2738,share sense: start work
+w0506,w1390,near-synonyms: manager / boss
+w0506,w2662,near-synonyms: manager / person in charge
+w0669,w0762,share sense: plan to do sth
+w0669,w1335,share sense: to plan
+w0669,w1575,synonyms: plan / scheme; plan
+w0669,w2817,synonyms: plan / planning
+w0676,w2028,share sense: work
+w0676,w2042,share sense: do work / do manual work
+w0676,w2536,share sense: work
+w0698,w2561,share sense: organization
+w0698,w2637,near-synonyms: organization / association
+w0698,w3996,near-synonyms: organize / reorganize
+w0711,w2825,near-synonyms: representative / agent
+w0713,w3056,share sense: mission
+w0758,w0768,share sense: responsible / responsibility
+w0758,w1792,synonyms: be in charge of / take charge of
+w0758,w2662,share sense: in charge of
+w0762,w1335,share sense: plan
+w0762,w1575,share sense: plan
+w0762,w2804,narrower: plan / plan in detail
+w0762,w2817,near-synonyms: plan in detail / planning
+w0762,w3127,share sense: arrange
+w0762,w3169,share sense: arrange
+w0768,w3418,shared word: duty / on duty
+w0768,w4946,narrower: responsibility / heavy responsibilities
+w0822,w1792,synonyms: be in charge of / take charge of
+w0822,w2662,share sense: in charge of
+w0846,w1626,share sense: profession
+w0846,w2563,near-synonyms: occupation / career
+w0880,w1241,narrower: ask for / ask for leave
+w0880,w4121,narrower: apply for / apply for reimbursement
+w0880,w4585,narrower: ask for / ask for instructions
+w0988,w1023,narrower: income / wage
+w0988,w3247,near-synonyms: income / remuneration
+w0988,w3470,narrower: income / salary
+w0995,w1465,near-synonyms: tool / equipment
+w0995,w3757,near-synonyms: tool / equipment
+w1012,w4811,near-synonyms: hard (toilsome) / work hard
+w1023,w2033,share sense: pay / remuneration
+w1023,w3247,share sense: pay
+w1023,w3470,synonyms: wage; salary / salary
+w1047,w1063,synonyms: author / writer
+w1101,w2664,share sense: reward; award
+w1101,w3247,share sense: reward
+w1101,w3420,share sense: award
+w1186,w2028,narrower: work / work overtime
+w1186,w2536,narrower: work / work overtime
+w1219,w2303,narrower: employ / recruit and employ
+w1256,w2303,same wording: employed by / employ
+w1256,w3519,near-synonyms: employed by / obtain employment
+w1320,w3055,synonyms: cooperate
+w1320,w4523,near-synonyms: cooperate / make concerted efforts
+w1321,w2273,share sense: personnel
+w1321,w4479,narrower: staff / staff officer
+w1323,w3682,share sense: report / report for duty
+w1335,w1575,share sense: plan
+w1335,w2804,share sense: to plan
+w1335,w2817,share sense: to plan / planning
+w1343,w2817,share sense: project
+w1390,w2662,near-synonyms: boss / person in charge
+w1390,w3117,near-synonyms: boss / superiors
+w1416,w2983,share sense: carry out
+w1418,w2635,share sense: file
+w1437,w1587,near-synonyms: lead / guide; direct
+w1437,w2791,near-synonyms: lead / guide
+w1525,w4144,share sense: promote
+w1525,w4154,share sense: promote
+w1558,w1905,near-synonyms: adjust; revision / amend; modify
+w1575,w2804,synonyms: scheme; plan / plan; scheme
+w1575,w2817,near-synonyms: scheme; plan / planning
+w1587,w1705,share sense: direct
+w1587,w2786,near-synonyms: give directions / instruct
+w1587,w2791,synonyms: to guide / guide
+w1587,w2841,near-synonyms: guide; direct / lead
+w1587,w3900,near-synonyms: guide; direct / lead
+w1615,w1705,share sense: command
+w1615,w2786,near-synonyms: order / instructions
+w1628,w1963,share sense: fitting in with / fit together
+w1705,w1792,share sense: direct / take charge of
+w1747,w3674,share sense: business
+w1747,w4878,share sense: business
+w1792,w2662,near-synonyms: take charge of / in charge of
+w1821,w3683,share sense: undertake
+w1903,w2967,near-synonyms: allocate / assign
+w1955,w3904,near-synonyms: convene / host
+w2028,w2042,share sense: manual work / physical labor
+w2028,w4811,narrower: work / work hard
+w2033,w3247,share sense: remuneration
+w2033,w3470,share sense: remuneration / salary
+w2038,w5029,synonyms: prospects / bright prospect
+w2042,w2536,narrower: work / do manual work for sb
+w2091,w2850,synonyms: sign
+w2107,w3904,near-synonyms: receive (a visitor) / host
+w2226,w4128,near-synonyms: handwork / craft
+w2536,w4811,narrower: work / work hard
+w2561,w2637,near-synonyms: organization / association
+w2664,w3247,share sense: reward
+w2664,w3420,share sense: award
+w2664,w4028,share sense: award
+w2705,w2863,near-synonyms: assess / appraisal
+w2705,w4617,near-synonyms: assess / check and accept
+w2791,w2841,near-synonyms: guide / lead
+w2791,w3900,near-synonyms: guide / lead
+w2796,w4479,share sense: adviser / give advice
+w2804,w2817,synonyms: plan / planning
+w2862,w3682,share sense: report / report for duty
+w2863,w4116,near-synonyms: appraisal / assess
+w2886,w3674,narrower: affairs / public affairs
+w2886,w3750,near-synonyms: affairs / matter
+w2888,w3902,near-synonyms: skill / specialty
+w2888,w4128,near-synonyms: skill / craft
+w2888,w4325,near-synonyms: skill / specialty
+w2900,w2942,share sense: post
+w2942,w3162,synonyms: position / post
+w3055,w4523,near-synonyms: cooperate / make concerted efforts
+w3127,w3169,share sense: arrange
+w3247,w3470,near-synonyms: remuneration / salary
+w3270,w3591,share sense: dismiss
+w3270,w4060,share sense: dismiss
+w3317,w4868,near-synonyms: devote oneself / do one's best
+w3420,w4028,share sense: award
+w3514,w3769,near-synonyms: select / filter
+w3591,w4277,near-synonyms: dismiss / cut staff
+w3674,w4878,share sense: business
+w3761,w4135,near-synonyms: draw up / formulate
+w3786,w4738,shared word: seal up / seal
+w3897,w4324,synonyms: take office / assume office
+w3939,w4999,share sense: memorandum
+w4060,w4277,near-synonyms: dismiss; fire / cut staff
+w4116,w4617,share sense: check / check and accept
+w4144,w4154,synonyms: promoted / promote to a higher office
+w4277,w4571,near-synonyms: cut staff / retrench
+w4811,w4868,near-synonyms: work hard / do one's best
