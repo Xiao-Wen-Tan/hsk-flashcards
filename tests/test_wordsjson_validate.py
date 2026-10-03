@@ -12,7 +12,8 @@ def sample():
     themes = [{"id": "t01", "order": 1, "name": "Family & People", "count": 5}]
     sentences = [{"id": w["id"], "sentence": f"我说{w['hz']}。", "en": "I say it.", "src": "claude"} for w in words]
     pinyin = {w["id"]: f"wǒ shuō {w['py']}." for w in words}
-    audio = {w["id"]: {"w": f"w/{w['id']}_0123abcd.mp3", "s": f"s/{w['id']}_4567cdef.mp3"} for w in words}
+    audio = {w["id"]: {"w": f"w/{w['id'][1:3]}/{w['id']}_0123abcd.mp3", "s": f"s/{w['id'][1:3]}/{w['id']}_4567cdef.mp3"}
+             for w in words}
     return build("v001", "2026-10-05", words, curriculum, themes, sentences, pinyin, audio)
 
 
@@ -22,7 +23,7 @@ def test_build_matches_the_schema_example_shape():
     first = data["words"][0]
     assert list(first) == ["id", "hz", "py", "pyNum", "pyBase", "syl", "lv", "pos", "en", "enShort", "theme", "ord",
                            "au", "noDistract", "ex"]
-    assert first["ex"] == {"hz": "我说爱。", "py": "wǒ shuō ài.", "en": "I say it.", "au": "s/w0001_4567cdef.mp3",
+    assert first["ex"] == {"hz": "我说爱。", "py": "wǒ shuō ài.", "en": "I say it.", "au": "s/00/w0001_4567cdef.mp3",
                            "src": "claude"}
 
 
@@ -106,7 +107,9 @@ def test_validate_reports_bad_fields_and_missing_audio():
                                              "w0002: enShort '/vm. number of times' starts with a part-of-speech label"]
     results = validate(data, lambda path, kind: "missing" if path.startswith("s/") else None,
                        word_range=(5, 5))
-    assert results["audio"][0] == "w0001: s/w0001_4567cdef.mp3: missing"
+    assert results["audio"][0] == "w0001: s/00/w0001_4567cdef.mp3: missing"
+    flat = {**data["words"][0], "au": "w/w0001_0123abcd.mp3"}  # the layout before the folders of 100
+    assert "w0001: au 'w/w0001_0123abcd.mp3' is not w/00/w0001_<hash>.mp3" in check_word(flat, {"t01"})
 
 
 def test_check_order_catches_a_level_going_down():

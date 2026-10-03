@@ -21,7 +21,8 @@ _HANZI = re.compile(r"[\u3007\u4e00-\u9fff]")  # Chinese characters, with the �
 _WORD_ID = re.compile(r"^w\d{4}$")
 _PYNUM = re.compile(r"^[a-zü]+[1-5]( [a-zü]+[1-5])*$")
 _HZ = re.compile(r"^[\u4e00-\u9fff]+$|^([\u4e00-\u9fff]+…)+$")
-_AUDIO = {"w": re.compile(r"^w/w\d{4}_[0-9a-f]{8}\.mp3$"), "s": re.compile(r"^s/w\d{4}_[0-9a-f]{8}\.mp3$")}
+# A sound sits in a folder named by the first two digits of its word ID ("w/00/w0001_99a84463.mp3").
+_AUDIO = {"w": re.compile(r"^w/\d{2}/w\d{4}_[0-9a-f]{8}\.mp3$"), "s": re.compile(r"^s/\d{2}/w\d{4}_[0-9a-f]{8}\.mp3$")}
 _WORD_KEYS = {"id", "hz", "py", "pyNum", "pyBase", "syl", "lv", "pos", "en", "enShort", "theme", "ord", "au",
               "noDistract", "ex"}
 _EX_KEYS = {"hz", "py", "en", "au", "src"}
@@ -172,8 +173,8 @@ def check_word(w, theme_ids):
         p.append(f"theme {w['theme']!r} is not a theme id")
     if not isinstance(w["ord"], int):
         p.append("ord is not a whole number")
-    if not _AUDIO["w"].match(w["au"]) or not w["au"].startswith(f"w/{wid}_"):
-        p.append(f"au {w['au']!r} is not w/{wid}_<hash>.mp3")
+    if not _AUDIO["w"].match(w["au"]) or not w["au"].startswith(f"w/{wid[1:3]}/{wid}_"):
+        p.append(f"au {w['au']!r} is not w/{wid[1:3]}/{wid}_<hash>.mp3")
     ex = w["ex"]
     if set(ex) != _EX_KEYS:
         p.append(f"ex fields {sorted(set(ex) ^ _EX_KEYS)} are missing or extra")
@@ -187,8 +188,8 @@ def check_word(w, theme_ids):
             p.append(f"ex.py {ex['py']!r} contains Chinese characters")
         else:
             p += [x for x in (head, lower_case_problem(ex["hz"], ex["py"])) if x]
-        if not _AUDIO["s"].match(ex["au"]) or not ex["au"].startswith(f"s/{wid}_"):
-            p.append(f"ex.au {ex['au']!r} is not s/{wid}_<hash>.mp3")
+        if not _AUDIO["s"].match(ex["au"]) or not ex["au"].startswith(f"s/{wid[1:3]}/{wid}_"):
+            p.append(f"ex.au {ex['au']!r} is not s/{wid[1:3]}/{wid}_<hash>.mp3")
         if ex["src"] not in ("pdf", "claude"):
             p.append(f"ex.src {ex['src']!r} is not pdf or claude")
     return [f"{wid}: {x}" for x in p]
