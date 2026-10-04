@@ -6,7 +6,7 @@
   --shadow: 0 2px 10px rgba(29, 27, 26, 0.08);
   --theme: var(--accent);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
-  color-scheme: light;
+  color-scheme: only light;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font-size: 18px; line-height: 1.4; }
@@ -29,6 +29,7 @@ button.big, .button.big {
   display: block; width: 100%; margin: 1rem 0; font-size: 1.2rem; font-weight: 700;
   background: var(--accent); color: #fff; border: none; border-radius: 1.5rem; min-height: 3.5rem;
 }
+a.button.big { display: flex; align-items: center; justify-content: center; }
 button.small { min-height: 3rem; margin: 0.25rem 0.25rem 0.25rem 0; }
 button.danger { background: var(--wrong); }
 .row { display: flex; flex-wrap: wrap; gap: 0.25rem; }
@@ -80,7 +81,7 @@ button.danger { background: var(--wrong); }
 .grades { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
 .grades button.big { margin: 0.5rem 0; font-size: 1rem; padding: 0.5rem; }
 .grade-know { background: var(--right) !important; }
-.grade-unsure { background: #b7791f !important; }
+.grade-unsure { background: #9a6413 !important; }
 .banner { padding: 0.75rem 1rem; border-radius: 1rem; color: #fff; font-weight: 700; }
 .banner.right { background: var(--right); animation: bounce 0.4s ease-out; }
 .banner.wrong { background: var(--wrong); animation: shake 0.4s ease-out; }
@@ -135,7 +136,9 @@ button.danger { background: var(--wrong); }
 .forecast { width: 100%; text-align: center; }
 .field { display: block; margin: 0.75rem 0; }
 .field input[type=number] { display: block; font: inherit; padding: 0.5rem; width: 8rem; min-height: 3rem; margin-top: 0.25rem; border: 2px solid var(--line); border-radius: 0.75rem; }
+.field.check { display: flex; align-items: center; gap: 0.6rem; min-height: 3rem; }
 .field.check input { width: 1.6rem; height: 1.6rem; vertical-align: middle; }
+input[type=file] { font: inherit; min-height: 3rem; max-width: 100%; }
 
 /* Bottom navigation, update banner, "Tap to continue" and short messages */
 nav { position: fixed; left: 0; right: 0; bottom: 0; display: flex; background: var(--card); box-shadow: 0 -2px 10px rgba(29, 27, 26, 0.08); padding-bottom: env(safe-area-inset-bottom); }

@@ -9,7 +9,9 @@ const css = read('css/app.css');
 
 test('the app is always light, also when the phone is in dark mode', () => {
   assert.doesNotMatch(css, /prefers-color-scheme/);
-  assert.match(css, /color-scheme: light;/);
+  // 'only light' also keeps Chrome's "darken websites" setting from drawing the app dark.
+  assert.match(css, /color-scheme: only light;/);
+  assert.match(read('index.html'), /<meta name="color-scheme" content="only light">/);
   assert.match(css, /--bg: #ffffff;/);
   assert.match(css, /body \{[^}]*background: var\(--bg\);/);
 });
@@ -34,4 +36,12 @@ test('the page and the installed app use the warm orange-red main colour', () =>
   assert.match(read('index.html'), new RegExp(`<meta name="theme-color" content="${accent}">`));
   const manifest = JSON.parse(read('manifest.webmanifest'));
   assert.deepEqual([manifest.theme_color, manifest.background_color], [accent, '#ffffff']);
+});
+
+test('the Unsure button and the settings fields are easy to read and to tap', () => {
+  // White on #9a6413 has a contrast of 4.99 to 1 (at least 4.5 is asked for normal text).
+  assert.match(css, /\.grade-unsure \{ background: #9a6413 !important; \}/);
+  assert.match(css, /\.field\.check \{[^}]*min-height: 3rem;/);
+  assert.match(css, /input\[type=file\] \{[^}]*min-height: 3rem;/);
+  assert.match(css, /a\.button\.big \{[^}]*align-items: center;/);
 });
