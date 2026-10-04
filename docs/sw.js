@@ -65,6 +65,7 @@ const APP_FILES = [
   'js/ui/screens.js',
   'js/ui/session.js',
   'js/ui/settings.js',
+  'js/ui/speak.js',
   'js/ui/update.js',
   'js/view/card.js',
   'js/view/files.js',

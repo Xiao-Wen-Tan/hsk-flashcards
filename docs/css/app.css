@@ -156,6 +156,21 @@ nav a.active { color: var(--accent); font-weight: 800; }
 .field input.code { font-family: ui-monospace, Consolas, monospace; letter-spacing: 0.05em; }
 .sheet-message { min-height: 1.4em; }
 
+/* Speaking practice (the panel of Plan 7) */
+.field select { display: block; font: inherit; padding: 0.5rem; min-height: 3rem; margin-top: 0.25rem; border: 2px solid var(--line); border-radius: 0.75rem; background: var(--card); }
+button.speak-start { background: var(--card); color: var(--accent); border: 2px solid var(--accent); }
+.speak-count { margin-top: -0.6rem; text-align: center; }
+.tiles4.five { grid-template-columns: repeat(5, 1fr); }
+.speak-hz { font-size: 3.5rem; }
+.speak-heading .counter { color: var(--accent); }
+.problem { background: var(--soft); border-left: 6px solid var(--wrong); border-radius: 0.75rem; padding: 0.6rem 0.8rem; font-weight: 600; }
+button.mic {
+  display: block; width: 7rem; height: 7rem; margin: 1rem auto; border-radius: 50%; border: none;
+  background: var(--accent); color: #fff; font-weight: 700; font-size: 1rem;
+}
+.meter { height: 0.6rem; margin: 1rem 0; background: var(--soft); border-radius: 0.3rem; overflow: hidden; }
+.meter-level { display: block; height: 100%; width: 0; background: var(--right); transition: width 0.08s linear; }
+
 /* Feedback motion. A right answer bounces, a wrong one shakes, and new badges pop up. */
 @keyframes bounce { 0% { transform: scale(0.9); } 60% { transform: scale(1.04); } 100% { transform: scale(1); } }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 50% { transform: translateX(6px); } 75% { transform: translateX(-4px); } }

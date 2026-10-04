@@ -8,6 +8,8 @@ import { resetAll } from '../rewind.js';
 import { cacheFiles, countCached } from '../offline.js';
 import { filesForWords } from '../view/files.js';
 import { backupFileName, backupText, parseBackup, settingsFromForm, settingsView } from '../view/settings.js';
+import { GOOGLE_NOTE, checkText } from '../view/speak.js';
+import { savedMode } from './recognize.js';
 import { h, show } from './dom.js';
 
 function numberField(label, name, value, [min, max]) {
@@ -64,7 +66,9 @@ export async function renderSettings(app) {
     onsubmit: async (e) => {
       e.preventDefault();
       const f = new FormData(form);
-      const next = settingsFromForm({ newPerDay: f.get('newPerDay'), reviewCap: f.get('reviewCap'), autoplay: f.get('autoplay') === 'on' }, saved);
+      const next = settingsFromForm({
+        newPerDay: f.get('newPerDay'), reviewCap: f.get('reviewCap'), autoplay: f.get('autoplay') === 'on', speakStrictness: f.get('speakStrictness'),
+      }, saved);
       await app.store.commit({ meta: { settings: next }, event: { day: studyDay(), kind: 'settings', settings: next } });
       status.textContent = `Saved: ${next.newPerDay} new words and up to ${next.reviewCap} reviews a day.`;
       form.newPerDay.value = next.newPerDay;
@@ -74,6 +78,8 @@ export async function renderSettings(app) {
   numberField('New words per day', 'newPerDay', v.newPerDay, v.newRange),
   numberField('Most reviews per day', 'reviewCap', v.reviewCap, v.capRange),
   h('label', { class: 'field check' }, h('input', { type: 'checkbox', name: 'autoplay', checked: v.autoplay }), ' Play sounds automatically'),
+  h('label', { class: 'field' }, 'Speaking check (how close the tones must be)',
+    h('select', { name: 'speakStrictness' }, v.strictness.map((c) => h('option', { value: c.value, selected: c.value === v.speakStrictness }, c.label)))),
   h('button', { class: 'big', type: 'submit' }, 'Save'), status);
 
   const protectedText = h('p', {});
@@ -126,6 +132,9 @@ export async function renderSettings(app) {
   const resetArea = h('div', { class: 'confirm' });
   show(app.main, h('h1', {}, 'Settings'),
     h('h2', {}, 'Daily amounts and sound'), form,
+    h('h2', {}, 'Speaking practice'),
+    h('p', { class: 'speak-check' }, checkText(savedMode())),
+    h('p', { class: 'muted' }, GOOGLE_NOTE),
     h('h2', {}, 'Offline'), audioText, downloadButton,
     h('button', { class: 'small', onclick: () => { stop = true; } }, 'Stop downloading'),
     h('h2', {}, 'Your progress'), protectedText,

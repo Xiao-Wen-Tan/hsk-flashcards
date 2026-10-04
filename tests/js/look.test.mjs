@@ -51,3 +51,7 @@ test('an element with the hidden attribute stays hidden, whatever its display ru
   // showed during a session and the Sheet's "Replace" button was always visible.
   assert.match(css, /\[hidden\] \{ display: none !important; \}/);
 });
+
+test('the strictness choice in Settings is as easy to tap as the other fields', () => {
+  assert.match(css, /\.field select \{[^}]*min-height: 3rem;/);
+});

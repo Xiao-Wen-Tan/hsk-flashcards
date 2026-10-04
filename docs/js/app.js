@@ -8,7 +8,7 @@ import { RELEASE, WORDS_FILE } from './release.js';
 import { PLUGINS } from './plugins.js';
 import { createHooks, loadPlugins } from './hooks.js';
 import { createPlayer } from './audio.js';
-import { NAV, needsRedraw, parseRoute } from './view/route.js';
+import { FULL_SCREEN, NAV, needsRedraw, parseRoute } from './view/route.js';
 import { h, show } from './ui/dom.js';
 import { setupUpdates } from './ui/update.js';
 import { endSession, renderSession } from './ui/session.js';
@@ -17,6 +17,7 @@ import {
 } from './ui/screens.js';
 import { renderSettings } from './ui/settings.js';
 import { renderRewind } from './ui/rewind.js';
+import { endSpeaking, renderSpeak } from './ui/speak.js';
 
 const app = {
   main: document.getElementById('main'),
@@ -25,6 +26,7 @@ const app = {
   hooks: createHooks(),
   player: createPlayer(),
   study: null,
+  speaking: null, // the speaking panel's controller (speaking.js) while '#/speak' is open
   lastResult: null,
   feedback: null,
   revealed: false,
@@ -51,7 +53,7 @@ app.note = (text) => {
 };
 
 function drawNav(route) {
-  const hidden = route.name === 'session';
+  const hidden = FULL_SCREEN.includes(route.name);
   app.nav.hidden = hidden;
   if (hidden) return;
   // Tapping the tab of the screen already shown draws it again. The address does not change
@@ -66,6 +68,7 @@ function drawNav(route) {
 async function render() {
   const route = parseRoute(window.location.hash);
   if (route.name !== 'session' && app.study) await endSession(app, { quiet: true });
+  if (route.name !== 'speak' && app.speaking) await endSpeaking(app, { quiet: true });
   app.drawnDay = studyDay();
   drawNav(route);
   try {
@@ -79,6 +82,7 @@ async function render() {
       case 'badges': await renderBadges(app); break;
       case 'settings': await renderSettings(app); break;
       case 'rewind': await renderRewind(app); break;
+      case 'speak': renderSpeak(app); break;
       default: await renderToday(app);
     }
   } catch (err) {
@@ -108,11 +112,16 @@ async function boot() {
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') {
       app.player.stop();
+      if (app.speaking) {
+        app.speakRun = (app.speakRun ?? 0) + 1; // the panel's sounds and recording stop
+        app.stopTry?.();
+      }
       app.hooks.emit('hidden', { store: app.store });
     } else {
       app.hooks.emit('open', { store: app.store, data: app.data });
       // Back from the background during a session, a tap restores sound (the design's "Tap to continue").
       if (app.study) app.needTap(() => renderSession(app));
+      else if (app.speaking) app.needTap(() => renderSpeak(app));
       // Back on a new study day, the screen is drawn again, so Today shows the new day's reviews.
       else if (needsRedraw({ drawnDay: app.drawnDay, today: studyDay(), route: parseRoute(window.location.hash) })) render();
     }

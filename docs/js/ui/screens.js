@@ -12,6 +12,8 @@ import { goals, nearest } from '../goals.js';
 import { burst } from './confetti.js';
 import { cardElement } from './card.js';
 import { startSession } from './session.js';
+import { startSpeaking } from './speak.js';
+import { speakStatus } from '../speaklist.js';
 import { h, show } from './dom.js';
 
 async function checkedDays(app) {
@@ -55,9 +57,19 @@ function ringElement(share, label) {
     svg, h('span', { class: 'ring-label' }, label));
 }
 
-// The four numbers of a day as tiles (tilesOf in view/today.js).
+// The four numbers of a day as tiles (tilesOf in view/today.js), or the five of a week or month.
 function tilesElement(tiles) {
-  return h('div', { class: 'tiles4' }, tiles.map((t) => h('div', { class: 'tile4' }, h('b', {}, t.value), h('span', {}, t.label))));
+  return h('div', { class: tiles.length === 5 ? 'tiles4 five' : 'tiles4' },
+    tiles.map((t) => h('div', { class: 'tile4' }, h('b', {}, t.value), h('span', {}, t.label))));
+}
+
+// A button that opens the speaking panel (ui/speak.js).
+function speakingButton(app, label, enabled = true) {
+  return h('button', {
+    class: 'big speak-start',
+    disabled: !enabled,
+    onclick: async (e) => { e.target.disabled = true; await startSpeaking(app); },
+  }, label);
 }
 
 export async function renderToday(app) {
@@ -69,9 +81,10 @@ export async function renderToday(app) {
   const checked = s.days.map((d) => d.day);
   const byId = new Map(s.progress.map((p) => [p.id, p]));
   const streak = currentStreak(checked, today, s.rewound);
+  const speak = speakStatus({ progress: s.progress, events: s.events, day: today });
   const v = todayView({
-    plan, checkedDays: checked, today, settings, resumable, rewound: s.rewound,
-    counters: todayCounters({ events: s.events, plan, day: today }),
+    plan, checkedDays: checked, today, settings, resumable, rewound: s.rewound, speak,
+    counters: todayCounters({ events: s.events, plan, day: today, speak }),
     goals: nearest(goals({ data: app.data, progressById: byId, facts: s.facts, streak }), 2),
   });
   show(app.main,
@@ -90,6 +103,8 @@ export async function renderToday(app) {
       class: 'big start',
       onclick: async (e) => { e.target.disabled = true; await startSession(app); },
     }, v.startLabel) : null,
+    speakingButton(app, v.speak.label, v.speak.enabled),
+    h('p', { class: 'speak-count muted' }, v.speak.count),
     h('h2', {}, 'Done today'),
     tilesElement(v.tiles),
     v.goals.length ? h('div', { class: 'goals' }, h('h2', {}, 'Next goals'), v.goals.map((g) => h('p', { class: 'goal' }, g))) : null);
@@ -107,6 +122,7 @@ export async function renderCheckin(app) {
     h('h1', {}, v.title),
     v.streak !== null ? h('p', { class: 'streak' }, h('span', { class: 'streak-n' }, v.streak), ' day streak') : null,
     v.lines.map((line) => h('p', {}, line)),
+    v.next ? speakingButton(app, v.next.label) : null,
     tilesElement(v.numbers),
     v.bests.map((b) => h('p', { class: 'best' }, b)),
     v.badges.length ? h('div', { class: 'new-badges' }, h('h2', {}, 'New badges'), v.badges.map((t) => h('p', { class: 'badge' }, t))) : null,

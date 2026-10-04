@@ -3,7 +3,8 @@
 // install({ on, store, data }) at start-up. The app then calls these hooks:
 //   'open'        ({ store, data })          when the app starts and when it comes back to the screen
 //   'hidden'      ({ store })                when the app goes to the background or is closed
-//   'sessionEnd'  ({ store, result })        after a session ends (result is Study.finish()'s result)
+//   'sessionEnd'  ({ store, result })        after a study session or the speaking panel ends (result is
+//                                            Study.finish()'s or speaking.js close()'s result)
 //   'settings'    ({ container, store })     when Settings is drawn, to add a section to container
 //   'rewound'     ({ store })                after "Go back to a day" (ui/rewind.js) or "Reset everything"
 //                                            (ui/settings.js) changed the saved history
