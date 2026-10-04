@@ -109,6 +109,7 @@ async function day() {
   await page.eval(COUNT_PLAYS);
   await page.eval("document.querySelector('.start').click()");
   await page.until("location.hash === '#/session' && !!document.querySelector('.session-top')");
+  check('the bottom bar is hidden during the session', await page.eval("getComputedStyle(document.getElementById('nav')).display === 'none'"));
   const seen = {};
   let strokes = 0;
   let listenHz = 0; // listening questions that showed characters
@@ -386,6 +387,10 @@ async function rewind() {
   const checkin = await page.text();
   check('day 2 checks in with a 2-day streak and confetti', /Checked in! \| 2 day streak/.test(checkin) && pieces > 0, `${checkin.slice(0, 60)}, ${pieces} pieces`);
   const learned2 = await page.eval(LEARNED_TODAY);
+  // Day 2's session-end backup must have reached the stand-in Sheet, so that the replacement
+  // below can be told apart from a plain append (it leaves fewer Log rows, not more).
+  await page.sleep(1500);
+  const rowsBefore = await fetch(`${FAKE_SHEET}/admin/rows`).then((r) => r.json()).catch(() => null);
   await page.eval("location.hash = '#/settings'; true");
   await page.until("[...document.querySelectorAll('button')].some((b) => b.textContent === 'Go back to a day')");
   await page.eval(CLICK('Go back to a day'));
@@ -410,11 +415,14 @@ async function rewind() {
   await page.sleep(1500);
   const rows = await fetch(`${FAKE_SHEET}/admin/rows`).then((r) => r.json()).catch(() => null);
   const events = await page.eval(EVENT_COUNT);
-  check('the Sheet is replaced by the rewound progress', rows !== null && rows.log === events && rows.progress === 12, `${JSON.stringify(rows)}, ${events} events on the phone`);
+  check('the Sheet is replaced by the rewound progress',
+    rows !== null && rowsBefore !== null && rowsBefore.log > rows.log && rows.log === events && rows.progress === 12,
+    `${JSON.stringify(rowsBefore)} before, ${JSON.stringify(rows)} after, ${events} events on the phone`);
   for (const hash of ['#/stats', '#/badges', '#/checkin']) {
     await page.eval(`location.hash = '${hash}'; true`);
     await page.sleep(700);
-    check(`${hash} draws after going back`, (await page.text()).length > 20);
+    const text = await page.text();
+    check(`${hash} draws after going back`, text.length > 20 && !/Something went wrong/.test(text), text.slice(0, 60));
   }
   check('no uncaught errors on the page', page.errors.length === 0, page.errors.join('; '));
   await page.close();

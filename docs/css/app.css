@@ -9,6 +9,7 @@
   color-scheme: only light;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; } /* beats display rules such as nav { display: flex } */
 body { margin: 0; background: var(--bg); color: var(--fg); font-size: 18px; line-height: 1.4; }
 main { max-width: 34rem; margin: 0 auto; padding: 1rem 1rem 6rem; }
 h1 { font-size: 1.6rem; margin: 0.5rem 0 1rem; }

@@ -187,7 +187,7 @@ export async function renderStats(app) {
     h('table', { class: 'forecast' },
       h('tr', {}, v.forecast.map((r) => h('th', {}, r.label))),
       h('tr', {}, v.forecast.map((r) => h('td', {}, r.due)))),
-    h('h3', {}, 'Accuracy, last 7 days'),
+    h('h3', {}, 'Reviews right first time, last 7 days'),
     h('p', {}, v.accuracy),
     h('h2', {}, 'All-time records'),
     h('dl', { class: 'records' }, v.records.map((r) => h('div', {}, h('dt', {}, r.label), h('dd', {}, r.value)))),

@@ -45,3 +45,9 @@ test('the Unsure button and the settings fields are easy to read and to tap', ()
   assert.match(css, /input\[type=file\] \{[^}]*min-height: 3rem;/);
   assert.match(css, /a\.button\.big \{[^}]*align-items: center;/);
 });
+
+test('an element with the hidden attribute stays hidden, whatever its display rule', () => {
+  // nav { display: flex } used to beat the browser's own [hidden] rule, so the bottom bar
+  // showed during a session and the Sheet's "Replace" button was always visible.
+  assert.match(css, /\[hidden\] \{ display: none !important; \}/);
+});
