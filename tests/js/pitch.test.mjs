@@ -34,7 +34,8 @@ test('steady pitches of a low, a middle and a high voice are tracked within 2%',
 test('a glide from 300 Hz down to 150 Hz is tracked within 2%, also from 48,000 samples a second', () => {
   const pieces = [{ ms: 100 }, { ms: 400, hz: [300, 150] }, { ms: 100 }];
   for (const rate of [16000, 48000, 44100]) {
-    const { worst } = worstError(pieces, trackPitch(madeUpVoice(pieces, { rate }), rate));
+    const { worst, voiced } = worstError(pieces, trackPitch(madeUpVoice(pieces, { rate }), rate));
+    assert.ok(voiced >= 30, `${rate}: ${voiced} windows`); // an empty track must not pass
     assert.ok(worst < 0.02, `${rate}: worst error ${(worst * 100).toFixed(2)}%`);
   }
 });
@@ -42,7 +43,9 @@ test('a glide from 300 Hz down to 150 Hz is tracked within 2%, also from 48,000 
 test('noise is tracked too, a little less closely', () => {
   const pieces = [{ ms: 100 }, { ms: 400, hz: [200, 260] }, { ms: 100 }];
   const sound = madeUpVoice(pieces, { noise: 0.02, random: mulberry32(7) });
-  assert.ok(worstError(pieces, trackPitch(sound, 16000)).worst < 0.03);
+  const { worst, voiced } = worstError(pieces, trackPitch(sound, 16000));
+  assert.ok(voiced >= 30, `${voiced} windows`);
+  assert.ok(worst < 0.03);
 });
 
 test('silence and hiss have no pitch', () => {
