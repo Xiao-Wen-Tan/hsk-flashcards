@@ -44,6 +44,7 @@ const APP_FILES = [
   'js/rng.js',
   'js/session.js',
   'js/sheet.js',
+  'js/speakcheck.js',
   'js/srs.js',
   'js/stats.js',
   'js/store.js',
