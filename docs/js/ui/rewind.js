@@ -24,7 +24,13 @@ export async function renderRewind(app) {
 
   // The confirmation for one day, with what going back undoes.
   function ask(day) {
-    const plan = rewindPlan({ events, days, badges: badges ?? {}, rewound: rewound ?? [], toDay: day, today });
+    let plan;
+    try {
+      plan = rewindPlan({ events, days, badges: badges ?? {}, rewound: rewound ?? [], toDay: day, today });
+    } catch (err) {
+      app.note(err.message);
+      return;
+    }
     area.replaceChildren(
       h('h2', {}, `Go back to ${shortDate(day)}?`),
       h('p', { class: 'confirm-text' }, confirmText(plan)),
@@ -33,7 +39,15 @@ export async function renderRewind(app) {
         class: 'big danger',
         onclick: async (e) => {
           e.target.disabled = true;
-          await rewindTo({ store: app.store, toDay: day });
+          try {
+            await rewindTo({ store: app.store, toDay: day });
+          } catch (err) {
+            // For example the app was open in a second tab that already went back further.
+            app.note(err.message);
+            renderRewind(app);
+            return;
+          }
+          app.lastResult = null; // the last session's result no longer holds
           await app.hooks.emit('rewound', { store: app.store });
           app.note(`Gone back to ${shortDate(day)}.`);
           window.location.hash = '#/today';

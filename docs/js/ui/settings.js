@@ -40,7 +40,14 @@ function resetPanel(app, area) {
       class: 'big danger',
       onclick: async (e) => {
         e.target.disabled = true;
-        await resetAll({ store: app.store });
+        try {
+          await resetAll({ store: app.store });
+        } catch (err) {
+          app.note(err.message);
+          e.target.disabled = false;
+          return;
+        }
+        app.lastResult = null; // the last session's result no longer holds
         await app.hooks.emit('rewound', { store: app.store });
         app.note('Everything was reset.');
         window.location.hash = '#/today';
