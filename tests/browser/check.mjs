@@ -11,6 +11,10 @@
 //                                          to the first day in Settings (after day and sheet)
 //   node tests/browser/check.mjs look      always light in dark mode, 48-pixel tap targets, theme
 //                                          colours, and no confetti or bounce with reduced motion
+//   node tests/browser/check.mjs tones FOLDER   the tone check on the app's own word recordings (project
+//                                          folder on 8124), and on the WAV files of FOLDER (optional)
+//   node tests/browser/check.mjs wav       writes .claude/scratch/speak_shi.wav, the recording of 是 that
+//                                          Chrome's fake microphone plays for the speaking checks
 // Each prints PASS or FAIL lines and exits with 1 when anything failed.
 const PORT = 9333;
 const SITE = 'http://localhost:8123/';
@@ -470,10 +474,78 @@ async function look() {
   await page.close();
 }
 
+// ---- Speaking practice (Plan 7) ----
+
+// The tone check on the app's own recordings (tests/browser/tones-check.js), with the pass bars
+// of Plan 7, which are a little below what was measured there. A folder of WAV files named like
+// '我 wo3 - third tone v2.wav' (the user's tone samples) adds recordings that must pass too.
+async function tones() {
+  const folder = process.argv[3];
+  const samples = [];
+  if (folder) {
+    const { readFileSync, readdirSync } = await import('node:fs');
+    const { markTone } = await import('../../docs/js/pinyin.js');
+    for (const name of readdirSync(folder).filter((n) => n.endsWith('.wav'))) {
+      const m = name.match(/^(\S+) ([a-zü]+)([1-5]) /u); // '我 wo3 - third tone v2.wav'
+      if (!m) continue;
+      const word = { hz: m[1], py: markTone(m[2], Number(m[3])), pyNum: `${m[2]}${m[3]}` };
+      samples.push({ name, word, wav: readFileSync(`${folder}/${name}`).toString('base64') });
+    }
+  }
+  const { WORDS_FILE } = await import('../../docs/js/release.js');
+  const page = await openPage(STORE_PAGE.replace('store-idb.html', 'tones.html'));
+  await page.until("document.title === 'ready'", 20000);
+  const r = await page.eval(`import('./tones-check.js').then((m) => m.measure({ wordsFile: '/docs/${WORDS_FILE}', base: '/docs/',
+    samples: ${JSON.stringify(samples)} }))`);
+  const s = r.syllables;
+  const pct = (x) => `${x.share}% of ${x.of}`;
+  check('the tone of a syllable is heard right at least 90% of the time', s.all.share >= 90, `${pct(s.all)}; tones 1-4 ${[1, 2, 3, 4].map((t) => pct(s[`tone ${t}`])).join(', ')}`);
+  check('one-syllable words by the app\'s voice pass the normal check at least 94% of the time', r.words['1 normal'].share >= 94,
+    `${pct(r.words['1 normal'])}; tones 1-4 heard right ${[1, 2, 3, 4].map((t) => `${s[`tone ${t} in 1`].share}%`).join(', ')}`);
+  check('two-syllable words pass the normal check at least 92% of the time', r.words['2 normal'].share >= 92,
+    `${pct(r.words['2 normal'])}; tones 1-4 heard right ${[1, 2, 3, 4].map((t) => `${s[`tone ${t} in 2`].share}%`).join(', ')}`);
+  results.push(`INFO gentle, normal, strict: 1 syllable ${['gentle', 'normal', 'strict'].map((k) => r.words[`1 ${k}`].share).join(', ')}; `
+    + `2 syllables ${['gentle', 'normal', 'strict'].map((k) => r.words[`2 ${k}`].share).join(', ')}; `
+    + `3 or more ${['gentle', 'normal', 'strict'].map((k) => r.words[`3+ ${k}`].share).join(', ')}; heard wrong ${JSON.stringify(r.confusion)}`);
+  if (folder) check('every tone sample passes the normal check', r.samples.length > 0 && r.samples.every((x) => x.pass), `${r.samples.filter((x) => x.pass).length} of ${r.samples.length}`);
+  await page.close();
+}
+
+// Writes the app's recording of 是 shì (a 4th tone) as a WAV file, 0.3 s of silence before it and
+// 1.5 s after, for Chrome's fake microphone (--use-file-for-fake-audio-capture).
+async function wav() {
+  const { WORDS_FILE } = await import('../../docs/js/release.js');
+  const page = await openPage(STORE_PAGE.replace('store-idb.html', 'tones.html'));
+  await page.until("document.title === 'ready'", 20000);
+  const b64 = await page.eval(`(async () => {
+    const data = await (await fetch('/docs/${WORDS_FILE}')).json();
+    const shi = data.words.find((w) => w.hz === '是');
+    const rate = 48000;
+    const x = (await new OfflineAudioContext(1, rate, rate).decodeAudioData(await (await fetch('/docs/audio/' + shi.au)).arrayBuffer())).getChannelData(0);
+    const parts = [new Float32Array(0.3 * rate), x, new Float32Array(1.5 * rate)];
+    const n = parts.reduce((a, p) => a + p.length, 0);
+    const v = new DataView(new ArrayBuffer(44 + 2 * n));
+    const text = (at, s) => [...s].forEach((c, i) => v.setUint8(at + i, c.charCodeAt(0)));
+    text(0, 'RIFF'); v.setUint32(4, 36 + 2 * n, true); text(8, 'WAVE'); text(12, 'fmt '); v.setUint32(16, 16, true);
+    v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, rate, true); v.setUint32(28, 2 * rate, true);
+    v.setUint16(32, 2, true); v.setUint16(34, 16, true); text(36, 'data'); v.setUint32(40, 2 * n, true);
+    let at = 44;
+    for (const p of parts) for (const s of p) { v.setInt16(at, Math.max(-32768, Math.min(32767, Math.round(s * 32767))), true); at += 2; }
+    const bytes = new Uint8Array(v.buffer);
+    let str = '';
+    for (let i = 0; i < bytes.length; i += 8192) str += String.fromCharCode(...bytes.subarray(i, i + 8192));
+    return btoa(str); })()`);
+  const { mkdirSync, writeFileSync } = await import('node:fs');
+  mkdirSync('.claude/scratch', { recursive: true });
+  writeFileSync('.claude/scratch/speak_shi.wav', Buffer.from(b64, 'base64'));
+  check('the recording of 是 is written for the fake microphone', b64.length > 100000, `.claude/scratch/speak_shi.wav, ${Buffer.from(b64, 'base64').length} bytes`);
+  await page.close();
+}
+
 const mode = process.argv[2];
-const modes = { store, day, offline, update, sheet, rewind, look };
+const modes = { store, day, offline, update, sheet, rewind, look, tones, wav };
 if (!modes[mode]) {
-  results.push('FAIL usage: node tests/browser/check.mjs store|day|offline|update|sheet|rewind|look');
+  results.push('FAIL usage: node tests/browser/check.mjs store|day|offline|update|sheet|rewind|look|tones|wav');
 } else {
   try {
     await modes[mode]();
