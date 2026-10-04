@@ -151,7 +151,9 @@ export function badgeLadder(facts, earned = {}, themes = []) {
       let steps = g.steps;
       if (g.id === 'learned') steps = steps.filter((n) => n < facts.totalWords);
       list = steps.map((n) => `${g.id}-${n}`).filter((id) => id in earned).map(got);
-      const step = steps.find((n) => !(`${g.id}-${n}` in earned));
+      // A step already reached but not yet saved (badges are saved when a session ends) is not
+      // shown as the next one, so the screen never reads "7 / 3 days".
+      const step = steps.find((n) => !(`${g.id}-${n}` in earned) && n > have);
       if (step) next = progressOf(`${g.id}-${step}`, have, step, g.unit, themes);
       if (g.id === 'learned') {
         if ('learned-all' in earned) list.push(got('learned-all'));

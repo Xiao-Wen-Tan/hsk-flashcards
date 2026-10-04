@@ -144,3 +144,11 @@ test('with 55 of the fixture\'s 61 words learned, the next learned badge is the 
   assert.deepEqual(ladder.find((g) => g.id === 'learned').next,
     { id: 'learned-all', title: 'Every word learned', text: '55 / 61 words', share: 55 / 61 });
 });
+
+test('a step already reached but not yet saved is not shown as the next badge', () => {
+  // Right after the update a learner with the 7-day badge and a best streak of 9 has not been
+  // given the new 3-day badge yet (badges are saved when a session ends). The next badge shown
+  // is the 14-day streak, not "7 / 3 days".
+  const streak = badgeLadder({ ...NONE, bestStreak: 9 }, { 'streak-7': 'a' }).find((g) => g.id === 'streak');
+  assert.deepEqual([streak.next.id, streak.next.text], ['streak-14', '9 / 14 days']);
+});
