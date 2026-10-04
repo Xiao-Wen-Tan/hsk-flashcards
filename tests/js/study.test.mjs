@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { Study, canContinue, previewDay } from '../../docs/js/study.js';
 import { MemoryStore } from '../../docs/js/store.js';
 import { learnedProgress, quizForReview } from '../../docs/js/srs.js';
-import { loadFixture, localDate } from './helpers.mjs';
+import { loadFixture, localDate, speakAll } from './helpers.mjs';
 
 const data = loadFixture();
 const right = (card) => (card.quiz === 'recall' ? 'know' : 'right');
@@ -15,6 +15,7 @@ async function playDay(store, day, grade = right, hour = 9) {
     if (study.card.type === 'learn') study.next();
     else await study.answer(grade(study.card), localDate(day, hour));
   }
+  await speakAll(store, day, localDate(day, hour));
   return study.finish(localDate(day, hour));
 }
 
@@ -199,6 +200,7 @@ test('stopping during the new words and starting again continues after the last 
   assert.deepEqual(again.plan.newWords, study.plan.newWords);
   assert.equal(again.canUndo, false);
   await playUntil(again, now, () => false);
+  await speakAll(store, '2026-10-05', now);
   const result = await again.finish(now);
   assert.equal(result.checkedIn, true);
   assert.equal(result.summary.learned, 12);

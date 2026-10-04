@@ -5,7 +5,7 @@ import {
 } from '../../docs/js/rewind.js';
 import { MemoryStore } from '../../docs/js/store.js';
 import { Study } from '../../docs/js/study.js';
-import { loadFixture, localDate } from './helpers.mjs';
+import { loadFixture, localDate, speakAll } from './helpers.mjs';
 
 // Word records as srs.js keeps them, cut down to the fields that matter here.
 const rec = (id, step, due) => ({ id, step, due });
@@ -107,6 +107,7 @@ async function playDay(store, day) {
     if (study.card.type === 'learn') study.next();
     else await study.answer(right(study.card), now);
   }
+  await speakAll(store, day, now);
   return study.finish(now);
 }
 

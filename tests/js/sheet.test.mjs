@@ -13,7 +13,7 @@ import { Study } from '../../docs/js/study.js';
 import { resetAll, rewindTo } from '../../docs/js/rewind.js';
 import { learnedProgress } from '../../docs/js/srs.js';
 import { loadAppsScript } from './fake-apps-script.mjs';
-import { loadFixture, word } from './helpers.mjs';
+import { loadFixture, speakAll, word } from './helpers.mjs';
 
 const data = loadFixture();
 const CODE = 'k7mq-2xrt-9pwd-hc4n-fz6b-y3ja';
@@ -33,6 +33,7 @@ async function playDay(store, day, { wrongFirst = 0 } = {}) {
     if (card.type === 'review' && wrong > 0) { grade = card.quiz === 'recall' ? 'dontknow' : 'wrong'; wrong -= 1; }
     await study.answer(grade, new Date(t));
   }
+  await speakAll(store, day, new Date(t));
   return study.finish(new Date(t));
 }
 

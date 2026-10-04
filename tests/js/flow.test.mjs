@@ -8,7 +8,7 @@ import { MemoryStore } from '../../docs/js/store.js';
 import { makePool } from '../../docs/js/distractors.js';
 import { gradeFor, questionView } from '../../docs/js/view/quiz.js';
 import { checkinView } from '../../docs/js/view/progress.js';
-import { loadFixture, localDate } from './helpers.mjs';
+import { loadFixture, localDate, speakAll } from './helpers.mjs';
 
 const data = loadFixture();
 const pool = makePool(data.words);
@@ -29,6 +29,7 @@ async function playDay(store, day, tap) {
     assert.equal(view.hz, view.kind === 'listen' ? null : byId.get(card.id).hz, `${view.kind} ${card.id}`);
     await study.answer(gradeFor(view, tap(view, card)), now);
   }
+  await speakAll(store, day, now);
   return { result: await study.finish(now), kinds };
 }
 

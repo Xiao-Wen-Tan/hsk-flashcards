@@ -9,7 +9,7 @@ import { addDays } from '../../docs/js/dates.js';
 import { mulberry32 } from '../../docs/js/rng.js';
 import { MemoryStore } from '../../docs/js/store.js';
 import { Study } from '../../docs/js/study.js';
-import { localDate, syntheticWords } from './helpers.mjs';
+import { localDate, speakAll, syntheticWords } from './helpers.mjs';
 
 const DAYS = 450;
 const FIRST_DAY = '2026-10-05';
@@ -43,6 +43,7 @@ test('450 simulated days never go over the review cap', { timeout: 120000 }, asy
       const grade = card.quiz === 'recall' ? (right ? 'know' : 'dontknow') : (right ? 'right' : 'wrong');
       await study.answer(grade, now);
     }
+    await speakAll(store, day, now);
     const result = await study.finish(now);
     const cards = study.state.cards;
     rows.push({

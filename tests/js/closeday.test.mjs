@@ -1,7 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { closeDay } from '../../docs/js/closeday.js';
+import { closeDay, dayStatus } from '../../docs/js/closeday.js';
 import { MemoryStore } from '../../docs/js/store.js';
+import { Study } from '../../docs/js/study.js';
+import { saveSpoken } from '../../docs/js/speaking.js';
 import { learnedProgress } from '../../docs/js/srs.js';
 import { loadFixture, localDate } from './helpers.mjs';
 
@@ -61,4 +63,46 @@ test('the learner\'s settings are read when the caller does not pass them', asyn
   const store = new MemoryStore();
   await store.commit({ meta: { settings: { newPerDay: 4 } }, event: { day: DAY, kind: 'settings' } });
   assert.equal((await closeDay({ store, data, day: DAY, now })).left.newWords.length, 4);
+});
+
+// ---- Since release r009 the day also needs its speaking (speaking practice spec, section 6) ----
+
+// Plays the day's whole learning session at 09:00, every answer right.
+async function learnDay(store, day) {
+  const at = localDate(day, 9);
+  const study = await Study.start({ store, data, now: at });
+  while (!study.finished) {
+    if (study.card.type === 'learn') study.next();
+    else await study.answer(study.card.quiz === 'recall' ? 'know' : 'right', at);
+  }
+  return study.finish(at);
+}
+
+test('the learning done, the day waits for its speaking list, and the last word spoken checks it in', async () => {
+  const store = new MemoryStore();
+  const learned = await learnDay(store, DAY);
+  assert.deepEqual([learned.checkedIn, learned.left.newWords.length, learned.speak.list.length, learned.speak.left.length], [false, 0, 12, 12]);
+  // Badges come at every close, the perfect day only with the check-in.
+  assert.deepEqual(learned.newBadges, ['learned-10', 'theme-t01']);
+  const [first, ...rest] = learned.speak.left;
+  await saveSpoken({ store, day: DAY, id: first, result: 'skip', now });
+  for (const id of rest.slice(0, -1)) await saveSpoken({ store, day: DAY, id, result: 'pass', tries: 1, check: { tones: 1, heard: null }, now });
+  const almost = await closeDay({ store, data, day: DAY, now });
+  assert.deepEqual([almost.checkedIn, almost.speak.left.length], [false, 1]);
+  await saveSpoken({ store, day: DAY, id: rest.at(-1), result: 'listened', now });
+  const r = await closeDay({ store, data, day: DAY, now });
+  assert.deepEqual([r.checkedIn, r.justCheckedIn, r.streak, r.speak.left], [true, true, 1, []]);
+  assert.ok(r.newBadges.includes('perfectday-1'));
+});
+
+test('a word skipped yesterday keeps today open even with nothing to study', async () => {
+  const store = new MemoryStore();
+  await allLearned(store);
+  await saveSpoken({ store, day: '2026-10-04', id: data.words[0].id, result: 'skip', now: localDate('2026-10-04', 20) });
+  const progress = await store.allProgress();
+  const status = await dayStatus({ store, data, day: DAY, settings: { reviewCap: 100, newPerDay: 12 }, progress });
+  assert.deepEqual([status.left.reviews.length, status.left.newWords.length, status.speak.left, status.done], [0, 0, [data.words[0].id], false]);
+  assert.equal((await closeDay({ store, data, day: DAY, now })).checkedIn, false);
+  await saveSpoken({ store, day: DAY, id: data.words[0].id, result: 'pass', tries: 3, check: { tones: 1, heard: '我' }, now });
+  assert.equal((await closeDay({ store, data, day: DAY, now })).checkedIn, true);
 });

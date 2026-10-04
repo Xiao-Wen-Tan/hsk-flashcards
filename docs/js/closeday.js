@@ -1,20 +1,23 @@
 // Closing a study day checks in the day when its work is done, then awards any new badges. The
-// study session calls it when it ends (Study.finish in study.js). Plan 7's speaking panel will call it
-// too, so the day is checked in from whichever screen finishes last.
+// study session calls it when it ends (Study.finish in study.js), and so does the speaking panel
+// (speaking.js), so the day is checked in from whichever screen finishes last.
 //
 //   const r = await closeDay({ store, data, day: '2026-10-05' });
-//   // { day, checkedIn, justCheckedIn, streak, newBadges: ['learned-10'], left }
+//   // { day, checkedIn, justCheckedIn, streak, newBadges: ['learned-10'], left, speak }
 import { normalizeSettings } from './config.js';
 import { badgeFacts, newBadges } from './badges.js';
 import { currentStreak } from './checkin.js';
 import { isDayDone, planDay } from './plan.js';
+import { speakStatus } from './speaklist.js';
 
-// What is left of `day` (planDay's plan) and whether the day can be checked in. This is the one
-// place that decides it. Plan 7 adds the speaking list here (read from `store`, which is unused
-// until then), so the callers never change.
-export async function dayStatus({ store, data, day, settings, progress }) {
+// What is left of `day` and whether the day can be checked in. This is the one place that
+// decides it. The learning (planDay's plan) and the speaking list (speakStatus in speaklist.js)
+// must both be done (speaking practice spec of 2026-10-03, section 6). events are all saved
+// events, read from `store` when not given.
+export async function dayStatus({ store, data, day, settings, progress, events }) {
   const left = planDay({ words: data.words, progress, today: day, settings });
-  return { left, done: isDayDone(left) };
+  const speak = speakStatus({ progress, events: events ?? (await store.allEvents()), day });
+  return { left, speak, done: isDayDone(left) && speak.left.length === 0 };
 }
 
 // Checks in `day` when it is done and not checked in yet, and awards the badges that the saved
@@ -23,7 +26,7 @@ export async function dayStatus({ store, data, day, settings, progress }) {
 export async function closeDay({ store, data, day, settings, now = new Date(), perfectSession = false }) {
   const amounts = settings ?? normalizeSettings(await store.getMeta('settings'));
   const progress = await store.allProgress();
-  const { left, done } = await dayStatus({ store, data, day, settings: amounts, progress });
+  const { left, speak, done } = await dayStatus({ store, data, day, settings: amounts, progress });
   const days = await store.allDays();
   let checkedIn = days.some((d) => d.day === day);
   let justCheckedIn = false;
@@ -44,5 +47,5 @@ export async function closeDay({ store, data, day, settings, now = new Date(), p
     await store.commit({ meta: { badges: updated }, event: { day, kind: 'badges', badges: fresh, ts: now.toISOString() } });
   }
   const streak = currentStreak(days.map((d) => d.day), day, rewound);
-  return { day, checkedIn, justCheckedIn, streak, newBadges: fresh, left };
+  return { day, checkedIn, justCheckedIn, streak, newBadges: fresh, left, speak };
 }

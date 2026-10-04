@@ -1,5 +1,7 @@
 // Shared test helpers. Paths are resolved from this file, so tests run from any folder.
 import { readFileSync } from 'node:fs';
+import { speakStatus } from '../../docs/js/speaklist.js';
+import { saveSpoken } from '../../docs/js/speaking.js';
 
 export function loadFixture() {
   const url = new URL('./fixtures/words_fixture.json', import.meta.url);
@@ -17,6 +19,15 @@ export function word(data, hz) {
 export function localDate(day, hour = 9) {
   const [y, m, d] = day.split('-').map(Number);
   return new Date(y, m - 1, d, hour);
+}
+
+// Finishes the day's speaking list as a phone without a microphone does, saving every word left
+// as 'listened'. Since release r009 a day is checked in only when the learning and the speaking
+// are both done, so tests that play whole days call this before Study.finish. A 'listened' word
+// earns no speaking badge, and at the time `now` of the answers it adds no minutes.
+export async function speakAll(store, day, now = localDate(day)) {
+  const [progress, events] = await Promise.all([store.allProgress(), store.allEvents()]);
+  for (const id of speakStatus({ progress, events, day }).left) await saveSpoken({ store, day, id, result: 'listened', now });
 }
 
 // Checks one quiz's wrong choices against every rule in the design, independently of how
