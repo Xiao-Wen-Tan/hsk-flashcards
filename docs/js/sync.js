@@ -36,8 +36,16 @@ export function createSync({ store, data, storage, fetchFn }) {
 
   function once({ keepalive = false, reset = false } = {}) {
     const s = state();
+    // backUp saves its own copy of the state. A mark made while it runs (markReset after going
+    // back or "Reset everything") must survive that copy, so the next run replaces the Sheet.
+    // Each mark gets a new number, and a backup clears only the mark it started with.
+    const started = s.resetMark ?? 0;
+    const keepNewMark = (next) => {
+      const mark = state().resetMark ?? 0;
+      save(mark > started ? { ...next, resetPending: true, resetMark: mark } : next);
+    };
     return backUp({
-      store, words: data.words, themes: data.themes, state: s, post: postFor(s, keepalive), save, reset,
+      store, words: data.words, themes: data.themes, state: s, post: postFor(s, keepalive), save: keepNewMark, reset,
       pageSize: keepalive ? KEEPALIVE_PAGE_SIZE : PAGE_SIZE,
     });
   }
@@ -71,11 +79,12 @@ export function createSync({ store, data, storage, fetchFn }) {
       save(withSettings(state(), { url, code }));
     },
     // Marks that the Sheet must be replaced by the phone's progress. Returns false, and marks
-    // nothing, when the backup is not set up.
+    // nothing, when the backup is not set up, or when another phone or browser backs up to the
+    // Sheet (going back there must not replace the main phone's copy).
     markReset() {
       const s = state();
-      if (!isReady(s)) return false;
-      save({ ...s, resetPending: true });
+      if (!isReady(s) || s.problem === 'other-device') return false;
+      save({ ...s, resetPending: true, resetMark: (s.resetMark ?? 0) + 1 });
       return true;
     },
     newCode() {

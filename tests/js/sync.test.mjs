@@ -152,3 +152,44 @@ test('after going back to a day, the backup replaces the Sheet, once', async () 
   assert.deepEqual([sync.state().resetPending, sync.state().problem], [false, null]);
   assert.equal(net.bodies.filter((b) => b.reset).length, 1);
 });
+
+test('going back while a backup is running still replaces the Sheet afterwards', async () => {
+  // A backup that started before going back saves its own copy of the state when it ends. That
+  // copy must not wipe the mark that the Sheet is to be replaced.
+  const sheet = loadAppsScript({ code: CODE });
+  sheet.gs.setup();
+  const store = new MemoryStore();
+  for (const [id, day] of [['w0026', '2026-10-05'], ['w0039', '2026-10-06']]) {
+    const p = learnedProgress(id, day);
+    await store.commit({ progress: [p], event: { day, kind: 'final', id, grade: 'right', outcome: 'learned', before: null, after: p, ts: `${day}T19:00:00Z` } });
+  }
+  // The first request waits until open() is called, like a slow network at the end of a session.
+  let open;
+  const gate = new Promise((resolve) => { open = resolve; });
+  const bodies = [];
+  const fetchFn = async (url, init) => {
+    const body = JSON.parse(init.body);
+    bodies.push(body);
+    if (bodies.length === 1) await gate;
+    return { ok: true, json: async () => sheet.post(body) };
+  };
+  const hooks = createHooks();
+  const sync = install({ on: hooks.on, store, data, storage: memoryStorage(), fetchFn });
+  sync.saveSettings({ url: URL_OK, code: CODE });
+  const backup = sync.run(); // sends answers 1 and 2, and waits at the gate
+  await rewindTo({ store, toDay: '2026-10-05', now: new Date('2026-10-07T08:00:00Z') });
+  await hooks.emit('rewound', { store });
+  open();
+  await backup;
+  assert.deepEqual(sheet.ss.rowsOf('Log').map((r) => r[0]), [1, 3]);
+  assert.deepEqual([sync.state().resetPending, sync.state().problem], [false, null]);
+  assert.equal(bodies.filter((b) => b.reset).length, 1);
+});
+
+test('going back in a second browser does not replace the main phone Sheet copy', async () => {
+  const { sync, storage } = await setUp();
+  sync.saveSettings({ url: URL_OK, code: CODE });
+  saveState(storage, { ...sync.state(), problem: 'other-device' });
+  assert.equal(sync.markReset(), false);
+  assert.equal(sync.state().resetPending, undefined);
+});
