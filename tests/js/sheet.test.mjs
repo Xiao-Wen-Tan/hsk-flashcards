@@ -10,6 +10,7 @@ import {
 } from '../../docs/js/sheet.js';
 import { MemoryStore } from '../../docs/js/store.js';
 import { Study } from '../../docs/js/study.js';
+import { resetAll, rewindTo } from '../../docs/js/rewind.js';
 import { learnedProgress } from '../../docs/js/srs.js';
 import { loadAppsScript } from './fake-apps-script.mjs';
 import { loadFixture, word } from './helpers.mjs';
@@ -278,4 +279,50 @@ test('the status line says what happened in plain words', () => {
   assert.match(statusText({ url: '' }, 0), /^Not set up yet/);
   assert.equal(statusText({ ...phone(), lastOk: '2026-10-05T19:30:00.000Z' }, 0), 'Last backup: 2026-10-05 19:30. Nothing waiting to be sent.');
   assert.equal(statusText({ ...phone() }, 1), 'No backup yet. 1 change waiting to be sent.');
+});
+
+test('the log names a rewind and a reset', () => {
+  const rewind = { seq: 40, day: '2026-10-07', kind: 'rewind', to: '2026-10-05', counts: { days: 1, newWords: 12, reviews: 12 }, ts: 'T' };
+  assert.deepEqual(logRow(rewind).slice(0, 9), [40, '2026-10-07', 'T', 'went back to a day', '', '', '', '', 'back to 2026-10-05']);
+  assert.deepEqual(logRow({ seq: 41, day: '2026-10-07', kind: 'reset', ts: 'T' }).slice(0, 9),
+    [41, '2026-10-07', 'T', 'reset everything', '', '', '', '', '']);
+});
+
+test('after going back to a day, the next backup replaces the Sheet, also when the phone was offline', async () => {
+  const store = new MemoryStore();
+  const sheet = sheetWithScript();
+  await playDay(store, '2026-10-05');
+  await playDay(store, '2026-10-06');
+  let { state } = await run(store, phone(), sheet.post);
+  await rewindTo({ store, toDay: '2026-10-05', now: new Date('2026-10-07T08:00:00Z') });
+  // An ordinary backup stops, because the events the Sheet has were deleted on the phone.
+  assert.equal((await run(store, state, sheet.post)).state.problem, 'mismatch');
+  // sync.js sets resetPending when the 'rewound' hook runs. Offline, the flag waits.
+  const offline = async () => { throw Object.assign(new Error('Could not reach the Sheet (Failed to fetch).'), { problem: 'offline' }); };
+  ({ state } = await run(store, { ...state, resetPending: true }, offline));
+  assert.deepEqual([state.problem, state.resetPending], ['offline', true]);
+  ({ state } = await run(store, state, sheet.post, { now: new Date('2026-10-07T08:05:00Z') }));
+  assert.deepEqual([state.problem, state.resetPending], [null, false]);
+  assert.deepEqual(sheet.ss.rowsOf('Log').map((r) => r[0]), (await store.eventsSince(0)).map((e) => e.seq));
+  assert.equal(sheet.ss.rowsOf('Daily').some((r) => r[0] === '2026-10-06'), false);
+  assert.deepEqual(sheet.ss.rowsOf('Meta').find((r) => r[0] === 'rewound')[1], '[["2026-10-06","2026-10-06"]]');
+  // The Dashboard's streak skips the rewound day. On 7 October it counts 5 October, after the rewound 6 October.
+  assert.equal(sheet.ss.getSheetByName('Dashboard').getRange(5, 2).getValues()[0][0], 1);
+  // A restore brings the rewound days back, and the next backup is an ordinary one.
+  const fresh = new MemoryStore();
+  const { state: restored } = await restoreFromSheet({ store: fresh, state: { ...phone('0011223344556677'), resetPending: true }, post: sheet.post });
+  assert.deepEqual(await fresh.getMeta('rewound'), [['2026-10-06', '2026-10-06']]);
+  assert.equal(restored.resetPending, false);
+});
+
+test('after "Reset everything" the Sheet is replaced by the empty progress', async () => {
+  const store = new MemoryStore();
+  const sheet = sheetWithScript();
+  await playDay(store, '2026-10-05');
+  let { state } = await run(store, phone(), sheet.post);
+  await resetAll({ store, now: new Date('2026-10-06T08:00:00Z') });
+  ({ state } = await run(store, { ...state, resetPending: true }, sheet.post));
+  assert.equal(state.problem, null);
+  assert.deepEqual(sheet.ss.rowsOf('Log').map((r) => r[3]), ['reset everything']);
+  assert.deepEqual([sheet.ss.rowsOf('Progress').length, sheet.ss.rowsOf('Daily').map((r) => r.slice(0, 2))], [0, [['2026-10-06', 'no']]]);
 });

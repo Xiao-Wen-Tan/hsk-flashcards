@@ -20,7 +20,7 @@ export const PAGE_SIZE = 500; // events per request
 export const KEEPALIVE_PAGE_SIZE = 40; // events per request when the app is being closed
 export const KEEPALIVE_LIMIT = 60000; // bytes; browsers refuse keepalive bodies over 64 KB
 export const RESYNC_HOURS = 12; // the design's "when it opens after 12 or more hours"
-export const META_KEYS = Object.freeze(['settings', 'badges']);
+export const META_KEYS = Object.freeze(['settings', 'badges', 'rewound']); // not 'session', which stays on the phone
 
 // Column headings of the Sheet's tabs. Code.gs repeats them, and a test checks they agree.
 export const HEADERS = Object.freeze({
@@ -34,6 +34,7 @@ export const HEADERS = Object.freeze({
 const KIND_TEXT = {
   review: 'review', reask: 'asked again', learn: 'learning card', check: 'group check',
   final: 'final check', undo: 'undo', checkin: 'check-in', badges: 'badges', settings: 'settings',
+  rewind: 'went back to a day', reset: 'reset everything',
 };
 const GRADE_TEXT = { right: 'right', wrong: 'wrong', know: 'Know it', unsure: 'Unsure', dontknow: "Don't know" };
 const QUIZ_TEXT = { listen: 'listen, pick meaning', pinyin: 'meaning, pick pinyin', recall: 'recall' };
@@ -127,6 +128,7 @@ export function logRow(e, word) {
   let result = e.outcome ?? '';
   if (e.kind === 'undo') result = `took back answer ${e.target}`;
   if (e.kind === 'badges') result = (e.badges ?? []).join(', ');
+  if (e.kind === 'rewind') result = `back to ${e.to}`;
   return [e.seq, e.day, e.ts ?? '', KIND_TEXT[e.kind] ?? e.kind, e.id ?? '', word?.hz ?? '', QUIZ_TEXT[e.quiz] ?? '',
     GRADE_TEXT[e.grade] ?? '', result, JSON.stringify(e)];
 }
@@ -143,15 +145,16 @@ export function dailyRow(day, events, dayRecord) {
     learned, minutesOf(answers), dayRecord ? JSON.stringify(dayRecord) : ''];
 }
 
-// The numbers the Dashboard shows at the top.
-export function summaryOf({ progress, days, words, now = new Date() }) {
+// The numbers the Dashboard shows at the top. rewound is the meta 'rewound' list of day ranges,
+// which the streaks skip (see checkin.js).
+export function summaryOf({ progress, days, words, now = new Date(), rewound = [] }) {
   const checked = days.map((d) => d.day);
   const today = studyDay(now);
   return {
     updated: now.toISOString(),
     today,
-    streak: currentStreak(checked, today),
-    bestStreak: bestStreak(checked),
+    streak: currentStreak(checked, today, rewound),
+    bestStreak: bestStreak(checked, rewound),
     checkIns: checked.length,
     learned: progress.filter(isLearned).length,
     mastered: progress.filter(isMastered).length,
@@ -207,15 +210,20 @@ function failed(state, problem, detail = '') {
 //   post(body)   sends one request and returns the parsed answer (postJson bound to the address)
 //   save(state)  stores the state, called after every confirmed page
 //   reset        true replaces everything in the Sheet with this phone's progress
+// state.resetPending (set by sync.js after going back to a day or "Reset everything") also
+// replaces the Sheet, and is cleared only when the Sheet has confirmed the replacement. So a
+// rewind on a phone that is offline still replaces the Sheet later, instead of stopping with
+// "mismatch" because the deleted events are gone.
 // Returns { state, sent }, where sent counts the events the Sheet confirmed.
 export async function backUp({
   store, words, themes = [], state, post, save = () => {}, now = new Date(), pageSize = PAGE_SIZE, reset = false,
 }) {
   if (!isReady(state)) return { state, sent: 0 };
+  const replace = reset || Boolean(state.resetPending);
   let current = { ...state };
   let sent = 0;
   try {
-    let cursor = reset ? 0 : current.cursor;
+    let cursor = replace ? 0 : current.cursor;
     // The event at the cursor must still be on the phone. When it is gone, the phone's log was
     // replaced (a backup file was restored), and sending more would mix two histories.
     if (cursor > 0) {
@@ -227,7 +235,7 @@ export async function backUp({
       }
     }
     let pending = await store.eventsSince(cursor);
-    if (reset && pending.length === 0) {
+    if (replace && pending.length === 0) {
       current = failed(current, 'empty');
       save(current);
       return { state: current, sent };
@@ -243,11 +251,13 @@ export async function backUp({
     const days = await store.allDays();
     const daysByDay = new Map(days.map((d) => [d.day, d]));
     const meta = [];
+    let rewound = [];
     for (const key of META_KEYS) {
       const value = await store.getMeta(key);
       if (value !== undefined) meta.push([key, JSON.stringify(value)]);
+      if (key === 'rewound' && value) rewound = value;
     }
-    const summary = summaryOf({ progress: [...progressById.values()], days, words, now });
+    const summary = summaryOf({ progress: [...progressById.values()], days, words, now, rewound });
     let dayEvents = await store.eventsFrom(pending.reduce((m, e) => (e.day < m ? e.day : m), pending[0].day));
     let retried = false;
     for (let i = 0; i < pending.length; i += pageSize) {
@@ -259,7 +269,7 @@ export async function backUp({
         code: current.code,
         device: current.device,
         from: cursor,
-        reset: reset && i === 0,
+        reset: replace && i === 0,
         log: page.map((e) => logRow(e, wordsById.get(e.id))),
         progress: ids.filter((id) => progressById.has(id)).map((id) => {
           const w = wordsById.get(id);
@@ -288,6 +298,7 @@ export async function backUp({
       cursor = page[page.length - 1].seq;
       sent += page.length;
       current = { ...current, cursor, lastOk: now.toISOString(), problem: null, detail: '' };
+      if (replace) current.resetPending = false;
       save(current);
     }
     return { state: current, sent };
@@ -319,7 +330,7 @@ export async function restoreFromSheet({ store, state, post, save = () => {}, no
   }
   await store.restore(dump);
   await ask({ action: 'claim', lastSeq: first.lastSeq });
-  const next = { ...state, cursor: first.lastSeq, lastOk: now.toISOString(), problem: null, detail: '' };
+  const next = { ...state, cursor: first.lastSeq, lastOk: now.toISOString(), problem: null, detail: '', resetPending: false };
   save(next);
   return { state: next, counts };
 }

@@ -8,6 +8,7 @@ import { PLUGINS } from '../../docs/js/plugins.js';
 import { loadState, saveState } from '../../docs/js/sheet.js';
 import { install } from '../../docs/js/sync.js';
 import { MemoryStore } from '../../docs/js/store.js';
+import { rewindTo } from '../../docs/js/rewind.js';
 import { learnedProgress } from '../../docs/js/srs.js';
 import { loadAppsScript } from './fake-apps-script.mjs';
 import { loadFixture } from './helpers.mjs';
@@ -131,4 +132,23 @@ test('Test connection, a new code and restore work through the Settings actions'
   const old = sync.state().code;
   assert.notEqual(sync.newCode(), old);
   await assert.rejects(sync.ping(), /refused the secret code/);
+});
+
+test('after going back to a day, the backup replaces the Sheet, once', async () => {
+  const { sync, hooks, sheet, store, net } = await setUp();
+  // A second study day, so there is a day to go back to.
+  const p = learnedProgress('w0039', '2026-10-06');
+  await store.commit({ progress: [p], event: { day: '2026-10-06', kind: 'final', id: 'w0039', grade: 'right', outcome: 'learned', before: null, after: p, ts: '2026-10-06T19:00:00Z' } });
+  await hooks.emit('rewound', { store }); // not set up yet, so nothing is marked or sent
+  assert.equal(sync.state().resetPending, undefined);
+  sync.saveSettings({ url: URL_OK, code: CODE });
+  await sync.run();
+  assert.equal(sheet.ss.rowsOf('Log').length, 2);
+  await rewindTo({ store, toDay: '2026-10-05', now: new Date('2026-10-07T08:00:00Z') });
+  await hooks.emit('rewound', { store });
+  assert.equal(sync.state().resetPending, true);
+  await sync.run(); // waits for the backup the hook started
+  assert.deepEqual(sheet.ss.rowsOf('Log').map((r) => [r[0], r[3]]), [[1, 'final check'], [3, 'went back to a day']]);
+  assert.deepEqual([sync.state().resetPending, sync.state().problem], [false, null]);
+  assert.equal(net.bodies.filter((b) => b.reset).length, 1);
 });

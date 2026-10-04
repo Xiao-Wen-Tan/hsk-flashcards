@@ -18,7 +18,7 @@ test('handlers run in order, and a failing one is logged and skipped', async () 
 });
 
 test('only the known hooks exist', () => {
-  assert.deepEqual(HOOK_NAMES, ['open', 'hidden', 'sessionEnd', 'settings']);
+  assert.deepEqual(HOOK_NAMES, ['open', 'hidden', 'sessionEnd', 'settings', 'rewound']);
   assert.throws(() => createHooks().on('sometimes', () => {}), /Unknown hook/);
 });
 

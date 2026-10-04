@@ -5,8 +5,10 @@
 //   'hidden'      ({ store })                when the app goes to the background or is closed
 //   'sessionEnd'  ({ store, result })        after a session ends (result is Study.finish()'s result)
 //   'settings'    ({ container, store })     when Settings is drawn, to add a section to container
+//   'rewound'     ({ store })                after "Go back to a day" (ui/rewind.js) or "Reset everything"
+//                                            (ui/settings.js) changed the saved history
 // A failing handler is logged and skipped, so a backup problem never stops a study session.
-export const HOOK_NAMES = Object.freeze(['open', 'hidden', 'sessionEnd', 'settings']);
+export const HOOK_NAMES = Object.freeze(['open', 'hidden', 'sessionEnd', 'settings', 'rewound']);
 
 export function createHooks({ log = (...args) => console.warn(...args) } = {}) {
   const handlers = new Map(HOOK_NAMES.map((name) => [name, []]));

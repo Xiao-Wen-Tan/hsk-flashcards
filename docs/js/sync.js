@@ -5,10 +5,13 @@
 //     that the browser finishes even after the page is gone),
 //   when the app opens and the last backup is 12 or more hours old, or the last try failed ('open'),
 //   when the phone comes back online, and when "Back up now" is tapped in Settings.
+// After "Go back to a day" or "Reset everything" ('rewound'), the next backup replaces the
+// Sheet's copy (state.resetPending, see backUp in sheet.js), also when it waits until the phone
+// is online again.
 // A backup never makes a screen wait, and a failed one only changes the status line in Settings.
 import {
-  KEEPALIVE_PAGE_SIZE, PAGE_SIZE, PROBLEM_TEXT, backUp, checkCode, checkWebAppUrl, isDue, loadState, makeCode, makeDeviceId,
-  postJson, restoreFromSheet, saveState, statusText, withSettings,
+  KEEPALIVE_PAGE_SIZE, PAGE_SIZE, PROBLEM_TEXT, backUp, checkCode, checkWebAppUrl, isDue, isReady, loadState, makeCode,
+  makeDeviceId, postJson, restoreFromSheet, saveState, statusText, withSettings,
 } from './sheet.js';
 import { h } from './ui/dom.js';
 
@@ -67,6 +70,14 @@ export function createSync({ store, data, storage, fetchFn }) {
     saveSettings({ url, code }) {
       save(withSettings(state(), { url, code }));
     },
+    // Marks that the Sheet must be replaced by the phone's progress. Returns false, and marks
+    // nothing, when the backup is not set up.
+    markReset() {
+      const s = state();
+      if (!isReady(s)) return false;
+      save({ ...s, resetPending: true });
+      return true;
+    },
     newCode() {
       save(withSettings(state(), { url: state().url, code: makeCode() }));
       return state().code;
@@ -92,6 +103,7 @@ export function install({ on, store, data, storage = globalThis.localStorage, fe
   on('sessionEnd', () => { quietly(); });
   on('hidden', () => { quietly({ keepalive: true }); });
   on('open', () => { if (isDue(sync.state())) quietly(); });
+  on('rewound', () => { if (sync.markReset()) quietly(); });
   if (typeof globalThis.addEventListener === 'function') globalThis.addEventListener('online', () => quietly());
   on('settings', ({ container }) => drawSettings(container, sync));
   return sync;
