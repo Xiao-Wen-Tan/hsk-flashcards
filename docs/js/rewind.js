@@ -12,7 +12,7 @@
 // For example, the learner studied on 1, 2, 3 and 4 October and, on 5 October, went back to
 // 2 October. The answers and check-ins of 3 and 4 October are undone, 3 and 4 October are rewound, the streak is 2
 // (3 after checking in on 5 October), and a 3-day streak badge of 3 October is removed.
-import { addDays } from './dates.js';
+import { addDays, isDay } from './dates.js';
 import { currentStreak } from './checkin.js';
 import { ANSWER_KINDS, liveEvents } from './stats.js';
 import { plural } from './view/format.js';
@@ -33,9 +33,11 @@ export function rewindChoices({ events, days, today }) {
 }
 
 // The rewound day ranges with from..to added, joined where they touch or overlap, oldest first.
-// Nothing is added when `from` is after `to` (going back to yesterday).
+// Nothing is added when `from` is after `to` (going back to yesterday). A saved range that is not
+// two study days in order is dropped, as isRewound in checkin.js ignores it anyway.
 export function addRange(rewound, from, to) {
-  const ranges = rewound.map(([a, b]) => [a, b]);
+  const ranges = rewound.filter((r) => Array.isArray(r) && isDay(r[0]) && isDay(r[1]) && r[0] <= r[1])
+    .map(([a, b]) => [a, b]);
   if (from <= to) ranges.push([from, to]);
   ranges.sort((x, y) => x[0].localeCompare(y[0]));
   const out = [];

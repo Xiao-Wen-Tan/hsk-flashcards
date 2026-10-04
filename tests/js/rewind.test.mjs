@@ -81,3 +81,9 @@ test('rewound ranges join when they touch or overlap', () => {
   // Going back to yesterday adds no range.
   assert.deepEqual(addRange([['2026-10-01', '2026-10-01']], '2026-10-05', '2026-10-04'), [['2026-10-01', '2026-10-01']]);
 });
+
+test('a saved rewound range that is not two study days in order is dropped', () => {
+  // From a hand-edited Sheet. Merged in, ['', ...] would hide 3 to 7 October from the streak.
+  assert.deepEqual(addRange([['', '2026-10-04'], null, ['2026-10-09', '2026-10-08']], '2026-10-03', '2026-10-07'),
+    [['2026-10-03', '2026-10-07']]);
+});
