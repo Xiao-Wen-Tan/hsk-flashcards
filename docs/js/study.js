@@ -1,5 +1,6 @@
 // Study is the one place the screens (Plan 4) talk to. It plans the day, runs a session,
-// saves every answer, handles Undo, and checks in and awards badges at the end.
+// saves every answer, handles Undo, and at the end closes the day (closeday.js), which checks in
+// and awards badges.
 // Every answer also saves the session itself (meta 'session'), so a session that is stopped,
 // closed or reloaded continues after its last answer on the same study day. Without it the
 // new words would start again from their learning cards, because a new word's record is only
@@ -13,13 +14,12 @@
 //   const result = await study.finish();                 // { checkedIn, streak, newBadges, ... }
 import { normalizeSettings } from './config.js';
 import { studyDay } from './dates.js';
-import { isDayDone, planDay } from './plan.js';
+import { planDay } from './plan.js';
 import {
   advance, answerCard, canUndo, createSession, currentCard, isFinished, sessionLeft, sessionSummary, undoAnswer,
 } from './session.js';
 import { PASS } from './srs.js';
-import { currentStreak } from './checkin.js';
-import { badgeFacts, newBadges } from './badges.js';
+import { closeDay } from './closeday.js';
 
 export async function loadSettings(store) {
   return normalizeSettings(await store.getMeta('settings'));
@@ -112,35 +112,13 @@ export class Study {
     this.last = null;
   }
 
-  // End the session (finished or not). Checks in when nothing is left for today, and
-  // awards any new badges.
+  // End the session (finished or not). closeDay checks in when nothing is left for the day and
+  // awards any new badges. The result adds the session's summary for the check-in screen.
   async finish(now = new Date()) {
-    const { store, data, day } = this;
-    const progress = await store.allProgress();
-    const after = planDay({ words: data.words, progress, today: day, settings: this.settings });
-    const days = await store.allDays();
-    let checkedIn = days.some((d) => d.day === day);
-    let justCheckedIn = false;
-    if (!checkedIn && isDayDone(after)) {
-      const record = { day, at: now.toISOString(), reviews: after.reviewsDone, newWords: after.newDone };
-      await store.commit({ days: [record], event: { day, kind: 'checkin', ts: now.toISOString() } });
-      days.push(record);
-      checkedIn = true;
-      justCheckedIn = true;
-    }
-    const checked = days.map((d) => d.day);
     const summary = sessionSummary(this.state);
-    const facts = badgeFacts({
-      data, progress, days, events: await store.allEvents(), rewound: (await store.getMeta('rewound')) ?? [],
-      perfectSession: summary.perfect,
+    const result = await closeDay({
+      store: this.store, data: this.data, day: this.day, settings: this.settings, now, perfectSession: summary.perfect,
     });
-    const earned = (await store.getMeta('badges')) ?? {};
-    const fresh = newBadges(facts, earned);
-    if (fresh.length) {
-      const updated = { ...earned };
-      for (const id of fresh) updated[id] = day;
-      await store.commit({ meta: { badges: updated }, event: { day, kind: 'badges', badges: fresh, ts: now.toISOString() } });
-    }
-    return { day, checkedIn, justCheckedIn, streak: currentStreak(checked, day), summary, newBadges: fresh, left: after };
+    return { ...result, summary };
   }
 }

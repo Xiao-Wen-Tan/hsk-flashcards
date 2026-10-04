@@ -26,6 +26,7 @@ const APP_FILES = [
   'js/audio.js',
   'js/badges.js',
   'js/checkin.js',
+  'js/closeday.js',
   'js/config.js',
   'js/counters.js',
   'js/curriculum.js',
