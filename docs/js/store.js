@@ -7,21 +7,40 @@
 // Both stores below (MemoryStore for tests, IdbStore for the browser) offer the same
 // async methods:
 //   allProgress(), getProgress(id)
-//   commit({ progress, remove, days, meta, event }) writes everything in one go and
-//     returns the event's seq. Every change goes with exactly one event, so the log
-//     always explains the saved state.
+//   commit({ progress, remove, days, meta, removeEvents, removeDays, removeMeta, clear, event })
+//     writes everything in one go and returns the event's seq. Every change goes with exactly
+//     one event, so the log always explains the saved state. Inside the commit the stores
+//     named in `clear` ('progress', 'events', 'days') are emptied first, then the deletes run
+//     (word IDs in `remove`, seq numbers in `removeEvents`, study days in `removeDays`, meta
+//     names in `removeMeta`), then the puts, and the event is added last.
 //   eventsSince(seq)  events with a larger seq, oldest first (for the Sheet backup, Plan 5)
 //   eventsFrom(day)   events of that study day and later, oldest first (for stats)
+//   allEvents()       every event, oldest first (for counters, badges and going back to a day)
 //   allDays(), getMeta(key), dump(), restore(dump)
-// seq numbers start at 1 and only ever go up, also after a restore.
+// seq numbers start at 1 and only ever go up, also after a restore or a clear.
 import { isDay } from './dates.js';
 
 export const STORE_NAMES = Object.freeze(['progress', 'events', 'days', 'meta']);
 
 const copy = (value) => (value === undefined ? undefined : structuredClone(value));
 
+// A saved event never changes, so MemoryStore keeps each one frozen and allEvents() hands out
+// the frozen events themselves. Copying tens of thousands of events at every session end made
+// the 450-day simulation test take minutes. A caller that tries to change one gets a TypeError.
+function frozen(value) {
+  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+    Object.freeze(value);
+    for (const v of Object.values(value)) frozen(v);
+  }
+  return value;
+}
+
 // Checks a commit before anything is written, so a bad commit changes nothing.
-export function checkCommit({ progress = [], remove = [], days = [], meta = {}, event } = {}) {
+export const CLEARABLE = Object.freeze(['progress', 'events', 'days']);
+
+export function checkCommit({
+  progress = [], remove = [], days = [], meta = {}, removeEvents = [], removeDays = [], removeMeta = [], clear = [], event,
+} = {}) {
   if (!event || typeof event.kind !== 'string' || !isDay(event.day)) {
     throw new Error('A commit needs an event with a kind and a study day');
   }
@@ -34,7 +53,11 @@ export function checkCommit({ progress = [], remove = [], days = [], meta = {}, 
   if (!remove.every((id) => typeof id === 'string')) throw new Error('remove takes word IDs');
   if (!days.every((d) => isDay(d?.day))) throw new Error('Bad day record');
   if (typeof meta !== 'object' || meta === null || Array.isArray(meta)) throw new Error('meta must be an object');
-  return { progress, remove, days, meta, event };
+  if (!removeEvents.every((s) => Number.isInteger(s) && s > 0)) throw new Error('removeEvents takes seq numbers');
+  if (!removeDays.every(isDay)) throw new Error('removeDays takes study days');
+  if (!removeMeta.every((k) => typeof k === 'string')) throw new Error('removeMeta takes meta names');
+  if (!clear.every((name) => CLEARABLE.includes(name))) throw new Error('clear takes progress, events or days');
+  return { progress, remove, days, meta, removeEvents, removeDays, removeMeta, clear, event };
 }
 
 function checkDump(dump) {
@@ -67,16 +90,27 @@ export class MemoryStore {
   async commit(input) {
     const c = checkCommit(input);
     const seq = this.nextSeq;
-    for (const p of c.progress) this.progress.set(p.id, copy(p));
+    if (c.clear.includes('progress')) this.progress.clear();
+    if (c.clear.includes('events')) this.events = [];
+    if (c.clear.includes('days')) this.days.clear();
     for (const id of c.remove) this.progress.delete(id);
+    if (c.removeEvents.length) {
+      const gone = new Set(c.removeEvents);
+      this.events = this.events.filter((e) => !gone.has(e.seq));
+    }
+    for (const day of c.removeDays) this.days.delete(day);
+    for (const key of c.removeMeta) this.meta.delete(key);
+    for (const p of c.progress) this.progress.set(p.id, copy(p));
     for (const d of c.days) this.days.set(d.day, copy(d));
     for (const [key, value] of Object.entries(c.meta)) this.meta.set(key, copy(value));
-    this.events.push({ ...copy(c.event), seq });
+    this.events.push(frozen({ ...copy(c.event), seq }));
     this.nextSeq = seq + 1;
     return seq;
   }
 
   async eventsSince(seq) { return this.events.filter((e) => e.seq > seq).map(copy); }
+
+  async allEvents() { return this.events.slice(); }
 
   async eventsFrom(day) { return this.events.filter((e) => e.day >= day).map(copy); }
 
@@ -96,7 +130,7 @@ export class MemoryStore {
   async restore(dump) {
     checkDump(dump);
     this.progress = new Map(dump.progress.map((p) => [p.id, copy(p)]));
-    this.events = dump.events.map(copy);
+    this.events = dump.events.map((e) => frozen(copy(e)));
     this.days = new Map(dump.days.map((d) => [d.day, copy(d)]));
     this.meta = new Map(Object.entries(copy(dump.meta)));
     this.nextSeq = Math.max(this.nextSeq, ...this.events.map((e) => e.seq + 1));
@@ -146,12 +180,18 @@ export class IdbStore {
 
   async getProgress(id) { return request(this.db.transaction('progress').objectStore('progress').get(id)); }
 
+  // clear() empties a store but does not reset its key generator, so the event added after a
+  // clear still gets the next seq (tests/browser/store-idb.js checks this in Chrome).
   async commit(input) {
     const c = checkCommit(input);
     const tx = this.db.transaction(STORE_NAMES, 'readwrite');
     const done = finished(tx);
-    for (const p of c.progress) tx.objectStore('progress').put(p);
+    for (const name of c.clear) tx.objectStore(name).clear();
     for (const id of c.remove) tx.objectStore('progress').delete(id);
+    for (const seq of c.removeEvents) tx.objectStore('events').delete(seq);
+    for (const day of c.removeDays) tx.objectStore('days').delete(day);
+    for (const key of c.removeMeta) tx.objectStore('meta').delete(key);
+    for (const p of c.progress) tx.objectStore('progress').put(p);
     for (const d of c.days) tx.objectStore('days').put(d);
     for (const [key, value] of Object.entries(c.meta)) tx.objectStore('meta').put({ key, value });
     const [seq] = await Promise.all([request(tx.objectStore('events').add({ ...c.event })), done]);
@@ -159,6 +199,8 @@ export class IdbStore {
   }
 
   async eventsSince(seq) { return this.getAll('events', IDBKeyRange.lowerBound(seq, true)); }
+
+  async allEvents() { return this.getAll('events'); }
 
   async eventsFrom(day) {
     const tx = this.db.transaction('events');

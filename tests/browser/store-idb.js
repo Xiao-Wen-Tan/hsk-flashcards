@@ -101,6 +101,32 @@ await check('data survives closing and opening the database again', async (store
   store.db = again.db; // so the check's clean-up closes the reopened connection
 });
 
+await check('events, days and meta keys are deleted in the same commit as the new event', async (store) => {
+  await store.commit({ progress: [learnedProgress('w0001', '2026-10-03')], days: [{ day: '2026-10-03' }], event: ev({ day: '2026-10-03' }) });
+  await store.commit({ days: [{ day: '2026-10-04' }], meta: { session: { day: '2026-10-04' } }, event: ev({ day: '2026-10-04' }) });
+  await store.commit({ event: ev({ day: '2026-10-04', kind: 'checkin' }) });
+  const seq = await store.commit({
+    removeEvents: [2, 3], removeDays: ['2026-10-04'], removeMeta: ['session'], remove: ['w0001'],
+    event: { day: '2026-10-05', kind: 'rewind', to: '2026-10-03' },
+  });
+  equal(seq, 4, 'seq of the rewind');
+  equal((await store.allEvents()).map((e) => e.seq), [1, 4], 'events left');
+  equal((await store.allDays()).map((d) => d.day), ['2026-10-03'], 'days left');
+  equal(await store.getMeta('session'), undefined, 'session gone');
+  equal(await store.allProgress(), [], 'word removed');
+});
+
+await check('clear empties progress, events and days, and seq keeps rising', async (store) => {
+  await store.commit({ progress: [learnedProgress('w0001', DAY)], days: [{ day: DAY }], meta: { settings: { newPerDay: 8 } }, event: ev() });
+  await store.commit({ event: ev() });
+  const seq = await store.commit({ clear: ['progress', 'events', 'days'], meta: { badges: {} }, event: { day: DAY, kind: 'reset' } });
+  equal(seq, 3, 'seq after the clear');
+  equal((await store.allEvents()).map((e) => [e.seq, e.kind]), [[3, 'reset']], 'only the reset event');
+  equal([await store.allProgress(), await store.allDays()], [[], []], 'progress and days empty');
+  equal(await store.getMeta('settings'), { newPerDay: 8 }, 'settings kept');
+  equal(await store.commit({ event: ev() }), 4, 'next seq');
+});
+
 const failed = results.filter((r) => r.startsWith('FAIL')).length;
 out.textContent = results.join('\n');
 document.title = failed ? `FAIL ${failed}` : `PASS ${results.length}`;
