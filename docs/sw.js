@@ -27,6 +27,7 @@ const APP_FILES = [
   'js/badges.js',
   'js/checkin.js',
   'js/config.js',
+  'js/counters.js',
   'js/curriculum.js',
   'js/dates.js',
   'js/distractors.js',
