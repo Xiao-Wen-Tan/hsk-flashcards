@@ -4,6 +4,7 @@ import {
   badgesView, calendarWeeks, checkinView, mapView, statsView, themeWordsView, wordBackHref, wordStatus,
 } from '../../docs/js/view/progress.js';
 import { learnedProgress } from '../../docs/js/srs.js';
+import { badgeFacts } from '../../docs/js/badges.js';
 import { loadFixture } from './helpers.mjs';
 
 const data = loadFixture();
@@ -89,18 +90,20 @@ test('stats show totals, levels, 30 days, the forecast and accuracy', () => {
   assert.equal(statsView({ data, progressList: [], events: [], checkedDays: [], today: TODAY }).accuracy, 'No reviews in the last 7 days.');
 });
 
-test('badges list the earned ones by date and the next milestone of each kind', () => {
-  const v = badgesView({
-    earned: { 'theme-t01': '2026-10-05', 'streak-7': '2026-10-11' },
-    data,
-    progressList: t01.map((w) => at(w.id, 1)),
-    checkedDays: ['2026-10-05', '2026-10-06', '2026-10-07', '2026-10-08', '2026-10-09', '2026-10-10', '2026-10-11'],
-  });
-  assert.deepEqual(v.earned.map((b) => [b.title, b.day]), [['Finished Starter Kit', '2026-10-05'], ['7-day streak', '2026-10-11']]);
-  assert.deepEqual(v.upcoming.map((u) => u.title), ['30-day streak', '10 check-ins', '50 words learned', '100 words mastered']);
-  // With 55 of the fixture's 61 words learned, the next learned badge is the one for every word.
-  const most = badgesView({ earned: {}, data, progressList: data.words.slice(0, 55).map((w) => at(w.id, 1)), checkedDays: [] });
-  assert.deepEqual(most.upcoming.find((u) => u.title.includes('learned')), { title: 'Every word learned', have: '55 of 61' });
+test('badges show group by group, each with its next badge and a progress bar', () => {
+  // Checked in from Monday 5 to Sunday 11 October, with the 12 Starter Kit words learned.
+  const days = ['2026-10-05', '2026-10-06', '2026-10-07', '2026-10-08', '2026-10-09', '2026-10-10', '2026-10-11'].map((day) => ({ day }));
+  const facts = badgeFacts({ data, progress: t01.map((w) => at(w.id, 1)), days, events: [] });
+  const earned = { 'theme-t01': '2026-10-05', 'learned-10': '2026-10-05', 'streak-3': '2026-10-07', 'streak-7': '2026-10-11' };
+  const v = badgesView({ earned, facts, themes: data.themes });
+  assert.equal(v.count, 4);
+  const g = Object.fromEntries(v.groups.map((x) => [x.id, x]));
+  assert.deepEqual(g.streak.earned.map((b) => [b.title, b.day]), [['3-day streak', '2026-10-07'], ['7-day streak', '2026-10-11']]);
+  assert.deepEqual([g.streak.next.title, g.streak.next.text, g.streak.next.pct], ['14-day streak', '7 / 14 days', '50%']);
+  assert.deepEqual([g.learned.next.title, g.learned.next.text, g.learned.next.pct], ['25 words learned', '12 / 25 words', '48%']);
+  assert.deepEqual([g.week.next.title, g.week.next.pct], ['Full week', null]);
+  assert.deepEqual(g.theme.earned.map((b) => b.title), ['Finished Starter Kit']);
+  assert.deepEqual([g.theme.next.title, g.theme.next.text], ['Finished Greetings & Courtesy', '0 / 10 words']);
 });
 
 test('the calendar starts on Monday and pads the month with blanks', () => {

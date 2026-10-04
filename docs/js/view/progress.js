@@ -1,10 +1,9 @@
 // The progress map, a theme's word list, Stats, Badges and the check-in screen.
 // All functions take saved data and return plain objects, so Node can test them.
-import { CONFIG } from '../config.js';
-import { bestStreak, monthCalendar } from '../checkin.js';
+import { monthCalendar } from '../checkin.js';
 import { weekdayIndex } from '../dates.js';
 import { accuracy, activity, forecast, groupById, levelProgress, mapSections, totals, wordsOfGroup } from '../stats.js';
-import { badgeTitle } from '../badges.js';
+import { badgeLadder, badgeTitle } from '../badges.js';
 import { hrefOf } from './route.js';
 import { isLearned, isMastered } from '../srs.js';
 import { WEEKDAY_SHORT, monthTitle, percent, plural } from './format.js';
@@ -91,35 +90,18 @@ export function statsView({ data, progressList, events, checkedDays, today }) {
   };
 }
 
-// The next milestone of each counted badge kind that is not earned yet.
-function upcoming(facts) {
-  const { badges } = CONFIG;
-  const next = (list, have) => list.find((n) => n > have);
-  const out = [];
-  const s = next(badges.streak, facts.bestStreak);
-  if (s) out.push({ title: badgeTitle(`streak-${s}`), have: `best streak so far: ${facts.bestStreak}` });
-  const c = next(badges.checkIns, facts.checkIns);
-  if (c) out.push({ title: badgeTitle(`checkins-${c}`), have: `${facts.checkIns} so far` });
-  const l = next(badges.learned, facts.learned);
-  if (l && l < facts.totalWords) out.push({ title: badgeTitle(`learned-${l}`), have: `${facts.learned} so far` });
-  else if (facts.learned < facts.totalWords) out.push({ title: badgeTitle('learned-all'), have: `${facts.learned} of ${facts.totalWords}` });
-  const m = next(badges.mastered, facts.mastered);
-  if (m) out.push({ title: badgeTitle(`mastered-${m}`), have: `${facts.mastered} so far` });
-  return out;
-}
-
-// The Badges screen. earned is the saved { badgeId: dayEarned } map (store meta 'badges').
-export function badgesView({ earned, data, progressList, checkedDays }) {
-  const list = Object.entries(earned ?? {})
-    .sort(([a, da], [b, db]) => da.localeCompare(db) || a.localeCompare(b))
-    .map(([id, day]) => ({ id, day, title: badgeTitle(id, data.themes) }));
-  const facts = {
-    bestStreak: bestStreak(checkedDays),
-    checkIns: checkedDays.length,
-    ...totals(progressList),
-    totalWords: data.words.length,
+// The Badges screen, group by group (badgeLadder in badges.js). earned is the saved
+// { badgeId: dayEarned } map (store meta 'badges') and facts is badgeFacts()'s result. Each
+// group's next badge gets pct, its progress as a bar width such as '57%', or null for no bar.
+export function badgesView({ earned, facts, themes }) {
+  const saved = earned ?? {};
+  return {
+    count: Object.keys(saved).length,
+    groups: badgeLadder(facts, saved, themes).map((g) => ({
+      ...g,
+      next: g.next && { ...g.next, pct: g.next.share === null ? null : percent(g.next.share) },
+    })),
   };
-  return { earned: list, upcoming: upcoming(facts) };
 }
 
 // A month as weeks of 7 cells from Monday, with null before the 1st and after the last day.

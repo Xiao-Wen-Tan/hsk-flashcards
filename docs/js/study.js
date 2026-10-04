@@ -18,9 +18,8 @@ import {
   advance, answerCard, canUndo, createSession, currentCard, isFinished, sessionLeft, sessionSummary, undoAnswer,
 } from './session.js';
 import { PASS } from './srs.js';
-import { bestStreak, currentStreak } from './checkin.js';
-import { groupsDone, themesDone, totals } from './stats.js';
-import { newBadges } from './badges.js';
+import { currentStreak } from './checkin.js';
+import { badgeFacts, newBadges } from './badges.js';
 
 export async function loadSettings(store) {
   return normalizeSettings(await store.getMeta('settings'));
@@ -118,7 +117,6 @@ export class Study {
   async finish(now = new Date()) {
     const { store, data, day } = this;
     const progress = await store.allProgress();
-    const byId = new Map(progress.map((p) => [p.id, p]));
     const after = planDay({ words: data.words, progress, today: day, settings: this.settings });
     const days = await store.allDays();
     let checkedIn = days.some((d) => d.day === day);
@@ -132,15 +130,10 @@ export class Study {
     }
     const checked = days.map((d) => d.day);
     const summary = sessionSummary(this.state);
-    const facts = {
-      bestStreak: bestStreak(checked),
-      checkIns: checked.length,
-      ...totals(progress),
-      totalWords: data.words.length,
-      themesDone: themesDone(data.themes, data.words, byId),
-      groupsDone: groupsDone(data.words, byId),
+    const facts = badgeFacts({
+      data, progress, days, events: await store.allEvents(), rewound: (await store.getMeta('rewound')) ?? [],
       perfectSession: summary.perfect,
-    };
+    });
     const earned = (await store.getMeta('badges')) ?? {};
     const fresh = newBadges(facts, earned);
     if (fresh.length) {

@@ -43,7 +43,7 @@ test('day 1 teaches 12 words through the screens and checks in', async () => {
   const v = checkinView({ result, checkedDays: (await store.allDays()).map((d) => d.day), today: result.day, themes: data.themes });
   assert.equal(v.title, 'Checked in!');
   assert.deepEqual(v.lines, ['12 new words learned.']);
-  assert.deepEqual(v.badges, ['Finished Starter Kit']);
+  assert.deepEqual(v.badges, ['10 words learned', '1 perfect day', 'Finished Starter Kit']);
 });
 
 test('day 2 starts with 12 listening reviews, and a wrong tap brings a recall card 4 cards later', async () => {

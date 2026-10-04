@@ -5,12 +5,23 @@ import { studyDay, addDays } from '../dates.js';
 import { todayView } from '../view/today.js';
 import { badgesView, checkinView, mapView, statsView, themeWordsView, wordBackHref } from '../view/progress.js';
 import { shortDate } from '../view/format.js';
+import { badgeFacts } from '../badges.js';
 import { cardElement } from './card.js';
 import { startSession } from './session.js';
 import { h, show } from './dom.js';
 
 async function checkedDays(app) {
   return (await app.store.allDays()).map((d) => d.day);
+}
+
+// Reads what the counters, goals and badges need, which is the saved words, check-in records,
+// events and rewound days (meta 'rewound'), and badgeFacts() over them.
+async function saved(app) {
+  const [progress, days, events, rewound] = await Promise.all([
+    app.store.allProgress(), app.store.allDays(), app.store.allEvents(), app.store.getMeta('rewound'),
+  ]);
+  const r = rewound ?? [];
+  return { progress, days, events, rewound: r, facts: badgeFacts({ data: app.data, progress, days, events, rewound: r }) };
 }
 
 async function progressById(app) {
@@ -123,16 +134,18 @@ export async function renderStats(app) {
     h('p', {}, v.accuracy));
 }
 
+// The Badges screen shows each group's earned badges with their days, then the next one greyed
+// out with its progress.
 export async function renderBadges(app) {
-  const v = badgesView({
-    earned: await app.store.getMeta('badges'),
-    data: app.data,
-    progressList: await app.store.allProgress(),
-    checkedDays: await checkedDays(app),
-  });
+  const { facts } = await saved(app);
+  const v = badgesView({ earned: await app.store.getMeta('badges'), facts, themes: app.data.themes });
   show(app.main, h('h1', {}, 'Badges'),
-    v.earned.length ? v.earned.map((b) => h('p', { class: 'badge' }, b.title, h('span', { class: 'muted' }, ` ${shortDate(b.day)}`)))
-      : h('p', { class: 'muted' }, 'No badges yet. Your first check-ins will earn some.'),
-    h('h2', {}, 'Next milestones'),
-    v.upcoming.map((u) => h('p', { class: 'badge locked' }, u.title, h('span', { class: 'muted' }, ` (${u.have})`))));
+    v.count ? null : h('p', { class: 'muted' }, 'No badges yet. Your first check-ins will earn some.'),
+    v.groups.map((g) => h('section', { class: 'badge-group' },
+      h('h2', {}, g.title),
+      g.earned.map((b) => h('p', { class: 'badge' }, b.title, h('span', { class: 'muted' }, ` ${shortDate(b.day)}`))),
+      g.next ? h('div', { class: 'badge locked' },
+        h('span', { class: 'badge-title' }, g.next.title),
+        g.next.pct === null ? null : h('span', { class: 'bar' }, h('span', { class: 'bar-learned', style: `width:${g.next.pct}` })),
+        h('span', { class: 'muted' }, g.next.text)) : null)));
 }

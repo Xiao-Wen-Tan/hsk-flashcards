@@ -26,11 +26,16 @@ export const CONFIG = Object.freeze({
 
   perfectMinReviews: 30, // a perfect session needs at least this many reviews
 
+  // Badge steps (badges.js BADGE_GROUPS). The spec of 2026-10-03 added streaks of 3, 14, 60 and
+  // 200 days, 10, 25, 250 and 4000 words, and the perfect-day, review and minute badges.
   badges: Object.freeze({
-    streak: Object.freeze([7, 30, 100, 365]),
+    streak: Object.freeze([3, 7, 14, 30, 60, 100, 200, 365]),
     checkIns: Object.freeze([10, 50, 200]),
-    learned: Object.freeze([50, 100, 500, 1000, 2000, 3000]),
+    learned: Object.freeze([10, 25, 50, 100, 250, 500, 1000, 2000, 3000, 4000]),
     mastered: Object.freeze([100, 500, 1000, 2500]),
+    perfectDays: Object.freeze([1, 7, 30]),
+    reviews: Object.freeze([100, 1000, 5000, 10000]),
+    minutes: Object.freeze([60, 300, 1000, 3000]),
   }),
 
   statsDays: Object.freeze({ activity: 30, forecast: 7, accuracy: 7 }),
