@@ -45,6 +45,7 @@ const APP_FILES = [
   'js/session.js',
   'js/sheet.js',
   'js/speakcheck.js',
+  'js/speakflow.js',
   'js/speaklist.js',
   'js/srs.js',
   'js/stats.js',
