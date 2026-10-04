@@ -11,7 +11,7 @@
 // The web app address and the secret code are kept only in this browser (localStorage).
 // They never go into the backup file, the Sheet or the repository.
 import { isLearned, isMastered } from './srs.js';
-import { liveEvents } from './stats.js';
+import { answerEvents, minutesOf } from './stats.js';
 import { bestStreak, currentStreak } from './checkin.js';
 import { studyDay } from './dates.js';
 
@@ -131,24 +131,16 @@ export function logRow(e, word) {
     GRADE_TEXT[e.grade] ?? '', result, JSON.stringify(e)];
 }
 
-// Minutes studied on a day: the gaps between answers added up, each gap counted as at most
-// 5 minutes, so a break does not count. Answers at 19:00:00, 19:00:20 and 19:40:00 give 5.3 min.
-export function minutesOf(events) {
-  const times = events.map((e) => Date.parse(e.ts)).filter(Number.isFinite).sort((a, b) => a - b);
-  let ms = 0;
-  for (let i = 1; i < times.length; i += 1) ms += Math.min(times[i] - times[i - 1], 5 * 60 * 1000);
-  return Math.round(ms / 6000) / 10;
-}
-
 // One row per study day. dayRecord is the saved check-in record of that day, or undefined.
+// Minutes are those of the day's answers (minutesOf in stats.js, the same as the app's counters).
 // ['2026-10-06', 'yes', 12, 0.917, 12, 21.5, '{"day":"2026-10-06",...}']
 export function dailyRow(day, events, dayRecord) {
-  const live = liveEvents(events.filter((e) => e.day === day));
-  const reviews = live.filter((e) => e.kind === 'review');
+  const answers = answerEvents(events.filter((e) => e.day === day));
+  const reviews = answers.filter((e) => e.kind === 'review');
   const right = reviews.filter((e) => e.grade === 'right' || e.grade === 'know').length;
-  const learned = live.filter((e) => e.outcome === 'learned').length;
+  const learned = answers.filter((e) => e.outcome === 'learned').length;
   return [day, dayRecord ? 'yes' : 'no', reviews.length, reviews.length ? Math.round((right / reviews.length) * 1000) / 1000 : '',
-    learned, minutesOf(events.filter((e) => e.day === day)), dayRecord ? JSON.stringify(dayRecord) : ''];
+    learned, minutesOf(answers), dayRecord ? JSON.stringify(dayRecord) : ''];
 }
 
 // The numbers the Dashboard shows at the top.

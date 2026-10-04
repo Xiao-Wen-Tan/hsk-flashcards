@@ -11,6 +11,24 @@ export function liveEvents(events) {
   return events.filter((e) => e.kind !== 'undo' && !undone.has(e.seq));
 }
 
+// The event kinds that are quiz answers (session.js card types). A learning card has no answer.
+export const ANSWER_KINDS = Object.freeze(['review', 'reask', 'check', 'final']);
+
+// The quiz answers among events, without the ones Undo took back.
+export function answerEvents(events) {
+  return liveEvents(events).filter((e) => ANSWER_KINDS.includes(e.kind));
+}
+
+// The minutes studied add up the gaps between the times of `events`, each gap counted as at
+// most 5 minutes, so a break does not count. The caller picks the events, for example one
+// day's answers. Answers at 19:00:00, 19:00:20 and 19:40:00 give 20 s + 5 min = 5.3 minutes.
+export function minutesOf(events) {
+  const times = events.map((e) => Date.parse(e.ts)).filter(Number.isFinite).sort((a, b) => a - b);
+  let ms = 0;
+  for (let i = 1; i < times.length; i += 1) ms += Math.min(times[i] - times[i - 1], 5 * 60 * 1000);
+  return Math.round(ms / 6000) / 10;
+}
+
 export function totals(progressList) {
   let learned = 0;
   let mastered = 0;

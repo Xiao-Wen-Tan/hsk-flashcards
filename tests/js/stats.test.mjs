@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  LEVEL_GROUPS, accuracy, activity, forecast, groupsDone, levelProgress, liveEvents, mapSections, themesDone, totals,
+  ANSWER_KINDS, LEVEL_GROUPS, accuracy, activity, answerEvents, forecast, groupsDone, levelProgress, liveEvents, mapSections,
+  minutesOf, themesDone, totals,
 } from '../../docs/js/stats.js';
 import { failedLessonProgress, learnedProgress } from '../../docs/js/srs.js';
 import { loadFixture } from './helpers.mjs';
@@ -124,4 +125,28 @@ test('7-day accuracy counts only scheduled reviews', () => {
   ];
   assert.deepEqual(accuracy(events, TODAY), { answered: 4, right: 2, rate: 0.5 });
   assert.deepEqual(accuracy([], TODAY), { answered: 0, right: 0, rate: null });
+});
+
+test('answers are the live review, re-ask, check and final events', () => {
+  const events = [
+    { seq: 1, day: TODAY, kind: 'review', grade: 'right' },
+    { seq: 2, day: TODAY, kind: 'check', grade: 'wrong' },
+    { seq: 3, day: TODAY, kind: 'undo', target: 2 },
+    { seq: 4, day: TODAY, kind: 'checkin' },
+    { seq: 5, day: TODAY, kind: 'final', grade: 'right', outcome: 'learned' },
+    { seq: 6, day: TODAY, kind: 'reask', grade: 'know' },
+    { seq: 7, day: TODAY, kind: 'badges', badges: ['perfect'] },
+  ];
+  assert.deepEqual(ANSWER_KINDS, ['review', 'reask', 'check', 'final']);
+  assert.deepEqual(answerEvents(events).map((e) => e.seq), [1, 5, 6]);
+});
+
+test('minutes add the gaps between the given events, each at most 5 minutes', () => {
+  const at = (t) => ({ ts: `2026-10-05T${t}Z` });
+  // 20 seconds, then 39 minutes 40 seconds counted as 5 minutes, make 320 seconds or 5.3 minutes.
+  assert.equal(minutesOf([at('19:00:00'), at('19:00:20'), at('19:40:00')]), 5.3);
+  assert.equal(minutesOf([at('19:00:00')]), 0);
+  assert.equal(minutesOf([]), 0);
+  // The order does not matter, and an event without a readable time is skipped.
+  assert.equal(minutesOf([at('19:40:00'), at('19:00:00'), { ts: 'not a time' }]), 5);
 });

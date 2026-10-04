@@ -5,7 +5,7 @@ process.env.TZ = 'UTC';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  HEADERS, backUp, checkCode, checkWebAppUrl, dailyRow, isDue, loadState, logRow, makeCode, makeDeviceId, minutesOf, postJson,
+  HEADERS, backUp, checkCode, checkWebAppUrl, dailyRow, isDue, loadState, logRow, makeCode, makeDeviceId, postJson,
   progressRow, restoreFromSheet, saveState, statusText, STATE_KEY, withSettings,
 } from '../../docs/js/sheet.js';
 import { MemoryStore } from '../../docs/js/store.js';
@@ -111,9 +111,7 @@ test('rows are readable, with the saved record as JSON in the last column', () =
     [9, '2026-10-06', 'T', 'undo', apple.id, '苹果', '', '', 'took back answer 8']);
 });
 
-test('minutes add the gaps between answers, each at most 5 minutes', () => {
-  const at = (t) => ({ ts: `2026-10-05T${t}Z` });
-  assert.equal(minutesOf([at('19:00:00'), at('19:00:20'), at('19:40:00')]), 5.3);
+test('a Daily row counts the live reviews, and minutes from the day\'s answers only', () => {
   const events = [
     { seq: 1, day: '2026-10-06', kind: 'review', grade: 'right', ts: '2026-10-06T19:00:00Z' },
     { seq: 2, day: '2026-10-06', kind: 'review', grade: 'wrong', ts: '2026-10-06T19:00:30Z' },
@@ -121,8 +119,10 @@ test('minutes add the gaps between answers, each at most 5 minutes', () => {
     { seq: 4, day: '2026-10-06', kind: 'review', grade: 'right', ts: '2026-10-06T19:01:00Z' },
     { seq: 5, day: '2026-10-06', kind: 'review', grade: 'know', ts: '2026-10-06T19:01:30Z' },
     { seq: 6, day: '2026-10-06', kind: 'review', grade: 'unsure', ts: '2026-10-06T19:01:40Z' },
+    { seq: 7, day: '2026-10-06', kind: 'checkin', ts: '2026-10-06T19:04:40Z' },
   ];
-  // 4 live reviews (answer 2 was taken back), 3 of them right or Know it, 100 seconds in all.
+  // 4 live reviews (answer 2 was taken back), 3 of them right or Know it. The live answers span
+  // 100 seconds, 1.7 minutes. The check-in 3 minutes later is not an answer, so it adds nothing.
   assert.deepEqual(dailyRow('2026-10-06', events, undefined), ['2026-10-06', 'no', 4, 0.75, 0, 1.7, '']);
 });
 
