@@ -31,6 +31,7 @@ const APP_FILES = [
   'js/curriculum.js',
   'js/dates.js',
   'js/distractors.js',
+  'js/goals.js',
   'js/hooks.js',
   'js/offline.js',
   'js/pinyin.js',
