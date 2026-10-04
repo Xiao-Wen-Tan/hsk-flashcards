@@ -57,6 +57,7 @@ export async function endSpeaking(app, { quiet = false } = {}) {
   app.speaking = null;
   app.speakRun = (app.speakRun ?? 0) + 1;
   app.player.stop();
+  stopPlayback();
   app.stopTry?.();
   const result = await speaking.close();
   app.lastResult = result;
@@ -139,6 +140,7 @@ async function advance(app, input) {
   app.busy = true;
   app.speakRun = (app.speakRun ?? 0) + 1;
   app.player.stop();
+  stopPlayback();
   app.stopTry?.();
   try {
     const finished = await speaking.send(input);
@@ -172,6 +174,7 @@ async function recordAndCheck(app, withSounds, alive) {
     stopPlayback(); // the learner's last recording must not be recorded again
     stream = await openMic();
   } catch {
+    if (!alive()) return; // the panel was left while the microphone was being asked for
     saveMode('none');
     try {
       // Without a microphone a word already listened to and repeated ends as 'listened', and
@@ -185,6 +188,8 @@ async function recordAndCheck(app, withSounds, alive) {
     renderSpeak(app);
     return;
   }
+  // Skip, Stop or leaving while the microphone was opening: close it again at once.
+  if (!alive()) { closeMic(stream); return; }
   const recognizer = withSounds ? listen({ track: stream.getAudioTracks()[0] }) : null;
   const recording = recordTry(stream, { onLevel: (level) => meter(app, level) });
   app.stopTry = recording.stop;
