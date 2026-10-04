@@ -55,25 +55,32 @@ function joined(chunks) {
 }
 
 // Records one try from an open stream. Resolves { samples, rate, voice }, where voice is false
-// when nothing louder than the room was heard. onLevel(level) is called about 20 times a second
-// for the meter. stop() on the returned object ends the try early.
+// when nothing louder than the room was heard. onLevel(level) is called 20 to 50 times a second
+// for the meter. stop() on the returned object ends the try early. A clock also ends the try
+// half a second after the longest try, in case no sound ever arrives (for example when the
+// phone holds the audio for a call), so the microphone is never left on.
 export function recordTry(stream, { onLevel = () => {} } = {}) {
   let stopNow = () => {};
   const done = (async () => {
     const ctx = new AudioContext();
+    if (ctx.state !== 'running') await ctx.resume().catch(() => {});
     const source = ctx.createMediaStreamSource(stream);
     const decide = stopper();
-    const started = performance.now();
+    // The try's clock starts with the first block of sound, so the noise floor of the first
+    // 300 ms is measured on real sound even when the worklet is slow to load.
+    let started = null;
     const chunks = [];
     let outcome = null;
     let finish;
     const ended = new Promise((resolve) => { finish = resolve; });
     const check = (level) => {
       onLevel(level);
+      if (started === null) started = performance.now();
       outcome = outcome ?? decide(level, performance.now() - started);
       if (outcome) finish();
     };
     stopNow = () => { outcome = outcome ?? 'done'; finish(); };
+    const guard = setTimeout(() => { outcome = outcome ?? (started === null ? 'silent' : 'done'); finish(); }, 6500);
     let node = null;
     let recorder = null;
     let analyser = null;
@@ -103,21 +110,30 @@ export function recordTry(stream, { onLevel = () => {} } = {}) {
       recorder.parts = parts;
     }
     await ended;
-    let samples;
-    if (recorder) {
-      clearInterval(timer);
-      const stopped = new Promise((resolve) => { recorder.onstop = resolve; });
-      recorder.stop();
-      await stopped;
-      const audio = await ctx.decodeAudioData(await new Blob(recorder.parts).arrayBuffer());
-      samples = audio.getChannelData(0).slice(0);
-    } else {
-      node.port.onmessage = null;
-      source.disconnect();
-      samples = joined(chunks);
-    }
+    clearTimeout(guard);
+    let samples = new Float32Array(0);
     const rate = ctx.sampleRate;
-    await ctx.close();
+    try {
+      if (recorder) {
+        clearInterval(timer);
+        if (recorder.state !== 'inactive') {
+          const stopped = new Promise((resolve) => { recorder.onstop = resolve; });
+          recorder.stop();
+          await stopped;
+        }
+        const audio = await ctx.decodeAudioData(await new Blob(recorder.parts).arrayBuffer());
+        samples = audio.getChannelData(0).slice(0);
+      } else {
+        node.port.onmessage = null;
+        source.disconnect();
+        samples = joined(chunks);
+      }
+    } catch {
+      // A recording that cannot be decoded (stopped at once, or empty) counts as no voice.
+      outcome = 'silent';
+    } finally {
+      await ctx.close().catch(() => {});
+    }
     return { samples, rate, voice: outcome !== 'silent' };
   })();
   return { done, stop: () => stopNow() };
