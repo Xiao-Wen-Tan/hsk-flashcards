@@ -55,6 +55,7 @@ test('text helpers', () => {
   assert.equal(percent(0.254), '25%');
   assert.equal(plural(1, 'review'), '1 review');
   assert.equal(plural(3, 'review'), '3 reviews');
+  assert.equal(plural(2500, 'more word'), '2,500 more words'); // goal countdowns on Today and Stats
   assert.equal(shortDate('2026-10-05'), 'Mon 5 Oct');
   assert.equal(monthTitle('2026-10'), 'October 2026');
 });

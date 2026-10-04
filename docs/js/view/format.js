@@ -19,8 +19,10 @@ export function percent(share) {
 }
 
 // plural(1, 'review') gives '1 review', plural(3, 'review') gives '3 reviews'.
+// Numbers of 1,000 and more get thousands commas: plural(2500, 'more word') is '2,500 more words'.
 export function plural(n, one, many = `${one}s`) {
-  return `${n} ${n === 1 ? one : many}`;
+  const shown = typeof n === 'number' ? n.toLocaleString('en-US') : n;
+  return `${shown} ${n === 1 ? one : many}`;
 }
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
