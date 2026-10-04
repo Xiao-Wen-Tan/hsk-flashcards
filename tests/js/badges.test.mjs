@@ -158,7 +158,7 @@ test('the speaking badges count the words spoken well, each word once', () => {
   assert.deepEqual(earnedBadges({ ...NONE, spokenWell: 1000 }), ['spoken-10', 'spoken-50', 'spoken-100', 'spoken-500', 'spoken-1000']);
   assert.equal(badgeTitle('spoken-10'), '10 words spoken well');
   assert.equal(badgeTitle('spoken-1000'), '1,000 words spoken well');
-  // 我 is spoken well twice and 你 once, 他 is skipped and 好 only listened to, which makes 2 words spoken well.
+  // w0001 is spoken well twice and w0002 once, w0003 is skipped and w0009 only listened to, which makes 2 words spoken well.
   const speak = (seq, id, result) => ({ seq, day: '2026-10-05', kind: 'speak', id, result, tries: 1, check: { tones: 1, heard: null } });
   const events = [speak(1, 'w0001', 'pass'), speak(2, 'w0002', 'pass'), speak(3, 'w0003', 'skip'), speak(4, 'w0009', 'listened'),
     { ...speak(5, 'w0001', 'pass'), day: '2026-10-06' }];

@@ -37,7 +37,8 @@ const grouped = (n) => Number(n).toLocaleString('en-US'); // 1000 gives '1,000'
 
 // The badges the facts earn, in group order. The facts object looks like
 // { bestStreak, checkIns, learned, mastered, totalWords, reviews, minutes, perfectDays, fullWeeks,
-//   themesDone: ['t01'], groupsDone: ['1-2'], perfectSession: true or false } (see badgeFacts).
+//   themesDone: ['t01'], groupsDone: ['1-2'], perfectSession: true or false, spokenWell } (see badgeFacts),
+// where spokenWell is the number of different words spoken well (speak result 'pass').
 // groupsDone holds the finished level groups (stats.js LEVEL_GROUPS), which replaced the
 // separate HSK 1 and HSK 2 badges (the user's decision of 2026-09-29).
 export function earnedBadges(facts) {
