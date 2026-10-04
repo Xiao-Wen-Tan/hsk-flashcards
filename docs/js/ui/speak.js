@@ -8,7 +8,7 @@ import { effectsOf, pauseMs } from '../speakflow.js';
 import { trackPitch } from '../pitch.js';
 import { addToVoice, emptyVoice, judgeTones } from '../tones.js';
 import { fallbackMode, matchWord, readingsOf, recognizerOutcome } from '../speakcheck.js';
-import { GOOGLE_NOTE, speakView } from '../view/speak.js';
+import { GOOGLE_NOTE, MIC_BUSY, micRefused, speakView } from '../view/speak.js';
 import { closeMic, openMic, playSamples, recordTry, stopPlayback } from './mic.js';
 import { findMode, listen, saveMode } from './recognize.js';
 import { h, show } from './dom.js';
@@ -173,8 +173,15 @@ async function recordAndCheck(app, withSounds, alive) {
   try {
     stopPlayback(); // the learner's last recording must not be recorded again
     stream = await openMic();
-  } catch {
+  } catch (err) {
     if (!alive()) return; // the panel was left while the microphone was being asked for
+    if (!micRefused(err)) {
+      // A busy microphone: this try did not happen, so the word is played again and the
+      // learner taps the microphone when it is free.
+      app.note(MIC_BUSY);
+      await advance(app, { type: 'heard', tones: null, sounds: null });
+      return;
+    }
     saveMode('none');
     try {
       // Without a microphone a word already listened to and repeated ends as 'listened', and

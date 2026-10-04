@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { GOOGLE_NOTE, checkText, speakButton, speakView, spokenLine } from '../../docs/js/view/speak.js';
+import { GOOGLE_NOTE, checkText, micRefused, speakButton, speakView, spokenLine } from '../../docs/js/view/speak.js';
 import { next, startWord } from '../../docs/js/speakflow.js';
 import { loadFixture, word } from './helpers.mjs';
 
@@ -73,4 +73,10 @@ test('the check-in line about speaking', () => {
   assert.equal(spokenLine({ pass: 3, listened: 2, skip: 1 }), '3 said well, 2 listened to and 1 skipped in speaking practice.');
   assert.equal(spokenLine({ pass: 0, listened: 12, skip: 0 }), '12 listened to in speaking practice.');
   assert.equal(spokenLine({ pass: 0, listened: 0, skip: 0 }), null);
+});
+
+test('only a refused or missing microphone switches to listening only; a busy one is tried again', () => {
+  for (const name of ['NotAllowedError', 'SecurityError', 'NotFoundError', 'TypeError']) assert.equal(micRefused({ name }), true, name);
+  // A call, or Chrome's recognizer still holding the microphone, gives NotReadableError.
+  for (const name of ['NotReadableError', 'AbortError', 'OverconstrainedError']) assert.equal(micRefused({ name }), false, name);
 });

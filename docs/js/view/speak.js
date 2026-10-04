@@ -17,6 +17,16 @@ export function checkText(mode) {
 }
 
 // The one-time note before the first try, also shown in Settings and on the credits page.
+// True when opening the microphone failed because it is refused or missing, so the panel goes
+// on with listening only. A busy microphone (NotReadableError, for example during a call or
+// while Chrome's recognizer still holds it) is not refused, and the learner can try again.
+const MIC_REFUSED = ['NotAllowedError', 'SecurityError', 'NotFoundError', 'TypeError'];
+export function micRefused(err) {
+  return MIC_REFUSED.includes(err?.name);
+}
+
+export const MIC_BUSY = 'The microphone is busy, for example during a call. Tap the microphone again in a moment.';
+
 export const GOOGLE_NOTE = 'The sound check uses Google\'s speech recognition in Chrome, which sends your voice to Google. '
   + 'This app never saves your recordings.';
 
