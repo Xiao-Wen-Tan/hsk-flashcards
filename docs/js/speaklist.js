@@ -3,7 +3,9 @@
 //
 // The list of a day holds every word studied that day, which is every word record whose
 // lessonDay or lastReview is the day (new words, lessons that ended without passing, and reviewed
-// words), and every word whose latest speak event before that day is a skip. It is done when
+// words), and every word skipped on an earlier day and not passed since (a 'listened' result,
+// when there was no microphone, does not clear a skip: the user's rule "skipped earlier and not
+// yet passed", 2026-10-03). It is done when
 // every word in it has a speak event on that day. A speak event is saved once per finished word:
 //   { day, kind: 'speak', id, result: 'pass' | 'skip' | 'listened', tries, check: { tones, heard }, ts }
 import { liveEvents } from './stats.js';
@@ -12,11 +14,15 @@ export const SPEAK_RESULTS = Object.freeze(['pass', 'skip', 'listened']);
 
 const speakEvents = (events) => events.filter((e) => e.kind === 'speak');
 
-// The words whose latest speak event before `day` is a skip, oldest skip first.
+// The words skipped before `day` and not passed since, ordered by their latest skip, oldest first.
 function carried(speaks, day) {
-  const last = new Map();
-  for (const e of speaks) if (e.day < day) last.set(e.id, e);
-  return [...last.values()].filter((e) => e.result === 'skip').sort((a, b) => a.seq - b.seq).map((e) => e.id);
+  const skipped = new Map(); // id -> seq of its latest skip since its last pass
+  for (const e of speaks) {
+    if (e.day >= day) continue;
+    if (e.result === 'pass') skipped.delete(e.id);
+    else if (e.result === 'skip') skipped.set(e.id, e.seq);
+  }
+  return [...skipped].sort((a, b) => a[1] - b[1]).map(([id]) => id);
 }
 
 // The IDs of the day's speaking list. The words studied that day come first, in the order they

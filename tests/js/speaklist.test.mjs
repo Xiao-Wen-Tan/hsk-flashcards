@@ -36,11 +36,15 @@ test('a word skipped on its latest earlier day comes back until it is spoken', (
   ];
   const all = [...events, ...more];
   assert.deepEqual(speakList({ progress, events: all, day: DAY }), ['c', 'a', 'b', 'd', 'x', 'y']);
-  // Skipped again today, x comes back tomorrow. Spoken today, y does not.
+  // Skipped again today, x comes back tomorrow. Only listened to today (no microphone), y is
+  // still not passed, so it comes back too (the user's rule: skipped and not yet passed).
   const today = [...all, spoke(DAY, 'x', 'skip'), spoke(DAY, 'y', 'listened')];
-  assert.deepEqual(speakList({ progress, events: today, day: '2026-10-07' }), ['x']);
-  // Before any learning on 7 October, the list holds only the carried word.
-  assert.deepEqual(speakStatus({ progress, events: today, day: '2026-10-07' }), { list: ['x'], done: [], left: ['x'] });
+  assert.deepEqual(speakList({ progress, events: today, day: '2026-10-07' }), ['y', 'x']);
+  // Before any learning on 7 October, the list holds only the carried words.
+  assert.deepEqual(speakStatus({ progress, events: today, day: '2026-10-07' }), { list: ['y', 'x'], done: [], left: ['y', 'x'] });
+  // Passed on 7 October, y is not carried to 8 October.
+  const passed = [...today, spoke('2026-10-07', 'y', 'pass'), spoke('2026-10-07', 'x', 'listened')];
+  assert.deepEqual(speakList({ progress, events: passed, day: '2026-10-08' }), ['x']);
 });
 
 test('the list is done when every word has a speak event that day', () => {
