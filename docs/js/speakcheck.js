@@ -148,6 +148,18 @@ export function recognizerOutcome(heard, voice) {
   return 'heard';
 }
 
+// The checking method after the recognizer failed in `mode`. In mode 'one' (one recording feeds
+// both checks) a failure of the sharing itself, such as 'audio-capture' or a voice missed twice
+// (error null), means the phone cannot let both checks use the microphone at once, so the learner
+// says the word twice (the user's rule, 2026-10-03). Without the network or permission the
+// recognizer cannot work at all, and in mode 'twice' nothing else is left, so the tone check
+// decides alone.
+//   fallbackMode('one', 'audio-capture') gives 'twice', fallbackMode('one', 'network') gives 'tones'
+const RECOGNIZER_GONE = ['network', 'not-allowed', 'service-not-allowed', 'language-not-supported', 'no-recognizer'];
+export function fallbackMode(mode, error) {
+  return mode === 'one' && !RECOGNIZER_GONE.includes(error) ? 'twice' : 'tones';
+}
+
 // The verdict of one try from the checks that ran. tones is judgeTones()'s result (tones.js)
 // or null, and sounds is matchWord()'s result or null. A try passes when every check that ran
 // passed. Returns { pass, problems, check }, where check is what is saved with the word:

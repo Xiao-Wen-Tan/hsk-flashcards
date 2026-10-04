@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  cleanHeard, matchWord, numberText, readingsOf, recognizerOutcome, syllablesOf, verdict,
+  cleanHeard, fallbackMode, matchWord, numberText, readingsOf, recognizerOutcome, syllablesOf, verdict,
 } from '../../docs/js/speakcheck.js';
 import { loadFixture, word } from './helpers.mjs';
 
@@ -93,4 +93,16 @@ test('100, 1000 and 1万 written in digits pass for 百, 千 and 万', () => {
 
 test('an answer in Latin letters only is reported as heard, not as nothing', () => {
   assert.deepEqual(matchWord(word(data, '他'), ['OK'], readings), { ok: false, heard: 'OK', how: null });
+});
+
+test('when the recognizer fails while sharing the recording, the learner says the word twice instead', () => {
+  // The user's rule: if the phone cannot let both checks use the microphone at once, the word is
+  // said twice. A sharing failure ('audio-capture', or a voice missed twice) is that case.
+  assert.equal(fallbackMode('one', 'audio-capture'), 'twice');
+  assert.equal(fallbackMode('one', null), 'twice');
+  // Without the network or permission the recognizer cannot work at all, so only tones are left.
+  assert.equal(fallbackMode('one', 'network'), 'tones');
+  assert.equal(fallbackMode('one', 'not-allowed'), 'tones');
+  assert.equal(fallbackMode('twice', 'audio-capture'), 'tones');
+  assert.equal(fallbackMode('twice', null), 'tones');
 });

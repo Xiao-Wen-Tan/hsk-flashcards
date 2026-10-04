@@ -7,7 +7,7 @@ import { Speaking } from '../speaking.js';
 import { effectsOf, pauseMs } from '../speakflow.js';
 import { trackPitch } from '../pitch.js';
 import { addToVoice, emptyVoice, judgeTones } from '../tones.js';
-import { matchWord, readingsOf, recognizerOutcome } from '../speakcheck.js';
+import { fallbackMode, matchWord, readingsOf, recognizerOutcome } from '../speakcheck.js';
 import { GOOGLE_NOTE, speakView } from '../view/speak.js';
 import { closeMic, openMic, playSamples, recordTry } from './mic.js';
 import { findMode, listen, saveMode } from './recognize.js';
@@ -179,13 +179,16 @@ async function recordAndCheck(app, withSounds, alive) {
   app.stopTry = null;
   if (!alive()) return;
   app.lastVoice = audio.voice ? audio : null;
-  // The recognizer failing, or missing a voice twice in a row, leaves the tone check alone.
+  // The recognizer failing, or missing a voice twice in a row, changes the checking method:
+  // from one shared recording to saying the word twice, or else to the tone check alone.
   const outcome = recognizerOutcome(heard, audio.voice);
   app.missedVoice = outcome === 'empty' ? (app.missedVoice ?? 0) + 1 : 0;
   if (outcome === 'failed' || app.missedVoice >= 2) {
-    saveMode('tones');
+    const next = fallbackMode(speaking.mode, outcome === 'failed' ? heard.error : null);
+    app.missedVoice = 0;
+    saveMode(next);
     try {
-      await speaking.setMode('tones');
+      await speaking.setMode(next);
     } catch (err) {
       app.note(err.message);
       renderSpeak(app);
