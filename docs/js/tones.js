@@ -50,7 +50,8 @@ const mean = (list) => list.reduce((s, v) => s + v, 0) / list.length;
 // is at most 120 ms (a third tone often breaks off in a creak), or else the weakest is dropped.
 // While there are fewer, the longest is split at its deepest dip in loudness, where a
 // consonant such as m, n or l sits between two vowels (我们 wǒmen is one voiced stretch).
-export function syllableSegments({ f0, db }, n, { minFrames = 5, joinGap = 12 } = {}) {
+// A dip shallower than `minDip` decibels gives null, as no second syllable was heard.
+export function syllableSegments({ f0, db }, n, { minFrames = 5, joinGap = 12, minDip = -Infinity } = {}) {
   const level = ([a, b]) => mean(db.slice(a, b + 1));
   let runs = voicedRuns(f0).filter(([a, b]) => b - a + 1 >= minFrames);
   if (!runs.length) return null;
@@ -79,6 +80,7 @@ export function syllableSegments({ f0, db }, n, { minFrames = 5, joinGap = 12 } 
       const d = Math.min(Math.max(...db.slice(a, i)), Math.max(...db.slice(i + 1, b + 1))) - db[i];
       if (d > depth) { depth = d; cut = i; }
     }
+    if (depth < minDip) return null;
     runs.splice(k, 1, [a, cut - 1], [cut + 1, b]);
   }
   return runs;
@@ -106,7 +108,9 @@ export function addToVoice(voice, hzList) {
 
 // The middle of a voice (`ref`, Hz) and its range (`span`, semitones from the 10th to the 90th
 // percentile of its pitch values, kept between 4 and 14). With no voice yet, the recording's
-// own pitch values are used and `known` is false, so the tone check looks at shapes only.
+// own pitch values are used and `known` is false, so the tone check looks at the shapes, and in
+// a word of 2 or more syllables at the heights of the syllables next to each other
+// (relativeHeights).
 // A voice whose pitch values run from 205 Hz to 322 Hz with the middle at 274 Hz gives
 // { ref: 274, span: 7.8, known: true }.
 export function voiceRange(voice, hzList = []) {
@@ -197,11 +201,29 @@ function distance(points, shape, levelWeight, upTo = 1) {
   return mean(diff.map((d) => (d - m) ** 2)) + levelWeight * m * m;
 }
 
-const levelWeightOf = (range) => (range.known ? CONFIG.speak.levelWeight : 0);
+const levelWeightOf = (range) => (range.known || range.relative ? CONFIG.speak.levelWeight : 0);
+
+// How far a syllable falls, the largest drop from one of its 5 points to a later one. The
+// points [0.40, 0.42, 0.30, 0.05, -0.10] fall by 0.42 - (-0.10) = 0.52.
+export function fallOf(points) {
+  let fall = -Infinity;
+  points.forEach((p, i) => { for (const q of points.slice(i + 1)) fall = Math.max(fall, p - q); });
+  return fall;
+}
+
+// The usual range of a voice in semitones, for the fall of a 4th tone before the learner's own
+// range is known.
+const USUAL_SPAN = 8;
 
 // Each tone's distance for syllable `k` of a word whose tones to listen for are `says`, as
 // { 1: 0.004, 2: 0.31, 3: 0.52, 4: 0.12 }. The smallest is the tone heard. Without a known
-// voice (range.known false) the height of the voice is unknown, so only the shapes count.
+// voice (range.known false) the height of the voice is unknown, so only the shapes count,
+// unless relativeHeights() set range.relative.
+// The last syllable of a word is not a 4th tone (distance Infinity) when it falls less than
+// CONFIG.speak.minFall of the voice range, 0.15. Its distance alone would let a level syllable
+// pass, because the first part of a 4th tone's shape, which is also compared, is nearly level.
+// Before the voice range is known, the fall is measured in semitones against the usual range
+// of 8, so the syllable must fall by 0.15 * 8 = 1.2 semitones, about 7% of its own pitch.
 export function toneScores(points, k, says, range = { known: true }) {
   const levelWeight = levelWeightOf(range);
   const out = {};
@@ -210,12 +232,30 @@ export function toneScores(points, k, says, range = { known: true }) {
     const ends = tone === 4 ? [0.6, 0.8, 1] : [1];
     out[tone] = Math.min(...ends.map((e) => distance(points, shape, levelWeight, e)));
   }
+  const fall = fallOf(points) * (range.known ? 1 : (range.span ?? USUAL_SPAN) / USUAL_SPAN);
+  if (k === says.length - 1 && fall < CONFIG.speak.minFall) out[4] = Infinity;
   return out;
 }
 
 const TONE_WORDS = { 1: 'a high level tone', 2: 'a rising tone', 3: 'a low tone', 4: 'a falling tone' };
 const SHOULD = { 1: 'it should stay high and level', 2: 'it should rise', 3: 'it should go low', 4: 'it should fall' };
 const ORDINAL = ['1st', '2nd', '3rd', '4th', '5th', '6th'];
+
+// Before the learner's voice range is known (range.known false), the height of one syllable
+// alone cannot be judged, but in a word of 2 or more judged syllables the height of each
+// syllable next to the others can. The points of all syllables (`points`, one list per
+// syllable, null for a neutral tone) are moved up or down together until their average height
+// is that of the shapes of the expected tones, and heights then count as with a known range.
+// In 天气 tiānqì, the shapes of a 1st tone before a 4th and of a 4th after a 1st average 0.35
+// and 0.13. Said with tiān at -0.30 and qì at 0.20, both move up by 0.29, so tiān sits at
+// -0.01, 0.36 below where a 1st tone should be, and that difference counts.
+// Returns { points, range }, the moved points and the range to judge with.
+function relativeHeights(points, says, range) {
+  const judged = points.map((p, k) => (p ? k : -1)).filter((k) => k >= 0);
+  if (range.known || judged.length < 2) return { points, range };
+  const shift = mean(judged.map((k) => mean(points[k]) - mean(shapeFor(says[k], k, says))));
+  return { points: points.map((p) => p && p.map((v) => v - shift)), range: { ...range, relative: true } };
+}
 
 // Judges the tones of one recording. track is trackPitch()'s result, word the card, voice the
 // learner's voice (addToVoice) or null, and strictness 'gentle', 'normal' or 'strict'.
@@ -230,16 +270,22 @@ export function judgeTones({ track, word, voice = null, strictness = 'normal' })
   const rule = CONFIG.speak.strictness[strictness] ?? CONFIG.speak.strictness.normal;
   const expected = expectedTones(word);
   const says = expected.map((e) => e.say);
-  const segments = syllableSegments(track, expected.length);
+  // A two-syllable word said in one voiced stretch needs a dip in loudness between its
+  // syllables, so a word said as one syllable is not heard as two. Longer words are often said
+  // in one stretch without a dip (半途而废 bàntú-érfèi in the app's own recording), so they are
+  // not held to it.
+  const segments = syllableSegments(track, expected.length, { minDip: expected.length === 2 ? CONFIG.speak.minDip : -Infinity });
   const judgedCount = says.filter((t) => t !== 5).length;
   if (!segments) {
     const n = expected.length;
     return { syllables: [], judged: judgedCount, right: 0, share: 0, pass: false, problem: `Could not hear ${n} syllable${n === 1 ? '' : 's'}.` };
   }
-  const range = voiceRange(voice, track.f0);
+  const own = voiceRange(voice, track.f0);
+  const read = expected.map((e, k) => (e.say === 5 ? null : shapeOf(track.f0, segments[k], own)));
+  const { points: all, range } = relativeHeights(read, says, own);
   const out = expected.map((e, k) => {
     if (e.say === 5) return { text: e.text, say: 5, heard: null, ok: true };
-    const points = shapeOf(track.f0, segments[k], range);
+    const points = all[k];
     if (!points) return { text: e.text, say: e.say, heard: null, ok: false };
     const scores = toneScores(points, k, says, range);
     const best = Math.min(...Object.values(scores));

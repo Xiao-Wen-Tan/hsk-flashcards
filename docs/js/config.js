@@ -44,6 +44,12 @@ export const CONFIG = Object.freeze({
   // The tone check of the speaking panel (tones.js, speaking practice spec of 2026-10-03).
   speak: Object.freeze({
     levelWeight: 0.5, // how much a syllable's height counts next to its shape
+    // How far the last syllable of a word must fall to count as a 4th tone, in voice ranges
+    // (tones.js). An earlier 4th tone is often said short and nearly level, so it is not held to it.
+    minFall: 0.15,
+    // The dip in loudness, in decibels, needed to split a two-syllable word said in one voiced
+    // stretch (tones.js), so that a word said as one syllable is not heard as two.
+    minDip: 0.5,
     voiceKeep: 0.98, // older recordings count this much less with each new one
     voiceRecordings: 5, // recordings needed before the height of the learner's voice is trusted
     // The learner setting "Speaking check". margin is how much farther the expected tone may be
