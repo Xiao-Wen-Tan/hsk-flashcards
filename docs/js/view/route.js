@@ -9,7 +9,7 @@ export const NAV = Object.freeze([
   { name: 'settings', label: 'Settings' },
 ]);
 
-const SIMPLE = new Set(['today', 'session', 'checkin', 'map', 'stats', 'badges', 'settings']);
+const SIMPLE = new Set(['today', 'session', 'checkin', 'map', 'stats', 'badges', 'settings', 'rewind']);
 
 // parseRoute('#/word/w0026') gives { name: 'word', id: 'w0026' }, and parseRoute('#/theme/t05/3')
 // gives { name: 'theme', id: 't05', group: '3' }. A word opened from a group's list keeps the

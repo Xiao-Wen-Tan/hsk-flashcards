@@ -1,8 +1,10 @@
 // The Settings screen: daily amounts, auto-play, backup file and restore, saved storage,
-// "Download all audio", the Google Sheet section that Plan 5 adds through hooks, and credits.
+// "Download all audio", going back to a day and resetting, the Google Sheet section that Plan 5
+// adds through hooks, and credits.
 import { RELEASE, WORDS_FILE } from '../release.js';
 import { studyDay } from '../dates.js';
 import { askPersistentStorage } from '../store.js';
+import { resetAll } from '../rewind.js';
 import { cacheFiles, countCached } from '../offline.js';
 import { filesForWords } from '../view/files.js';
 import { backupFileName, backupText, parseBackup, settingsFromForm, settingsView } from '../view/settings.js';
@@ -20,6 +22,31 @@ function download(name, text) {
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 10000);
+}
+
+// "Download backup file", also offered before going back to a day and before a reset.
+export async function saveBackupFile(app) {
+  download(backupFileName(studyDay()), backupText(await app.store.dump(), { release: RELEASE }));
+}
+
+// The confirmation of "Reset everything", drawn in the page, which offers the backup file first.
+function resetPanel(app, area) {
+  area.replaceChildren(
+    h('p', { class: 'confirm-text' }, 'This deletes all progress on this phone: every learned word, answer, check-in, '
+      + 'badge and the streak. The daily amounts, auto-play and the Google Sheet address stay. If the Google Sheet '
+      + 'backup is set up, the Sheet is replaced by the empty progress too.'),
+    h('button', { class: 'small', onclick: () => saveBackupFile(app) }, 'Save a backup file first'),
+    h('button', {
+      class: 'big danger',
+      onclick: async (e) => {
+        e.target.disabled = true;
+        await resetAll({ store: app.store });
+        await app.hooks.emit('rewound', { store: app.store });
+        app.note('Everything was reset.');
+        window.location.hash = '#/today';
+      },
+    }, 'Yes, reset everything'),
+    h('button', { class: 'small', onclick: () => area.replaceChildren() }, 'Cancel'));
 }
 
 export async function renderSettings(app) {
@@ -89,17 +116,21 @@ export async function renderSettings(app) {
   });
 
   const pluginArea = h('div', {});
+  const resetArea = h('div', { class: 'confirm' });
   show(app.main, h('h1', {}, 'Settings'),
     h('h2', {}, 'Daily amounts and sound'), form,
     h('h2', {}, 'Offline'), audioText, downloadButton,
     h('button', { class: 'small', onclick: () => { stop = true; } }, 'Stop downloading'),
     h('h2', {}, 'Your progress'), protectedText,
     h('button', { class: 'small', onclick: async () => { await askPersistentStorage(); showProtection(); } }, 'Protect saved progress'),
-    h('button', {
-      class: 'small',
-      onclick: async () => download(backupFileName(studyDay()), backupText(await app.store.dump(), { release: RELEASE })),
-    }, 'Download backup file'),
+    h('button', { class: 'small', onclick: () => saveBackupFile(app) }, 'Download backup file'),
     h('label', { class: 'field' }, 'Restore from a backup file', fileInput),
+    h('h2', {}, 'Go back or start again'),
+    h('p', { class: 'muted' }, 'Going back to a day undoes everything after it. Resetting deletes all progress.'),
+    h('div', { class: 'row' },
+      h('button', { class: 'small', onclick: () => { window.location.hash = '#/rewind'; } }, 'Go back to a day'),
+      h('button', { class: 'small', onclick: () => resetPanel(app, resetArea) }, 'Reset everything')),
+    resetArea,
     pluginArea,
     h('h2', {}, 'About'),
     h('p', { class: 'muted' }, `Release ${RELEASE}, word list ${WORDS_FILE.replace('data/', '')}.`),

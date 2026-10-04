@@ -18,6 +18,7 @@ test('addresses name the screens', () => {
   assert.deepEqual(parseRoute('#/theme/t05'), { name: 'theme', id: 't05' });
   assert.deepEqual(parseRoute('#/word/w0026'), { name: 'word', id: 'w0026' });
   assert.deepEqual(parseRoute('#/nonsense'), { name: 'today' });
+  assert.deepEqual(parseRoute('#/rewind'), { name: 'rewind' }); // "Go back to a day", opened from Settings
   assert.deepEqual(parseRoute('#/theme'), { name: 'today' });
   // A map tile opens one level group's words of a theme, for example the HSK 3 words of t05.
   assert.deepEqual(parseRoute('#/theme/t05/3'), { name: 'theme', id: 't05', group: '3' });

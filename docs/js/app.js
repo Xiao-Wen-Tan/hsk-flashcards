@@ -16,6 +16,7 @@ import {
   renderBadges, renderCheckin, renderMap, renderStats, renderTheme, renderToday, renderWord,
 } from './ui/screens.js';
 import { renderSettings } from './ui/settings.js';
+import { renderRewind } from './ui/rewind.js';
 
 const app = {
   main: document.getElementById('main'),
@@ -77,6 +78,7 @@ async function render() {
       case 'stats': await renderStats(app); break;
       case 'badges': await renderBadges(app); break;
       case 'settings': await renderSettings(app); break;
+      case 'rewind': await renderRewind(app); break;
       default: await renderToday(app);
     }
   } catch (err) {
