@@ -139,3 +139,13 @@ test('bad deletes are refused and write nothing', async () => {
   await assert.rejects(store.commit({ clear: ['meta'], event: ev() }), /clear takes progress, events or days/);
   assert.deepEqual((await store.allEvents()).map((e) => e.seq), [1]);
 });
+
+test('a commit with a value that cannot be saved changes nothing, also with clear', async () => {
+  const store = new MemoryStore();
+  await store.commit({ progress: [{ id: 'w1', step: 1 }], event: { day: '2026-10-05', kind: 'final', id: 'w1' } });
+  const before = await store.dump();
+  await assert.rejects(store.commit({
+    clear: ['progress', 'events', 'days'], meta: { badges: {}, bad: () => 1 }, event: { day: '2026-10-06', kind: 'reset' },
+  }));
+  assert.deepEqual(await store.dump(), before);
+});

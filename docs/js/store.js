@@ -90,6 +90,12 @@ export class MemoryStore {
   async commit(input) {
     const c = checkCommit(input);
     const seq = this.nextSeq;
+    // Everything is copied before anything changes, so a value that cannot be copied (a
+    // function, for example) throws and leaves the store as it was, as IndexedDB does.
+    const progress = c.progress.map(copy);
+    const days = c.days.map(copy);
+    const meta = Object.entries(c.meta).map(([key, value]) => [key, copy(value)]);
+    const event = frozen({ ...copy(c.event), seq });
     if (c.clear.includes('progress')) this.progress.clear();
     if (c.clear.includes('events')) this.events = [];
     if (c.clear.includes('days')) this.days.clear();
@@ -100,10 +106,10 @@ export class MemoryStore {
     }
     for (const day of c.removeDays) this.days.delete(day);
     for (const key of c.removeMeta) this.meta.delete(key);
-    for (const p of c.progress) this.progress.set(p.id, copy(p));
-    for (const d of c.days) this.days.set(d.day, copy(d));
-    for (const [key, value] of Object.entries(c.meta)) this.meta.set(key, copy(value));
-    this.events.push(frozen({ ...copy(c.event), seq }));
+    for (const p of progress) this.progress.set(p.id, p);
+    for (const d of days) this.days.set(d.day, d);
+    for (const [key, value] of meta) this.meta.set(key, value);
+    this.events.push(event);
     this.nextSeq = seq + 1;
     return seq;
   }
@@ -186,15 +192,25 @@ export class IdbStore {
     const c = checkCommit(input);
     const tx = this.db.transaction(STORE_NAMES, 'readwrite');
     const done = finished(tx);
-    for (const name of c.clear) tx.objectStore(name).clear();
-    for (const id of c.remove) tx.objectStore('progress').delete(id);
-    for (const seq of c.removeEvents) tx.objectStore('events').delete(seq);
-    for (const day of c.removeDays) tx.objectStore('days').delete(day);
-    for (const key of c.removeMeta) tx.objectStore('meta').delete(key);
-    for (const p of c.progress) tx.objectStore('progress').put(p);
-    for (const d of c.days) tx.objectStore('days').put(d);
-    for (const [key, value] of Object.entries(c.meta)) tx.objectStore('meta').put({ key, value });
-    const [seq] = await Promise.all([request(tx.objectStore('events').add({ ...c.event })), done]);
+    let added;
+    try {
+      for (const name of c.clear) tx.objectStore(name).clear();
+      for (const id of c.remove) tx.objectStore('progress').delete(id);
+      for (const seq of c.removeEvents) tx.objectStore('events').delete(seq);
+      for (const day of c.removeDays) tx.objectStore('days').delete(day);
+      for (const key of c.removeMeta) tx.objectStore('meta').delete(key);
+      for (const p of c.progress) tx.objectStore('progress').put(p);
+      for (const d of c.days) tx.objectStore('days').put(d);
+      for (const [key, value] of Object.entries(c.meta)) tx.objectStore('meta').put({ key, value });
+      added = request(tx.objectStore('events').add({ ...c.event }));
+    } catch (err) {
+      // A put that throws at once (a value that cannot be stored) would otherwise leave the
+      // deletes queued above to be saved. Aborting drops the whole commit.
+      done.catch(() => {});
+      tx.abort();
+      throw err;
+    }
+    const [seq] = await Promise.all([added, done]);
     return seq;
   }
 
