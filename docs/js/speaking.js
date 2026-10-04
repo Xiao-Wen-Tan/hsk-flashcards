@@ -60,12 +60,24 @@ export class Speaking {
 
   // Sends one input to the current word's routine. When the word ends, it is saved and the next
   // word starts. Returns the finished word as { id, result, tries, check }, or null.
+  // An input that arrives while a finished word is being saved (a second tap on Skip, or a late
+  // sound) is dropped, as it belongs to the word being saved and not to the next one. When the
+  // save fails, the word goes back to where it was, so it can be finished again.
   async send(input, now = new Date()) {
-    if (!this.state) return null;
+    if (!this.state || this.saving) return null;
+    const before = this.state;
     this.state = next(this.state, input);
     if (this.state.phase !== 'done') return null;
     const { id, result, tries, check } = this.state;
-    await saveSpoken({ store: this.store, day: this.day, id, result, tries, check, now });
+    this.saving = true;
+    try {
+      await saveSpoken({ store: this.store, day: this.day, id, result, tries, check, now });
+    } catch (err) {
+      this.state = before;
+      throw err;
+    } finally {
+      this.saving = false;
+    }
     this.counts[result] += 1;
     this.queue.shift();
     this.state = this.queue.length ? this.begin(this.queue[0]) : null;

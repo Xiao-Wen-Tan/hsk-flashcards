@@ -97,3 +97,24 @@ test('without a microphone the words are listened to, repeated and saved as list
 test('an unknown result is refused', async () => {
   await assert.rejects(saveSpoken({ store: new MemoryStore(), day: DAY, id: 'w0001', result: 'great' }), /Unknown speaking result great/);
 });
+
+test('an input that arrives while a word is being saved is dropped, and a failed save can be done again', async () => {
+  const store = new MemoryStore();
+  await learnDay(store, DAY);
+  const at = localDate(DAY, 10);
+  const speaking = await Speaking.start({ store, data, now: at, mode: 'tones' });
+  const commit = store.commit.bind(store);
+  store.commit = async (c) => { await new Promise((resolve) => { setTimeout(resolve, 20); }); return commit(c); };
+  // Two taps on Skip at once: the first saves the word, the second must not skip the next word.
+  const [first, second] = await Promise.all([speaking.send({ type: 'skip' }, at), speaking.send({ type: 'skip' }, at)]);
+  assert.equal(first.result, 'skip');
+  assert.equal(second, null);
+  assert.equal((await store.allEvents()).filter((e) => e.kind === 'speak').length, 1);
+  assert.deepEqual([speaking.position, speaking.word.hz], [{ done: 1, total: 12 }, '你']);
+  // A save that fails leaves the word as it was, so the learner can finish it again.
+  store.commit = async () => { throw new Error('disk full'); };
+  await assert.rejects(speaking.send({ type: 'skip' }, at), /disk full/);
+  assert.deepEqual([speaking.word.hz, speaking.state.phase], ['你', 'listen']);
+  store.commit = commit;
+  assert.equal((await speaking.send({ type: 'skip' }, at)).result, 'skip');
+});
