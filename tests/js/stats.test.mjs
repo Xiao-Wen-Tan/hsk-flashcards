@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  ANSWER_KINDS, LEVEL_GROUPS, accuracy, activity, answerEvents, forecast, groupsDone, levelProgress, liveEvents, mapSections,
+  ANSWER_KINDS, LEVEL_GROUPS, accuracy, answerEvents, forecast, groupsDone, levelProgress, liveEvents, mapSections,
   minutesOf, themesDone, totals,
 } from '../../docs/js/stats.js';
 import { failedLessonProgress, learnedProgress } from '../../docs/js/srs.js';
@@ -92,20 +92,6 @@ test('a tile with a learned word is started, never locked, when it is not the cu
   const words = WORDS3.map((w) => (w.id === 'e' ? { ...w, theme: 't01' } : w)); // HSK 3 Starter Kit: d and e
   const half = mapSections(THEMES3, words, progress)[1].tiles[0];
   assert.deepEqual([half.name, half.learned, half.total, half.status], ['Starter Kit', 1, 2, 'started']);
-});
-
-test('30-day activity counts reviews and learned words per day', () => {
-  const events = [
-    { seq: 1, day: '2026-09-20', kind: 'review', grade: 'right' }, // 31 days ago, so left out
-    { seq: 2, day: '2026-09-21', kind: 'review', grade: 'right' },
-    { seq: 3, day: TODAY, kind: 'review', grade: 'right' },
-    { seq: 4, day: TODAY, kind: 'reask', grade: 'know' },
-    { seq: 5, day: TODAY, kind: 'final', grade: 'right', outcome: 'learned' },
-  ];
-  const rows = activity(events, [TODAY], TODAY);
-  assert.equal(rows.length, 30);
-  assert.deepEqual(rows[0], { day: '2026-09-21', reviews: 1, learned: 0, checkedIn: false });
-  assert.deepEqual(rows[29], { day: TODAY, reviews: 1, learned: 1, checkedIn: true });
 });
 
 test('7-day forecast puts overdue words on today', () => {

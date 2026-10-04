@@ -70,23 +70,36 @@ test('a theme lists its words in teaching order with their place', () => {
   assert.equal(wordStatus({ step: 0 }), 'New');
 });
 
-test('stats show totals, levels, 30 days, the forecast and accuracy', () => {
+test('stats show this week and month, the all-time records, the levels and the goals', () => {
+  // Today is Tuesday 20 October. A word was learned on Monday 12 and Monday 19 October, and two
+  // reviews were answered today, 2 minutes apart, one of them wrong.
   const progressList = [at(t01[0].id, 1, TODAY), at(t01[1].id, 7, '2026-10-22')];
   const events = [
-    { seq: 1, day: TODAY, kind: 'review', grade: 'right' },
-    { seq: 2, day: TODAY, kind: 'review', grade: 'wrong' },
-    { seq: 3, day: '2026-10-19', kind: 'final', grade: 'right', outcome: 'learned' },
+    { seq: 1, day: '2026-10-12', kind: 'final', grade: 'right', outcome: 'learned', ts: '2026-10-12T19:00:00Z' },
+    { seq: 2, day: '2026-10-19', kind: 'final', grade: 'right', outcome: 'learned', ts: '2026-10-19T19:00:00Z' },
+    { seq: 3, day: TODAY, kind: 'review', grade: 'right', ts: `${TODAY}T19:00:00Z` },
+    { seq: 4, day: TODAY, kind: 'review', grade: 'wrong', ts: `${TODAY}T19:02:00Z` },
   ];
-  const v = statsView({ data, progressList, events, checkedDays: ['2026-10-19'], today: TODAY });
-  assert.deepEqual([v.learned, v.mastered, v.total], [2, 1, 61]);
-  assert.deepEqual(v.levels.map((l) => l.label), ['HSK 1', 'HSK 2']);
-  assert.equal(v.levels[0].text, '2 of 47 learned, 1 mastered');
-  assert.equal(v.activity.length, 30);
-  assert.deepEqual(v.activity.slice(-2).map((r) => [r.day, r.reviews, r.learned, r.checkedIn, r.height]),
-    [['2026-10-19', 0, 1, true, 0.5], ['2026-10-20', 2, 0, false, 1]]);
+  const goals = [{ id: 'streak', text: '2 days to the 3-day badge', left: 2, share: 0.67 }];
+  const v = statsView({ data, progressList, events, checkedDays: ['2026-10-12', '2026-10-19'], today: TODAY, goals });
+  const tiles = (p) => [p.title, p.numbers.map((n) => `${n.value} ${n.label}`)];
+  assert.deepEqual(v.periods.map(tiles), [
+    ['This week', ['1 words learned', '2 reviews', '2 study days', '2 minutes']],
+    ['October 2026', ['2 words learned', '2 reviews', '3 study days', '2 minutes']],
+  ]);
+  assert.deepEqual(v.bars7.map((r) => r.label), ['W', 'T', 'F', 'S', 'S', 'M', 'T']);
+  assert.deepEqual(v.bars7.slice(-2).map((r) => [r.day, r.newWords, r.reviews, r.checkedIn, r.height]),
+    [['2026-10-19', 1, 0, true, 0.5], ['2026-10-20', 0, 2, false, 1]]);
+  assert.equal(v.bars30.length, 30);
   assert.deepEqual(v.forecast.map((r) => [r.label, r.due]),
     [['Today', 1], ['Wed', 0], ['Thu', 1], ['Fri', 0], ['Sat', 0], ['Sun', 0], ['Mon', 0]]);
   assert.equal(v.accuracy, '50% right (1 of 2 reviews).');
+  assert.deepEqual(v.records.map((r) => `${r.label}: ${r.value}`), [
+    'Best streak: 1 day', 'Perfect days: 2', 'Reviews answered: 2', 'Words learned: 2 of 61', 'Words mastered: 1',
+    'Study days: 3', 'Minutes studied: 2',
+  ]);
+  assert.deepEqual(v.levels.map((l) => [l.label, l.text]), [['HSK 1', '2 of 47 learned, 1 mastered'], ['HSK 2', '0 of 14 learned, 0 mastered']]);
+  assert.deepEqual(v.goals, ['2 days to the 3-day badge']);
   assert.equal(statsView({ data, progressList: [], events: [], checkedDays: [], today: TODAY }).accuracy, 'No reviews in the last 7 days.');
 });
 

@@ -2,11 +2,12 @@
 // All functions take saved data and return plain objects, so Node can test them.
 import { monthCalendar } from '../checkin.js';
 import { weekdayIndex } from '../dates.js';
-import { accuracy, activity, forecast, groupById, levelProgress, mapSections, totals, wordsOfGroup } from '../stats.js';
+import { accuracy, forecast, groupById, levelProgress, mapSections, wordsOfGroup } from '../stats.js';
+import { allTime, bars, periodTotals, thisMonth, thisWeek } from '../counters.js';
 import { badgeLadder, badgeTitle } from '../badges.js';
 import { hrefOf } from './route.js';
 import { isLearned, isMastered } from '../srs.js';
-import { WEEKDAY_SHORT, monthTitle, percent, plural } from './format.js';
+import { WEEKDAY_LETTERS, WEEKDAY_SHORT, monthTitle, percent, plural } from './format.js';
 import { tilesOf } from './today.js';
 
 const STATUS_LABEL = Object.freeze({ done: 'Done', current: 'Now', locked: 'Locked' });
@@ -64,30 +65,61 @@ export function wordBackHref(word, groupId) {
   return hrefOf({ name: 'theme', id: word.theme, group: groupId });
 }
 
-// The Stats screen. events are the answers of the last 30 study days (store.eventsFrom).
-export function statsView({ data, progressList, events, checkedDays, today }) {
+const grouped = (n) => Number(n).toLocaleString('en-US'); // 1234 gives '1,234'
+
+// The four numbers of a week or month as tiles.
+function periodTiles(t) {
+  return [
+    { label: 'words learned', value: grouped(t.newWords) },
+    { label: 'reviews', value: grouped(t.reviews) },
+    { label: 'study days', value: grouped(t.studyDays) },
+    { label: 'minutes', value: grouped(Math.round(t.minutes)) },
+  ];
+}
+
+// The Stats screen, in the four sections of the spec of 2026-10-03:
+//   1. periods (this week, Monday to Sunday, and this calendar month), bars7 and bars30 (new words
+//      and reviews per day), and the reviews due in the next 7 days and the 7-day accuracy that
+//      the screen showed before
+//   2. records, the all-time records
+//   3. levels, the progress per HSK level
+//   4. goals, every goal countdown nearest first (goals.js goals)
+// events are all saved events, rewound the meta 'rewound' day ranges.
+export function statsView({ data, progressList, events, checkedDays, today, rewound = [], goals = [] }) {
   const byId = new Map(progressList.map((p) => [p.id, p]));
-  const { learned, mastered } = totals(progressList);
-  const rows = activity(events, checkedDays, today);
-  const top = Math.max(1, ...rows.map((r) => r.reviews + r.learned));
+  const week = thisWeek(today);
+  const month = thisMonth(today);
+  const all = allTime({ events, checkedDays, progress: progressList, rewound });
   const acc = accuracy(events, today);
   return {
-    learned,
-    mastered,
-    total: data.words.length,
-    levels: levelProgress(data.words, byId).map((l) => ({
-      label: `HSK ${l.lv}`,
-      text: `${l.learned} of ${l.total} learned, ${l.mastered} mastered`,
-      learnedPct: percent(l.learned / l.total),
-      masteredPct: percent(l.mastered / l.total),
-    })),
-    activity: rows.map((r) => ({ ...r, height: (r.reviews + r.learned) / top })),
+    periods: [
+      { title: 'This week', numbers: periodTiles(periodTotals(events, checkedDays, week.from, week.to)) },
+      { title: monthTitle(today.slice(0, 7)), numbers: periodTiles(periodTotals(events, checkedDays, month.from, month.to)) },
+    ],
+    bars7: bars(events, checkedDays, today, 7).map((r) => ({ ...r, label: WEEKDAY_LETTERS[weekdayIndex(r.day)] })),
+    bars30: bars(events, checkedDays, today, 30),
     forecast: forecast(progressList, today).map((r, i) => ({
       ...r, label: i === 0 ? 'Today' : WEEKDAY_SHORT[weekdayIndex(r.day)],
     })),
     accuracy: acc.rate === null
       ? 'No reviews in the last 7 days.'
       : `${percent(acc.rate)} right (${acc.right} of ${acc.answered} reviews).`,
+    records: [
+      { label: 'Best streak', value: plural(all.bestStreak, 'day') },
+      { label: 'Perfect days', value: grouped(all.perfectDays) },
+      { label: 'Reviews answered', value: grouped(all.reviews) },
+      { label: 'Words learned', value: `${grouped(all.learned)} of ${grouped(data.words.length)}` },
+      { label: 'Words mastered', value: grouped(all.mastered) },
+      { label: 'Study days', value: grouped(all.studyDays) },
+      { label: 'Minutes studied', value: grouped(Math.round(all.minutes)) },
+    ],
+    levels: levelProgress(data.words, byId).map((l) => ({
+      label: `HSK ${l.lv}`,
+      text: `${l.learned} of ${l.total} learned, ${l.mastered} mastered`,
+      learnedPct: percent(l.learned / l.total),
+      masteredPct: percent(l.mastered / l.total),
+    })),
+    goals: goals.map((g) => g.text),
   };
 }
 

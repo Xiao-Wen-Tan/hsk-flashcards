@@ -38,7 +38,7 @@ export const CONFIG = Object.freeze({
     minutes: Object.freeze([60, 300, 1000, 3000]),
   }),
 
-  statsDays: Object.freeze({ activity: 30, forecast: 7, accuracy: 7 }),
+  statsDays: Object.freeze({ forecast: 7, accuracy: 7 }),
 
   // Rough seconds per card, used only to print an estimated daily time in the simulation test.
   secondsPerCard: Object.freeze({ review: 8, reask: 6, learn: 20, check: 8, final: 8 }),

@@ -127,20 +127,6 @@ export function themesDone(themes, words, progressById) {
   }).map((t) => t.id);
 }
 
-// Reviews answered and words learned on each of the last `days` study days, oldest first.
-export function activity(events, checkedDays, today, days = CONFIG.statsDays.activity) {
-  const checked = new Set(checkedDays);
-  const rows = new Map(dayRange(addDays(today, -(days - 1)), days)
-    .map((day) => [day, { day, reviews: 0, learned: 0, checkedIn: checked.has(day) }]));
-  for (const e of liveEvents(events)) {
-    const row = rows.get(e.day);
-    if (!row) continue;
-    if (e.kind === 'review') row.reviews += 1;
-    if (e.outcome === 'learned') row.learned += 1;
-  }
-  return [...rows.values()];
-}
-
 // Reviews due on each of the next `days` days. Overdue words count on today.
 export function forecast(progressList, today, days = CONFIG.statsDays.forecast) {
   const rows = dayRange(today, days).map((day) => ({ day, due: 0 }));

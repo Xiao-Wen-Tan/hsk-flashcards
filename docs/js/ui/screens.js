@@ -1,7 +1,7 @@
 // The Today, Check-in, Progress map, theme word list, word card, Stats and Badges screens.
 // Each one reads saved data, asks a view module in ../view/ what to show, and draws it.
 import { canContinue, previewDay } from '../study.js';
-import { studyDay, addDays } from '../dates.js';
+import { studyDay } from '../dates.js';
 import { todayView } from '../view/today.js';
 import { badgesView, checkinView, mapView, statsView, themeWordsView, wordBackHref } from '../view/progress.js';
 import { shortDate } from '../view/format.js';
@@ -153,37 +153,51 @@ export async function renderWord(app, wordId, groupId) {
     cardElement(app, word, { autoplay: settings.autoplay !== false }));
 }
 
+// A bar chart of new words and reviews per day. A checked-in day's bar has the main colour.
+function chartElement(rows, withLabels) {
+  return [
+    h('div', { class: 'chart' }, rows.map((r) => h('span', {
+      class: `col${r.checkedIn ? ' done' : ''}`,
+      title: `${shortDate(r.day)}: ${r.newWords} new words, ${r.reviews} reviews`,
+      style: `height:${Math.round(r.height * 100)}%`,
+    }))),
+    withLabels ? h('div', { class: 'chart-labels' }, rows.map((r) => h('span', {}, r.label))) : null,
+  ];
+}
+
+// Stats in the four sections of the spec of 2026-10-03 (statsView in view/progress.js).
 export async function renderStats(app) {
   const today = studyDay();
+  const s = await saved(app);
+  const checked = s.days.map((d) => d.day);
+  const streak = currentStreak(checked, today, s.rewound);
+  const byId = new Map(s.progress.map((p) => [p.id, p]));
   const v = statsView({
-    data: app.data,
-    progressList: await app.store.allProgress(),
-    events: await app.store.eventsFrom(addDays(today, -29)),
-    checkedDays: await checkedDays(app),
-    today,
+    data: app.data, progressList: s.progress, events: s.events, checkedDays: checked, today, rewound: s.rewound,
+    goals: goals({ data: app.data, progressById: byId, facts: s.facts, streak }),
   });
   show(app.main, h('h1', {}, 'Stats'),
-    h('div', { class: 'counts' },
-      h('div', {}, h('b', {}, v.learned), h('span', {}, 'learned')),
-      h('div', {}, h('b', {}, v.mastered), h('span', {}, 'mastered')),
-      h('div', {}, h('b', {}, v.total), h('span', {}, 'words in all'))),
+    h('h2', {}, 'This week and this month'),
+    v.periods.map((p) => [h('h3', {}, p.title), tilesElement(p.numbers)]),
+    h('h3', {}, 'New words and reviews, last 7 days'),
+    chartElement(v.bars7, true),
+    h('h3', {}, 'Last 30 days'),
+    chartElement(v.bars30, false),
+    h('h3', {}, 'Reviews due in the next 7 days'),
+    h('table', { class: 'forecast' },
+      h('tr', {}, v.forecast.map((r) => h('th', {}, r.label))),
+      h('tr', {}, v.forecast.map((r) => h('td', {}, r.due)))),
+    h('h3', {}, 'Accuracy, last 7 days'),
+    h('p', {}, v.accuracy),
+    h('h2', {}, 'All-time records'),
+    h('dl', { class: 'records' }, v.records.map((r) => h('div', {}, h('dt', {}, r.label), h('dd', {}, r.value)))),
     h('h2', {}, 'HSK levels'),
     v.levels.map((l) => h('div', { class: 'level' }, h('span', {}, l.label),
       h('span', { class: 'bar' }, h('span', { class: 'bar-learned', style: `width:${l.learnedPct}` }),
         h('span', { class: 'bar-mastered', style: `width:${l.masteredPct}` })),
       h('span', { class: 'muted' }, l.text))),
-    h('h2', {}, 'Last 30 days'),
-    h('div', { class: 'chart' }, v.activity.map((r) => h('span', {
-      class: `col${r.checkedIn ? ' done' : ''}`,
-      title: `${shortDate(r.day)}: ${r.reviews} reviews, ${r.learned} learned`,
-      style: `height:${Math.round(r.height * 100)}%`,
-    }))),
-    h('h2', {}, 'Reviews due in the next 7 days'),
-    h('table', { class: 'forecast' },
-      h('tr', {}, v.forecast.map((r) => h('th', {}, r.label))),
-      h('tr', {}, v.forecast.map((r) => h('td', {}, r.due)))),
-    h('h2', {}, 'Accuracy, last 7 days'),
-    h('p', {}, v.accuracy));
+    h('h2', {}, 'Goals'),
+    v.goals.length ? v.goals.map((g) => h('p', { class: 'goal' }, g)) : h('p', { class: 'muted' }, 'Every goal is reached.'));
 }
 
 // The Badges screen shows each group's earned badges with their days, then the next one greyed
