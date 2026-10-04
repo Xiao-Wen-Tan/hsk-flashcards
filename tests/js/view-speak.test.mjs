@@ -37,8 +37,9 @@ test('after a miss the screen says what was wrong, and the next try says try aga
 
 test('Today\'s button counts the words left to speak', () => {
   assert.deepEqual(speakButton({ list: ['a', 'b'], done: [], left: ['a', 'b'] }), { label: 'Speaking practice', count: '2 words to speak', enabled: true });
-  assert.deepEqual(speakButton({ list: ['a'], done: ['a'], left: [] }), { label: 'Speaking practice', count: 'All 1 word spoken.', enabled: false });
+  assert.deepEqual(speakButton({ list: ['a'], done: ['a'], left: [] }), { label: 'Speaking practice', count: 'The word is spoken.', enabled: false });
   assert.equal(speakButton({ list: [], done: [], left: [] }).count, 'No words to speak yet. Study first.');
+  assert.equal(speakButton({ list: ['a', 'b'], done: ['a', 'b'], left: [] }).count, 'All 2 words spoken.');
 });
 
 test('Settings says which checks work on this phone, and the Google note', () => {

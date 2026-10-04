@@ -27,6 +27,7 @@ export function speakButton(speak) {
   const left = speak.left.length;
   let count;
   if (left) count = `${plural(left, 'word')} to speak`;
+  else if (speak.list.length === 1) count = 'The word is spoken.';
   else if (speak.list.length) count = `All ${plural(speak.list.length, 'word')} spoken.`;
   else count = 'No words to speak yet. Study first.';
   return { label: 'Speaking practice', count, enabled: left > 0 };
