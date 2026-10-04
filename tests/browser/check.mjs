@@ -15,6 +15,12 @@
 //                                          folder on 8124), and on the WAV files of FOLDER (optional)
 //   node tests/browser/check.mjs wav       writes .claude/scratch/speak_shi_vNNN.wav (a new number each run), the recording of 是 that
 //                                          Chrome's fake microphone plays for the speaking checks
+// The speaking checks need Chrome started with the fake microphone (Task 15 of Plan 7). Each runs
+// in a new, empty browser profile of its own, studies day 1, then opens speaking practice:
+//   node tests/browser/check.mjs speak       the tone check alone (the recognizer fails headless)
+//   node tests/browser/check.mjs speakboth   both checks from one recording, with a stand-in recognizer
+//   node tests/browser/check.mjs speaktwice  the word said twice, with a stand-in recognizer
+//   node tests/browser/check.mjs nomic       with the microphone refused, words are listened to and the day checks in
 // Each prints PASS or FAIL lines and exits with 1 when anything failed.
 const PORT = 9333;
 const SITE = 'http://localhost:8123/';
@@ -22,7 +28,32 @@ const STORE_PAGE = 'http://localhost:8124/tests/browser/store-idb.html';
 
 async function openPage(url) {
   const target = await (await fetch(`http://127.0.0.1:${PORT}/json/new?${encodeURIComponent(url)}`, { method: 'PUT' })).json();
-  const ws = new WebSocket(target.webSocketDebuggerUrl);
+  return connect(target.webSocketDebuggerUrl, () => fetch(`http://127.0.0.1:${PORT}/json/close/${target.id}`));
+}
+
+// A page in a new, empty browser profile of its own (a browser context), so a check starts as a
+// phone that never used the app. init are scripts that run before the app's own, and denied
+// lists the permissions to refuse, such as ['microphone'].
+async function openFreshPage(url, { init = [], denied = [] } = {}) {
+  const { webSocketDebuggerUrl } = await (await fetch(`http://127.0.0.1:${PORT}/json/version`)).json();
+  const browser = await connect(webSocketDebuggerUrl, () => {}, { browser: true });
+  const { browserContextId } = await browser.send('Target.createBrowserContext');
+  for (const name of denied) await browser.send('Browser.setPermission', { permission: { name }, setting: 'denied', browserContextId });
+  const { targetId } = await browser.send('Target.createTarget', { url: 'about:blank', browserContextId });
+  const page = await connect(`ws://127.0.0.1:${PORT}/devtools/page/${targetId}`, async () => {
+    await browser.send('Target.closeTarget', { targetId });
+    await browser.send('Target.disposeBrowserContext', { browserContextId });
+    await browser.close();
+  });
+  await page.send('Page.enable');
+  for (const source of init) await page.send('Page.addScriptToEvaluateOnNewDocument', { source });
+  await page.send('Page.navigate', { url });
+  return page;
+}
+
+// Talks to one page (or, with browser: true, to the browser itself) over its DevTools socket.
+async function connect(socketUrl, closeTarget, { browser = false } = {}) {
+  const ws = new WebSocket(socketUrl);
   await new Promise((resolve) => ws.addEventListener('open', resolve, { once: true }));
   let id = 0;
   const waiting = new Map();
@@ -43,6 +74,7 @@ async function openPage(url) {
     waiting.set(id, { resolve, reject });
     ws.send(JSON.stringify({ id, method, params }));
   });
+  if (browser) return { send, close: async () => ws.close() };
   await send('Runtime.enable');
   await send('Emulation.setDeviceMetricsOverride', { width: 412, height: 915, deviceScaleFactor: 2, mobile: true });
   const page = {
@@ -65,7 +97,7 @@ async function openPage(url) {
     text: () => page.eval("document.getElementById('main').innerText.split(String.fromCharCode(10)).filter(Boolean).join(' | ')"),
     async close() {
       ws.close();
-      await fetch(`http://127.0.0.1:${PORT}/json/close/${target.id}`);
+      await closeTarget();
     },
   };
   return page;
@@ -81,6 +113,19 @@ const COUNT_PLAYS = `window.__plays = []; const play = HTMLMediaElement.prototyp
   HTMLMediaElement.prototype.play = function () { __plays.push(this.src.replace(location.origin, '')); return play.call(this); }; true`;
 const CLICK = (label) => `[...document.querySelectorAll('button')].find((b) => b.textContent === '${label}').click()`;
 const POSITION = "document.querySelector('.session-top .muted').textContent";
+
+// Opens speaking practice from the check-in screen after the learning and skips every word,
+// which ends the panel, checks in the day and shows the check-in screen again.
+async function skipSpeaking(page) {
+  await page.eval(CLICK('Next: speaking practice'));
+  await page.until("location.hash === '#/speak' && !!document.querySelector('.speak-hz')");
+  for (let i = 0; i < 200 && (await page.eval('location.hash')) === '#/speak'; i += 1) {
+    await page.eval("[...document.querySelectorAll('button')].find((b) => b.textContent === 'Skip')?.click(); true");
+    await page.sleep(150);
+  }
+  await page.until("location.hash === '#/checkin' && !!document.querySelector('h1')");
+  await page.sleep(300);
+}
 
 // Reloads the page in the middle of the new words, as closing the app would, then taps Start
 // again. The bug of 3 October started the lesson again from its first learning card.
@@ -174,8 +219,12 @@ async function day() {
   check('the card after an answer plays its sound once', afterPlays?.length === 1, JSON.stringify(afterPlays));
   await page.until("location.hash === '#/checkin' && !!document.querySelector('h1')");
   await page.sleep(300);
+  const learned = await page.text();
+  check('after the learning the day waits for speaking practice',
+    /^Learning done \| 0 day streak \| 12 new words learned\. \| 12 words of speaking practice are left before today's check-in\. \| Next: speaking practice/.test(learned), learned.slice(0, 160));
+  await skipSpeaking(page);
   const checkin = await page.text();
-  check('the check-in screen says Checked in! with a 1-day streak', /Checked in! \| 1 day streak \| 12 new words learned/.test(checkin), checkin.slice(0, 120));
+  check('after speaking practice the check-in screen says Checked in! with a 1-day streak', /^Checked in! \| 1 day streak \| 12 skipped in speaking practice\./.test(checkin), checkin.slice(0, 120));
   check('the service worker controls the page', await page.eval('!!navigator.serviceWorker.controller'));
   const media = await page.eval("caches.open('media-v1').then((c) => c.keys()).then((k) => k.length)");
   check('today\'s and tomorrow\'s sound and stroke files were saved', media > 0, `${media} files`);
@@ -236,6 +285,8 @@ async function offline() {
   await page.eval(CLICK('Stroke order'));
   await page.sleep(2500);
   check('its stroke order draws offline', (await page.eval("document.querySelectorAll('.strokes svg').length")) > 0);
+  const panelFiles = await page.eval("Promise.all(['js/ui/speak.js', 'js/ui/mic-worklet.js', 'js/tones.js'].map((f) => fetch(f).then((r) => r.status, () => 'failed')))");
+  check('the speaking panel files are on the phone', panelFiles.every((s) => s === 200), JSON.stringify(panelFiles));
   await page.close();
 }
 
@@ -387,6 +438,7 @@ async function rewind() {
   await page.until("location.hash === '#/session' && !!document.querySelector('.session-top')");
   await answerAll(page);
   await page.until("location.hash === '#/checkin' && !!document.querySelector('h1')");
+  await skipSpeaking(page);
   const pieces = await page.eval("document.querySelectorAll('.confetti-piece').length");
   const checkin = await page.text();
   check('day 2 checks in with a 2-day streak and confetti', /Checked in! \| 2 day streak/.test(checkin) && pieces > 0, `${checkin.slice(0, 60)}, ${pieces} pieces`);
@@ -548,10 +600,185 @@ async function wav() {
   await page.close();
 }
 
+// Plays every sound 4 times faster, so the listen and repeat rounds of a word take a few seconds.
+const FAST_SOUND = `(() => { const play = HTMLMediaElement.prototype.play;
+  HTMLMediaElement.prototype.play = function () { this.defaultPlaybackRate = 4; this.playbackRate = 4; return play.call(this); }; })();`;
+
+// A stand-in for Chrome's speech recognizer, which needs Google's servers and gives an error in a
+// headless Chrome. It hears window.__heard, or else the word on the screen, 1.5 seconds after it
+// starts or as soon as it is stopped. With share true it takes a microphone track, as Chrome 135
+// and later do, and refuses anything else with a TypeError. __starts records how it was started.
+const RECOGNIZER = (share) => `(() => { window.__starts = [];
+  class FakeRecognition {
+    start(track) {
+      if (${share} && arguments.length && !(track instanceof MediaStreamTrack)) throw new TypeError('parameter 1 is not of type MediaStreamTrack');
+      __starts.push(track instanceof MediaStreamTrack ? 'track' : 'own');
+      this.timer = setTimeout(() => this.finish(), 1500);
+    }
+    stop() { this.finish(); }
+    abort() { clearTimeout(this.timer); this.done = true; }
+    finish() {
+      if (this.done) return;
+      this.done = true;
+      clearTimeout(this.timer);
+      const text = window.__heard ?? document.querySelector('.speak-hz')?.textContent ?? '';
+      this.onresult?.({ results: [[{ transcript: text + '。', confidence: 0.9 }]] });
+      this.onend?.();
+    }
+  }
+  window.SpeechRecognition = FakeRecognition;
+  window.webkitSpeechRecognition = FakeRecognition; })();`;
+
+// What the panel shows now.
+const PANEL = `(() => { const m = document.getElementById('main');
+  const text = (sel) => m.querySelector(sel)?.textContent ?? null;
+  return { hash: location.hash, word: text('.speak-hz'), prompt: text('.prompt'), banner: text('.banner'),
+    problems: [...m.querySelectorAll('.problem')].map((p) => p.textContent), mic: !!m.querySelector('button.mic:not([disabled])'),
+    note: !!m.querySelector('.note'), myVoice: [...m.querySelectorAll('button')].some((b) => b.textContent === 'Play my voice') }; })()`;
+const SPOKEN = `(async () => { const { openIdbStore } = await import(location.origin + '/js/store.js');
+  const s = await openIdbStore(); const e = (await s.allEvents()).filter((x) => x.kind === 'speak'); s.db.close();
+  return e.map((x) => ({ id: x.id, result: x.result, tries: x.tries, check: x.check })); })()`;
+const SETTINGS_CHECK = `(async () => { location.hash = '#/settings'; await new Promise((r) => setTimeout(r, 700));
+  return document.querySelector('.speak-check')?.textContent ?? ''; })()`;
+
+// Studies day 1 in a fresh profile, every answer right, then opens speaking practice from the
+// check-in screen.
+async function learnThenSpeak(page) {
+  await page.until("!!document.querySelector('.start')", 20000);
+  await page.eval(COUNT_PLAYS);
+  await page.eval("document.querySelector('.start').click()");
+  await page.until("location.hash === '#/session' && !!document.querySelector('.session-top')");
+  await answerAll(page);
+  await page.until("location.hash === '#/checkin' && [...document.querySelectorAll('button')].some((b) => b.textContent === 'Next: speaking practice')");
+  await page.eval(CLICK('Next: speaking practice'));
+  await page.until("location.hash === '#/speak' && !!document.querySelector('.speak-hz')");
+}
+
+// Waits for the microphone button of the current word, after its listen and repeat rounds, taps
+// it (and OK on the one-time Google note first), and waits for the verdict. Returns the word,
+// 'pass' or 'miss' with the problems shown, and the prompts seen during the try.
+async function tryWord(page) {
+  await page.until(`(() => { const p = ${PANEL}; return p.mic || p.note; })()`, 40000);
+  if ((await page.eval(PANEL)).note) await page.eval(CLICK('OK'));
+  await page.until(`${PANEL}.mic`, 5000);
+  const { word } = await page.eval(PANEL);
+  await page.eval("document.querySelector('button.mic').click()");
+  const prompts = [];
+  for (let i = 0; i < 150; i += 1) {
+    const p = await page.eval(PANEL);
+    if (p.prompt && !prompts.includes(p.prompt)) prompts.push(p.prompt);
+    if (p.hash !== '#/speak' || p.banner === 'Well said!') return { word, result: 'pass', prompts };
+    if (p.problems.length) return { word, result: 'miss', problems: p.problems, prompts, myVoice: p.myVoice };
+    await page.sleep(100);
+  }
+  return { word, result: 'timeout', prompts };
+}
+
+// Tries every word of the list once, skipping a word that misses, until the panel ends.
+async function tryAll(page, before = async () => {}) {
+  const out = {};
+  for (let i = 0; i < 30 && (await page.eval('location.hash')) === '#/speak'; i += 1) {
+    await before((await page.eval(PANEL)).word);
+    const r = await tryWord(page);
+    out[r.word] = r;
+    if (r.result === 'miss') await page.eval(CLICK('Skip'));
+    await page.sleep(1200);
+  }
+  await page.until("location.hash === '#/checkin' && !!document.querySelector('h1')");
+  await page.sleep(300);
+  return out;
+}
+
+// Takes Chrome's speech recognizer away, as on a phone without it. In a headless Chrome it
+// exists but hears nothing.
+const NO_RECOGNIZER = '(() => { delete window.SpeechRecognition; delete window.webkitSpeechRecognition; })();';
+
+// The tone check alone, as on a phone without the recognizer or offline. Chrome's fake microphone
+// plays the app's recording of 是 shì, a 4th tone, for every try.
+async function speak() {
+  const page = await openFreshPage(`${SITE}#/today`, { init: [FAST_SOUND, NO_RECOGNIZER] });
+  await learnThenSpeak(page);
+  const panelNav = await page.eval("getComputedStyle(document.getElementById('nav')).display");
+  const tried = await tryAll(page);
+  const said = (hz) => tried[hz]?.result;
+  check('the 4th-tone words pass with the recording of 是', ['是', '在', '不', '这'].every((hz) => said(hz) === 'pass'), JSON.stringify(Object.fromEntries(Object.entries(tried).map(([k, v]) => [k, v.result]))));
+  check('neutral-tone words pass on any voice', said('的') === 'pass' && said('了') === 'pass');
+  check('a 3rd tone said as a 4th is named', tried['我']?.problems?.[0] === 'Tone: heard a falling tone, it should go low.', JSON.stringify(tried['我']));
+  check('a 1st tone said as a 4th is named', tried['他']?.problems?.[0] === 'Tone: heard a falling tone, it should stay high and level.', JSON.stringify(tried['他']));
+  check('after a try the learner can play their own voice', tried['我']?.myVoice === true);
+  check('the bottom bar was hidden on the panel', panelNav === 'none', panelNav);
+  const checkin = await page.text();
+  check('the last word closes the day, which shows Checked in! and the speaking line', /^Checked in! \| 1 day streak \| \d+ said well and \d+ skipped in speaking practice\./.test(checkin), checkin.slice(0, 100));
+  const spoken = await page.eval(SPOKEN);
+  check('one speak event per word, with the tone share and nothing heard', spoken.length === 12 && spoken.every((e) => e.tries === 1 && e.check.heard === null && (e.result === 'pass' ? e.check.tones === 1 : e.result === 'skip')),
+    JSON.stringify(spoken.slice(0, 3)));
+  const line = await page.eval(SETTINGS_CHECK);
+  check('Settings says the tone check alone works here', line.startsWith('Speaking check on this phone: tones only.'), line);
+  check('no uncaught errors on the page', page.errors.length === 0, page.errors.join('; '));
+  await page.close();
+}
+
+// Both checks from one recording, with the stand-in recognizer that takes the microphone track.
+async function speakboth() {
+  const page = await openFreshPage(`${SITE}#/today`, { init: [FAST_SOUND, RECOGNIZER(true)] });
+  await learnThenSpeak(page);
+  // Before 在 the recognizer is made to hear 十 shí, which is not a homophone of 在 zài.
+  const tried = await tryAll(page, (hz) => page.eval(`window.__heard = ${hz === '在' ? "'十'" : 'null'}; true`));
+  check('a word said right passes both checks', tried['是']?.result === 'pass' && tried['不']?.result === 'pass', JSON.stringify(tried['是']));
+  check('a wrong sound fails the try and says what was heard', tried['在']?.problems?.[0] === 'Heard: 十', JSON.stringify(tried['在']));
+  check('a wrong tone fails the try although the sounds are right', tried['我']?.problems?.[0] === 'Tone: heard a falling tone, it should go low.', JSON.stringify(tried['我']));
+  check('the recognizer listened to the recording\'s own microphone track', await page.eval("__starts.length > 0 && __starts.every((s) => s === 'track')"), await page.eval('JSON.stringify(__starts)'));
+  const spoken = await page.eval(SPOKEN);
+  const shi = spoken.find((e) => e.result === 'pass' && e.check.heard === '是');
+  check('the saved event holds what the recognizer heard and the tone share', Boolean(shi) && shi.check.tones === 1, JSON.stringify(shi));
+  const line = await page.eval(SETTINGS_CHECK);
+  check('Settings says sounds and tones are checked from one recording', line === 'Speaking check on this phone: sounds and tones.', line);
+  check('no uncaught errors on the page', page.errors.length === 0, page.errors.join('; '));
+  await page.close();
+}
+
+// The word said twice, with the stand-in recognizer that opens the microphone itself.
+async function speaktwice() {
+  const page = await openFreshPage(`${SITE}#/today`, { init: [FAST_SOUND, RECOGNIZER(false)] });
+  await learnThenSpeak(page);
+  const first = await tryWord(page);
+  check('each try asks for the word twice, sounds first', first.prompts.includes('Say it now, for the sound check.')
+    && first.prompts.includes('Now say it once more, for the tone check.')
+    && first.prompts.indexOf('Say it now, for the sound check.') < first.prompts.indexOf('Now say it once more, for the tone check.'), JSON.stringify(first.prompts));
+  check('the recognizer opened the microphone itself', await page.eval("__starts.length > 0 && __starts.every((s) => s === 'own')"), await page.eval('JSON.stringify(__starts)'));
+  const line = await page.eval(SETTINGS_CHECK);
+  check('Settings says the word is said twice on this phone', line === 'Speaking check on this phone: sounds and tones, saying each word twice.', line);
+  check('no uncaught errors on the page', page.errors.length === 0, page.errors.join('; '));
+  await page.close();
+}
+
+// With the microphone refused, every word is listened to and repeated and ends as 'listened',
+// and the day still checks in.
+async function nomic() {
+  const page = await openFreshPage(`${SITE}#/today`, { init: [FAST_SOUND], denied: ['microphone'] });
+  await learnThenSpeak(page);
+  let micSeen = false;
+  for (let i = 0; i < 1200 && (await page.eval('location.hash')) === '#/speak'; i += 1) {
+    micSeen = micSeen || (await page.eval(PANEL)).mic;
+    await page.sleep(100);
+  }
+  await page.until("location.hash === '#/checkin' && !!document.querySelector('h1')");
+  await page.sleep(300);
+  const checkin = await page.text();
+  check('without a microphone no microphone button is shown', micSeen === false);
+  check('the day still checks in', /^Checked in! \| 1 day streak \| 12 listened to in speaking practice\./.test(checkin), checkin.slice(0, 100));
+  const spoken = await page.eval(SPOKEN);
+  check('every word is saved as listened', spoken.length === 12 && spoken.every((e) => e.result === 'listened' && e.tries === 0), JSON.stringify(spoken.slice(0, 2)));
+  const line = await page.eval(SETTINGS_CHECK);
+  check('Settings says the microphone is not allowed', line.startsWith('Speaking check on this phone: none, because the microphone is not allowed.'), line);
+  check('no uncaught errors on the page', page.errors.length === 0, page.errors.join('; '));
+  await page.close();
+}
+
 const mode = process.argv[2];
-const modes = { store, day, offline, update, sheet, rewind, look, tones, wav };
+const modes = { store, day, offline, update, sheet, rewind, look, tones, wav, speak, speakboth, speaktwice, nomic };
 if (!modes[mode]) {
-  results.push('FAIL usage: node tests/browser/check.mjs store|day|offline|update|sheet|rewind|look|tones|wav');
+  results.push('FAIL usage: node tests/browser/check.mjs store|day|offline|update|sheet|rewind|look|tones|wav|speak|speakboth|speaktwice|nomic');
 } else {
   try {
     await modes[mode]();
