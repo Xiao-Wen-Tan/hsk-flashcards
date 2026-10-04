@@ -50,6 +50,7 @@ const APP_FILES = [
   'js/strokes.js',
   'js/study.js',
   'js/sync.js',
+  'js/tones.js',
   'js/ui/card.js',
   'js/ui/confetti.js',
   'js/ui/dom.js',
