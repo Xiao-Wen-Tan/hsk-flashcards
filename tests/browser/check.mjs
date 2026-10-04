@@ -72,6 +72,23 @@ function check(name, ok, detail = '') {
 const COUNT_PLAYS = `window.__plays = []; const play = HTMLMediaElement.prototype.play;
   HTMLMediaElement.prototype.play = function () { __plays.push(this.src.replace(location.origin, '')); return play.call(this); }; true`;
 const CLICK = (label) => `[...document.querySelectorAll('button')].find((b) => b.textContent === '${label}').click()`;
+const POSITION = "document.querySelector('.session-top .muted').textContent";
+
+// Reloads the page in the middle of the new words, as closing the app would, then taps Start
+// again. The bug of 3 October started the lesson again from its first learning card.
+async function reloadAndContinue(page) {
+  const before = await page.eval(POSITION);
+  await page.eval('location.reload(); true');
+  await page.sleep(500);
+  await page.until("!!document.querySelector('.start')", 20000);
+  const label = await page.eval("document.querySelector('.start').textContent");
+  await page.eval(COUNT_PLAYS);
+  await page.eval("document.querySelector('.start').click()");
+  await page.until("location.hash === '#/session' && !!document.querySelector('.session-top')");
+  const after = await page.eval(POSITION);
+  check('after a reload during the new words, Today offers Continue', label === 'Continue', label);
+  check('Continue goes on after the last answer', after === before, `card ${before} before, ${after} after`);
+}
 
 async function store() {
   const page = await openPage(STORE_PAGE);
@@ -93,6 +110,7 @@ async function day() {
   let listenHz = 0; // listening questions that showed characters
   let learnPlays = null; // sounds started by the first new word's card
   let afterPlays = null; // sounds started by the first card after an answer
+  let reloaded = false;
   for (let i = 0; i < 300 && (await page.eval('location.hash')) === '#/session'; i += 1) {
     const kind = await page.eval(`(() => { const m = document.getElementById('main');
       if (!m.querySelector('.session-top')) return 'wait';
@@ -102,6 +120,11 @@ async function day() {
       if (m.querySelector('.grades')) return 'grades';
       return m.querySelector('.card') ? 'learn' : 'other'; })()`);
     seen[kind] = (seen[kind] ?? 0) + 1;
+    if (kind === 'feedback' && seen.listen === 6 && !reloaded) {
+      reloaded = true;
+      await reloadAndContinue(page);
+      continue;
+    }
     if ((kind === 'learn' && !learnPlays) || (kind === 'feedback' && !afterPlays)) {
       // Let the card's sound run out. Two silent one-second plays and the pause take under 3 s.
       // __mark is where the sounds of this card start (set before the tap that opened it).
@@ -161,6 +184,26 @@ async function day() {
     check(`${hash} draws`, (await page.text()).length > 20);
   }
   check('Today now says the day is done', /Done for today/.test(await page.text()));
+  check('the session was reloaded and continued', reloaded);
+  // The next morning: the clock moves one day ahead while the app is in the background. The bug
+  // of 3 October kept showing "Done for today" with no reviews.
+  await page.eval(`(() => { const Real = Date; const shift = 86400000;
+    window.Date = class extends Real {
+      constructor(...a) { if (a.length) super(...a); else super(Real.now() + shift); }
+      static now() { return Real.now() + shift; }
+    };
+    for (const state of ['hidden', 'visible']) {
+      Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => state });
+      document.dispatchEvent(new Event('visibilitychange'));
+    }
+    return true; })()`);
+  await page.sleep(1000);
+  const nextDay = await page.text();
+  check('back in the app on the next day, Today shows the 12 reviews', /12 \| reviews/.test(nextDay) && !/Done for today/.test(nextDay), nextDay.slice(0, 120));
+  await page.eval("document.getElementById('main').append(Object.assign(document.createElement('i'), { id: 'stale' })); true");
+  await page.eval("[...document.querySelectorAll('#nav a')].find((a) => a.textContent === 'Today').click(); true");
+  await page.sleep(700);
+  check('tapping Today on Today draws it again', await page.eval("!document.getElementById('stale')"));
   const installable = await page.send('Page.getInstallabilityErrors');
   check('Chrome finds the app installable', installable.installabilityErrors.length === 0, JSON.stringify(installable.installabilityErrors));
   check('no uncaught errors on the page', page.errors.length === 0, page.errors.join('; '));

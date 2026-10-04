@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { Study, previewDay } from '../../docs/js/study.js';
+import { Study, canContinue, previewDay } from '../../docs/js/study.js';
 import { MemoryStore } from '../../docs/js/store.js';
 import { learnedProgress, quizForReview } from '../../docs/js/srs.js';
 import { loadFixture, localDate } from './helpers.mjs';
@@ -165,4 +165,108 @@ test('a missed day resets the streak', async () => {
   await playDay(store, '2026-10-05');
   assert.equal((await playDay(store, '2026-10-06')).streak, 2);
   assert.equal((await playDay(store, '2026-10-08')).streak, 1);
+});
+
+// Works through a session until stop(card) is true, answering every question right.
+async function playUntil(study, now, stop) {
+  while (!study.finished && !stop(study.card)) {
+    if (study.card.type === 'learn') study.next();
+    else await study.answer(right(study.card), now);
+  }
+}
+
+test('stopping during the new words and starting again continues after the last answer', async () => {
+  // The bug of 3 October: a new word is saved only at its final check, so a stopped session
+  // used to start again from the first learning card.
+  const store = new MemoryStore();
+  const now = localDate('2026-10-05');
+  const study = await Study.start({ store, data, now });
+  // The 8 learning cards and 8 checks of the first two groups, then the third group's
+  // learning cards, then Stop.
+  await playUntil(study, now, (c) => c.type === 'check' && c.group === 2);
+  const { cards } = study.state;
+  await study.finish(now);
+  assert.equal(await canContinue({ store, data, now: localDate('2026-10-05', 11) }), true);
+  const again = await Study.start({ store, data, now: localDate('2026-10-05', 11) });
+  // The last answer was the 16th card, so the third group's learning cards show again.
+  assert.equal(again.state.pos, 16);
+  assert.deepEqual(again.state.cards, cards);
+  assert.deepEqual([again.card.type, again.card.group], ['learn', 2]);
+  assert.deepEqual(again.plan.newWords, study.plan.newWords);
+  assert.equal(again.canUndo, false);
+  await playUntil(again, now, () => false);
+  const result = await again.finish(now);
+  assert.equal(result.checkedIn, true);
+  assert.equal(result.summary.learned, 12);
+  assert.equal((await store.allProgress()).filter((p) => p.step === 1).length, 12);
+  assert.equal(await canContinue({ store, data, now }), false);
+});
+
+test('a stopped review session continues with its re-asks', async () => {
+  const store = new MemoryStore();
+  await playDay(store, '2026-10-05');
+  const now = localDate('2026-10-06');
+  const study = await Study.start({ store, data, now });
+  await study.answer('wrong', now);
+  await study.answer(right(study.card), now);
+  await study.finish(now);
+  const again = await Study.start({ store, data, now });
+  assert.equal(again.state.pos, 2);
+  assert.equal(again.state.cards.filter((c) => c.type === 'reask').length, 1);
+  assert.equal(again.plan.reviews.length, 10);
+});
+
+test('a session stopped yesterday is not continued', async () => {
+  const store = new MemoryStore();
+  const now = localDate('2026-10-05');
+  const study = await Study.start({ store, data, now });
+  await playUntil(study, now, (c) => c.type === 'check' && c.group === 2);
+  await study.finish(now);
+  assert.equal(await canContinue({ store, data, now: localDate('2026-10-06') }), false);
+  const next = await Study.start({ store, data, now: localDate('2026-10-06') });
+  assert.equal(next.day, '2026-10-06');
+  assert.equal(next.state.pos, 0);
+  assert.deepEqual(next.plan.newWords, study.plan.newWords);
+});
+
+test('a finished session is not continued', async () => {
+  const store = new MemoryStore();
+  await playDay(store, '2026-10-05');
+  assert.equal(await canContinue({ store, data, now: localDate('2026-10-05', 11) }), false);
+  const again = await Study.start({ store, data, now: localDate('2026-10-05', 11) });
+  assert.equal(again.state.cards.length, 0);
+});
+
+test('Undo saves the session too, so starting again shows the card that was taken back', async () => {
+  const store = new MemoryStore();
+  const now = localDate('2026-10-05');
+  const study = await Study.start({ store, data, now });
+  await playUntil(study, now, (c) => c.type === 'check');
+  const id = study.card.id;
+  await study.answer('right', now);
+  await study.answer('right', now);
+  await study.undo(now);
+  const again = await Study.start({ store, data, now });
+  assert.equal(again.state.pos, 5);
+  assert.deepEqual([again.card.type, again.state.cards[4].id], ['check', id]);
+});
+
+test('a stopped session is not continued after the daily amounts were lowered', async () => {
+  // Stopped after the first group, then new words per day lowered from 12 to 4: Today plans 4
+  // new words, so Start must teach those 4, not the 12 of the stopped session.
+  const store = new MemoryStore();
+  const now = localDate('2026-10-05');
+  const study = await Study.start({ store, data, now });
+  await playUntil(study, now, (c) => c.type === 'learn' && c.group === 1);
+  await study.finish(now);
+  await store.commit({ meta: { settings: { newPerDay: 4 } }, event: { day: '2026-10-05', kind: 'settings' } });
+  assert.equal(await canContinue({ store, data, now }), false);
+  const again = await Study.start({ store, data, now });
+  assert.equal(again.state.pos, 0);
+  assert.deepEqual(again.plan.newWords, study.plan.newWords.slice(0, 4));
+  // Raising the amount keeps the stopped session; the extra words come in a second session.
+  await store.commit({ meta: { settings: { newPerDay: 20 } }, event: { day: '2026-10-05', kind: 'settings' } });
+  await playUntil(again, now, (c) => c.type === 'final');
+  const third = await Study.start({ store, data, now });
+  assert.equal(third.card.type, 'final');
 });

@@ -39,3 +39,9 @@ test('with nothing due the learner can still tap Start to check in, once', () =>
   assert.equal(done.canStart, false);
   assert.equal(done.status, 'Done for today. See you tomorrow!');
 });
+
+test('a session stopped earlier today makes the button say Continue', () => {
+  // Stopped during the first new words: nothing has a record yet, but the saved session continues.
+  const v = todayView({ plan: plan({ newWords: ids(12) }), checkedDays: [], today: TODAY, settings: SETTINGS, resumable: true });
+  assert.deepEqual([v.canStart, v.startLabel, v.newWords], [true, 'Continue', 12]);
+});

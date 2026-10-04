@@ -3,9 +3,10 @@ import { currentStreak, weekStrip } from '../checkin.js';
 import { weekdayIndex } from '../dates.js';
 import { WEEKDAY_LETTERS, plural } from './format.js';
 
-// plan is Plan 2's planDay result (from previewDay), checkedDays the checked-in study days.
+// plan is Plan 2's planDay result (from previewDay), checkedDays the checked-in study days, and
+// resumable is true when a session stopped earlier today can continue (canContinue in study.js).
 // With 150 reviews waiting and the default settings, the note says that new words are halved.
-export function todayView({ plan, checkedDays, today, settings }) {
+export function todayView({ plan, checkedDays, today, settings, resumable = false }) {
   const checkedInToday = checkedDays.includes(today);
   const reviews = plan.reviews.length;
   const newWords = plan.newWords.length;
@@ -29,6 +30,6 @@ export function todayView({ plan, checkedDays, today, settings }) {
     status,
     checkedInToday,
     canStart: !(nothingLeft && checkedInToday),
-    startLabel: plan.reviewsDone + plan.newDone > 0 ? 'Continue' : 'Start',
+    startLabel: resumable || plan.reviewsDone + plan.newDone > 0 ? 'Continue' : 'Start',
   };
 }

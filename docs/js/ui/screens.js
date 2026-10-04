@@ -1,6 +1,6 @@
 // The Today, Check-in, Progress map, theme word list, word card, Stats and Badges screens.
 // Each one reads saved data, asks a view module in ../view/ what to show, and draws it.
-import { previewDay } from '../study.js';
+import { canContinue, previewDay } from '../study.js';
 import { studyDay, addDays } from '../dates.js';
 import { todayView } from '../view/today.js';
 import { badgesView, checkinView, mapView, statsView, themeWordsView, wordBackHref } from '../view/progress.js';
@@ -21,7 +21,8 @@ export async function renderToday(app) {
   const today = studyDay();
   const plan = await previewDay({ store: app.store, data: app.data });
   const settings = { ...(await app.settings()) };
-  const v = todayView({ plan, checkedDays: await checkedDays(app), today, settings });
+  const resumable = await canContinue({ store: app.store, data: app.data });
+  const v = todayView({ plan, checkedDays: await checkedDays(app), today, settings, resumable });
   show(app.main,
     h('a', { class: 'streak', href: '#/checkin' }, h('span', { class: 'streak-n' }, v.streak), ' day streak'),
     h('div', { class: 'week' }, v.week.map((d) => h('span', {

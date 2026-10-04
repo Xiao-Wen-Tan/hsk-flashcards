@@ -200,7 +200,10 @@ test('restore into a fresh phone gives the same progress, and the new phone take
   let { state: oldPhone } = await run(store, phone(), sheet.post);
   const fresh = new MemoryStore();
   const { state: newPhone, counts } = await restoreFromSheet({ store: fresh, state: phone('0011223344556677'), post: sheet.post });
-  assert.deepEqual(await fresh.dump(), await store.dump());
+  // The saved session (meta 'session', for continuing a stopped session) stays on the phone.
+  const { session, ...meta } = (await store.dump()).meta;
+  assert.ok(session);
+  assert.deepEqual(await fresh.dump(), { ...(await store.dump()), meta });
   assert.equal(counts.events, (await store.eventsSince(0)).length);
   assert.equal(newPhone.cursor, oldPhone.cursor);
   // The next answer on the new phone gets the next seq, so its backup continues the Sheet's log.

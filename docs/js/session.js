@@ -153,6 +153,14 @@ export function undoAnswer(state) {
   return state.prev;
 }
 
+// What a stopped session still holds, in the shape of a day plan: the reviews not yet asked
+// and the new words whose lesson has not ended.
+export function sessionLeft(state) {
+  const reviews = [...new Set(state.cards.slice(state.pos).filter((c) => c.type === 'review').map((c) => c.id))];
+  const newWords = Object.keys(state.lesson).filter((id) => state.lesson[id].result === null);
+  return { reviews, newWords };
+}
+
 export function sessionSummary(state) {
   const { reviews, firstRight, learned, failed } = state.tally;
   return {

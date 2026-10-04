@@ -27,3 +27,11 @@ export function hrefOf(route) {
   const base = `#/${route.name}/${encodeURIComponent(route.id)}`;
   return route.group ? `${base}/${encodeURIComponent(route.group)}` : base;
 }
+
+// When the app comes back from the background, a screen drawn on an earlier study day is out
+// of date (Today drawn on 5 October would still say "Done for today" on 6 October), so it is
+// drawn again. A running session keeps the day it started on, and Settings is left alone so
+// nothing being typed there is lost.
+export function needsRedraw({ drawnDay, today, route }) {
+  return route.name !== 'session' && route.name !== 'settings' && drawnDay !== today;
+}

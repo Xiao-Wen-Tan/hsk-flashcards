@@ -2,12 +2,13 @@
 // worker, loads the plugins, and draws the screen that the address names ('#/today', '#/map', ...).
 import { openIdbStore } from './store.js';
 import { loadSettings } from './study.js';
+import { studyDay } from './dates.js';
 import { makePool } from './distractors.js';
 import { RELEASE, WORDS_FILE } from './release.js';
 import { PLUGINS } from './plugins.js';
 import { createHooks, loadPlugins } from './hooks.js';
 import { createPlayer } from './audio.js';
-import { NAV, parseRoute } from './view/route.js';
+import { NAV, needsRedraw, parseRoute } from './view/route.js';
 import { h, show } from './ui/dom.js';
 import { setupUpdates } from './ui/update.js';
 import { endSession, renderSession } from './ui/session.js';
@@ -27,6 +28,7 @@ const app = {
   feedback: null,
   revealed: false,
   busy: false,
+  drawnDay: null, // the study day the screen was last drawn on
 };
 
 app.settings = () => loadSettings(app.store);
@@ -51,15 +53,19 @@ function drawNav(route) {
   const hidden = route.name === 'session';
   app.nav.hidden = hidden;
   if (hidden) return;
+  // Tapping the tab of the screen already shown draws it again. The address does not change
+  // then, so there is no hashchange. (Opened at './', the first tap on Today does change it.)
   app.nav.replaceChildren(...NAV.map((item) => h('a', {
     href: `#/${item.name}`,
     class: item.name === route.name ? 'active' : '',
+    onclick: () => { if (window.location.hash === `#/${item.name}`) render(); },
   }, item.label)));
 }
 
 async function render() {
   const route = parseRoute(window.location.hash);
   if (route.name !== 'session' && app.study) await endSession(app, { quiet: true });
+  app.drawnDay = studyDay();
   drawNav(route);
   try {
     switch (route.name) {
@@ -105,6 +111,8 @@ async function boot() {
       app.hooks.emit('open', { store: app.store, data: app.data });
       // Back from the background during a session, a tap restores sound (the design's "Tap to continue").
       if (app.study) app.needTap(() => renderSession(app));
+      // Back on a new study day, the screen is drawn again, so Today shows the new day's reviews.
+      else if (needsRedraw({ drawnDay: app.drawnDay, today: studyDay(), route: parseRoute(window.location.hash) })) render();
     }
   });
   await render();

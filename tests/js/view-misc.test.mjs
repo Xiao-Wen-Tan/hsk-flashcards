@@ -1,13 +1,14 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { hrefOf, parseRoute } from '../../docs/js/view/route.js';
+import { hrefOf, needsRedraw, parseRoute } from '../../docs/js/view/route.js';
+import { studyDay } from '../../docs/js/dates.js';
 import {
   backupFileName, backupText, parseBackup, settingsFromForm, settingsView,
 } from '../../docs/js/view/settings.js';
 import { filesForWords, soonWords } from '../../docs/js/view/files.js';
 import { MemoryStore } from '../../docs/js/store.js';
 import { learnedProgress } from '../../docs/js/srs.js';
-import { loadFixture, word } from './helpers.mjs';
+import { loadFixture, localDate, word } from './helpers.mjs';
 
 const data = loadFixture();
 
@@ -27,6 +28,20 @@ test('addresses name the screens', () => {
   assert.equal(hrefOf({ name: 'word', id: 'w0026', group: '3' }), '#/word/w0026/3');
   assert.equal(hrefOf({ name: 'word', id: 'w0026' }), '#/word/w0026');
   assert.equal(hrefOf({ name: 'stats' }), '#/stats');
+});
+
+test('a screen drawn on an earlier study day is drawn again when the app comes back', () => {
+  // The bug of 3 October: Today drawn on day 1 ("Done for today") was still shown on day 2.
+  const drawnDay = studyDay(localDate('2026-10-05', 21));
+  const today = { name: 'today' };
+  assert.equal(needsRedraw({ drawnDay, today: studyDay(localDate('2026-10-05', 23)), route: today }), false);
+  // 03:00 still counts for 5 October, 05:00 is a new study day.
+  assert.equal(needsRedraw({ drawnDay, today: studyDay(localDate('2026-10-06', 3)), route: today }), false);
+  assert.equal(needsRedraw({ drawnDay, today: studyDay(localDate('2026-10-06', 5)), route: today }), true);
+  assert.equal(needsRedraw({ drawnDay, today: '2026-10-06', route: { name: 'map' } }), true);
+  // A running session keeps the day it started on, and Settings keeps what is being typed.
+  assert.equal(needsRedraw({ drawnDay, today: '2026-10-06', route: { name: 'session' } }), false);
+  assert.equal(needsRedraw({ drawnDay, today: '2026-10-06', route: { name: 'settings' } }), false);
 });
 
 test('settings have defaults, ranges and auto-play on', () => {
