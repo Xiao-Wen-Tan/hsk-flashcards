@@ -47,3 +47,11 @@ export const WEEKDAY_SHORT = Object.freeze(WEEKDAYS);
 // Six bright colours of the bright look (spec of 2026-10-03, section 4): orange, yellow, green,
 // blue, violet and pink. The themes take them in turn, and the confetti uses them too.
 export const THEME_COLORS = Object.freeze(['#ff6b35', '#ffb703', '#38b000', '#3a86ff', '#8338ec', '#ff006e']);
+
+// A theme's colour, for its map tiles and the band at the top of its cards. The themes take the
+// six colours in turn by their order, so themes 1, 7, 13, 19 and 25 are orange and theme 6 is
+// pink. themes is the words file's theme list. An unknown theme gets the first colour.
+export function themeColor(themeId, themes = []) {
+  const order = themes.find((t) => t.id === themeId)?.order ?? 1;
+  return THEME_COLORS[(order - 1) % THEME_COLORS.length];
+}

@@ -7,7 +7,7 @@ import { allTime, bars, periodTotals, thisMonth, thisWeek } from '../counters.js
 import { badgeLadder, badgeTitle } from '../badges.js';
 import { hrefOf } from './route.js';
 import { isLearned, isMastered } from '../srs.js';
-import { WEEKDAY_LETTERS, WEEKDAY_SHORT, monthTitle, percent, plural } from './format.js';
+import { WEEKDAY_LETTERS, WEEKDAY_SHORT, monthTitle, percent, plural, themeColor } from './format.js';
 import { tilesOf } from './today.js';
 
 const STATUS_LABEL = Object.freeze({ done: 'Done', current: 'Now', locked: 'Locked' });
@@ -15,7 +15,8 @@ const STATUS_LABEL = Object.freeze({ done: 'Done', current: 'Now', locked: 'Lock
 // One section per level group (HSK 1-2, then 3, 4, 5 and 6), each with a tile per theme that
 // has words in that group, in theme order. A tile's counts are of that group's words only,
 // and it opens the list of those words. A started tile (see stats.js mapSections) shows its
-// learned share, for example '40%', where the other tiles show Done, Now or Locked.
+// learned share, for example '40%', where the other tiles show Done, Now or Locked. A tile has
+// the colour of its theme (themeColor in format.js).
 export function mapView(data, progressById) {
   return mapSections(data.themes, data.words, progressById).map((s) => ({
     id: s.id,
@@ -26,6 +27,7 @@ export function mapView(data, progressById) {
     tiles: s.tiles.map((t) => ({
       id: t.id,
       name: t.name,
+      color: themeColor(t.id, data.themes),
       href: hrefOf({ name: 'theme', id: t.id, group: s.id }),
       status: t.status,
       statusLabel: t.status === 'started' ? percent(t.learnedShare) : STATUS_LABEL[t.status],

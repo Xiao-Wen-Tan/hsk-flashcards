@@ -126,7 +126,7 @@ export async function renderMap(app) {
     sections.map((s) => h('section', { class: `group-section${s.done ? ' done' : ''}` },
       h('h2', {}, s.title, s.statusLabel ? h('span', { class: 'group-status' }, ` ${s.statusLabel}`) : null),
       h('p', { class: 'group-counts' }, s.counts),
-      h('div', { class: 'tiles' }, s.tiles.map((t) => h('a', { class: `tile ${t.status}`, href: t.href },
+      h('div', { class: 'tiles' }, s.tiles.map((t) => h('a', { class: `tile ${t.status}`, href: t.href, style: `--theme:${t.color}` },
         h('span', { class: 'tile-status' }, t.statusLabel),
         h('span', { class: 'tile-name' }, t.name),
         h('span', { class: 'bar' },

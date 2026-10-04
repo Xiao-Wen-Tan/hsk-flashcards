@@ -1,7 +1,7 @@
 // What the learning card shows. The same card is used for a new word and after every
 // quiz answer. It never touches the page, so Node can test it.
 import { charsOf } from '../strokes.js';
-import { posText } from './format.js';
+import { posText, themeColor } from './format.js';
 
 export const AUDIO_BASE = 'audio/';
 
@@ -38,9 +38,11 @@ export const PLAYS_AFTER_ANSWER = 1;
 
 // Everything the learning card shows for one word of the words file.
 // learningCard(apple).plays is 2, learningCard(apple, { afterAnswer: true }).plays is 1.
-export function learningCard(word, { afterAnswer = false } = {}) {
+// color is the colour of the word's theme (themeColor), for the band at the top of the card.
+export function learningCard(word, { afterAnswer = false, themes = [] } = {}) {
   return {
     id: word.id,
+    color: themeColor(word.theme, themes),
     hz: word.hz,
     py: word.py,
     pos: posText(word.pos),

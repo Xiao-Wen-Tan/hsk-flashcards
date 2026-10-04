@@ -16,7 +16,7 @@ export function playSound(app, url, times) {
 // new word's card and once on the card after a quiz answer (afterAnswer). "Play again"
 // plays it the same number of times.
 export function cardElement(app, word, { autoplay, afterAnswer = false }) {
-  const c = learningCard(word, { afterAnswer });
+  const c = learningCard(word, { afterAnswer, themes: app.data.themes });
   const strokes = h('div', { class: 'strokes', hidden: true });
   const strokeButton = h('button', {
     class: 'small',
@@ -30,7 +30,7 @@ export function cardElement(app, word, { autoplay, afterAnswer = false }) {
       }
     },
   }, 'Stroke order');
-  const el = h('section', { class: 'card' },
+  const el = h('section', { class: 'card', style: `--theme:${c.color}` },
     h('div', { class: 'hz', lang: 'zh-CN' }, c.hz),
     h('div', { class: 'py' }, c.py),
     c.pos ? h('div', { class: 'pos' }, c.pos) : null,

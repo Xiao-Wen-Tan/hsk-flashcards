@@ -5,6 +5,7 @@ import {
 } from '../../docs/js/view/progress.js';
 import { learnedProgress } from '../../docs/js/srs.js';
 import { badgeFacts } from '../../docs/js/badges.js';
+import { THEME_COLORS } from '../../docs/js/view/format.js';
 import { loadFixture } from './helpers.mjs';
 
 const data = loadFixture();
@@ -23,6 +24,7 @@ test('the map has a tile per theme, done, current or locked, with shares', () =>
     ['t04', 'Family & People', 'Locked'], ['t05', 'Food & Drink', 'Locked'],
   ]);
   assert.deepEqual(tiles.map((t) => t.href).slice(0, 2), ['#/theme/t01/1-2', '#/theme/t02/1-2']);
+  assert.deepEqual(tiles.map((t) => t.color), THEME_COLORS.slice(0, 5)); // each theme in its colour
   assert.deepEqual([tiles[0].learnedPct, tiles[0].masteredPct], ['100%', '100%']);
   assert.deepEqual([tiles[1].learnedPct, tiles[1].masteredPct, tiles[1].counts], ['20%', '0%', '2 of 10 learned, 0 mastered']);
 });

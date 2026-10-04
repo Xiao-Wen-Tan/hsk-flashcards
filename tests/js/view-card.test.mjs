@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { highlightParts, learningCard } from '../../docs/js/view/card.js';
-import { monthTitle, percent, plural, posText, shortDate } from '../../docs/js/view/format.js';
+import { THEME_COLORS, monthTitle, percent, plural, posText, shortDate, themeColor } from '../../docs/js/view/format.js';
 import { loadFixture, word } from './helpers.mjs';
 
 const data = loadFixture();
@@ -34,6 +34,22 @@ test('the learning card of 苹果 has every part the design names', () => {
   assert.equal(c.sentencePy, 'Wǒ xiǎng chī píngguǒ.');
   assert.equal(c.sentenceEn, 'I want to eat an apple.');
   assert.equal(c.sentenceAudio, 'audio/s/w0026_814ba0af.mp3');
+});
+
+test('a card has the colour of its theme, for the band at its top', () => {
+  // 苹果 is in Food & Drink, the fixture's 5th theme, so it gets the 5th colour.
+  assert.equal(learningCard(word(data, '苹果'), { themes: data.themes }).color, THEME_COLORS[4]);
+  assert.equal(learningCard(word(data, '苹果')).color, THEME_COLORS[0]); // without the theme list
+});
+
+test('the themes take the six colours in turn', () => {
+  const themes = Array.from({ length: 30 }, (_, i) => ({ id: `t${String(i + 1).padStart(2, '0')}`, order: i + 1 }));
+  assert.equal(THEME_COLORS.length, 6);
+  assert.equal(themeColor('t01', themes), THEME_COLORS[0]);
+  assert.equal(themeColor('t06', themes), THEME_COLORS[5]);
+  assert.equal(themeColor('t07', themes), THEME_COLORS[0]);
+  assert.equal(themeColor('t30', themes), THEME_COLORS[5]);
+  assert.equal(themeColor('t99', themes), THEME_COLORS[0]);
 });
 
 test('a new word\'s card plays the word twice, the card after an answer plays it once', () => {
