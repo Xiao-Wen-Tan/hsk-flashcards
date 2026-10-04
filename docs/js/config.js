@@ -48,7 +48,8 @@ export const CONFIG = Object.freeze({
     // (tones.js). An earlier 4th tone is often said short and nearly level, so it is not held to it.
     minFall: 0.15,
     // The dip in loudness, in decibels, needed to split a two-syllable word said in one voiced
-    // stretch (tones.js), so that a word said as one syllable is not heard as two.
+    // stretch (tones.js), so that a word said as one syllable is not heard as two. minFall and
+    // minDip are the same at every strictness; the strictness setting changes margin and share.
     minDip: 0.5,
     voiceKeep: 0.98, // older recordings count this much less with each new one
     voiceRecordings: 5, // recordings needed before the height of the learner's voice is trusted

@@ -122,3 +122,13 @@ test('neutral tones are not judged, and silence does not pass', () => {
   const quiet = judgeTones({ track: trackPitch(new Float32Array(16000), 16000), word: w, voice: KNOWN });
   assert.deepEqual([quiet.pass, quiet.problem], [false, 'Could not hear 2 syllables.']);
 });
+
+test('before the voice range is known, a failed word gets general advice, not a syllable that may be the wrong one', () => {
+  // Without the learner's range, heights are compared within the word, and one syllable's error
+  // spreads over the others, so naming a syllable could point at the one said right.
+  const word = { hz: '老师', py: 'lǎoshī', pyNum: 'lao3 shi1' };
+  const pieces = [{ ms: 150 }, { ms: 250, hz: [150, 120, 125] }, { ms: 40 }, { ms: 250, hz: [118, 117] }, { ms: 150 }];
+  const r = judgeTones({ track: trackPitch(madeUpVoice(pieces), 16000), word, voice: null, strictness: 'normal' });
+  assert.equal(r.pass, false); // shī said low and level is wrong
+  assert.equal(r.problem, 'Not quite. Listen again and copy how the word rises and falls.');
+});

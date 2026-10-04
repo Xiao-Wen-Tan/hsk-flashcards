@@ -299,7 +299,11 @@ export function judgeTones({ track, word, voice = null, strictness = 'normal' })
   const share = judgedCount ? right / judgedCount : 1;
   const wrong = out.findIndex((s) => !s.ok);
   let problem = null;
-  if (wrong >= 0) {
+  if (wrong >= 0 && range.relative) {
+    // Before the learner's voice range is known, heights are compared within the word, and one
+    // syllable's error moves the others too, so the syllable to name may be the one said right.
+    problem = 'Not quite. Listen again and copy how the word rises and falls.';
+  } else if (wrong >= 0) {
     const s = out[wrong];
     const where = expected.length === 1 ? 'Tone' : `${ORDINAL[wrong] ?? `${wrong + 1}th`} syllable`;
     problem = s.heard ? `${where}: heard ${TONE_WORDS[s.heard]}, ${SHOULD[s.say]}.` : `${where}: could not hear its pitch.`;
