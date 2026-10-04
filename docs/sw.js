@@ -36,6 +36,7 @@ const APP_FILES = [
   'js/hooks.js',
   'js/offline.js',
   'js/pinyin.js',
+  'js/pitch.js',
   'js/plan.js',
   'js/plugins.js',
   'js/release.js',
