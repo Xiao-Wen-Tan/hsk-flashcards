@@ -27,6 +27,11 @@ function writeStore(key, value) {
 function loadVoice() {
   try { return JSON.parse(readStore(VOICE_KEY)) ?? emptyVoice(); } catch { return emptyVoice(); }
 }
+// The OK on the Google note is also kept in memory (app.noteSeen), so where localStorage is
+// blocked the note goes away for the rest of the visit and the microphone button works.
+function noteSeen(app) {
+  return app.noteSeen === true || readStore(NOTE_KEY) === 'seen';
+}
 
 const wait = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
 
@@ -39,6 +44,7 @@ export async function startSpeaking(app) {
   saveMode(mode);
   app.readings = app.readings ?? readingsOf(app.data.words);
   app.lastVoice = null;
+  app.missedVoice = 0;
   app.speaking = await Speaking.start({ store: app.store, data: app.data, mode });
   window.location.hash = '#/speak';
 }
@@ -76,7 +82,7 @@ async function playOnce(app, url) {
 function draw(app, flash = null) {
   const speaking = app.speaking;
   const v = speakView({ word: speaking.word, state: speaking.state, position: speaking.position });
-  const needNote = v.mic && ['one', 'twice'].includes(speaking.state.mode) && readStore(NOTE_KEY) !== 'seen';
+  const needNote = v.mic && ['one', 'twice'].includes(speaking.state.mode) && !noteSeen(app);
   const micButton = h('button', {
     class: 'mic',
     disabled: needNote,
@@ -104,12 +110,16 @@ function draw(app, flash = null) {
     h('p', { class: 'prompt' }, v.prompt),
     v.problems.map((p) => h('p', { class: 'problem' }, p)),
     needNote ? h('div', { class: 'note' }, h('p', {}, GOOGLE_NOTE),
-      h('button', { class: 'small', onclick: () => { writeStore(NOTE_KEY, 'seen'); draw(app); } }, 'OK')) : null,
+      h('button', { class: 'small', onclick: () => { app.noteSeen = true; writeStore(NOTE_KEY, 'seen'); draw(app); } }, 'OK')) : null,
     v.mic ? micButton : null,
     v.listening ? h('div', { class: 'meter' }, h('span', { class: 'meter-level' })) : null,
+    // The replay buttons are always shown but work only while the routine waits for the learner
+    // (v.replay, in 'turn'). A replay while the routine plays a sound would stop that sound, and
+    // the routine, which waits for it to end, would never move the word on. A replay during a try
+    // would play into the open microphone.
     h('div', { class: 'row' },
-      h('button', { class: 'small', onclick: () => playOnce(app, v.wordAudio) }, 'Play the word'),
-      app.lastVoice ? h('button', { class: 'small', onclick: () => playSamples(app.lastVoice) }, 'Play my voice') : null));
+      h('button', { class: 'small', disabled: !v.replay, onclick: () => playOnce(app, v.wordAudio) }, 'Play the word'),
+      app.lastVoice ? h('button', { class: 'small', disabled: !v.replay, onclick: () => playSamples(app.lastVoice) }, 'Play my voice') : null));
 }
 
 function meter(app, level) {
@@ -118,9 +128,11 @@ function meter(app, level) {
 }
 
 // Sends one input to the controller and draws what follows. A finished word gets a short
-// message before the next word. A save that fails (the store, for example, could not write)
-// is shown as a note, and the panel is redrawn on the word as it was, so it is not left
-// waiting (speaking.js send() restores the word's state on a failed save).
+// message before the next word. The message is drawn on the next word's screen, so taps stay
+// blocked (app.busy) until that screen is ready, and a second tap on Skip does not skip the
+// next word too. A save that fails (the store, for example, could not write) is shown as a
+// note, and the panel is redrawn on the word as it was, so it is not left waiting (speaking.js
+// send() restores the word's state on a failed save).
 async function advance(app, input) {
   const speaking = app.speaking;
   if (!speaking || app.busy) return;
@@ -128,23 +140,24 @@ async function advance(app, input) {
   app.speakRun = (app.speakRun ?? 0) + 1;
   app.player.stop();
   app.stopTry?.();
-  let finished;
   try {
-    finished = await speaking.send(input);
+    const finished = await speaking.send(input);
+    // A new word has started, and "Play my voice" belongs to the word that has just ended.
+    if (finished) app.lastVoice = null;
+    if (finished && finished.result !== 'listened' && app.speaking === speaking && !speaking.finished) {
+      const text = finished.result === 'pass' ? 'Well said!' : 'Skipped. It comes back next time.';
+      app.speakRun += 1;
+      const run = app.speakRun;
+      draw(app, { right: finished.result === 'pass', text });
+      await wait(900);
+      if (app.speakRun !== run) return;
+    }
   } catch (err) {
     app.note(err.message);
     renderSpeak(app);
     return;
   } finally {
     app.busy = false;
-  }
-  if (finished && finished.result !== 'listened' && app.speaking === speaking && !speaking.finished) {
-    const text = finished.result === 'pass' ? 'Well said!' : 'Skipped. It comes back next time.';
-    app.speakRun += 1;
-    const run = app.speakRun;
-    draw(app, { right: finished.result === 'pass', text });
-    await wait(900);
-    if (app.speakRun !== run) return;
   }
   renderSpeak(app);
 }
@@ -160,7 +173,9 @@ async function recordAndCheck(app, withSounds, alive) {
   } catch {
     saveMode('none');
     try {
-      await speaking.setMode('none');
+      // Without a microphone a word already listened to and repeated ends as 'listened', and
+      // the next word starts without the last try's voice.
+      if (await speaking.setMode('none')) app.lastVoice = null;
     } catch (err) {
       app.note(err.message);
       renderSpeak(app);
@@ -176,7 +191,7 @@ async function recordAndCheck(app, withSounds, alive) {
   recognizer?.stop();
   const heard = recognizer ? await recognizer.done : null;
   closeMic(stream);
-  app.stopTry = null;
+  if (app.stopTry === recording.stop) app.stopTry = null; // a later try may have set its own
   if (!alive()) return;
   app.lastVoice = audio.voice ? audio : null;
   // The recognizer failing, or missing a voice twice in a row, changes the checking method:
@@ -204,9 +219,14 @@ async function recordAndCheck(app, withSounds, alive) {
 }
 
 // In the 'sounds' phase of mode 'twice' the recognizer listens alone, and the recording follows.
+// While it listens, app.stopTry stops it, so Skip, Stop, leaving the panel and the app going to
+// the background turn the microphone off at once instead of after up to 10 seconds.
 async function soundsFirst(app, alive) {
   const speaking = app.speaking;
-  const heard = await listen().done;
+  const recognizer = listen();
+  app.stopTry = recognizer.stop;
+  const heard = await recognizer.done;
+  if (app.stopTry === recognizer.stop) app.stopTry = null; // a later try may have set its own
   if (!alive()) return;
   if (heard.error && heard.error !== 'no-speech') {
     saveMode('tones');

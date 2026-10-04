@@ -61,6 +61,10 @@ export function speakView({ word, state, position }) {
     prompt: '',
     problems: state.phase === 'missed' || (state.phase === 'turn' && state.tries > 0) ? state.problems : [],
     mic: state.phase === 'turn',
+    // "Play the word" and "Play my voice" work only while the routine waits for the learner, in
+    // 'turn' (also the screen after a miss, before the next try). In the other phases a sound
+    // plays or the microphone is open, and a replay would cut that sound short or be recorded.
+    replay: state.phase === 'turn',
     listening: state.phase === 'sounds' || state.phase === 'record',
     tries: state.tries,
   };

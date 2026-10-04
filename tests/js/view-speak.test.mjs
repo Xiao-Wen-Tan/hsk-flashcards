@@ -35,6 +35,24 @@ test('after a miss the screen says what was wrong, and the next try says try aga
   assert.equal(speakView({ word: wo, state: second, position: { done: 0, total: 1 } }).prompt, 'Now say it once more, for the tone check.');
 });
 
+test('"Play the word" and "Play my voice" work only while the routine waits for the learner', () => {
+  const replay = (s) => speakView({ word: wo, state: s, position: { done: 0, total: 1 } }).replay;
+  let s = startWord({ id: wo.id, mode: 'one' });
+  assert.equal(replay(s), false, 'listen: the word and its sentence play');
+  s = next(s, DONE);
+  assert.equal(replay(s), false, 'repeat: the word plays, then a pause');
+  s = next(next(next(s, DONE), DONE), DONE);
+  assert.deepEqual([s.phase, replay(s)], ['turn', true], 'turn: the routine waits for the microphone button');
+  s = next(s, { type: 'tap' });
+  assert.deepEqual([s.phase, replay(s)], ['record', false], 'record: the microphone is open');
+  s = next(s, { type: 'heard', tones: { pass: true, share: 1 }, sounds: { ok: false, heard: '是' } });
+  assert.deepEqual([s.phase, replay(s)], ['missed', false], 'missed: the word plays again');
+  s = next(s, DONE);
+  assert.deepEqual([s.phase, s.tries, replay(s)], ['turn', 1, true], 'after a miss, before the next try');
+  const sounds = next(startWord({ id: wo.id, spokenWell: true, mode: 'twice' }), { type: 'tap' });
+  assert.deepEqual([sounds.phase, replay(sounds)], ['sounds', false], 'sounds: the recognizer listens');
+});
+
 test('Today\'s button counts the words left to speak', () => {
   assert.deepEqual(speakButton({ list: ['a', 'b'], done: [], left: ['a', 'b'] }), { label: 'Speaking practice', count: '2 words to speak', enabled: true });
   assert.deepEqual(speakButton({ list: ['a'], done: ['a'], left: [] }), { label: 'Speaking practice', count: 'The word is spoken.', enabled: false });
