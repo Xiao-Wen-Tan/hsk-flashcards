@@ -13,7 +13,7 @@
 //                                          colours, and no confetti or bounce with reduced motion
 //   node tests/browser/check.mjs tones FOLDER   the tone check on the app's own word recordings (project
 //                                          folder on 8124), and on the WAV files of FOLDER (optional)
-//   node tests/browser/check.mjs wav       writes .claude/scratch/speak_shi.wav, the recording of 是 that
+//   node tests/browser/check.mjs wav       writes .claude/scratch/speak_shi_vNNN.wav (a new number each run), the recording of 是 that
 //                                          Chrome's fake microphone plays for the speaking checks
 // Each prints PASS or FAIL lines and exits with 1 when anything failed.
 const PORT = 9333;
@@ -535,10 +535,16 @@ async function wav() {
     let str = '';
     for (let i = 0; i < bytes.length; i += 8192) str += String.fromCharCode(...bytes.subarray(i, i + 8192));
     return btoa(str); })()`);
-  const { mkdirSync, writeFileSync } = await import('node:fs');
+  // A new numbered file each run (speak_shi_v001.wav, v002, ...), as outputs are never
+  // overwritten. Chrome's fake microphone takes the path this prints, and the check's clean-up
+  // deletes the file afterwards.
+  const { existsSync, mkdirSync, writeFileSync } = await import('node:fs');
   mkdirSync('.claude/scratch', { recursive: true });
-  writeFileSync('.claude/scratch/speak_shi.wav', Buffer.from(b64, 'base64'));
-  check('the recording of 是 is written for the fake microphone', b64.length > 100000, `.claude/scratch/speak_shi.wav, ${Buffer.from(b64, 'base64').length} bytes`);
+  let n = 1;
+  while (existsSync(`.claude/scratch/speak_shi_v${String(n).padStart(3, '0')}.wav`)) n += 1;
+  const file = `.claude/scratch/speak_shi_v${String(n).padStart(3, '0')}.wav`;
+  writeFileSync(file, Buffer.from(b64, 'base64'), { flag: 'wx' });
+  check('the recording of 是 is written for the fake microphone', b64.length > 100000, `${file}, ${Buffer.from(b64, 'base64').length} bytes`);
   await page.close();
 }
 
