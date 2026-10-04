@@ -39,6 +39,7 @@ const APP_FILES = [
   'js/plan.js',
   'js/plugins.js',
   'js/release.js',
+  'js/rewind.js',
   'js/rng.js',
   'js/session.js',
   'js/sheet.js',
