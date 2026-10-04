@@ -42,13 +42,24 @@ export function numberText(n) {
 // Cleans up what the recognizer heard. Full-width forms become plain ones, punctuation, spaces
 // and Latin letters go, and numbers written in digits become characters.
 // cleanHeard('我有 2 个。') gives '我有二个'.
-export function cleanHeard(text) {
-  const plain = String(text ?? '').normalize('NFKC').replace(/\d+/g, (d) => numberText(Number(d)));
+// Two readings of digits are possible, and only for digits (a written 二 stays 二, as 二 said
+// for 两 is a beginner's mistake): `liang` reads a digit 2 as 两 (2个 is 两个), and `bare`
+// drops the 一 of a number that starts with 一百, 一千, 一万 or 一亿 (100 is 百, 1万 is 万).
+export function cleanHeard(text, { liang = false, bare = false } = {}) {
+  const plain = String(text ?? '').normalize('NFKC').replace(/\d+([百千万亿]?)/g, (d, unit) => {
+    let t = numberText(Number(d.slice(0, d.length - unit.length))) + unit;
+    if (liang) t = t.replaceAll('二', '两');
+    if (bare && /^一[百千万亿]/.test(t)) t = t.slice(1);
+    return t;
+  });
   return [...plain].filter((ch) => HAN.test(ch)).join('');
 }
 
-// 2 may also mean 两, as in 两个 and 两百. withLiang('二个') gives '两个'.
-const withLiang = (text) => text.replaceAll('二', '两');
+// Every cleaned reading of one recognizer guess, the plain one first, without repeats.
+function readingsOfGuess(text) {
+  const all = [{}, { liang: true }, { bare: true }, { liang: true, bare: true }].map((o) => cleanHeard(text, o));
+  return [...new Set(all)].filter(Boolean);
+}
 
 // The syllables of a word, one per character of its characters when they line up, as
 // [{ ch: '他', py: 'tā' }], from the card pinyin `py` (so 一 in 一点儿 is yì). The 儿 ending is
@@ -102,8 +113,8 @@ function soundsLike(ch, py, readings) {
 export function matchWord(word, heardList, readings) {
   const target = [...word.hz].filter((ch) => HAN.test(ch)).join('');
   const parts = syllablesOf(word);
-  const cleaned = heardList.map(cleanHeard).filter(Boolean);
-  const guesses = cleaned.flatMap((h) => (withLiang(h) === h ? [h] : [h, withLiang(h)]));
+  const cleaned = heardList.map((t) => cleanHeard(t)).filter(Boolean);
+  const guesses = heardList.flatMap(readingsOfGuess);
   const short = parts && parts.at(-1).py === 'r' ? target.slice(0, -1) : null;
   for (const h of guesses) {
     if (h === target || h === short) return { ok: true, heard: h, how: 'same' };
@@ -117,7 +128,9 @@ export function matchWord(word, heardList, readings) {
       }
     }
   }
-  return { ok: false, heard: cleaned[0] ?? '', how: null };
+  // An answer in Latin letters only (for example 'OK') is shown as it was heard.
+  const raw = heardList.map((t) => String(t ?? '').trim()).find(Boolean) ?? '';
+  return { ok: false, heard: cleaned[0] ?? raw, how: null };
 }
 
 // What the recognizer's answer means for one try. heard is its { texts, error } (ui/recognize.js

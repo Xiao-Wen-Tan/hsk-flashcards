@@ -72,3 +72,25 @@ test('what the recognizer\'s answer means for a try', () => {
   assert.equal(recognizerOutcome({ texts: [], error: 'no-speech' }, false), 'heard');
   assert.equal(recognizerOutcome({ texts: ['是'], error: null }, true), 'heard');
 });
+
+test('a written 二 is not taken for 两, but a digit 2 may be', () => {
+  // 二 for 两 is a classic beginner mistake, so the character 二 must fail for 两.
+  const liang = word(data, '两');
+  assert.deepEqual(matchWord(liang, ['二'], readings), { ok: false, heard: '二', how: null });
+  assert.equal(matchWord(liang, ['2'], readings).ok, true);
+});
+
+test('100, 1000 and 1万 written in digits pass for 百, 千 and 万', () => {
+  const bai = { hz: '百', py: 'bǎi', pyNum: 'bai3' };
+  const qian = { hz: '千', py: 'qiān', pyNum: 'qian1' };
+  const wan = { hz: '万', py: 'wàn', pyNum: 'wan4' };
+  assert.equal(matchWord(bai, ['100'], readings).ok, true);
+  assert.equal(matchWord(qian, ['1000'], readings).ok, true);
+  assert.equal(matchWord(wan, ['1万'], readings).ok, true);
+  assert.equal(matchWord(wan, ['10000'], readings).ok, true);
+  assert.equal(matchWord(bai, ['200'], readings).ok, false);
+});
+
+test('an answer in Latin letters only is reported as heard, not as nothing', () => {
+  assert.deepEqual(matchWord(word(data, '他'), ['OK'], readings), { ok: false, heard: 'OK', how: null });
+});
