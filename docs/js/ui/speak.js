@@ -9,7 +9,7 @@ import { trackPitch } from '../pitch.js';
 import { addToVoice, emptyVoice, judgeTones } from '../tones.js';
 import { fallbackMode, matchWord, readingsOf, recognizerOutcome } from '../speakcheck.js';
 import { GOOGLE_NOTE, speakView } from '../view/speak.js';
-import { closeMic, openMic, playSamples, recordTry } from './mic.js';
+import { closeMic, openMic, playSamples, recordTry, stopPlayback } from './mic.js';
 import { findMode, listen, saveMode } from './recognize.js';
 import { h, show } from './dom.js';
 
@@ -169,6 +169,7 @@ async function recordAndCheck(app, withSounds, alive) {
   const word = speaking.word;
   let stream;
   try {
+    stopPlayback(); // the learner's last recording must not be recorded again
     stream = await openMic();
   } catch {
     saveMode('none');
@@ -223,6 +224,7 @@ async function recordAndCheck(app, withSounds, alive) {
 // the background turn the microphone off at once instead of after up to 10 seconds.
 async function soundsFirst(app, alive) {
   const speaking = app.speaking;
+  stopPlayback(); // the recognizer must not hear the learner's last recording
   const recognizer = listen();
   app.stopTry = recognizer.stop;
   const heard = await recognizer.done;

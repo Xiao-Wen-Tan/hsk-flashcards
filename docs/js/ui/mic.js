@@ -139,14 +139,25 @@ export function recordTry(stream, { onLevel = () => {} } = {}) {
   return { done, stop: () => stopNow() };
 }
 
-// Plays a recording back ("Play my voice"). Resolves when it has played.
+let playing = null; // the "Play my voice" sound that is playing, so a new try can stop it
+
+// Plays a recording back ("Play my voice"). Resolves when it has played or was stopped.
 export async function playSamples({ samples, rate }) {
+  stopPlayback();
   const ctx = new AudioContext();
   const buffer = ctx.createBuffer(1, samples.length, rate);
   buffer.copyToChannel(samples, 0);
   const src = ctx.createBufferSource();
   src.buffer = buffer;
   src.connect(ctx.destination);
+  playing = src;
   await new Promise((resolve) => { src.onended = resolve; src.start(); });
-  await ctx.close();
+  if (playing === src) playing = null;
+  await ctx.close().catch(() => {});
+}
+
+// Stops "Play my voice", so its end is not recorded as the learner's next try.
+export function stopPlayback() {
+  try { playing?.stop(); } catch { /* already ended */ }
+  playing = null;
 }
