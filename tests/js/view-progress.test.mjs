@@ -129,5 +129,18 @@ test('the check-in screen explains the session result', () => {
   assert.equal(early.title, 'Not checked in yet');
   assert.equal(early.lines.at(-1), 'Still left today: 1 review and 2 new words.');
   const plain = checkinView({ result: null, checkedDays: [], today: TODAY, themes: data.themes });
-  assert.deepEqual([plain.title, plain.streak, plain.lines], ['Check-in', null, []]);
+  assert.deepEqual([plain.title, plain.streak, plain.lines, plain.confetti], ['Check-in', null, [], false]);
+});
+
+test("the check-in screen shows the day's four numbers, the personal bests and confetti", () => {
+  const result = {
+    day: TODAY, checkedIn: true, justCheckedIn: true, streak: 3, newBadges: [],
+    summary: { reviews: 12, firstRight: 12, learned: 12, failed: 0, perfect: false }, left: { reviews: [], newWords: [] },
+  };
+  const counters = { newWords: 12, reviews: 12, answers: 48, right: 46, accuracy: 96, minutes: 21.4 };
+  const v = checkinView({ result, checkedDays: [TODAY], today: TODAY, themes: data.themes, counters, bests: ['Best accuracy this week!'] });
+  assert.deepEqual(v.numbers.map((t) => `${t.value} ${t.label}`), ['12 new words', '12 reviews', '96% accuracy', '21 minutes']);
+  assert.deepEqual(v.bests, ['Best accuracy this week!']);
+  assert.equal(v.confetti, true);
+  assert.equal(checkinView({ result: { ...result, justCheckedIn: false }, checkedDays: [TODAY], today: TODAY, themes: data.themes }).confetti, false);
 });

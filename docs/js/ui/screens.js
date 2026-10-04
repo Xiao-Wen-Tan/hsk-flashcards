@@ -6,6 +6,10 @@ import { todayView } from '../view/today.js';
 import { badgesView, checkinView, mapView, statsView, themeWordsView, wordBackHref } from '../view/progress.js';
 import { shortDate } from '../view/format.js';
 import { badgeFacts } from '../badges.js';
+import { currentStreak } from '../checkin.js';
+import { dayStats, personalBests, todayCounters } from '../counters.js';
+import { goals, nearest } from '../goals.js';
+import { burst } from './confetti.js';
 import { cardElement } from './card.js';
 import { startSession } from './session.js';
 import { h, show } from './dom.js';
@@ -28,36 +32,83 @@ async function progressById(app) {
   return new Map((await app.store.allProgress()).map((p) => [p.id, p]));
 }
 
+// The day's ring, a circle that fills as the day's planned work gets done. It starts empty and
+// fills smoothly (the CSS transition of .ring-fill), unless the phone asks for reduced motion.
+function ringElement(share, label) {
+  const NS = 'http://www.w3.org/2000/svg';
+  const C = 2 * Math.PI * 52; // the length of the circle
+  const circle = (cls) => {
+    const c = document.createElementNS(NS, 'circle');
+    for (const [k, v] of Object.entries({ cx: 60, cy: 60, r: 52, class: cls })) c.setAttribute(k, v);
+    return c;
+  };
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 120 120');
+  svg.setAttribute('class', 'ring');
+  svg.setAttribute('aria-hidden', 'true');
+  const fill = circle('ring-fill');
+  fill.style.strokeDasharray = `${C}`;
+  fill.style.strokeDashoffset = `${C}`;
+  svg.append(circle('ring-track'), fill);
+  requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.strokeDashoffset = `${C * (1 - share)}`; }));
+  return h('div', { class: 'ring-box', role: 'img', 'aria-label': `${label} of today's work done` },
+    svg, h('span', { class: 'ring-label' }, label));
+}
+
+// The four numbers of a day as tiles (tilesOf in view/today.js).
+function tilesElement(tiles) {
+  return h('div', { class: 'tiles4' }, tiles.map((t) => h('div', { class: 'tile4' }, h('b', {}, t.value), h('span', {}, t.label))));
+}
+
 export async function renderToday(app) {
   const today = studyDay();
   const plan = await previewDay({ store: app.store, data: app.data });
   const settings = { ...(await app.settings()) };
   const resumable = await canContinue({ store: app.store, data: app.data });
-  const v = todayView({ plan, checkedDays: await checkedDays(app), today, settings, resumable });
+  const s = await saved(app);
+  const checked = s.days.map((d) => d.day);
+  const byId = new Map(s.progress.map((p) => [p.id, p]));
+  const streak = currentStreak(checked, today, s.rewound);
+  const v = todayView({
+    plan, checkedDays: checked, today, settings, resumable, rewound: s.rewound,
+    counters: todayCounters({ events: s.events, plan, day: today }),
+    goals: nearest(goals({ data: app.data, progressById: byId, facts: s.facts, streak }), 2),
+  });
   show(app.main,
     h('a', { class: 'streak', href: '#/checkin' }, h('span', { class: 'streak-n' }, v.streak), ' day streak'),
     h('div', { class: 'week' }, v.week.map((d) => h('span', {
       class: `day${d.checkedIn ? ' done' : ''}${d.isToday ? ' today' : ''}${d.future ? ' future' : ''}`,
     }, d.letter))),
-    h('div', { class: 'counts' },
-      h('div', {}, h('b', {}, v.reviews), h('span', {}, 'reviews')),
-      h('div', {}, h('b', {}, v.newWords), h('span', {}, 'new words'))),
+    h('div', { class: 'today-top' },
+      ringElement(v.ring, v.ringPct),
+      h('div', { class: 'counts' },
+        h('div', {}, h('b', {}, v.reviews), h('span', {}, 'reviews')),
+        h('div', {}, h('b', {}, v.newWords), h('span', {}, 'new words')))),
     v.note ? h('p', { class: 'note' }, v.note) : null,
     h('p', { class: 'status' }, v.status),
     v.canStart ? h('button', {
       class: 'big start',
       onclick: async (e) => { e.target.disabled = true; await startSession(app); },
-    }, v.startLabel) : null);
+    }, v.startLabel) : null,
+    h('h2', {}, 'Done today'),
+    tilesElement(v.tiles),
+    v.goals.length ? h('div', { class: 'goals' }, h('h2', {}, 'Next goals'), v.goals.map((g) => h('p', { class: 'goal' }, g))) : null);
 }
 
 export async function renderCheckin(app) {
   const today = app.lastResult?.day ?? studyDay();
-  const v = checkinView({ result: app.lastResult, checkedDays: await checkedDays(app), today, themes: app.data.themes });
+  const events = await app.store.allEvents();
+  const v = checkinView({
+    result: app.lastResult, checkedDays: await checkedDays(app), today, themes: app.data.themes,
+    counters: dayStats(events, today), bests: personalBests({ events, today }),
+  });
   app.lastResult = null;
   show(app.main,
     h('h1', {}, v.title),
     v.streak !== null ? h('p', { class: 'streak' }, h('span', { class: 'streak-n' }, v.streak), ' day streak') : null,
     v.lines.map((line) => h('p', {}, line)),
+    tilesElement(v.numbers),
+    v.bests.map((b) => h('p', { class: 'best' }, b)),
     v.badges.length ? h('div', { class: 'new-badges' }, h('h2', {}, 'New badges'), v.badges.map((t) => h('p', { class: 'badge' }, t))) : null,
     h('h2', {}, v.monthTitle),
     h('table', { class: 'calendar' },
@@ -66,6 +117,7 @@ export async function renderCheckin(app) {
         class: c ? `${c.checkedIn ? 'done' : ''}${c.isToday ? ' today' : ''}` : '',
       }, c ? c.date : ''))))),
     h('a', { class: 'button big', href: '#/today' }, 'Back to Today'));
+  if (v.confetti) burst(app.main);
 }
 
 export async function renderMap(app) {

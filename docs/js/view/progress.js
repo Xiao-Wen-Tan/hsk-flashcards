@@ -7,6 +7,7 @@ import { badgeLadder, badgeTitle } from '../badges.js';
 import { hrefOf } from './route.js';
 import { isLearned, isMastered } from '../srs.js';
 import { WEEKDAY_SHORT, monthTitle, percent, plural } from './format.js';
+import { tilesOf } from './today.js';
 
 const STATUS_LABEL = Object.freeze({ done: 'Done', current: 'Now', locked: 'Locked' });
 
@@ -116,13 +117,18 @@ export function calendarWeeks(checkedDays, month, today) {
 }
 
 // The check-in screen. result is Study.finish()'s result, or null when the screen is
-// opened from the streak on the Today screen.
-export function checkinView({ result, checkedDays, today, themes }) {
+// opened from the streak on the Today screen. counters is the day's numbers (counters.js
+// dayStats) and bests the personal-best notes (counters.js personalBests). confetti is true
+// right after the day was checked in.
+export function checkinView({ result, checkedDays, today, themes, counters = null, bests = [] }) {
   const month = today.slice(0, 7);
   const view = {
     title: 'Check-in',
     lines: [],
+    numbers: counters ? tilesOf(counters) : [],
+    bests,
     badges: [],
+    confetti: Boolean(result?.justCheckedIn),
     streak: result ? result.streak : null,
     monthTitle: monthTitle(month),
     weeks: calendarWeeks(checkedDays, month, today),

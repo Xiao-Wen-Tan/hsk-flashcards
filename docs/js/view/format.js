@@ -43,3 +43,7 @@ export function monthTitle(month) {
 
 export const WEEKDAY_LETTERS = Object.freeze(['M', 'T', 'W', 'T', 'F', 'S', 'S']);
 export const WEEKDAY_SHORT = Object.freeze(WEEKDAYS);
+
+// Six bright colours of the bright look (spec of 2026-10-03, section 4): orange, yellow, green,
+// blue, violet and pink. The themes take them in turn, and the confetti uses them too.
+export const THEME_COLORS = Object.freeze(['#ff6b35', '#ffb703', '#38b000', '#3a86ff', '#8338ec', '#ff006e']);
