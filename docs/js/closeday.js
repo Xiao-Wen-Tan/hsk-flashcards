@@ -26,7 +26,10 @@ export async function dayStatus({ store, data, day, settings, progress, events }
 export async function closeDay({ store, data, day, settings, now = new Date(), perfectSession = false }) {
   const amounts = settings ?? normalizeSettings(await store.getMeta('settings'));
   const progress = await store.allProgress();
-  const { left, speak, done } = await dayStatus({ store, data, day, settings: amounts, progress });
+  // Every event is read once. The check-in event written below does not change the badge
+  // numbers, which count answers and speak events and take check-ins from `days`.
+  const events = await store.allEvents();
+  const { left, speak, done } = await dayStatus({ store, data, day, settings: amounts, progress, events });
   const days = await store.allDays();
   let checkedIn = days.some((d) => d.day === day);
   let justCheckedIn = false;
@@ -38,7 +41,7 @@ export async function closeDay({ store, data, day, settings, now = new Date(), p
     justCheckedIn = true;
   }
   const rewound = (await store.getMeta('rewound')) ?? [];
-  const facts = badgeFacts({ data, progress, days, events: await store.allEvents(), rewound, perfectSession });
+  const facts = badgeFacts({ data, progress, days, events, rewound, perfectSession });
   const earned = (await store.getMeta('badges')) ?? {};
   const fresh = newBadges(facts, earned);
   if (fresh.length) {
