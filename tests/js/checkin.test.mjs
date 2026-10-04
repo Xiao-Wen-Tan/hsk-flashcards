@@ -59,3 +59,11 @@ test('rewound days neither count nor break a streak', () => {
   assert.equal(isRewound('2026-10-05', rewound), false);
   assert.equal(isRewound('2026-10-03'), false);
 });
+
+test('a rewound range that is not two study days is ignored', () => {
+  // ['', '2026-10-04'] would make every earlier day rewound, and the streak would never stop.
+  assert.equal(isRewound('2026-10-02', [['', '2026-10-04']]), false);
+  assert.equal(isRewound('2026-10-02', [null, ['2026-10-02']]), false);
+  assert.equal(currentStreak(['2026-10-01', '2026-10-02'], '2026-10-05', [['', '2026-10-04']]), 0);
+  assert.equal(currentStreak(['2026-10-01', '2026-10-02'], '2026-10-05', [['2026-10-03', '2026-10-04']]), 2);
+});

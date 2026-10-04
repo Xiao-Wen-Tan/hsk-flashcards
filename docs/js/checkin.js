@@ -1,11 +1,13 @@
 // Check-in streaks and calendars. `checked` is a list of checked-in study days ('YYYY-MM-DD').
-import { addDays, dayRange, daysBetween, mondayOf } from './dates.js';
+import { addDays, dayRange, daysBetween, isDay, mondayOf } from './dates.js';
 
 // `rewound` is the list of day ranges the learner went back over (meta 'rewound', written by
 // rewind.js), such as [['2026-10-03', '2026-10-04']]. A rewound day neither counts in a streak
 // nor breaks it, so after going back to a day the streak is what it was at the end of that day.
+// A range that is not two study days (for example ['', '2026-10-04'] from a hand-edited Sheet)
+// is ignored, as it would otherwise make every earlier day rewound.
 export function isRewound(day, rewound = []) {
-  return rewound.some(([from, to]) => day >= from && day <= to);
+  return rewound.some((r) => Array.isArray(r) && isDay(r[0]) && isDay(r[1]) && day >= r[0] && day <= r[1]);
 }
 
 // Days in a row with a check-in, ending today. Before today's check-in the streak still
