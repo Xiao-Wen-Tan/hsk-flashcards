@@ -29,15 +29,24 @@ test('one day\'s numbers come from its live answers', () => {
   const s = dayStats(tuesday(), '2026-10-06');
   // The minutes are 20 s + 40 s + 60 s, plus 38 minutes counted as 5, which is 420 s or 7 minutes.
   // The answer taken back by Undo, the undo itself and the check-in are not answers.
-  assert.deepEqual(s, { day: '2026-10-06', newWords: 1, reviews: 2, answers: 5, right: 4, accuracy: 80, minutes: 7 });
+  assert.deepEqual(s, { day: '2026-10-06', newWords: 1, reviews: 2, answers: 5, right: 4, accuracy: 80, spoken: 0, minutes: 7 });
   assert.deepEqual(dayStats(tuesday(), '2026-10-07'),
-    { day: '2026-10-07', newWords: 0, reviews: 0, answers: 0, right: 0, accuracy: null, minutes: 0 });
+    { day: '2026-10-07', newWords: 0, reviews: 0, answers: 0, right: 0, accuracy: null, spoken: 0, minutes: 0 });
 });
 
-test('today\'s ring is the share of the planned work that is done', () => {
+test('today\'s ring is the share of the day\'s studying and speaking that is done', () => {
+  // 2 reviews studied and spoken, and 2 reviews and 4 new words left to study and then to speak.
   const plan = { reviews: ['a', 'b'], newWords: ['c', 'd', 'e', 'f'], reviewsDone: 2, newDone: 0 };
-  const c = todayCounters({ events: tuesday(), plan, day: '2026-10-06' });
-  assert.deepEqual([c.done, c.left, c.ring, c.accuracy, c.minutes], [2, 6, 0.25, 80, 7]);
+  const speak = { list: ['x', 'y'], done: ['x', 'y'], left: [] };
+  const c = todayCounters({ events: tuesday(), plan, day: '2026-10-06', speak });
+  assert.deepEqual([c.done, c.left, c.ring, c.accuracy, c.minutes], [4, 12, 0.25, 80, 7]);
+  // With the studying done and 6 words still to speak, the ring is half full.
+  const studied = { reviews: [], newWords: [], reviewsDone: 6, newDone: 0 };
+  const six = ['a', 'b', 'c', 'd', 'e', 'f'];
+  assert.equal(todayCounters({ events: [], plan: studied, day: '2026-10-06', speak: { list: six, done: [], left: six } }).ring, 0.5);
+  // A review skipped yesterday is on the speaking list already, so it counts once to study and once to speak.
+  const carried = todayCounters({ events: [], plan: { ...plan, reviewsDone: 0 }, day: '2026-10-06', speak: { list: ['a'], done: [], left: ['a'] } });
+  assert.equal(carried.left, 6 + 1 + 5);
   const empty = { reviews: [], newWords: [], reviewsDone: 0, newDone: 0 };
   assert.equal(todayCounters({ events: [], plan: empty, day: '2026-10-06' }).ring, 1);
 });
@@ -58,8 +67,8 @@ test('week and month totals add words, reviews, study days and minutes', () => {
   ];
   // 5 October has a check-in but no answers (nothing was due), so it is a study day too.
   const checked = ['2026-10-04', '2026-10-05', '2026-10-06'];
-  assert.deepEqual(periodTotals(events, checked, '2026-10-05', '2026-10-11'), { newWords: 1, reviews: 2, studyDays: 2, minutes: 7 });
-  assert.deepEqual(periodTotals(events, checked, '2026-10-01', '2026-10-31'), { newWords: 3, reviews: 2, studyDays: 3, minutes: 8 });
+  assert.deepEqual(periodTotals(events, checked, '2026-10-05', '2026-10-11'), { newWords: 1, reviews: 2, spoken: 0, studyDays: 2, minutes: 7 });
+  assert.deepEqual(periodTotals(events, checked, '2026-10-01', '2026-10-31'), { newWords: 3, reviews: 2, spoken: 0, studyDays: 3, minutes: 8 });
 });
 
 test('bars give each of the last days its words and reviews, scaled to the busiest day', () => {
@@ -118,4 +127,20 @@ test('personal bests compare today with earlier days', () => {
   // A week starts on Monday, so on Monday 12 October last week's days do not count for accuracy.
   const nextMonday = [...events, ans('2026-10-12', '19:00:00', 'review', 'wrong'), ans('2026-10-12', '19:00:30', 'review', 'right')];
   assert.deepEqual(personalBests({ events: nextMonday, today: '2026-10-12' }), []);
+});
+
+test('speaking counts in the minutes and as words spoken, but not in the accuracy', () => {
+  // On Tuesday the learner also spoke three words after the answers, two of them well and one skipped.
+  const spoke = (time, result) => other('2026-10-06', time, 'speak', { id: 'w0001', result, tries: 1, check: { tones: 1, heard: null } });
+  const events = [...tuesday(), spoke('19:41:00', 'pass'), spoke('19:41:30', 'skip'), spoke('19:42:00', 'listened')];
+  // The 420 seconds of the answers plus the 2 minutes from 19:40:00 to 19:42:00 make 9 minutes.
+  assert.deepEqual(dayStats(events, '2026-10-06'),
+    { day: '2026-10-06', newWords: 1, reviews: 2, answers: 5, right: 4, accuracy: 80, spoken: 2, minutes: 9 });
+  // A day with speaking only is a study day, with no accuracy, and it is not a perfect day.
+  const only = [spoke('19:00:00', 'pass')].map((e) => ({ ...e, day: '2026-10-07', ts: '2026-10-07T19:00:00Z' }));
+  assert.deepEqual(dayStats(only, '2026-10-07'),
+    { day: '2026-10-07', newWords: 0, reviews: 0, answers: 0, right: 0, accuracy: null, spoken: 1, minutes: 0 });
+  assert.deepEqual(perfectDays(only, ['2026-10-07']), []);
+  assert.equal(periodTotals([...events, ...only], [], '2026-10-05', '2026-10-11').studyDays, 2);
+  assert.deepEqual(personalBests({ events: [...events, ...only], today: '2026-10-07' }), []);
 });

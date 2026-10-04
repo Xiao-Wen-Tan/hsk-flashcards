@@ -113,7 +113,7 @@ test('rows are readable, with the saved record as JSON in the last column', () =
     [9, '2026-10-06', 'T', 'undo', apple.id, '苹果', '', '', 'took back answer 8']);
 });
 
-test('a Daily row counts the live reviews, and minutes from the day\'s answers only', () => {
+test('a Daily row counts the live reviews, and minutes from the day\'s answers, not its check-in', () => {
   const events = [
     { seq: 1, day: '2026-10-06', kind: 'review', grade: 'right', ts: '2026-10-06T19:00:00Z' },
     { seq: 2, day: '2026-10-06', kind: 'review', grade: 'wrong', ts: '2026-10-06T19:00:30Z' },
@@ -326,4 +326,17 @@ test('after "Reset everything" the Sheet is replaced by the empty progress', asy
   assert.equal(state.problem, null);
   assert.deepEqual(sheet.ss.rowsOf('Log').map((r) => r[3]), ['reset everything']);
   assert.deepEqual([sheet.ss.rowsOf('Progress').length, sheet.ss.rowsOf('Daily').map((r) => r.slice(0, 2))], [0, [['2026-10-06', 'no']]]);
+});
+
+test('the log names a spoken word with its result, and the Daily minutes include speaking', () => {
+  const apple = word(data, '苹果');
+  const spoke = { seq: 12, day: '2026-10-06', kind: 'speak', id: apple.id, result: 'pass', tries: 2, check: { tones: 1, heard: '苹果' }, ts: 'T' };
+  assert.deepEqual(logRow(spoke, apple).slice(0, 9), [12, '2026-10-06', 'T', 'spoke', apple.id, '苹果', '', '', 'pass']);
+  const events = [
+    { seq: 1, day: '2026-10-06', kind: 'review', grade: 'right', ts: '2026-10-06T19:00:00Z' },
+    { seq: 2, day: '2026-10-06', kind: 'review', grade: 'right', ts: '2026-10-06T19:01:00Z' },
+    { seq: 3, day: '2026-10-06', kind: 'speak', id: apple.id, result: 'pass', ts: '2026-10-06T19:03:00Z' },
+  ];
+  // The answers span 1 minute and the speaking 2 more, as the app's own minutes count them.
+  assert.deepEqual(dailyRow('2026-10-06', events, undefined), ['2026-10-06', 'no', 2, 1, 0, 3, '']);
 });

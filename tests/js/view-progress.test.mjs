@@ -86,8 +86,8 @@ test('stats show this week and month, the all-time records, the levels and the g
   const v = statsView({ data, progressList, events, checkedDays: ['2026-10-12', '2026-10-19'], today: TODAY, goals });
   const tiles = (p) => [p.title, p.numbers.map((n) => `${n.value} ${n.label}`)];
   assert.deepEqual(v.periods.map(tiles), [
-    ['This week', ['1 words learned', '2 reviews', '2 study days', '2 minutes']],
-    ['October 2026', ['2 words learned', '2 reviews', '3 study days', '2 minutes']],
+    ['This week', ['1 words learned', '2 reviews', '0 words spoken', '2 study days', '2 minutes']],
+    ['October 2026', ['2 words learned', '2 reviews', '0 words spoken', '3 study days', '2 minutes']],
   ]);
   assert.deepEqual(v.bars7.map((r) => r.label), ['W', 'T', 'F', 'S', 'S', 'M', 'T']);
   assert.deepEqual(v.bars7.slice(-2).map((r) => [r.day, r.newWords, r.reviews, r.checkedIn, r.height]),

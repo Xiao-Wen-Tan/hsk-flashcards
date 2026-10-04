@@ -69,11 +69,13 @@ export function wordBackHref(word, groupId) {
 
 const grouped = (n) => Number(n).toLocaleString('en-US'); // 1234 gives '1,234'
 
-// The four numbers of a week or month as tiles.
+// The five numbers of a week or month as tiles. "words spoken" counts the words finished in
+// speaking practice that were not skipped (speaking practice spec, section 6).
 function periodTiles(t) {
   return [
     { label: 'words learned', value: grouped(t.newWords) },
     { label: 'reviews', value: grouped(t.reviews) },
+    { label: 'words spoken', value: grouped(t.spoken) },
     { label: 'study days', value: grouped(t.studyDays) },
     { label: 'minutes', value: grouped(Math.round(t.minutes)) },
   ];

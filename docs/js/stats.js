@@ -19,6 +19,13 @@ export function answerEvents(events) {
   return liveEvents(events).filter((e) => ANSWER_KINDS.includes(e.kind));
 }
 
+// The events whose times count as study time, which are the quiz answers and the speak events of
+// the speaking panel (one per finished word). Minutes studied follow their times, so they include
+// speaking, while accuracy follows the quiz answers alone (speaking practice spec, section 6).
+export function timedEvents(events) {
+  return [...answerEvents(events), ...events.filter((e) => e.kind === 'speak')];
+}
+
 // The minutes studied add up the gaps between the times of `events`, each gap counted as at
 // most 5 minutes, so a break does not count. The caller picks the events, for example one
 // day's answers. Answers at 19:00:00, 19:00:20 and 19:40:00 give 20 s + 5 min = 5.3 minutes.

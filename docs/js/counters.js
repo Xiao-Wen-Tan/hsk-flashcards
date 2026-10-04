@@ -1,11 +1,13 @@
 // Counters for Today, the check-in screen and Stats (spec of 2026-10-03, section 2). All of them
-// come from the answers and check-ins the app already saves. Pure functions, so Node tests them.
+// come from the answers, speak events and check-ins the app saves. Pure functions, so Node tests them.
 //   events       saved events (store.allEvents() or store.eventsFrom(day)), with Undo still in them
 //   checkedDays  the checked-in study days, such as ['2026-10-05', '2026-10-06']
 // Definitions:
 //   accuracy   the share of a day's quiz answers that were right (right or Know it), a whole percent
-//   minutes    the gaps between a day's answers, each at most 5 minutes (minutesOf in stats.js)
-//   study day  a day with any answer or a check-in
+//   minutes    the gaps between a day's answers and speak events, each at most 5 minutes
+//              (minutesOf and timedEvents in stats.js)
+//   spoken     the words finished in speaking practice that were spoken, not skipped
+//   study day  a day with any answer, speak event or check-in
 //   perfect    a checked-in day with at least one answer, every one of them right
 //   week       Monday to Sunday;  month  the calendar month
 import { addDays, dayRange, mondayOf } from './dates.js';
@@ -13,20 +15,23 @@ import { PASS } from './srs.js';
 import { answerEvents, minutesOf, totals } from './stats.js';
 import { bestStreak } from './checkin.js';
 
-const emptyDay = (day) => ({ day, newWords: 0, reviews: 0, answers: 0, right: 0, accuracy: null, minutes: 0 });
+const emptyDay = (day) => ({ day, newWords: 0, reviews: 0, answers: 0, right: 0, accuracy: null, spoken: 0, minutes: 0 });
 const round1 = (n) => Math.round(n * 10) / 10;
 const sum = (rows, key) => rows.reduce((total, r) => total + r[key], 0);
 
 // Each day's numbers, worked out in one pass, as a Map from day to
-// { day, newWords, reviews, answers, right, accuracy, minutes }. Days without answers are absent.
+// { day, newWords, reviews, answers, right, accuracy, spoken, minutes }. Days without answers
+// and speak events are absent. A day with speak events only has accuracy null.
 export function statsByDay(events) {
   const byDay = new Map();
-  for (const e of answerEvents(events)) {
-    if (!byDay.has(e.day)) byDay.set(e.day, []);
-    byDay.get(e.day).push(e);
-  }
+  const of = (day) => {
+    if (!byDay.has(day)) byDay.set(day, { answers: [], speaks: [] });
+    return byDay.get(day);
+  };
+  for (const e of answerEvents(events)) of(e.day).answers.push(e);
+  for (const e of events) if (e.kind === 'speak') of(e.day).speaks.push(e);
   const out = new Map();
-  for (const [day, answers] of byDay) {
+  for (const [day, { answers, speaks }] of byDay) {
     const right = answers.filter((e) => PASS.has(e.grade)).length;
     out.set(day, {
       day,
@@ -34,8 +39,9 @@ export function statsByDay(events) {
       reviews: answers.filter((e) => e.kind === 'review').length,
       answers: answers.length,
       right,
-      accuracy: Math.round((100 * right) / answers.length),
-      minutes: minutesOf(answers),
+      accuracy: answers.length ? Math.round((100 * right) / answers.length) : null,
+      spoken: speaks.filter((e) => e.result !== 'skip').length,
+      minutes: minutesOf([...answers, ...speaks]),
     });
   }
   return out;
@@ -46,12 +52,18 @@ export function dayStats(events, day) {
   return statsByDay(events.filter((e) => e.day === day)).get(day) ?? emptyDay(day);
 }
 
-// Today's numbers and the ring of the Today screen. plan is planDay's result for today. The ring
-// is the share of today's planned work that is done. For example, 2 reviews done and 6 reviews and
-// new words left give 2 / 8 = 0.25. With nothing planned at all the ring is full.
-export function todayCounters({ events, plan, day }) {
-  const done = plan.reviewsDone + plan.newDone;
-  const left = plan.reviews.length + plan.newWords.length;
+// Today's numbers and the ring of the Today screen. plan is planDay's result for today and speak
+// the speaking list's status (speakStatus in speaklist.js). The ring is the share of today's work
+// that is done, where the work is every planned word to study and every word to speak. A word
+// still to study will also be spoken, so it counts twice, unless it is on the speaking list
+// already (skipped on an earlier day). For example, with 2 reviews studied and spoken, and 2
+// reviews and 4 new words left, 4 of 16 are done and the ring is 0.25. With nothing to do at all
+// the ring is full.
+export function todayCounters({ events, plan, day, speak = { list: [], done: [], left: [] } }) {
+  const toStudy = [...plan.reviews, ...plan.newWords];
+  const listed = new Set(speak.list);
+  const done = plan.reviewsDone + plan.newDone + speak.done.length;
+  const left = toStudy.length + speak.left.length + toStudy.filter((id) => !listed.has(id)).length;
   return { ...dayStats(events, day), done, left, ring: left === 0 ? 1 : done / (done + left) };
 }
 
@@ -73,7 +85,7 @@ function studyDays(byDay, checkedDays, inRange = () => true) {
   return new Set([...byDay.keys(), ...checkedDays].filter(inRange)).size;
 }
 
-// Totals from `from` to `to`, both included, as { newWords, reviews, studyDays, minutes }.
+// Totals from `from` to `to`, both included, as { newWords, reviews, spoken, studyDays, minutes }.
 export function periodTotals(events, checkedDays, from, to) {
   const inRange = (day) => day >= from && day <= to;
   const byDay = statsByDay(events.filter((e) => inRange(e.day)));
@@ -81,6 +93,7 @@ export function periodTotals(events, checkedDays, from, to) {
   return {
     newWords: sum(days, 'newWords'),
     reviews: sum(days, 'reviews'),
+    spoken: sum(days, 'spoken'),
     studyDays: studyDays(byDay, checkedDays, inRange),
     minutes: round1(sum(days, 'minutes')),
   };
@@ -103,7 +116,7 @@ export function bars(events, checkedDays, today, n) {
 function perfectOf(byDay, checkedDays) {
   return [...new Set(checkedDays)].sort().filter((day) => {
     const s = byDay.get(day);
-    return Boolean(s) && s.right === s.answers;
+    return Boolean(s) && s.answers > 0 && s.right === s.answers;
   });
 }
 
@@ -147,7 +160,7 @@ export function personalBests({ events, today }) {
   const out = [];
   if (now.newWords > 0 && beats(earlier, 'newWords')) out.push('Most words in a day!');
   if (now.reviews > 0 && beats(earlier, 'reviews')) out.push('Most reviews in a day!');
-  if (beats(week, 'accuracy')) out.push('Best accuracy this week!');
+  if (now.accuracy !== null && beats(week.filter((d) => d.accuracy !== null), 'accuracy')) out.push('Best accuracy this week!');
   if (now.minutes > 0 && beats(week, 'minutes')) out.push('Most minutes this week!');
   return out;
 }

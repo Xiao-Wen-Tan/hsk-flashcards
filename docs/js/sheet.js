@@ -11,7 +11,7 @@
 // The web app address and the secret code are kept only in this browser (localStorage).
 // They never go into the backup file, the Sheet or the repository.
 import { isLearned, isMastered } from './srs.js';
-import { answerEvents, minutesOf } from './stats.js';
+import { answerEvents, minutesOf, timedEvents } from './stats.js';
 import { bestStreak, currentStreak } from './checkin.js';
 import { studyDay } from './dates.js';
 
@@ -34,7 +34,7 @@ export const HEADERS = Object.freeze({
 const KIND_TEXT = {
   review: 'review', reask: 'asked again', learn: 'learning card', check: 'group check',
   final: 'final check', undo: 'undo', checkin: 'check-in', badges: 'badges', settings: 'settings',
-  rewind: 'went back to a day', reset: 'reset everything',
+  rewind: 'went back to a day', reset: 'reset everything', speak: 'spoke',
 };
 const GRADE_TEXT = { right: 'right', wrong: 'wrong', know: 'Know it', unsure: 'Unsure', dontknow: "Don't know" };
 const QUIZ_TEXT = { listen: 'listen, pick meaning', pinyin: 'meaning, pick pinyin', recall: 'recall' };
@@ -129,12 +129,14 @@ export function logRow(e, word) {
   if (e.kind === 'undo') result = `took back answer ${e.target}`;
   if (e.kind === 'badges') result = (e.badges ?? []).join(', ');
   if (e.kind === 'rewind') result = `back to ${e.to}`;
+  if (e.kind === 'speak') result = e.result;
   return [e.seq, e.day, e.ts ?? '', KIND_TEXT[e.kind] ?? e.kind, e.id ?? '', word?.hz ?? '', QUIZ_TEXT[e.quiz] ?? '',
     GRADE_TEXT[e.grade] ?? '', result, JSON.stringify(e)];
 }
 
 // One row per study day. dayRecord is the saved check-in record of that day, or undefined.
-// Minutes are those of the day's answers (minutesOf in stats.js, the same as the app's counters).
+// Minutes are those of the day's answers and speak events (minutesOf and timedEvents in stats.js,
+// the same as the app's counters).
 // ['2026-10-06', 'yes', 12, 0.917, 12, 21.5, '{"day":"2026-10-06",...}']
 export function dailyRow(day, events, dayRecord) {
   const answers = answerEvents(events.filter((e) => e.day === day));
@@ -142,7 +144,7 @@ export function dailyRow(day, events, dayRecord) {
   const right = reviews.filter((e) => e.grade === 'right' || e.grade === 'know').length;
   const learned = answers.filter((e) => e.outcome === 'learned').length;
   return [day, dayRecord ? 'yes' : 'no', reviews.length, reviews.length ? Math.round((right / reviews.length) * 1000) / 1000 : '',
-    learned, minutesOf(answers), dayRecord ? JSON.stringify(dayRecord) : ''];
+    learned, minutesOf(timedEvents(events.filter((e) => e.day === day))), dayRecord ? JSON.stringify(dayRecord) : ''];
 }
 
 // The numbers the Dashboard shows at the top. rewound is the meta 'rewound' list of day ranges,
