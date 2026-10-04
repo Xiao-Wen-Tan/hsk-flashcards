@@ -13,12 +13,19 @@ test('config cannot be changed at run time', () => {
 });
 
 test('missing settings get the defaults', () => {
-  assert.deepEqual(normalizeSettings(undefined), { reviewCap: 100, newPerDay: 12 });
-  assert.deepEqual(normalizeSettings(null), { reviewCap: 100, newPerDay: 12 });
+  assert.deepEqual(normalizeSettings(undefined), { reviewCap: 100, newPerDay: 12, speakStrictness: 'normal' });
+  assert.deepEqual(normalizeSettings(null), { reviewCap: 100, newPerDay: 12, speakStrictness: 'normal' });
 });
 
 test('settings are kept inside their ranges and other keys survive', () => {
   assert.deepEqual(normalizeSettings({ newPerDay: 50, reviewCap: 5, autoplay: false }),
-    { newPerDay: 30, reviewCap: 20, autoplay: false });
-  assert.deepEqual(normalizeSettings({ newPerDay: '8', reviewCap: 'abc' }), { newPerDay: 8, reviewCap: 100 });
+    { newPerDay: 30, reviewCap: 20, autoplay: false, speakStrictness: 'normal' });
+  assert.deepEqual(normalizeSettings({ newPerDay: '8', reviewCap: 'abc' }), { newPerDay: 8, reviewCap: 100, speakStrictness: 'normal' });
+});
+
+test('the speaking check is gentle, normal or strict, and normal by default', () => {
+  assert.equal(normalizeSettings({ speakStrictness: 'gentle' }).speakStrictness, 'gentle');
+  assert.equal(normalizeSettings({ speakStrictness: 'strict' }).speakStrictness, 'strict');
+  assert.equal(normalizeSettings({ speakStrictness: 'very' }).speakStrictness, 'normal');
+  assert.deepEqual(Object.keys(CONFIG.speak.strictness), ['gentle', 'normal', 'strict']);
 });

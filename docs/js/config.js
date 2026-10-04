@@ -40,6 +40,21 @@ export const CONFIG = Object.freeze({
 
   statsDays: Object.freeze({ forecast: 7, accuracy: 7 }),
 
+  // The tone check of the speaking panel (tones.js, speaking practice spec of 2026-10-03).
+  speak: Object.freeze({
+    levelWeight: 0.5, // how much a syllable's height counts next to its shape
+    voiceKeep: 0.98, // older recordings count this much less with each new one
+    voiceRecordings: 5, // recordings needed before the height of the learner's voice is trusted
+    // The learner setting "Speaking check". margin is how much farther the expected tone may be
+    // than the nearest tone (toneScores), and share is the part of the judged syllables of a
+    // word that must be right.
+    strictness: Object.freeze({
+      gentle: Object.freeze({ margin: 0.04, share: 0.6 }),
+      normal: Object.freeze({ margin: 0.02, share: 1 }),
+      strict: Object.freeze({ margin: 0, share: 1 }),
+    }),
+  }),
+
   // Rough seconds per card, used only to print an estimated daily time in the simulation test.
   secondsPerCard: Object.freeze({ review: 8, reask: 6, learn: 20, check: 8, final: 8 }),
 });
@@ -50,13 +65,18 @@ function clampInt(value, min, max, fallback) {
   return Math.min(max, Math.max(min, Math.round(n)));
 }
 
+// How strictly the speaking panel checks the tones (learner setting, CONFIG.speak.strictness).
+export const STRICTNESS = Object.freeze(['gentle', 'normal', 'strict']);
+
 // Fill in missing learner settings and keep them inside their allowed range.
-// For example, normalizeSettings({ newPerDay: 50 }) gives { reviewCap: 100, newPerDay: 30 }.
+// For example, normalizeSettings({ newPerDay: 50 }) gives
+// { reviewCap: 100, newPerDay: 30, speakStrictness: 'normal' }.
 export function normalizeSettings(raw = {}) {
   const s = raw ?? {};
   return {
     ...s,
     reviewCap: clampInt(s.reviewCap, CONFIG.reviewCapMin, CONFIG.reviewCapMax, CONFIG.reviewCap),
     newPerDay: clampInt(s.newPerDay, CONFIG.newPerDayMin, CONFIG.newPerDayMax, CONFIG.newPerDay),
+    speakStrictness: STRICTNESS.includes(s.speakStrictness) ? s.speakStrictness : 'normal',
   };
 }

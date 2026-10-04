@@ -1,7 +1,8 @@
 // The Settings form and the backup file. No page access, so Node can test it.
-import { CONFIG, normalizeSettings } from '../config.js';
+import { CONFIG, STRICTNESS, normalizeSettings } from '../config.js';
 
-// Values for the form. Auto-play is on unless the learner turned it off.
+// Values for the form. Auto-play is on unless the learner turned it off. strictness lists the
+// choices of "Speaking check" (the speaking panel's tone check, CONFIG.speak.strictness).
 export function settingsView(saved) {
   const s = normalizeSettings(saved);
   return {
@@ -10,6 +11,8 @@ export function settingsView(saved) {
     autoplay: s.autoplay !== false,
     newRange: [CONFIG.newPerDayMin, CONFIG.newPerDayMax],
     capRange: [CONFIG.reviewCapMin, CONFIG.reviewCapMax],
+    speakStrictness: s.speakStrictness,
+    strictness: STRICTNESS.map((value) => ({ value, label: value[0].toUpperCase() + value.slice(1) })),
   };
 }
 
@@ -19,6 +22,7 @@ export function settingsView(saved) {
 export function settingsFromForm(form, saved = {}) {
   return normalizeSettings({
     ...saved, newPerDay: form.newPerDay, reviewCap: form.reviewCap, autoplay: Boolean(form.autoplay),
+    speakStrictness: form.speakStrictness ?? saved.speakStrictness,
   });
 }
 

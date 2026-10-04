@@ -46,10 +46,14 @@ test('a screen drawn on an earlier study day is drawn again when the app comes b
 });
 
 test('settings have defaults, ranges and auto-play on', () => {
-  assert.deepEqual(settingsView(undefined), { newPerDay: 12, reviewCap: 100, autoplay: true, newRange: [4, 30], capRange: [20, 300] });
+  assert.deepEqual(settingsView(undefined), {
+    newPerDay: 12, reviewCap: 100, autoplay: true, newRange: [4, 30], capRange: [20, 300], speakStrictness: 'normal',
+    strictness: [{ value: 'gentle', label: 'Gentle' }, { value: 'normal', label: 'Normal' }, { value: 'strict', label: 'Strict' }],
+  });
   assert.equal(settingsView({ autoplay: false }).autoplay, false);
   assert.deepEqual(settingsFromForm({ newPerDay: '50', reviewCap: '80', autoplay: false }, { other: 1 }),
-    { other: 1, newPerDay: 30, reviewCap: 80, autoplay: false });
+    { other: 1, newPerDay: 30, reviewCap: 80, autoplay: false, speakStrictness: 'normal' });
+  assert.equal(settingsFromForm({ newPerDay: '12', reviewCap: '100', autoplay: true, speakStrictness: 'gentle' }).speakStrictness, 'gentle');
 });
 
 test('a backup file round-trips through the store', async () => {
