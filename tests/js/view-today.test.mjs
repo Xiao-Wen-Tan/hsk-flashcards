@@ -66,3 +66,17 @@ test('the streak runs across rewound days', () => {
   const v = todayView({ plan: plan({}), checkedDays: ['2026-10-04'], today: TODAY, settings: SETTINGS, rewound: [['2026-10-05', '2026-10-06']] });
   assert.equal(v.streak, 1);
 });
+
+test('the speaking button sits under Start, and Today waits for the speaking before the check-in', () => {
+  const speak = { list: ids(18), done: [], left: ids(18) };
+  const v = todayView({ plan: plan({ reviewsDone: 6, newDone: 12 }), checkedDays: [], today: TODAY, settings: SETTINGS, speak });
+  assert.deepEqual(v.speak, { label: 'Speaking practice', count: '18 words to speak', enabled: true });
+  assert.equal(v.status, 'Learning done. Speaking practice is left before today\'s check-in.');
+  assert.equal(v.canStart, false);
+  // Before any learning, the list holds only the words carried over from earlier days.
+  const morning = todayView({ plan: plan({ reviews: ids(20), newWords: ids(12) }), checkedDays: [], today: TODAY, settings: SETTINGS, speak: { list: ['x'], done: [], left: ['x'] } });
+  assert.deepEqual([morning.status, morning.canStart, morning.speak.count], ['20 reviews and 12 new words today.', true, '1 word to speak']);
+  // Spoken and checked in, the day is done.
+  const done = todayView({ plan: plan({ reviewsDone: 6 }), checkedDays: [TODAY], today: TODAY, settings: SETTINGS, speak: { list: ['x'], done: ['x'], left: [] } });
+  assert.deepEqual([done.status, done.canStart, done.speak.enabled], ['Done for today. See you tomorrow!', false, false]);
+});

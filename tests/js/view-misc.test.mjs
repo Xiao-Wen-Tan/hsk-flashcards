@@ -19,6 +19,7 @@ test('addresses name the screens', () => {
   assert.deepEqual(parseRoute('#/word/w0026'), { name: 'word', id: 'w0026' });
   assert.deepEqual(parseRoute('#/nonsense'), { name: 'today' });
   assert.deepEqual(parseRoute('#/rewind'), { name: 'rewind' }); // "Go back to a day", opened from Settings
+  assert.deepEqual(parseRoute('#/speak'), { name: 'speak' }); // the speaking panel, opened from Today
   assert.deepEqual(parseRoute('#/theme'), { name: 'today' });
   // A map tile opens one level group's words of a theme, for example the HSK 3 words of t05.
   assert.deepEqual(parseRoute('#/theme/t05/3'), { name: 'theme', id: 't05', group: '3' });
@@ -42,6 +43,7 @@ test('a screen drawn on an earlier study day is drawn again when the app comes b
   assert.equal(needsRedraw({ drawnDay, today: '2026-10-06', route: { name: 'map' } }), true);
   // A running session keeps the day it started on, and Settings keeps what is being typed.
   assert.equal(needsRedraw({ drawnDay, today: '2026-10-06', route: { name: 'session' } }), false);
+  assert.equal(needsRedraw({ drawnDay, today: '2026-10-06', route: { name: 'speak' } }), false);
   assert.equal(needsRedraw({ drawnDay, today: '2026-10-06', route: { name: 'settings' } }), false);
 });
 

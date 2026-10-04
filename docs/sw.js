@@ -71,6 +71,7 @@ const APP_FILES = [
   'js/view/rewind.js',
   'js/view/route.js',
   'js/view/settings.js',
+  'js/view/speak.js',
   'js/view/today.js',
   'vendor/hanzi-writer-3.7.3.esm.js',
 ];

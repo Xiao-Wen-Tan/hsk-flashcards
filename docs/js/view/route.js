@@ -9,7 +9,10 @@ export const NAV = Object.freeze([
   { name: 'settings', label: 'Settings' },
 ]);
 
-const SIMPLE = new Set(['today', 'session', 'checkin', 'map', 'stats', 'badges', 'settings', 'rewind']);
+const SIMPLE = new Set(['today', 'session', 'checkin', 'map', 'stats', 'badges', 'settings', 'rewind', 'speak']);
+
+// The study session and the speaking panel are full screens without the bottom bar.
+export const FULL_SCREEN = Object.freeze(['session', 'speak']);
 
 // parseRoute('#/word/w0026') gives { name: 'word', id: 'w0026' }, and parseRoute('#/theme/t05/3')
 // gives { name: 'theme', id: 't05', group: '3' }. A word opened from a group's list keeps the
@@ -30,8 +33,8 @@ export function hrefOf(route) {
 
 // When the app comes back from the background, a screen drawn on an earlier study day is out
 // of date (Today drawn on 5 October would still say "Done for today" on 6 October), so it is
-// drawn again. A running session keeps the day it started on, and Settings is left alone so
-// nothing being typed there is lost.
+// drawn again. A running session or speaking panel keeps the day it started on, and Settings is
+// left alone so nothing being typed there is lost.
 export function needsRedraw({ drawnDay, today, route }) {
-  return route.name !== 'session' && route.name !== 'settings' && drawnDay !== today;
+  return !FULL_SCREEN.includes(route.name) && route.name !== 'settings' && drawnDay !== today;
 }

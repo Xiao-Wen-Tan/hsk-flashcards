@@ -159,3 +159,20 @@ test("the check-in screen shows the day's four numbers, the personal bests and c
   assert.equal(v.confetti, true);
   assert.equal(checkinView({ result: { ...result, justCheckedIn: false }, checkedDays: [TODAY], today: TODAY, themes: data.themes }).confetti, false);
 });
+
+test('after the learning, the check-in screen sends the learner on to speaking practice', () => {
+  const left = { reviews: [], newWords: [] };
+  const learned = {
+    day: TODAY, checkedIn: false, justCheckedIn: false, streak: 2, newBadges: [],
+    summary: { reviews: 0, firstRight: 0, learned: 12, failed: 0, perfect: false }, left, speak: { list: ['a', 'b'], done: [], left: ['a', 'b'] },
+  };
+  const v = checkinView({ result: learned, checkedDays: [], today: TODAY, themes: data.themes });
+  assert.equal(v.title, 'Learning done');
+  assert.deepEqual(v.lines, ['12 new words learned.', '2 words of speaking practice are left before today\'s check-in.']);
+  assert.deepEqual(v.next, { label: 'Next: speaking practice', href: '#/speak' });
+  // The speaking panel's result has the counts of its words instead of a session summary.
+  const spoken = { ...learned, checkedIn: true, justCheckedIn: true, summary: undefined, speak: { list: ['a', 'b'], done: ['a', 'b'], left: [] },
+    spoken: { pass: 1, listened: 0, skip: 1 } };
+  const w = checkinView({ result: spoken, checkedDays: [TODAY], today: TODAY, themes: data.themes });
+  assert.deepEqual([w.title, w.lines, w.next, w.confetti], ['Checked in!', ['1 said well and 1 skipped in speaking practice.'], null, true]);
+});

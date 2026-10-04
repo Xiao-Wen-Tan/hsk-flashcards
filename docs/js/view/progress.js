@@ -9,6 +9,7 @@ import { hrefOf } from './route.js';
 import { isLearned, isMastered } from '../srs.js';
 import { WEEKDAY_LETTERS, WEEKDAY_SHORT, monthTitle, percent, plural, themeColor } from './format.js';
 import { tilesOf } from './today.js';
+import { spokenLine } from './speak.js';
 
 const STATUS_LABEL = Object.freeze({ done: 'Done', current: 'Now', locked: 'Locked' });
 
@@ -152,10 +153,11 @@ export function calendarWeeks(checkedDays, month, today) {
   return weeks;
 }
 
-// The check-in screen. result is Study.finish()'s result, or null when the screen is
-// opened from the streak on the Today screen. counters is the day's numbers (counters.js
-// dayStats) and bests the personal-best notes (counters.js personalBests). confetti is true
-// right after the day was checked in.
+// The check-in screen. result is Study.finish()'s result, the speaking panel's (speaking.js
+// close(), with `spoken` instead of `summary`), or null when the screen is opened from the
+// streak on the Today screen. counters is the day's numbers (counters.js dayStats) and bests
+// the personal-best notes (counters.js personalBests). confetti is true right after the day was
+// checked in. next is the button to speaking practice while its list has words left.
 export function checkinView({ result, checkedDays, today, themes, counters = null, bests = [] }) {
   const month = today.slice(0, 7);
   const view = {
@@ -165,21 +167,29 @@ export function checkinView({ result, checkedDays, today, themes, counters = nul
     bests,
     badges: [],
     confetti: Boolean(result?.justCheckedIn),
+    next: null,
     streak: result ? result.streak : null,
     monthTitle: monthTitle(month),
     weeks: calendarWeeks(checkedDays, month, today),
   };
   if (!result) return view;
   const s = result.summary;
+  const studyLeft = result.left.reviews.length + result.left.newWords.length;
+  const speakLeft = result.speak?.left.length ?? 0;
   if (result.justCheckedIn) view.title = 'Checked in!';
   else if (result.checkedIn) view.title = 'Already checked in today';
+  else if (!studyLeft) view.title = 'Learning done';
   else view.title = 'Not checked in yet';
-  if (s.reviews) view.lines.push(`${plural(s.reviews, 'review')}, ${s.firstRight} right first time.`);
-  if (s.learned) view.lines.push(`${plural(s.learned, 'new word')} learned.`);
-  if (s.failed) view.lines.push(`${plural(s.failed, 'new word')} will come back next time.`);
-  if (!result.checkedIn) {
+  if (s?.reviews) view.lines.push(`${plural(s.reviews, 'review')}, ${s.firstRight} right first time.`);
+  if (s?.learned) view.lines.push(`${plural(s.learned, 'new word')} learned.`);
+  if (s?.failed) view.lines.push(`${plural(s.failed, 'new word')} will come back next time.`);
+  if (result.spoken && spokenLine(result.spoken)) view.lines.push(spokenLine(result.spoken));
+  if (!result.checkedIn && studyLeft) {
     view.lines.push(`Still left today: ${plural(result.left.reviews.length, 'review')} and ${plural(result.left.newWords.length, 'new word')}.`);
+  } else if (!result.checkedIn && speakLeft) {
+    view.lines.push(`${plural(speakLeft, 'word')} of speaking practice ${speakLeft === 1 ? 'is' : 'are'} left before today's check-in.`);
   }
+  if (speakLeft) view.next = { label: 'Next: speaking practice', href: '#/speak' };
   view.badges = result.newBadges.map((id) => badgeTitle(id, themes));
   return view;
 }
