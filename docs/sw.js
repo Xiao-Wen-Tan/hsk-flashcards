@@ -9,7 +9,7 @@
 // A new version waits until the learner taps "Update available, tap to reload", which
 // sends the message 'skipWaiting'.
 // RELEASE and WORDS_FILE repeat docs/js/release.js, and tests/js/release.test.mjs checks them.
-const RELEASE = 'r007';
+const RELEASE = 'r008';
 const WORDS_FILE = 'data/words_v002.json';
 const MEDIA_CACHE = 'media-v1';
 const APP_CACHE = `app-${RELEASE}`;

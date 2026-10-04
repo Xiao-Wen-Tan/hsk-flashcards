@@ -7,6 +7,10 @@
 //   node tests/browser/check.mjs offline   the same site with its server stopped
 //   node tests/browser/check.mjs update    after RELEASE was raised in the smoke copy
 //   node tests/browser/check.mjs sheet     the Google Sheet backup, against fake-sheet-server.mjs (after day)
+//   node tests/browser/check.mjs rewind    a second day with the clock one day ahead, then going back
+//                                          to the first day in Settings (after day and sheet)
+//   node tests/browser/check.mjs look      always light in dark mode, 48-pixel tap targets, theme
+//                                          colours, and no confetti or bounce with reduced motion
 // Each prints PASS or FAIL lines and exits with 1 when anything failed.
 const PORT = 9333;
 const SITE = 'http://localhost:8123/';
@@ -307,10 +311,161 @@ async function sheet() {
   await page.close();
 }
 
+// ---- Going back to a day (Plan 6) ----
+
+// The page's clock, one day ahead of the real one, installed before the app's own scripts run.
+const CLOCK_AHEAD = `(() => { const Real = Date; const shift = 86400000;
+  window.Date = class extends Real {
+    constructor(...a) { if (a.length) super(...a); else super(Real.now() + shift); }
+    static now() { return Real.now() + shift; }
+  }; })();`;
+
+// What the session shows now, as in day() above.
+const KIND = `(() => { const m = document.getElementById('main');
+  if (!m.querySelector('.session-top')) return 'wait';
+  if (m.querySelector('.banner')) return 'feedback';
+  if (m.querySelector('.choice')) return m.querySelector('.en') ? 'pinyin' : 'listen';
+  if ([...m.querySelectorAll('button')].some((b) => b.textContent === 'Reveal')) return 'recall';
+  if (m.querySelector('.grades')) return 'grades';
+  return m.querySelector('.card') ? 'learn' : 'other'; })()`;
+
+// Taps the right choice of a listening or pinyin question, found as in day() above.
+const TAP_RIGHT = `(async () => { const { WORDS_FILE } = await import(location.origin + '/js/release.js');
+  const data = await (await fetch(WORDS_FILE)).json();
+  const shown = document.querySelector('.big-hz');
+  const heard = __plays[__plays.length - 1];
+  const w = shown ? data.words.find((x) => x.hz === shown.textContent) : data.words.find((x) => '/audio/' + x.au === heard);
+  const want = document.querySelector('.en') ? w.py : w.enShort;
+  const b = [...document.querySelectorAll('.choice')].find((c) => c.textContent === want) ?? document.querySelector('.choice');
+  b.click(); })()`;
+
+// Answers every card of the running session right, until the session ends.
+async function answerAll(page) {
+  for (let i = 0; i < 400 && (await page.eval('location.hash')) === '#/session'; i += 1) {
+    const kind = await page.eval(KIND);
+    if (kind === 'listen' || kind === 'pinyin') await page.eval(TAP_RIGHT);
+    else if (kind === 'recall') await page.eval(CLICK('Reveal'));
+    else if (kind === 'grades') await page.eval("document.querySelector('.grades button').click()");
+    else if (kind === 'learn' || kind === 'feedback') await page.eval(CLICK('Next'));
+    await page.sleep(100);
+  }
+}
+
+// These read the saved store in the page, for the words learned on the page's study day and the
+// plan of today.
+const LEARNED_TODAY = `(async () => { const { openIdbStore } = await import(location.origin + '/js/store.js');
+  const { studyDay } = await import(location.origin + '/js/dates.js');
+  const s = await openIdbStore(); const p = await s.allProgress(); s.db.close();
+  return p.filter((x) => x.learned === studyDay()).map((x) => x.id).sort(); })()`;
+const PLANNED_NEW = `(async () => { const { openIdbStore } = await import(location.origin + '/js/store.js');
+  const { previewDay } = await import(location.origin + '/js/study.js');
+  const { WORDS_FILE } = await import(location.origin + '/js/release.js');
+  const data = await (await fetch(WORDS_FILE)).json();
+  const s = await openIdbStore(); const plan = await previewDay({ store: s, data }); s.db.close();
+  return plan.newWords.slice().sort(); })()`;
+const EVENT_COUNT = `(async () => { const { openIdbStore } = await import(location.origin + '/js/store.js');
+  const s = await openIdbStore(); const n = (await s.allEvents()).length; s.db.close(); return n; })()`;
+
+// Run after 'day' and 'sheet' in the same Chrome profile. The page's clock is moved one day
+// ahead, so the app sees day 2. Its 12 reviews and 12 new words are studied, then Settings,
+// "Go back to a day" takes it back to day 1.
+async function rewind() {
+  const page = await openPage('about:blank');
+  await page.send('Page.enable');
+  await page.send('Page.addScriptToEvaluateOnNewDocument', { source: CLOCK_AHEAD });
+  await page.send('Page.navigate', { url: `${SITE}#/today` });
+  await page.until("!!document.querySelector('.start')", 20000);
+  const day2 = await page.text();
+  check('on day 2 Today shows 12 reviews and 12 new words', /12 \| reviews/.test(day2) && /12 \| new words/.test(day2), day2.slice(0, 120));
+  await page.eval(COUNT_PLAYS);
+  await page.eval("document.querySelector('.start').click()");
+  await page.until("location.hash === '#/session' && !!document.querySelector('.session-top')");
+  await answerAll(page);
+  await page.until("location.hash === '#/checkin' && !!document.querySelector('h1')");
+  const pieces = await page.eval("document.querySelectorAll('.confetti-piece').length");
+  const checkin = await page.text();
+  check('day 2 checks in with a 2-day streak and confetti', /Checked in! \| 2 day streak/.test(checkin) && pieces > 0, `${checkin.slice(0, 60)}, ${pieces} pieces`);
+  const learned2 = await page.eval(LEARNED_TODAY);
+  await page.eval("location.hash = '#/settings'; true");
+  await page.until("[...document.querySelectorAll('button')].some((b) => b.textContent === 'Go back to a day')");
+  await page.eval(CLICK('Go back to a day'));
+  await page.until("location.hash === '#/rewind' && !!document.querySelector('.day-pick')");
+  const picks = await page.eval("[...document.querySelectorAll('.day-pick')].map((b) => b.textContent)");
+  check('only day 1 can be chosen', picks.length === 1, JSON.stringify(picks));
+  await page.eval("document.querySelector('.day-pick').click()");
+  await page.until("!!document.querySelector('.confirm-text')");
+  const said = await page.eval("document.querySelector('.confirm-text').textContent");
+  check('the confirmation names what is undone', said === 'Undo 1 day: 12 new words and 12 reviews. Your streak becomes 1 day.', said);
+  check('the confirmation offers the backup file first', await page.eval("[...document.querySelectorAll('button')].some((b) => b.textContent === 'Save a backup file first')"));
+  await page.eval("document.querySelector('button.danger').click()");
+  await page.until("location.hash === '#/today' && !!document.querySelector('.start')");
+  await page.sleep(500);
+  const today = await page.text();
+  check('after going back, the streak is as at the end of day 1', /^1 day streak/.test(today), today.slice(0, 60));
+  check('after going back, Today has the 12 reviews and 12 new words again', /12 \| reviews/.test(today) && /12 \| new words/.test(today), today.slice(0, 120));
+  const planned = await page.eval(PLANNED_NEW);
+  check('the new words of Today are the words learned on day 2', planned.length === 12 && JSON.stringify(planned) === JSON.stringify(learned2),
+    `${planned.length} planned, ${learned2.length} learned on day 2`);
+  // The 'rewound' hook replaces the Sheet's copy (the stand-in of the 'sheet' check) with the phone's.
+  await page.sleep(1500);
+  const rows = await fetch(`${FAKE_SHEET}/admin/rows`).then((r) => r.json()).catch(() => null);
+  const events = await page.eval(EVENT_COUNT);
+  check('the Sheet is replaced by the rewound progress', rows !== null && rows.log === events && rows.progress === 12, `${JSON.stringify(rows)}, ${events} events on the phone`);
+  for (const hash of ['#/stats', '#/badges', '#/checkin']) {
+    await page.eval(`location.hash = '${hash}'; true`);
+    await page.sleep(700);
+    check(`${hash} draws after going back`, (await page.text()).length > 20);
+  }
+  check('no uncaught errors on the page', page.errors.length === 0, page.errors.join('; '));
+  await page.close();
+}
+
+// ---- The bright look (Plan 6) ----
+
+const BODY_COLOURS = "[getComputedStyle(document.body).backgroundColor, getComputedStyle(document.body).color]";
+// The smallest height of the buttons and bottom-bar links that are shown.
+const SMALLEST_TAP = `Math.min(...[...document.querySelectorAll('button, .button, nav a')]
+  .filter((el) => el.offsetParent !== null).map((el) => el.getBoundingClientRect().height))`;
+const BOUNCE = `(() => { const b = Object.assign(document.createElement('div'), { className: 'banner right' });
+  document.body.append(b); const name = getComputedStyle(b).animationName; b.remove(); return name; })()`;
+const BURST = "import(location.origin + '/js/ui/confetti.js').then((m) => [m.burst(document.body), document.querySelectorAll('.confetti-piece').length])";
+
+async function look() {
+  const page = await openPage(`${SITE}#/today`);
+  await page.until("!!document.querySelector('.streak')", 20000);
+  await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'dark' }] });
+  await page.sleep(300);
+  const dark = await page.eval(`[matchMedia('(prefers-color-scheme: dark)').matches, ...${BODY_COLOURS}]`);
+  check('in dark mode the page stays white with dark text', dark[0] === true && dark[1] === 'rgb(255, 255, 255)' && dark[2] === 'rgb(29, 27, 26)', JSON.stringify(dark));
+  let smallest = Infinity;
+  for (const hash of ['#/today', '#/map', '#/stats', '#/badges', '#/settings']) {
+    await page.eval(`location.hash = '${hash}'; true`);
+    await page.sleep(700);
+    smallest = Math.min(smallest, await page.eval(SMALLEST_TAP));
+  }
+  check('every button and bottom-bar tab is at least 48 pixels high', smallest >= 47.5, `${smallest} px`);
+  await page.eval("location.hash = '#/map'; true");
+  await page.sleep(700);
+  const colours = await page.eval("[...document.querySelectorAll('.tile')].slice(0, 2).map((t) => getComputedStyle(t).borderTopColor)");
+  check('map tiles carry their theme colours', colours[0] === 'rgb(255, 107, 53)' && colours[1] === 'rgb(255, 183, 3)', JSON.stringify(colours));
+  await page.eval("location.hash = '#/today'; true");
+  await page.sleep(1500);
+  const ring = await page.eval("parseFloat(document.querySelector('.ring-fill').style.strokeDashoffset)");
+  check('the day\'s ring is drawn and full once the day is done', ring < 1, `stroke-dashoffset ${ring}`);
+  const moving = await page.eval(BURST);
+  check('with normal motion, confetti bursts and a right answer bounces', moving[0] === 40 && moving[1] >= 40 && (await page.eval(BOUNCE)) === 'bounce', JSON.stringify(moving));
+  await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+  await page.sleep(2500); // the pieces of the first burst are removed after 2 seconds
+  const still = await page.eval(BURST);
+  check('with reduced motion there is no confetti and no bounce', still[0] === 0 && still[1] === 0 && (await page.eval(BOUNCE)) === 'none', JSON.stringify(still));
+  check('no uncaught errors on the page', page.errors.length === 0, page.errors.join('; '));
+  await page.close();
+}
+
 const mode = process.argv[2];
-const modes = { store, day, offline, update, sheet };
+const modes = { store, day, offline, update, sheet, rewind, look };
 if (!modes[mode]) {
-  results.push('FAIL usage: node tests/browser/check.mjs store|day|offline|update|sheet');
+  results.push('FAIL usage: node tests/browser/check.mjs store|day|offline|update|sheet|rewind|look');
 } else {
   try {
     await modes[mode]();
