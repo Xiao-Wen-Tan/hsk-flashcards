@@ -12,7 +12,7 @@
 // For example, the learner studied on 1, 2, 3 and 4 October and, on 5 October, went back to
 // 2 October. The answers and check-ins of 3 and 4 October are undone, 3 and 4 October are rewound, the streak is 2
 // (3 after checking in on 5 October), and a 3-day streak badge of 3 October is removed.
-import { addDays, isDay } from './dates.js';
+import { addDays, isDay, studyDay } from './dates.js';
 import { currentStreak } from './checkin.js';
 import { ANSWER_KINDS, liveEvents } from './stats.js';
 import { plural } from './view/format.js';
@@ -98,4 +98,39 @@ export function confirmText(plan) {
   const { days, newWords, reviews } = plan.counts;
   return `Undo ${plural(days, 'day')}: ${plural(newWords, 'new word')} and ${plural(reviews, 'review')}. `
     + `Your streak becomes ${plural(plan.streakAfter, 'day')}.`;
+}
+
+// Goes back to `toDay` in one store commit, so it happens completely or not at all. One event of
+// kind 'rewind' names the chosen day and the counts, so the Sheet's log shows that it happened,
+// and the saved study session (meta 'session') is deleted. Returns the plan (see rewindPlan).
+// A day that rewindChoices does not offer is refused.
+export async function rewindTo({ store, toDay, now = new Date() }) {
+  const today = studyDay(now);
+  const [events, days, badges, rewound] = await Promise.all([
+    store.allEvents(), store.allDays(), store.getMeta('badges'), store.getMeta('rewound'),
+  ]);
+  if (!rewindChoices({ events, days, today }).includes(toDay)) throw new Error('That day cannot be chosen.');
+  const plan = rewindPlan({ events, days, badges: badges ?? {}, rewound: rewound ?? [], toDay, today });
+  await store.commit({
+    progress: plan.put,
+    remove: plan.remove,
+    removeEvents: plan.eventSeqs,
+    removeDays: plan.dayKeys,
+    removeMeta: ['session'],
+    meta: { badges: plan.badges, rewound: plan.rewound },
+    event: { day: today, kind: 'rewind', to: toDay, counts: plan.counts, ts: now.toISOString() },
+  });
+  return plan;
+}
+
+// "Reset everything" deletes every word record, answer, check-in, badge, rewound day and the
+// saved session in one commit, and keeps the settings (daily amounts and auto-play; the Sheet
+// address and code are kept in the browser, not in the store). One event of kind 'reset' is left.
+export async function resetAll({ store, now = new Date() }) {
+  await store.commit({
+    clear: ['progress', 'events', 'days'],
+    removeMeta: ['session'],
+    meta: { badges: {}, rewound: [] },
+    event: { day: studyDay(now), kind: 'reset', ts: now.toISOString() },
+  });
 }
