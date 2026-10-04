@@ -5,6 +5,7 @@ import {
 } from '../../docs/js/rewind.js';
 import { MemoryStore } from '../../docs/js/store.js';
 import { Study } from '../../docs/js/study.js';
+import { Speaking } from '../../docs/js/speaking.js';
 import { loadFixture, localDate, speakAll } from './helpers.mjs';
 
 // Word records as srs.js keeps them, cut down to the fields that matter here.
@@ -174,4 +175,40 @@ test('reset everything deletes the progress and keeps the settings', async () =>
   assert.deepEqual([await store.getMeta('badges'), await store.getMeta('rewound'), await store.getMeta('session')], [{}, [], undefined]);
   const study = await Study.start({ store, data, now: localDate('2026-10-02', 9) });
   assert.deepEqual(study.plan.newWords, data.words.slice(0, 8).map((w) => w.id));
+});
+
+test('going back removes the later speak events, and a speaking badge earned later', async () => {
+  // Says the first `wellLimit` words of the day's list well, through the speaking panel's controller, and skips the rest.
+  const speakDay = async (store, day, wellLimit) => {
+    const at = localDate(day, 10);
+    const speaking = await Speaking.start({ store, data, now: at, mode: 'tones' });
+    let well = 0;
+    while (!speaking.finished) {
+      if (well >= wellLimit) { await speaking.send({ type: 'skip' }, at); continue; }
+      for (const input of [{ type: 'done' }, { type: 'done' }, { type: 'done' }, { type: 'done' }, { type: 'tap' }]) await speaking.send(input, at);
+      await speaking.send({ type: 'heard', tones: { pass: true, share: 1, problem: null } }, at);
+      well += 1;
+    }
+    return speaking.close(at);
+  };
+  const store = new MemoryStore();
+  const learn = async (day) => {
+    const now = localDate(day, 9);
+    const study = await Study.start({ store, data, now });
+    while (!study.finished) {
+      if (study.card.type === 'learn') study.next();
+      else await study.answer(right(study.card), now);
+    }
+  };
+  await learn('2026-10-01');
+  assert.deepEqual((await speakDay(store, '2026-10-01', 9)).newBadges.filter((b) => b.startsWith('spoken')), []);
+  await learn('2026-10-02');
+  // On 2 October one more word is said well, the 10th, which earns the first speaking badge.
+  assert.ok((await speakDay(store, '2026-10-02', 24)).newBadges.includes('spoken-10'));
+  const before = (await store.allEvents()).filter((e) => e.kind === 'speak');
+  await rewindTo({ store, toDay: '2026-10-01', now: localDate('2026-10-03', 9) });
+  const after = (await store.allEvents()).filter((e) => e.kind === 'speak');
+  assert.deepEqual(after, before.filter((e) => e.day === '2026-10-01'));
+  assert.equal(after.length, 12);
+  assert.equal('spoken-10' in (await store.getMeta('badges')), false);
 });

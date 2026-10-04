@@ -36,6 +36,7 @@ export const CONFIG = Object.freeze({
     perfectDays: Object.freeze([1, 7, 30]),
     reviews: Object.freeze([100, 1000, 5000, 10000]),
     minutes: Object.freeze([60, 300, 1000, 3000]),
+    spoken: Object.freeze([10, 50, 100, 500, 1000]), // words spoken well (speaking practice spec)
   }),
 
   statsDays: Object.freeze({ forecast: 7, accuracy: 7 }),

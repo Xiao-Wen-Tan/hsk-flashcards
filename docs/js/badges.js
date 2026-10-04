@@ -1,5 +1,5 @@
 // Milestone badges. A badge ID is a short text, for example 'streak-7', 'learned-all',
-// 'reviews-1000', 'minutes-60', 'perfectday-7', 'week-2', 'theme-t05', 'hsk-1-2' or 'perfect'.
+// 'reviews-1000', 'minutes-60', 'spoken-10', 'perfectday-7', 'week-2', 'theme-t05', 'hsk-1-2' or 'perfect'.
 // Earned badges are kept in the meta store as { badgeId: dayEarned }, so each one is awarded once.
 import { CONFIG } from './config.js';
 import { allTime, fullWeeks } from './counters.js';
@@ -14,7 +14,8 @@ import { isLearned } from './srs.js';
 //          one badge 'Full week ×N'
 //   list   one per finished theme ('theme-t05') or level group ('hsk-1-2')
 //   once   'perfect', a session with at least 30 reviews, all right first time
-// Plan 7 adds a speaking group here as one more steps row.
+// The speaking group counts the words spoken well in the speaking panel (speak events with the
+// result 'pass'), each word once.
 export const BADGE_GROUPS = Object.freeze([
   { id: 'streak', title: 'Streaks', kind: 'steps', fact: 'bestStreak', steps: CONFIG.badges.streak, unit: 'days' },
   { id: 'checkins', title: 'Check-ins', kind: 'steps', fact: 'checkIns', steps: CONFIG.badges.checkIns, unit: 'check-ins' },
@@ -22,6 +23,7 @@ export const BADGE_GROUPS = Object.freeze([
   { id: 'mastered', title: 'Words mastered', kind: 'steps', fact: 'mastered', steps: CONFIG.badges.mastered, unit: 'words' },
   { id: 'reviews', title: 'Reviews answered', kind: 'steps', fact: 'reviews', steps: CONFIG.badges.reviews, unit: 'reviews' },
   { id: 'minutes', title: 'Minutes studied', kind: 'steps', fact: 'minutes', steps: CONFIG.badges.minutes, unit: 'minutes' },
+  { id: 'spoken', title: 'Speaking', kind: 'steps', fact: 'spokenWell', steps: CONFIG.badges.spoken, unit: 'words' },
   { id: 'perfectday', title: 'Perfect days', kind: 'steps', fact: 'perfectDays', steps: CONFIG.badges.perfectDays, unit: 'days' },
   { id: 'week', title: 'Full weeks', kind: 'count', fact: 'fullWeeks', steps: null, unit: 'weeks' },
   { id: 'theme', title: 'Themes', kind: 'list', fact: 'themesDone', steps: null, unit: 'words' },
@@ -70,6 +72,7 @@ export function badgeTitle(id, themes = []) {
     case 'mastered': return `${grouped(value)} words mastered`;
     case 'reviews': return `${grouped(value)} reviews answered`;
     case 'minutes': return `${grouped(value)} minutes studied`;
+    case 'spoken': return `${grouped(value)} words spoken well`;
     case 'perfectday': return value === '1' ? '1 perfect day' : `${value} perfect days`;
     case 'week': return value === '1' ? 'Full week' : `Full week ×${value}`;
     case 'theme': return `Finished ${themes.find((t) => t.id === value)?.name ?? value}`;
@@ -123,6 +126,7 @@ export function badgeFacts({ data, progress, days, events, rewound = [], perfect
     reviews: all.reviews,
     minutes: all.minutes,
     perfectDays: all.perfectDays,
+    spokenWell: new Set(events.filter((e) => e.kind === 'speak' && e.result === 'pass').map((e) => e.id)).size,
     fullWeeks: fullWeeks(checked),
     themesDone: themesDone(data.themes, data.words, byId),
     groupsDone: groupsDone(data.words, byId),

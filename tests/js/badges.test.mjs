@@ -6,8 +6,8 @@ import { loadFixture } from './helpers.mjs';
 
 const data = loadFixture();
 const NONE = {
-  bestStreak: 0, checkIns: 0, learned: 0, mastered: 0, totalWords: 5000, reviews: 0, minutes: 0, perfectDays: 0, fullWeeks: 0,
-  themesDone: [], groupsDone: [], perfectSession: false,
+  bestStreak: 0, checkIns: 0, learned: 0, mastered: 0, totalWords: 5000, reviews: 0, minutes: 0, perfectDays: 0, spokenWell: 0,
+  fullWeeks: 0, themesDone: [], groupsDone: [], perfectSession: false,
 };
 
 test('nothing earned at the start', () => {
@@ -85,7 +85,7 @@ test('titles for the badge screen', () => {
 
 test('the Badges screen shows the groups in this order', () => {
   assert.deepEqual(BADGE_GROUPS.map((g) => g.id),
-    ['streak', 'checkins', 'learned', 'mastered', 'reviews', 'minutes', 'perfectday', 'week', 'theme', 'hsk', 'perfect']);
+    ['streak', 'checkins', 'learned', 'mastered', 'reviews', 'minutes', 'spoken', 'perfectday', 'week', 'theme', 'hsk', 'perfect']);
 });
 
 test('the facts come from the saved words, check-ins and events', () => {
@@ -99,7 +99,7 @@ test('the facts come from the saved words, check-ins and events', () => {
   const progress = data.words.filter((w) => w.theme === 't01').map((w) => learnedProgress(w.id, '2026-10-05'));
   const days = [{ day: '2026-10-05' }, { day: '2026-10-06' }];
   assert.deepEqual(badgeFacts({ data, progress, days, events, perfectSession: true }), {
-    bestStreak: 2, checkIns: 2, learned: 12, mastered: 0, totalWords: 61, reviews: 2, minutes: 2.5, perfectDays: 1, fullWeeks: 0,
+    bestStreak: 2, checkIns: 2, learned: 12, mastered: 0, totalWords: 61, reviews: 2, minutes: 2.5, perfectDays: 1, spokenWell: 0, fullWeeks: 0,
     themesDone: ['t01'], groupsDone: [], perfectSession: true,
     // The unfinished theme with the fewest words left, and the first unfinished level group.
     nextTheme: { id: 't02', have: 0, need: 10 }, nextGroup: { id: '1-2', have: 12, need: 61 },
@@ -151,4 +151,18 @@ test('a step already reached but not yet saved is not shown as the next badge', 
   // is the 14-day streak, not "7 / 3 days".
   const streak = badgeLadder({ ...NONE, bestStreak: 9 }, { 'streak-7': 'a' }).find((g) => g.id === 'streak');
   assert.deepEqual([streak.next.id, streak.next.text], ['streak-14', '9 / 14 days']);
+});
+
+test('the speaking badges count the words spoken well, each word once', () => {
+  assert.deepEqual(earnedBadges({ ...NONE, spokenWell: 99 }), ['spoken-10', 'spoken-50']);
+  assert.deepEqual(earnedBadges({ ...NONE, spokenWell: 1000 }), ['spoken-10', 'spoken-50', 'spoken-100', 'spoken-500', 'spoken-1000']);
+  assert.equal(badgeTitle('spoken-10'), '10 words spoken well');
+  assert.equal(badgeTitle('spoken-1000'), '1,000 words spoken well');
+  // 我 is spoken well twice and 你 once, 他 is skipped and 好 only listened to, which makes 2 words spoken well.
+  const speak = (seq, id, result) => ({ seq, day: '2026-10-05', kind: 'speak', id, result, tries: 1, check: { tones: 1, heard: null } });
+  const events = [speak(1, 'w0001', 'pass'), speak(2, 'w0002', 'pass'), speak(3, 'w0003', 'skip'), speak(4, 'w0009', 'listened'),
+    { ...speak(5, 'w0001', 'pass'), day: '2026-10-06' }];
+  assert.equal(badgeFacts({ data, progress: [], days: [], events }).spokenWell, 2);
+  const ladder = badgeLadder({ ...NONE, spokenWell: 2 }, {});
+  assert.deepEqual(ladder.find((g) => g.id === 'spoken').next, { id: 'spoken-10', title: '10 words spoken well', text: '2 / 10 words', share: 0.2 });
 });

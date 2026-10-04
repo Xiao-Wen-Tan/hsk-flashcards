@@ -1,6 +1,7 @@
 // Goal countdowns (spec of 2026-10-03, section 2) say how far each next milestone is, in the unit
 // it names. Today shows the two nearest, Stats shows them all. A goal's `share` is the part of its
 // target still to go, so 3 days left of a 30-day streak is 0.1, and the smallest share is nearest.
+// Plan 7 adds the next speaking badge.
 import { CONFIG } from './config.js';
 import { LEVEL_GROUPS, mapSections, wordsOfGroup } from './stats.js';
 import { isLearned } from './srs.js';
@@ -49,6 +50,13 @@ export function goals({ data, progressById, facts, streak }) {
   if (minutes) {
     const left = Math.ceil(minutes - facts.minutes);
     out.push(goal('minutes', `${plural(left, 'minute')} to the ${grouped(minutes)}-minute badge`, left, minutes));
+  }
+  // The next speaking badge, counted in words spoken well (badges.js).
+  const spokenWell = facts.spokenWell ?? 0;
+  const spoken = nextStep(CONFIG.badges.spoken, spokenWell);
+  if (spoken) {
+    const left = spoken - spokenWell;
+    out.push(goal('spoken', `${plural(left, 'more word')} to say well for the ${grouped(spoken)}-word speaking badge`, left, spoken));
   }
   return nearest(out, out.length);
 }
