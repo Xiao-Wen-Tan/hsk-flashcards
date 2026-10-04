@@ -99,7 +99,9 @@ function decibels(x, start, size) {
 // f0[i] is the pitch in Hz of the window that starts at i * 10 ms (0 for no pitch) and db[i] its
 // loudness. `samples` are numbers between -1 and 1 at `rate` samples a second.
 export function trackPitch(samples, rate) {
-  const x = downsample(samples, rate);
+  // A sample that is not a number (NaN) or is infinite, from a faulty recording, counts as
+  // silence, so it can neither switch off the silence limit below nor silence the whole track.
+  const x = downsample(samples, rate).map((v) => (Number.isFinite(v) ? v : 0));
   const hop = Math.round((PITCH.hopMs / 1000) * PITCH.rate);
   const win = Math.round((PITCH.winMs / 1000) * PITCH.rate);
   const f0 = [];
@@ -135,14 +137,15 @@ export function voicedRuns(f0) {
 export function cleanPitch(f0, { minRun = 4 } = {}) {
   const out = f0.slice();
   if (!out.some((v) => v > 0)) return out;
-  // An octave jump is found by comparing with the median of the voiced values within 15 windows.
-  for (let i = 0; i < out.length; i += 1) {
-    if (!out[i]) continue;
-    const near = [];
-    for (let k = Math.max(0, i - 15); k <= Math.min(out.length - 1, i + 15); k += 1) if (f0[k] > 0) near.push(f0[k]);
-    const m = median(near);
-    if (out[i] > 1.7 * m) out[i] /= 2;
-    else if (out[i] < 0.6 * m) out[i] *= 2;
+  // An octave jump is found by comparing each value with the median of the values within 15
+  // windows in the same voiced stretch, so a syllable is never compared with the next one. A
+  // short syllable at 174 Hz that follows a syllable at 300 Hz after a pause keeps its 174 Hz.
+  for (const [a, b] of voicedRuns(f0)) {
+    for (let i = a; i <= b; i += 1) {
+      const m = median(f0.slice(Math.max(a, i - 15), Math.min(b, i + 15) + 1));
+      if (out[i] > 1.7 * m) out[i] /= 2;
+      else if (out[i] < 0.6 * m) out[i] *= 2;
+    }
   }
   // A 5-window median inside each voiced stretch.
   const smooth = out.slice();

@@ -67,6 +67,27 @@ test('the clean-up halves an octave jump, smooths, and drops stretches under 40 
   assert.deepEqual(voicedRuns([0, 5, 5, 0, 5]), [[1, 2], [4, 4]]);
 });
 
+test('the octave check stays inside one voiced stretch, so a lower syllable after a pause keeps its pitch', () => {
+  // 20 windows at 300 Hz, a pause of 30 ms, then 8 windows at 174 Hz. Compared with the 300 Hz
+  // before the pause, 174 Hz would look like an octave too low and be doubled to 348 Hz.
+  const f0 = [0, 0, ...Array(20).fill(300), 0, 0, 0, ...Array(8).fill(174), 0, 0];
+  assert.deepEqual(cleanPitch(f0), f0);
+});
+
+test('a sample that is not a number or is infinite counts as silence', () => {
+  // A voice at 220 Hz between two silences that carry a quiet hum at 100 Hz, 60 dB below the
+  // voice, which the silence limit of trackPitch removes.
+  const pieces = [{ ms: 200 }, { ms: 400, hz: [220] }, { ms: 200 }];
+  const sound = madeUpVoice(pieces).map((v, i) => v + 0.0003 * Math.sin((2 * Math.PI * 100 * i) / 16000));
+  const clean = voicedRuns(trackPitch(sound, 16000).f0);
+  assert.equal(clean.length, 1);
+  for (const bad of [NaN, Infinity, -Infinity]) {
+    const broken = Float32Array.from(sound);
+    broken[100] = bad;
+    assert.deepEqual(voicedRuns(trackPitch(broken, 16000).f0), clean, String(bad));
+  }
+});
+
 test('semitones count from a reference, 12 to twice the pitch', () => {
   assert.equal(semitones(440, 220), 12);
   assert.equal(semitones(220, 220), 0);
