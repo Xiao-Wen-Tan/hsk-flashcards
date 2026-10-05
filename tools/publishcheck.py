@@ -20,8 +20,9 @@ BINARY_TYPES = {".mp3", ".png", ".pdf", ".jpg", ".jpeg", ".gif", ".ico", ".woff"
 MAX_FILE_MB = 50  # GitHub warns above 50 MB and refuses files above 100 MB
 MAX_SITE_MB = 900  # GitHub Pages sites may be at most 1 GB
 
-# The checker and its tests hold made-up examples of every problem, so they are not scanned.
-SELF_FILES = {"tools/publishcheck.py", "tests/test_publishcheck.py"}
+# The checker, its tests and the plan that built them hold made-up examples of every problem,
+# so they are not scanned.
+SELF_FILES = {"tools/publishcheck.py", "tests/test_publishcheck.py", ".claude/plans/2026-09-28-plan5-sync-publish.md"}
 
 PLACEHOLDER_LINE = "var SECRET_CODE = 'PASTE-THE-CODE-FROM-THE-APP';"
 

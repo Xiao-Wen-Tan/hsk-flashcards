@@ -1,4 +1,5 @@
-.claude/
+.claude/scratch/
+.claude/settings.local.json
 .remember/
 __pycache__/
 .pytest_cache/

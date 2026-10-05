@@ -57,4 +57,4 @@ def test_marked_test_addresses_are_allowed():
 
 def test_only_the_checker_and_its_tests_are_left_unscanned():
     # They hold made-up examples of every problem, so scanning them would always fail.
-    assert pc.SELF_FILES == {"tools/publishcheck.py", "tests/test_publishcheck.py"}
+    assert pc.SELF_FILES == {"tools/publishcheck.py", "tests/test_publishcheck.py", ".claude/plans/2026-09-28-plan5-sync-publish.md"}

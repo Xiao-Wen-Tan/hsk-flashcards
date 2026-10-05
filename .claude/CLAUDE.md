@@ -1,0 +1,18 @@
+# HSK Flashcards project
+
+Daily Chinese flashcard web app for one English-speaking beginner on an Android phone, hosted on GitHub Pages.
+
+- Design: .claude/specs/2026-09-27-hsk-flashcards-design.md, extended by .claude/specs/2026-10-03-rewind-counters-look-design.md and .claude/specs/2026-10-03-speaking-practice-design.md. Plans: .claude/plans/.
+- The web root is docs/ and it is PUBLIC. Never put notes, specs or personal data there.
+- Build scripts live in tools/ and run from the project root, for example `python tools/02_extract_pdfs.py`.
+- Paths in scripts are relative. The source PDFs are read from ../HSK 词汇 6本/ and never copied.
+- Outputs are never overwritten. Use common.next_versions or next_version_path; writers open files with mode "x".
+- Tests: `python -m pytest tests -q` (Python) and `node --test "tests/js/*.test.mjs"` (app logic). Keep the quotes around the pattern.
+- App logic lives in docs/js/ as plain ES modules with no DOM and no npm packages. The screens call docs/js/study.js.
+- Every release that changes docs/ raises RELEASE in docs/js/release.js and docs/sw.js (r001, r002, ...). A new words file is named in WORDS_FILE in both, then `python tools/12_vendor_strokes.py` adds its stroke data. tests/js/release.test.mjs checks all of this.
+- Browser checks: `python tools/14_smoke_site.py`, then the servers and headless Chrome of Plan 4 Task 17, then `node tests/browser/check.mjs store|tones|day|sheet|rewind|look|wav`, then, in a Chrome started again with the fake microphone playing the WAV file that `wav` printed (Plan 7 Task 15: --use-fake-ui-for-media-stream --use-fake-device-for-media-stream --use-file-for-fake-audio-capture=<that file>), `speak|speakboth|speaktwice|nomic|offline|update` (in that order; rewind needs day and sheet first; sheet needs the fake Sheet server on 8125; tones takes the folder .claude/scratch/tone_samples; delete the WAV file afterwards).
+- Pitfall: file-writing tools turn a typed unicode escape (backslash, u, four hex digits) into the literal character. Check escapes with grep after writing; build the backslash with chr(92) when repairing.
+- The site is public at https://xiao-wen-tan.github.io/hsk-flashcards/ (GitHub Pages, main branch, /docs), which redirects (301, seen on 2026-10-03) to the custom domain https://wen-tan.com/hsk-flashcards/. Before every push run `python tools/15_publish_check.py`; after Pages has published, run `node tools/16_check_live.mjs https://wen-tan.com/hsk-flashcards/`. The release checklist is in .claude/plans/2026-09-28-plan5-sync-publish.md.
+- The Google Sheet backup: docs/js/sheet.js and docs/js/sync.js on the phone, tools/apps_script/Code.gs in the user's Sheet (SETUP.md). The web app address and the secret code live only on the phone and in the user's copy of the script. Never commit them. Test addresses in tests carry TEST-FAKE so the publish check allows them.
+- The git database lives outside Box at ~/git/hsk-flashcards.git (.git here is a pointer file, `gitdir: ~/git/hsk-flashcards.git`; Box may delete it, so recreate it if git says this is not a repository). Git in this Box folder needs `git -c safe.directory='<this folder>'` because Box reports the files as owned by Everyone.
+- Cloud sessions (Claude Code on the web) open the GitHub repository, which is PUBLIC, so everything committed here is public too. They do not have the source PDFs, the git-ignored build folders under data/, `.claude/scratch/` (the user's own tone sample recordings stay on the PC) or `.remember/`. Rebuilding words, audio or strokes from the PDFs runs on the PC. The git pointer file and `safe.directory` notes above apply only on the PC. Setup command for the cloud environment: `pip install -r tools/requirements.txt`.
