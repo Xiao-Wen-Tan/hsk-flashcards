@@ -53,6 +53,10 @@ export const CONFIG = Object.freeze({
     minDip: 0.5,
     voiceKeep: 0.98, // older recordings count this much less with each new one
     voiceRecordings: 5, // recordings needed before the height of the learner's voice is trusted
+    // How far, in voice ranges, the middle of a recording may be from the middle of the stored
+    // voice for its heights to be judged against that voice (tones.js fitsVoice). Farther, it is
+    // most likely another person speaking, and only the shapes and the heights within the word count.
+    voiceFit: 0.75,
     // The learner setting "Speaking check". margin is how much farther the expected tone may be
     // than the nearest tone (toneScores), and share is the part of the judged syllables of a
     // word that must be right.

@@ -50,6 +50,8 @@ const listenAgain = (s) => ({ ...s, phase: 'listen', round: 0, repeated: true })
 //   { type: 'tap' }                   the microphone button, in 'turn'
 //   { type: 'heard', sounds, tones }  the checks of a recording, as matchWord() and judgeTones()
 //                                     give them (only sounds in the 'sounds' phase), either may be null
+//   { type: 'busy', problem }         the microphone could not be opened for the recording, so the
+//                                     try did not happen; `problem` is shown and the word plays again
 //   { type: 'mode', mode }            the checks changed, for example to 'tones' when the recognizer
 //                                     failed, or to 'none' when the microphone was refused
 //   { type: 'skip' }                  the Skip button
@@ -75,6 +77,9 @@ export function next(s, input) {
     case 'sounds':
       return input.type === 'heard' ? { ...s, phase: 'record', sounds: input.sounds ?? null } : s;
     case 'record': {
+      // A busy microphone is not a try. In mode 'twice' the sound check's answer is dropped too,
+      // so the word cannot pass on the sound check alone, and both are asked for again.
+      if (input.type === 'busy') return { ...s, phase: 'missed', problems: [input.problem], sounds: null };
       if (input.type !== 'heard') return s;
       const sounds = s.mode === 'twice' ? s.sounds : input.sounds ?? null;
       const v = verdict({ tones: input.tones ?? null, sounds: s.mode === 'tones' ? null : sounds });
@@ -83,7 +88,7 @@ export function next(s, input) {
     }
     case 'missed':
       if (input.type !== 'done') return s;
-      return s.startedAtTurn && !s.repeated ? listenAgain(s) : { ...s, phase: 'turn' };
+      return s.startedAtTurn && !s.repeated && s.tries > 0 ? listenAgain(s) : { ...s, phase: 'turn' };
     default:
       return s;
   }

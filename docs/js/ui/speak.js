@@ -6,7 +6,7 @@
 import { Speaking } from '../speaking.js';
 import { effectsOf, pauseMs } from '../speakflow.js';
 import { trackPitch } from '../pitch.js';
-import { addToVoice, emptyVoice, judgeTones } from '../tones.js';
+import { emptyVoice, judgeTones, updateVoice } from '../tones.js';
 import { fallbackMode, matchWord, readingsOf, recognizerOutcome } from '../speakcheck.js';
 import { GOOGLE_NOTE, MIC_BUSY, micRefused, speakView } from '../view/speak.js';
 import { closeMic, openMic, playSamples, recordTry, stopPlayback } from './mic.js';
@@ -14,7 +14,7 @@ import { findMode, listen, saveMode } from './recognize.js';
 import { h, show } from './dom.js';
 
 // Two things are kept in this browser only. They are the learner's voice range (tones.js
-// addToVoice, a count of pitch values, never a recording) and whether the Google note was seen.
+// updateVoice, a count of pitch values, never a recording) and whether the Google note was seen.
 const VOICE_KEY = 'hsk-voice';
 const NOTE_KEY = 'hsk-speak-note';
 
@@ -178,8 +178,7 @@ async function recordAndCheck(app, withSounds, alive) {
     if (!micRefused(err)) {
       // A busy microphone: this try did not happen, so the word is played again and the
       // learner taps the microphone when it is free.
-      app.note(MIC_BUSY);
-      await advance(app, { type: 'heard', tones: null, sounds: null });
+      await advance(app, { type: 'busy', problem: MIC_BUSY });
       return;
     }
     saveMode('none');
@@ -227,7 +226,7 @@ async function recordAndCheck(app, withSounds, alive) {
   const track = trackPitch(audio.samples, audio.rate);
   const voice = loadVoice();
   const tones = judgeTones({ track, word, voice, strictness: (await app.settings()).speakStrictness });
-  if (audio.voice) writeStore(VOICE_KEY, JSON.stringify(addToVoice(voice, track.f0)));
+  if (audio.voice) writeStore(VOICE_KEY, JSON.stringify(updateVoice(voice, track.f0)));
   await advance(app, { type: 'heard', tones, sounds });
 }
 
