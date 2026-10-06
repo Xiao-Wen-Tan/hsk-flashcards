@@ -187,6 +187,16 @@ async function day() {
       if (kind === 'learn') learnPlays = plays;
       else afterPlays = plays;
     }
+    if (kind === 'learn' && seen.learn === 1) {
+      // A double tap on Next moves on one card only. Before r011 it skipped the next new word's
+      // learning card, and that word's quick check came without it (the user's report of 6 October).
+      await page.sleep(500);
+      const [from, to] = await page.eval(`(() => { const at = () => Number(${POSITION}.split(' / ')[0]);
+        const from = at(); ${CLICK('Next')}; ${CLICK('Next')}; return [from, at()]; })()`);
+      check('a double tap on Next does not skip a new word', to === from + 1, `card ${from} to ${to}`);
+      await page.sleep(500);
+      continue;
+    }
     if (kind === 'listen') listenHz += await page.eval("document.querySelectorAll('#main .hz').length");
     if (kind === 'learn' && !strokes) {
       await page.eval(CLICK('Stroke order'));
@@ -209,7 +219,7 @@ async function day() {
     } else if (kind === 'recall') await page.eval(CLICK('Reveal'));
     else if (kind === 'grades') await page.eval("document.querySelector('.grades button').click()");
     else if (kind === 'learn' || kind === 'feedback') await page.eval(CLICK('Next'));
-    await page.sleep(100);
+    await page.sleep(450); // longer than TAP_GAP_MS in ui/session.js, so no tap is taken for a double tap
   }
   check('the session shows learning cards, listening checks and pinyin checks',
     seen.learn === 12 && seen.listen >= 12 && seen.pinyin >= 12, JSON.stringify(seen));
@@ -403,7 +413,7 @@ async function answerAll(page) {
     else if (kind === 'recall') await page.eval(CLICK('Reveal'));
     else if (kind === 'grades') await page.eval("document.querySelector('.grades button').click()");
     else if (kind === 'learn' || kind === 'feedback') await page.eval(CLICK('Next'));
-    await page.sleep(100);
+    await page.sleep(450); // longer than TAP_GAP_MS in ui/session.js, so no tap is taken for a double tap
   }
 }
 

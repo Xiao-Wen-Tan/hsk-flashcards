@@ -11,6 +11,18 @@ import { h, show } from './dom.js';
 
 const autoplayOn = (app) => app.study.settings.autoplay !== false;
 
+// A tap that comes this soon after a session screen is drawn is the second tap of a double tap
+// meant for the screen before. A forward tap (Next, Reveal, a choice or a rating) is ignored
+// then. Without this, a double tap on Next skipped the next new word's learning card, and its
+// quick check later asked about a word the learner had never seen (the user's report of
+// 2026-10-06).
+export const TAP_GAP_MS = 400;
+
+// The tap handler for a forward button. app.drawnAt is set by renderSession.
+const forward = (app, go) => () => {
+  if (performance.now() - app.drawnAt >= TAP_GAP_MS) go();
+};
+
 // Start (or continue) today's session. The tap on Start also lets Chrome play sound.
 export async function startSession(app) {
   app.player.stop();
@@ -89,6 +101,7 @@ export function renderSession(app) {
     return;
   }
   const main = app.main;
+  app.drawnAt = performance.now();
   // After a multiple-choice answer the screen shows the result, the full learning card and Next.
   // That card plays the word once, because the question has just played it.
   if (app.feedback) {
@@ -96,7 +109,7 @@ export function renderSession(app) {
     show(main, header(app),
       h('div', { class: fb.right ? 'banner right' : 'banner wrong' }, fb.message),
       cardElement(app, word, { autoplay: autoplayOn(app), afterAnswer: true }),
-      h('button', { class: 'big', onclick: () => next(app) }, 'Next'));
+      h('button', { class: 'big', onclick: forward(app, () => next(app)) }, 'Next'));
     return;
   }
   const card = study.card;
@@ -106,7 +119,7 @@ export function renderSession(app) {
   if (view.kind === 'learn') {
     show(main, header(app), h('p', { class: 'heading' }, view.heading),
       cardElement(app, word, { autoplay: autoplayOn(app) }),
-      h('button', { class: 'big', onclick: () => { app.player.stop(); study.next(); renderSession(app); } }, 'Next'));
+      h('button', { class: 'big', onclick: forward(app, () => { app.player.stop(); study.next(); renderSession(app); }) }, 'Next'));
     return;
   }
   if (view.kind === 'recall') {
@@ -117,7 +130,7 @@ export function renderSession(app) {
         h('div', { class: 'py' }, view.py),
         h('button', { class: 'small', onclick: () => playSound(app, view.sound, 2) }, 'Play sound'),
         h('p', { class: 'prompt' }, view.prompt),
-        h('button', { class: 'big', onclick: () => { app.revealed = true; renderSession(app); } }, 'Reveal'));
+        h('button', { class: 'big', onclick: forward(app, () => { app.revealed = true; renderSession(app); }) }, 'Reveal'));
       if (autoplayOn(app)) playSound(app, view.sound, 2);
       return;
     }
@@ -125,7 +138,7 @@ export function renderSession(app) {
       cardElement(app, word, { autoplay: false }),
       h('div', { class: 'grades' }, view.grades.map((g) => h('button', {
         class: `big grade-${g.grade}`,
-        onclick: () => answer(app, g.grade, null),
+        onclick: forward(app, () => answer(app, g.grade, null)),
       }, g.label))));
     return;
   }
@@ -134,7 +147,7 @@ export function renderSession(app) {
   const choiceButtons = view.choices.map((text, i) => h('button', {
     class: 'choice',
     lang: view.kind === 'pinyin' ? 'zh-Latn-pinyin' : 'en',
-    onclick: () => answer(app, gradeFor(view, i), { word, fb: feedbackFor(view, i) }),
+    onclick: forward(app, () => answer(app, gradeFor(view, i), { word, fb: feedbackFor(view, i) })),
   }, text));
   show(main, header(app), h('p', { class: 'heading' }, view.heading),
     view.hz ? h('div', { class: 'hz big-hz', lang: 'zh-CN' }, view.hz) : null,
