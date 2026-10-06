@@ -88,6 +88,22 @@ test('when the phone cannot share the microphone, the word is said twice, sounds
   assert.deepEqual([bad.phase, bad.problems], ['missed', ['Heard: 是']]);
 });
 
+test('a busy microphone is not a try: the word plays again, and in mode twice it cannot pass on the sound check alone', () => {
+  const BUSY = { type: 'busy', problem: 'The microphone is busy.' };
+  let s = run(startWord({ id: 'w0003', mode: 'twice' }), [DONE, DONE, DONE, DONE, { type: 'tap' }, { type: 'heard', sounds: HEARD_OK }]).s;
+  assert.equal(s.phase, 'record');
+  s = next(s, BUSY);
+  assert.deepEqual([s.phase, s.tries, s.problems, s.sounds], ['missed', 0, ['The microphone is busy.'], null]);
+  assert.deepEqual(effectsOf(s), [{ type: 'play', what: 'word' }]);
+  // Back to the learner's turn, and the next tap asks for the sound check again.
+  s = next(next(s, DONE), { type: 'tap' });
+  assert.equal(s.phase, 'sounds');
+  // A word spoken well before is not taught again for a busy microphone.
+  let well = next(startWord({ id: 'w0003', spokenWell: true, mode: 'tones' }), { type: 'tap' });
+  well = next(next(well, BUSY), DONE);
+  assert.deepEqual([well.phase, well.tries], ['turn', 0]);
+});
+
 test('when the recognizer fails, the tone check decides alone', () => {
   // When the word is said twice and the recognizer fails the first time, the recording follows at once.
   let s = run(startWord({ id: 'w0003', mode: 'twice' }), [DONE, DONE, DONE, DONE, { type: 'tap' }]).s;

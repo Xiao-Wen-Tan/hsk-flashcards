@@ -1,8 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  SHAPES, addToVoice, emptyVoice, expectedTones, judgeTones, syllableSegments, voiceRange,
+  SHAPES, addToVoice, emptyVoice, expectedTones, fitsVoice, judgeTones, syllableSegments, updateVoice, voiceRange,
 } from '../../docs/js/tones.js';
+import { CONFIG } from '../../docs/js/config.js';
 import { trackPitch } from '../../docs/js/pitch.js';
 import { mulberry32 } from '../../docs/js/rng.js';
 import { madeUpVoice } from './voice.mjs';
@@ -131,4 +132,59 @@ test('before the voice range is known, a failed word gets general advice, not a 
   const r = judgeTones({ track: trackPitch(madeUpVoice(pieces), 16000), word, voice: null, strictness: 'normal' });
   assert.equal(r.pass, false); // shī said low and level is wrong
   assert.equal(r.problem, 'Not quite. Listen again and copy how the word rises and falls.');
+});
+
+test('another speaker on the learner\'s phone is not judged against the learner\'s voice', () => {
+  // The learner's voice is known (middle 200 Hz). A native speaker an octave lower says the
+  // words right. Their heights would all sound low against the learner's voice.
+  const other = { ref: 100, span: 8 };
+  const say = (shapes, random) => {
+    const pieces = [{ ms: 120 }];
+    shapes.forEach((points) => {
+      pieces.push({ ms: 300, hz: points.map((p) => other.ref * 2 ** (((p + (random() - 0.5) * 0.1) * other.span) / 12)) });
+      pieces.push({ ms: 80 });
+    });
+    return madeUpVoice(pieces, { noise: 0.005, random });
+  };
+  const random = mulberry32(7);
+  for (const [hz, shapes] of [
+    ['他', [SHAPES.alone[1]]], ['是', [SHAPES.alone[4]]],
+    ['再见', [SHAPES.before[4][4], SHAPES.after[4][4]]],
+  ]) {
+    const track = trackPitch(say(shapes, random), 16000);
+    assert.equal(voiceRange(KNOWN, track.f0).known, false, hz);
+    const j = judgeTones({ track, word: word(data, hz), voice: KNOWN });
+    assert.equal(j.pass, true, `${hz}: ${j.problem}`);
+  }
+});
+
+test('a recording fits the voice when its middle is within voiceFit ranges of the voice\'s middle', () => {
+  const range = { ref: 200, span: 8 };
+  const at = (r) => [range.ref * 2 ** ((r * range.span) / 12)];
+  assert.equal(CONFIG.speak.voiceFit, 0.75);
+  assert.equal(fitsVoice(range, at(0.7)), true);
+  assert.equal(fitsVoice(range, at(-0.7)), true);
+  assert.equal(fitsVoice(range, at(0.8)), false);
+  assert.equal(fitsVoice(range, at(-1.7)), false);
+  assert.equal(fitsVoice(range, [0, 0]), true); // no pitch at all
+  // The learner's own words, high or low, keep the known range.
+  assert.equal(voiceRange(KNOWN, hzOf(SHAPES.alone[1])).known, true);
+  assert.equal(voiceRange(KNOWN, hzOf(SHAPES.after[4][3])).known, true);
+});
+
+test('another speaker\'s recordings stay out of the learner\'s voice, until they come 5 times in a row', () => {
+  const learner = hzOf([-0.25, 0, 0.25]);
+  const low = learner.map((hz) => hz / 2);
+  let voice = KNOWN;
+  voice = updateVoice(voice, low);
+  assert.deepEqual([voice.recordings, voice.misfits, voice.bins], [KNOWN.recordings, 1, KNOWN.bins]);
+  voice = updateVoice(voice, learner); // the learner again: added, and the count starts again
+  assert.deepEqual([voice.recordings, voice.misfits], [KNOWN.recordings + 1, 0]);
+  for (let i = 0; i < CONFIG.speak.voiceRecordings - 1; i += 1) voice = updateVoice(voice, low);
+  assert.deepEqual([voice.recordings, voice.misfits], [KNOWN.recordings + 1, 4]);
+  // The 5th in a row: the voice on this phone has changed, and it starts again from this recording.
+  voice = updateVoice(voice, low);
+  assert.deepEqual([voice.recordings, voice.misfits], [1, 0]);
+  // Before a voice is known, every recording is added.
+  assert.equal(updateVoice(emptyVoice(), learner).recordings, 1);
 });

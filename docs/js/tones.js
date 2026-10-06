@@ -106,18 +106,11 @@ export function addToVoice(voice, hzList) {
   return { bins, recordings: voice.recordings + 1 };
 }
 
-// The middle of a voice (`ref`, Hz) and its range (`span`, semitones from the 10th to the 90th
-// percentile of its pitch values, kept between 4 and 14). With no voice yet, the recording's
-// own pitch values are used and `known` is false, so the tone check looks at the shapes, and in
-// a word of 2 or more syllables at the heights of the syllables next to each other
-// (relativeHeights).
-// A voice whose pitch values run from 205 Hz to 322 Hz with the middle at 274 Hz gives
-// { ref: 274, span: 7.8, known: true }.
-export function voiceRange(voice, hzList = []) {
-  const known = voice && voice.recordings >= CONFIG.speak.voiceRecordings;
-  const bins = known ? voice.bins : addToVoice(emptyVoice(), hzList).bins;
+// The middle (`ref`, Hz) and the range (`span`, semitones from the 10th to the 90th percentile,
+// kept between 4 and 14) of the pitch values counted in `bins`, or null when there are none.
+function rangeOf(bins) {
   const total = bins.reduce((s, v) => s + v, 0);
-  if (!total) return { ref: 200, span: 8, known: false };
+  if (!total) return null;
   // The pitch (semitones above 55 Hz) below which `share` of the values lie, read between the
   // edges of the half-semitone bin where the count passes that share.
   const at = (share) => {
@@ -129,7 +122,46 @@ export function voiceRange(voice, hzList = []) {
     return (bins.length - 1) / 2;
   };
   const span = Math.min(14, Math.max(4, at(0.9) - at(0.1)));
-  return { ref: 55 * 2 ** (at(0.5) / 12), span: Math.round(span * 10) / 10, known: Boolean(known) };
+  return { ref: 55 * 2 ** (at(0.5) / 12), span: Math.round(span * 10) / 10 };
+}
+
+// Whether a recording's pitch values (Hz) fit a voice range: their middle is at most
+// CONFIG.speak.voiceFit ranges from the middle of the voice. A recording without pitch fits.
+// Another person speaking on the learner's phone, such as a teacher or a native speaker, mostly
+// does not fit, and the heights of their syllables are not judged against the learner's voice.
+// With the range { ref: 263, span: 6.8 }, a voice around 120 Hz (13.6 semitones lower) does not fit.
+export function fitsVoice(range, hzList) {
+  const hz = hzList.filter((v) => v > 0).sort((a, b) => a - b);
+  if (!hz.length) return true;
+  return Math.abs(semitones(hz[hz.length >> 1], range.ref) / range.span) <= CONFIG.speak.voiceFit;
+}
+
+// The learner's voice range for judging one recording (pitch values `hzList`, Hz), as
+// { ref, span, known }. The stored voice is used once it has CONFIG.speak.voiceRecordings
+// recordings and the recording fits it (fitsVoice). Otherwise the recording's own pitch values
+// are used and `known` is false, so the tone check looks at the shapes, and in a word of 2 or
+// more syllables at the heights of the syllables next to each other (relativeHeights).
+// A voice whose pitch values run from 205 Hz to 322 Hz with the middle at 274 Hz gives
+// { ref: 274, span: 7.8, known: true }.
+export function voiceRange(voice, hzList = []) {
+  if (voice && voice.recordings >= CONFIG.speak.voiceRecordings) {
+    const stored = rangeOf(voice.bins);
+    if (stored && fitsVoice(stored, hzList)) return { ...stored, known: true };
+  }
+  return { ...(rangeOf(addToVoice(emptyVoice(), hzList).bins) ?? { ref: 200, span: 8 }), known: false };
+}
+
+// The stored voice after one more recording (pitch values `hzList`, Hz). A recording that does
+// not fit the voice (fitsVoice) is left out, so another speaker does not change the learner's
+// voice, and `misfits` counts such recordings in a row. When CONFIG.speak.voiceRecordings of
+// them come in a row, the voice on this phone has changed (or the first recordings were someone
+// else's), and the voice starts again from this recording.
+export function updateVoice(voice, hzList) {
+  const stored = voice.recordings >= CONFIG.speak.voiceRecordings ? rangeOf(voice.bins) : null;
+  if (!stored || fitsVoice(stored, hzList)) return { ...addToVoice(voice, hzList), misfits: 0 };
+  const misfits = (voice.misfits ?? 0) + 1;
+  if (misfits >= CONFIG.speak.voiceRecordings) return { ...addToVoice(emptyVoice(), hzList), misfits: 0 };
+  return { ...voice, misfits };
 }
 
 // ---- Tone shapes ----
