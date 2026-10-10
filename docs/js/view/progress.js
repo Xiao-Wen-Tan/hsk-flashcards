@@ -157,7 +157,8 @@ export function calendarWeeks(checkedDays, month, today) {
 // close(), with `spoken` instead of `summary`), or null when the screen is opened from the
 // streak on the Today screen. counters is the day's numbers (counters.js dayStats) and bests
 // the personal-best notes (counters.js personalBests). confetti is true right after the day was
-// checked in. next is the button to speaking practice while its list has words left.
+// checked in. next is the button to speaking practice while its list has words left. Speaking
+// practice is optional: the day is checked in without it.
 export function checkinView({ result, checkedDays, today, themes, counters = null, bests = [] }) {
   const month = today.slice(0, 7);
   const view = {
@@ -186,8 +187,6 @@ export function checkinView({ result, checkedDays, today, themes, counters = nul
   if (result.spoken && spokenLine(result.spoken)) view.lines.push(spokenLine(result.spoken));
   if (!result.checkedIn && studyLeft) {
     view.lines.push(`Still left today: ${plural(result.left.reviews.length, 'review')} and ${plural(result.left.newWords.length, 'new word')}.`);
-  } else if (!result.checkedIn && speakLeft) {
-    view.lines.push(`${plural(speakLeft, 'word')} of speaking practice ${speakLeft === 1 ? 'is' : 'are'} left before today's check-in.`);
   }
   if (speakLeft) view.next = { label: 'Next: speaking practice', href: '#/speak' };
   view.badges = result.newBadges.map((id) => badgeTitle(id, themes));

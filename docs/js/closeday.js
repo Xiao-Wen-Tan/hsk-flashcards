@@ -1,6 +1,6 @@
 // Closing a study day checks in the day when its work is done, then awards any new badges. The
 // study session calls it when it ends (Study.finish in study.js), and so does the speaking panel
-// (speaking.js), so the day is checked in from whichever screen finishes last.
+// (speaking.js), which awards the speaking badges. Speaking practice is not needed to check in.
 //
 //   const r = await closeDay({ store, data, day: '2026-10-05' });
 //   // { day, checkedIn, justCheckedIn, streak, newBadges: ['learned-10'], left, speak }
@@ -11,13 +11,14 @@ import { isDayDone, planDay } from './plan.js';
 import { speakStatus } from './speaklist.js';
 
 // What is left of `day` and whether the day can be checked in. This is the one place that
-// decides it. The learning (planDay's plan) and the speaking list (speakStatus in speaklist.js)
-// must both be done (speaking practice spec of 2026-10-03, section 6). events are all saved
-// events, read from `store` when not given.
+// decides it. The learning (planDay's plan) must be done. The speaking list (speakStatus in
+// speaklist.js) is returned for the screens, but it does not hold back the check-in or the
+// streak (the user's decision of 2026-10-10, which replaces section 6 of the speaking practice
+// spec of 2026-10-03). events are all saved events, read from `store` when not given.
 export async function dayStatus({ store, data, day, settings, progress, events }) {
   const left = planDay({ words: data.words, progress, today: day, settings });
   const speak = speakStatus({ progress, events: events ?? (await store.allEvents()), day });
-  return { left, speak, done: isDayDone(left) && speak.left.length === 0 };
+  return { left, speak, done: isDayDone(left) };
 }
 
 // Checks in `day` when it is done and not checked in yet, and awards the badges that the saved

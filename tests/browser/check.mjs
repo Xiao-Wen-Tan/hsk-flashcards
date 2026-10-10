@@ -230,11 +230,12 @@ async function day() {
   await page.until("location.hash === '#/checkin' && !!document.querySelector('h1')");
   await page.sleep(300);
   const learned = await page.text();
-  check('after the learning the day waits for speaking practice',
-    /^Learning done \| 0 day streak \| 12 new words learned\. \| 12 words of speaking practice are left before today's check-in\. \| Next: speaking practice/.test(learned), learned.slice(0, 160));
+  // Speaking practice is optional (the user's decision of 2026-10-10): the learning checks the day in.
+  check('after the learning the day is checked in and speaking practice is offered',
+    /^Checked in! \| 1 day streak \| 12 new words learned\. \| Next: speaking practice/.test(learned), learned.slice(0, 160));
   await skipSpeaking(page);
   const checkin = await page.text();
-  check('after speaking practice the check-in screen says Checked in! with a 1-day streak', /^Checked in! \| 1 day streak \| 12 skipped in speaking practice\./.test(checkin), checkin.slice(0, 120));
+  check('after speaking practice the check-in screen says Already checked in today with a 1-day streak', /^Already checked in today \| 1 day streak \| 12 skipped in speaking practice\./.test(checkin), checkin.slice(0, 120));
   check('the service worker controls the page', await page.eval('!!navigator.serviceWorker.controller'));
   const media = await page.eval("caches.open('media-v1').then((c) => c.keys()).then((k) => k.length)");
   check('today\'s and tomorrow\'s sound and stroke files were saved', media > 0, `${media} files`);
@@ -448,10 +449,12 @@ async function rewind() {
   await page.until("location.hash === '#/session' && !!document.querySelector('.session-top')");
   await answerAll(page);
   await page.until("location.hash === '#/checkin' && !!document.querySelector('h1')");
-  await skipSpeaking(page);
+  await page.sleep(300);
+  // The learning alone checks the day in (the user's decision of 2026-10-10).
   const pieces = await page.eval("document.querySelectorAll('.confetti-piece').length");
   const checkin = await page.text();
   check('day 2 checks in with a 2-day streak and confetti', /Checked in! \| 2 day streak/.test(checkin) && pieces > 0, `${checkin.slice(0, 60)}, ${pieces} pieces`);
+  await skipSpeaking(page);
   const learned2 = await page.eval(LEARNED_TODAY);
   // Day 2's session-end backup must have reached the stand-in Sheet, so that the replacement
   // below can be told apart from a plain append (it leaves fewer Log rows, not more).
@@ -718,7 +721,7 @@ async function speak() {
   check('after a try the learner can play their own voice', tried['我']?.myVoice === true);
   check('the bottom bar was hidden on the panel', panelNav === 'none', panelNav);
   const checkin = await page.text();
-  check('the last word closes the day, which shows Checked in! and the speaking line', /^Checked in! \| 1 day streak \| \d+ said well and \d+ skipped in speaking practice\./.test(checkin), checkin.slice(0, 100));
+  check('the last word closes the panel, which shows the check-in and the speaking line', /^Already checked in today \| 1 day streak \| \d+ said well and \d+ skipped in speaking practice\./.test(checkin), checkin.slice(0, 100));
   const spoken = await page.eval(SPOKEN);
   check('one speak event per word, with the tone share and nothing heard', spoken.length === 12 && spoken.every((e) => e.tries === 1 && e.check.heard === null && (e.result === 'pass' ? e.check.tones === 1 : e.result === 'skip')),
     JSON.stringify(spoken.slice(0, 3)));
@@ -776,7 +779,7 @@ async function nomic() {
   await page.sleep(300);
   const checkin = await page.text();
   check('without a microphone no microphone button is shown', micSeen === false);
-  check('the day still checks in', /^Checked in! \| 1 day streak \| 12 listened to in speaking practice\./.test(checkin), checkin.slice(0, 100));
+  check('the day still checks in', /^Already checked in today \| 1 day streak \| 12 listened to in speaking practice\./.test(checkin), checkin.slice(0, 100));
   const spoken = await page.eval(SPOKEN);
   check('every word is saved as listened', spoken.length === 12 && spoken.every((e) => e.result === 'listened' && e.tries === 0), JSON.stringify(spoken.slice(0, 2)));
   const line = await page.eval(SETTINGS_CHECK);

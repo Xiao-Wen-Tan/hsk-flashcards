@@ -31,6 +31,12 @@ together."
 This changes the original design's rule that the day is checked in when the learning is done. From r009 the
 day is checked in when the learning and the speaking are both done.
 
+**Changed on 2026-10-10 (the user's decision, release r011):** speaking practice is taken out of the check-in
+and the streak. The day is checked in when the learning is done, as in the original design. Speaking practice
+stays optional: its button, list, carried-over skips, badges and minutes are unchanged, and the check-in screen
+still offers "Next: speaking practice". Where this spec says the check-in waits for the speaking (the table
+above, section 1's Today line and section 6), that no longer applies.
+
 ## 1. Entry
 
 - Today shows a "Speaking practice" button under Start/Continue, with a count, for example "18 words to

@@ -84,8 +84,8 @@ export class Speaking {
     return { id, result, tries, check };
   }
 
-  // Closes the day, which is checked in when the learning and the speaking are both done, and
-  // awards new badges. Returns closeDay's result with the counts of this session's words.
+  // Closes the day, which awards new badges (the day itself is checked in when the learning is
+  // done; speaking practice is optional since the user's decision of 2026-10-10). Returns closeDay's result with the counts of this session's words.
   async close(now = new Date()) {
     const result = await closeDay({ store: this.store, data: this.data, day: this.day, now });
     return { ...result, spoken: { ...this.counts } };
