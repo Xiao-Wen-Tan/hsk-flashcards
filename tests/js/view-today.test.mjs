@@ -67,12 +67,17 @@ test('the streak runs across rewound days', () => {
   assert.equal(v.streak, 1);
 });
 
-test('the speaking button sits under Start, and Today waits for the speaking before the check-in', () => {
+// Speaking practice is optional (the user's decision of 2026-10-10): the learning alone checks
+// the day in, and the speaking button stays open while words are left.
+test('the speaking button sits under Start, and Today does not wait for the speaking', () => {
   const speak = { list: ids(18), done: [], left: ids(18) };
-  const v = todayView({ plan: plan({ reviewsDone: 6, newDone: 12 }), checkedDays: [], today: TODAY, settings: SETTINGS, speak });
+  const v = todayView({ plan: plan({ reviewsDone: 6, newDone: 12 }), checkedDays: [TODAY], today: TODAY, settings: SETTINGS, speak });
   assert.deepEqual(v.speak, { label: 'Speaking practice', count: '18 words to speak', enabled: true });
-  assert.equal(v.status, 'Learning done. Speaking practice is left before today\'s check-in.');
+  assert.equal(v.status, 'Done for today. See you tomorrow!');
   assert.equal(v.canStart, false);
+  // A word carried over from an earlier day does not hold back Start, which checks the day in.
+  const carried = todayView({ plan: plan({}), checkedDays: [], today: TODAY, settings: SETTINGS, speak: { list: ['x'], done: [], left: ['x'] } });
+  assert.deepEqual([carried.status, carried.canStart], ['Nothing is due. Tap Start to check in.', true]);
   // Before any learning, the list holds only the words carried over from earlier days.
   const morning = todayView({ plan: plan({ reviews: ids(20), newWords: ids(12) }), checkedDays: [], today: TODAY, settings: SETTINGS, speak: { list: ['x'], done: [], left: ['x'] } });
   assert.deepEqual([morning.status, morning.canStart, morning.speak.count], ['20 reviews and 12 new words today.', true, '1 word to speak']);
